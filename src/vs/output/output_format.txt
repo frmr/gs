@@ -1,0 +1,13 @@
+This document explains the format of the output of the voronoi tessellation generator.
+
+The output file should contain a list of voronoi cells. The data for each cell will look like this:
+
+5                                // the number of corners
+0.416334 0.0619557 -0.903664     // the center of the cell
+0.338102 0.056509 -0.939411      // corners
+0.337818 0.102352 -0.93563       // .
+0.507376 0.111946 -0.854422      // .
+0.509018 0.109968 -0.853702      // .
+0.425042 -0.0203774 -0.904944    // .
+
+The first line contains the number of corners. The second line contains the location of the center of the cell (the centroid). The following lines contain the corners of the cell in clockwise order. 
