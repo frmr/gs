@@ -34,7 +34,11 @@
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="src/gs/main.cpp" />
+		<Unit filename="src/gs/gsCell.h" />
+		<Unit filename="src/gs/gsCellLink.h" />
+		<Unit filename="src/gs/gsEdge.h" />
+		<Unit filename="src/gs/gsGlobe.h" />
+		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
