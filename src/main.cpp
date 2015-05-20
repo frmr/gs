@@ -3,6 +3,8 @@
 #include <SDL.h>
 #include <GL/gl3w.h>
 
+#include "gs/gsGlobe.h"
+
 using std::cout;
 using std::cerr;
 using std::endl;
@@ -11,22 +13,25 @@ namespace gs
 {
     bool InitSdl()
     {
-        if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
+        if ( SDL_Init( SDL_INIT_EVERYTHING ) < 0 )
         {
             cerr << "gs::InitSdl() in src/main.cpp: Failed to initialise SDL." << endl;
             return false;
         }
 
-        SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-        SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 1);
         SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
+        SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+        SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 2);
+
+        SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+        SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
         return true;
     }
 
-    bool InitWindow( SDL_Window* window, SDL_GLContext& context, const int screenWidth, const int screenHeight )
+    bool InitWindow( SDL_Window** window, SDL_GLContext& context, const int screenWidth, const int screenHeight )
     {
-        window = SDL_CreateWindow( "gs", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenWidth, screenHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN );
+        *window = SDL_CreateWindow( "gs", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenWidth, screenHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN );
 
         if ( window == NULL )
         {
@@ -34,16 +39,15 @@ namespace gs
             return false;
         }
 
-        SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
-        SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 24 );
-
-        context = SDL_GL_CreateContext( window );
+        context = SDL_GL_CreateContext( *window );
 
         if ( context == NULL )
         {
             cerr << "gs::InitWindow() in src/main.cpp: Failed to create OpenGL context." << endl;
             return false;
         }
+
+        //SDL_GL_SetSwapInterval(0);
 
         return true;
     }
@@ -56,25 +60,25 @@ namespace gs
             return false;
         }
 
-        if ( !gl3wIsSupported( 3, 1 ) )
+        if ( !gl3wIsSupported( 3, 2 ) )
         {
-            cerr << "gs::InitOpenGl() in src/main.cpp: OpenGL 3.1 not supported." << endl;
+            cerr << "gs::InitOpenGl() in src/main.cpp: OpenGL 3.2 not supported." << endl;
             return false;
         }
 
-        //return true;
+        glClearColor( 1.0f, 0.0f, 0.0f, 1.0f );
+        //glViewport( 0, 0, 1024, 768 );
 
-        bool success = true;
-        GLuint gProgramID = glCreateProgram();
-        GLuint vertexShader = glCreateShader( GL_VERTEX_SHADER );
-
-
-        return success;
+        return true;
     }
 
-    void Draw()
+    void Render( SDL_Window* window, const gs::Globe globe )
     {
-        glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        globe.Draw();
+
+        SDL_GL_SwapWindow( window );
     }
 }
 
@@ -82,7 +86,13 @@ namespace gs
 
 int main(int argc, char* argv[] )
 {
-    gs::InitSdl();
+    bool running = true;
+
+    if ( !gs::InitSdl() )
+    {
+        cerr << "main() in main.cpp: Failed to initialise SDL." << endl;
+        running = false;
+    }
 
     int screenWidth = 1024;
     int screenHeight = 768;
@@ -90,9 +100,7 @@ int main(int argc, char* argv[] )
     SDL_Window* window = NULL;
     SDL_GLContext context = NULL;
 
-    bool running = true;
-
-    if ( !gs::InitWindow( window, context, screenWidth, screenHeight ) )
+    if ( !gs::InitWindow( &window, context, screenWidth, screenHeight ) )
     {
         cerr << "main() in main.cpp: Failed to initialise window." << endl;
         running = false;
@@ -103,6 +111,8 @@ int main(int argc, char* argv[] )
         cerr << "main() in main.cpp: Failed to initialise OpenGL." << endl;
         running = false;
     }
+
+    gs::Globe globe;
 
     while ( running )
     {
@@ -115,8 +125,7 @@ int main(int argc, char* argv[] )
             }
         }
 
-        gs::Draw();
-        SDL_GL_SwapWindow( window );
+        gs::Render( window, globe );
     }
 
     SDL_GL_DeleteContext( context );
