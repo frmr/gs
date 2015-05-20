@@ -17,6 +17,7 @@ bool gs::Shader::CompileShader( const GLuint shader, const string& filename )
     if ( success != 0 )
     {
         cerr << "gs::Shader::CompileShader() in gsShader.cpp: Failed to compile " << filename << " when loading " << name << "." << endl;
+        PrintShaderLog( shader );
         return false;
     }
 
@@ -43,6 +44,17 @@ string gs::Shader::LoadShaderFromFile( const string &filename ) const
 
     fileStream.close();
     return content;
+}
+
+void gs::Shader::PrintShaderLog( const GLuint shader ) const
+{
+    GLsizei length;
+    glGetShaderiv( shader, GL_INFO_LOG_LENGTH, &length );
+    GLchar* log = new GLchar[length+1];
+    glGetShaderInfoLog( shader, length, &length, log );
+    log[length] = (GLchar)'\0';
+    fprintf(stderr, "%d\n", length);
+    fprintf(stderr, "%s\n",  log);
 }
 
 GLuint gs::Shader::GetAttribLocation( const string& attrib )
@@ -110,7 +122,6 @@ gs::Shader::Shader( const string& name, const string& vertexFilename, const stri
 {
     CompileShader( vertexShader, vertexFilename );
     CompileShader( fragmentShader, fragmentFilename );
-
     glAttachShader( program, vertexShader );
     glAttachShader( program, fragmentShader );
 }

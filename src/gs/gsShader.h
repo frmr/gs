@@ -24,6 +24,7 @@ namespace gs
     private:
         bool    CompileShader( const GLuint shader, const string& filename );
         string  LoadShaderFromFile( const string &filename ) const;
+        void    PrintShaderLog( const GLuint shader ) const;
 
     public:
         GLuint  GetAttribLocation( const string& attrib );

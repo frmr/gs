@@ -2,7 +2,7 @@
 
 void gs::Globe::Draw() const
 {
-    shader.Use();
+    //shader.Use();
     glEnableVertexAttribArray( 0 );
     glBindBuffer( GL_ARRAY_BUFFER, vbo );
 
