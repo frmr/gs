@@ -3,7 +3,9 @@
 #include <SDL.h>
 #include <GL/gl3w.h>
 
+
 #include "gs/gsGlobe.h"
+#include "gs/gsMatrixStack.h"
 
 using std::cout;
 using std::cerr;
@@ -66,17 +68,21 @@ namespace gs
             return false;
         }
 
+        GLint maxSize;
+        glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxSize);
+        cerr << "Tex size: " << maxSize << endl;
+
         glClearColor( 1.0f, 0.0f, 0.0f, 1.0f );
         //glViewport( 0, 0, 1024, 768 );
 
         return true;
     }
 
-    void Render( SDL_Window* window, const gs::Globe globe )
+    void Render( SDL_Window* window, gs::MatrixStack& matrix, const gs::Globe globe )
     {
         glClear(GL_COLOR_BUFFER_BIT);
 
-        globe.Draw();
+        globe.Draw( matrix );
 
         SDL_GL_SwapWindow( window );
     }
@@ -112,6 +118,8 @@ int main(int argc, char* argv[] )
         running = false;
     }
 
+    gs::MatrixStack matrix;
+
     gs::Globe globe;
 
     while ( running )
@@ -125,7 +133,7 @@ int main(int argc, char* argv[] )
             }
         }
 
-        gs::Render( window, globe );
+        gs::Render( window, matrix, globe );
     }
 
     SDL_GL_DeleteContext( context );

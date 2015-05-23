@@ -7,7 +7,7 @@
 		<Option compiler="mingw64" />
 		<Build>
 			<Target title="Debug32">
-				<Option output="bin/Debug/gs" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug32/gs" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="mingw64" />
@@ -20,7 +20,7 @@
 				</Linker>
 			</Target>
 			<Target title="Debug64">
-				<Option output="bin/Debug/gs" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug64/gs" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="mingw64" />
@@ -34,7 +34,7 @@
 				</Linker>
 			</Target>
 			<Target title="Release32">
-				<Option output="bin/Release/gs" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release32/gs" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="0" />
 				<Option compiler="mingw64" />
@@ -48,7 +48,7 @@
 				</Linker>
 			</Target>
 			<Target title="Release64">
-				<Option output="bin/Release/gs" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release64/gs" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="0" />
 				<Option compiler="mingw64" />
@@ -84,6 +84,7 @@
 		<Unit filename="src/gl3w/gl3w.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/gs/gsCamera.cpp" />
 		<Unit filename="src/gs/gsCamera.h" />
 		<Unit filename="src/gs/gsCellLink.h" />
 		<Unit filename="src/gs/gsConfig.cpp" />
@@ -91,10 +92,15 @@
 		<Unit filename="src/gs/gsEdge.h" />
 		<Unit filename="src/gs/gsGlobe.cpp" />
 		<Unit filename="src/gs/gsGlobe.h" />
+		<Unit filename="src/gs/gsMatrixStack.cpp" />
+		<Unit filename="src/gs/gsMatrixStack.h" />
 		<Unit filename="src/gs/gsShader.cpp" />
 		<Unit filename="src/gs/gsShader.h" />
 		<Unit filename="src/gs/gsTile.h" />
 		<Unit filename="src/main.cpp" />
+		<Unit filename="src/matrix/Matrices.cpp" />
+		<Unit filename="src/matrix/Matrices.h" />
+		<Unit filename="src/matrix/Vectors.h" />
 		<Unit filename="src/voronoi/glm/core/_detail.hpp" />
 		<Unit filename="src/voronoi/glm/core/_fixes.hpp" />
 		<Unit filename="src/voronoi/glm/core/_swizzle.hpp" />

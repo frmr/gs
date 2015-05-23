@@ -5,6 +5,7 @@
 
 #include <GL/gl3w.h>
 
+#include "gsMatrixStack.h"
 #include "gsShader.h"
 
 using std::vector;
@@ -22,7 +23,7 @@ namespace gs
         //vector<gs::Edge>    edges;
 
     public:
-        void Draw() const;
+        void Draw( const gs::MatrixStack& matrix ) const;
 
     public:
         Globe();
