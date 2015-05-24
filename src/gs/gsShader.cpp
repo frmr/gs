@@ -105,8 +105,6 @@ bool gs::Shader::Link()
     GLint status = 0;
     glGetProgramiv( program, GL_LINK_STATUS, &status );
 
-    //cerr << GL_FALSE << endl;
-
     if ( status == GL_FALSE )
     {
         cerr << "gs::Shader::Link() in gsShader.cpp: Failed to link " << name << "." << endl;
@@ -121,7 +119,7 @@ bool gs::Shader::Use() const
 {
     if ( !linked )
     {
-        //cerr << "gs::Shader::Use() in gsShader.cpp: Cannot use " << name << " before linking." << endl;
+        cerr << "gs::Shader::Use() in gsShader.cpp: Cannot use " << name << " before linking." << endl;
         return false;
     }
     glUseProgram( program );

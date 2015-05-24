@@ -40,9 +40,16 @@ void gs::Config::SetFullscreen( const bool newFullscreen )
     fullscreen = newFullscreen;
 }
 
-gs::Config::Config( const int screenWidth, const int screenHeight, const bool fullscreen )
-    :   screenWidth( screenWidth ),
-        screenHeight( screenHeight ),
-        fullscreen( fullscreen )
+gs::Config::Config()
+    :   screenWidth( 1024 ),
+        screenHeight( 768 ),
+        fullscreen( false )
+{
+}
+
+gs::Config::Config( const string& filename )
+    :   screenWidth( 1024 ),
+        screenHeight( 768 ),
+        fullscreen( false )
 {
 }

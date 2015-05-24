@@ -3,8 +3,8 @@
 #include <SDL.h>
 #include <GL/gl3w.h>
 
-
 #include "gs/gsGlobe.h"
+#include "gs/gsInputState.h"
 #include "gs/gsMatrixStack.h"
 
 using std::cout;
@@ -15,7 +15,7 @@ namespace gs
 {
     bool InitSdl()
     {
-        if ( SDL_Init( SDL_INIT_EVERYTHING ) < 0 )
+        if ( SDL_Init( SDL_INIT_VIDEO | SDL_INIT_EVENTS ) < 0 )
         {
             cerr << "gs::InitSdl() in src/main.cpp: Failed to initialise SDL." << endl;
             return false;
@@ -88,10 +88,10 @@ namespace gs
     }
 }
 
-
-
 int main(int argc, char* argv[] )
 {
+    //gs::Config config( "gs.cfg" );
+
     bool running = true;
 
     if ( !gs::InitSdl() )
@@ -119,19 +119,13 @@ int main(int argc, char* argv[] )
     }
 
     gs::MatrixStack matrix;
-
-    gs::Globe globe;
+    gs::Globe       globe;
+    gs::InputState  input;
 
     while ( running )
     {
-        SDL_Event event;
-        while( SDL_PollEvent( &event ) != 0 )
-        {
-            if( event.type == SDL_QUIT )
-            {
-                running = false;
-            }
-        }
+        input.Update();
+        running = !(input.GetExit() || input.GetPause());
 
         gs::Render( window, matrix, globe );
     }
