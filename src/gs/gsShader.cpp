@@ -8,16 +8,16 @@ using std::endl;
 
 bool gs::Shader::CompileShader( const GLuint shader, const string& filename )
 {
-    const char* source = LoadShaderFromFile( filename ).c_str();
+    const char* const source = LoadShaderFromFile( filename ).c_str();
     glShaderSource( shader, 1, &source, NULL );
     glCompileShader( shader );
+    PrintShaderLog( shader );
 
-    GLint success = 0;
-    glGetShaderiv( shader, GL_COMPILE_STATUS, &success );
-    if ( success != 0 )
+    GLint status = 0;
+    glGetShaderiv( shader, GL_COMPILE_STATUS, &status );
+    if ( status == GL_FALSE )
     {
         cerr << "gs::Shader::CompileShader() in gsShader.cpp: Failed to compile " << filename << " when loading " << name << "." << endl;
-        PrintShaderLog( shader );
         return false;
     }
 
@@ -46,6 +46,17 @@ string gs::Shader::LoadShaderFromFile( const string &filename ) const
     return content;
 }
 
+void gs::Shader::PrintProgramLog() const
+{
+    GLsizei length;
+    glGetProgramiv( program, GL_INFO_LOG_LENGTH, &length );
+    GLchar* log = new GLchar[length+1];
+    glGetProgramInfoLog( program, length, &length, log );
+    log[length] = (GLchar)'\0';
+    fprintf( stderr, "%s\n", log );
+    delete log;
+}
+
 void gs::Shader::PrintShaderLog( const GLuint shader ) const
 {
     GLsizei length;
@@ -53,8 +64,8 @@ void gs::Shader::PrintShaderLog( const GLuint shader ) const
     GLchar* log = new GLchar[length+1];
     glGetShaderInfoLog( shader, length, &length, log );
     log[length] = (GLchar)'\0';
-    fprintf(stderr, "%d\n", length);
-    fprintf(stderr, "%s\n",  log);
+    fprintf( stderr, "%s\n",  log );
+    delete log;
 }
 
 GLuint gs::Shader::GetAttribLocation( const string& attrib )
@@ -86,12 +97,17 @@ GLint gs::Shader::GetUniformLocation( const string& uniform ) const
 bool gs::Shader::Link()
 {
     glLinkProgram( program );
+    PrintProgramLog();
+
     glDeleteShader( vertexShader );
     glDeleteShader( fragmentShader );
 
-    int success = 0;
-    glGetProgramiv( program, GL_LINK_STATUS, &success );
-    if ( success != 0 )
+    GLint status = 0;
+    glGetProgramiv( program, GL_LINK_STATUS, &status );
+
+    //cerr << GL_FALSE << endl;
+
+    if ( status == GL_FALSE )
     {
         cerr << "gs::Shader::Link() in gsShader.cpp: Failed to link " << name << "." << endl;
         return false;
@@ -105,7 +121,7 @@ bool gs::Shader::Use() const
 {
     if ( !linked )
     {
-        cerr << "gs::Shader::Use() in gsShader.cpp: Cannot use " << name << " before linking." << endl;
+        //cerr << "gs::Shader::Use() in gsShader.cpp: Cannot use " << name << " before linking." << endl;
         return false;
     }
     glUseProgram( program );

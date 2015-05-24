@@ -1,8 +1,11 @@
 #version 150
 
-out vec4 colorOut;
+precision highp float;
+
+//out vec4 outputF;
 
 void main(void)
 {
-    colorOut = vec4(0.0, 0.0, 1.0, 1.0);
+    //outputF = vec4(0.0, 0.0, 1.0, 1.0);
+    gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);
 }

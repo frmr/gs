@@ -1,5 +1,10 @@
 #include "gsGlobe.h"
 
+#include <iostream>
+
+using std::cerr;
+using std::endl;
+
 void gs::Globe::Draw( const gs::MatrixStack& matrix ) const
 {
     shader.Use();
@@ -7,18 +12,23 @@ void gs::Globe::Draw( const gs::MatrixStack& matrix ) const
     glBindBuffer( GL_ARRAY_BUFFER, vbo );
 
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-
 }
 
 gs::Globe::Globe()
     :   shader( "test", "data/shaders/test.vert", "data/shaders/test.frag" )
 {
-    /* We're going to create a simple diamond made from lines */
-    const GLfloat diamond[4][2] = {
-    {  0.0,  1.0  }, /* Top point */
-    {  1.0,  0.0  }, /* Right point */
-    {  0.0, -1.0  }, /* Bottom point */
-    { -1.0,  0.0  } }; /* Left point */
+//    /* We're going to create a simple diamond made from lines */
+//    const GLfloat diamond[4][2] = {
+//    {  0.0,  1.0  }, /* Top point */
+//    {  1.0,  0.0  }, /* Right point */
+//    {  0.0, -1.0  }, /* Bottom point */
+//    { -1.0,  0.0  } }; /* Left point */
+
+    const GLfloat diamond[4][4] = {
+    {  0.0,  1.0, 0.0, 1.0  }, /* Top point */
+    {  1.0,  0.0, 0.0, 1.0  }, /* Right point */
+    {  0.0, -1.0, 0.0, 1.0  }, /* Bottom point */
+    { -1.0,  0.0, 0.0, 1.0  } }; /* Left point */
 
     const GLfloat colors[4][3] = {
     {  1.0,  0.0,  0.0  }, /* Red */
@@ -33,13 +43,13 @@ gs::Globe::Globe()
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
 
-    GLuint loc = shader.GetAttribLocation("in_Position");
+    GLuint loc = shader.GetAttribLocation("position");
 
-    glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(GLfloat), diamond, GL_STATIC_DRAW);
-    glVertexAttribPointer(loc, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glBufferData(GL_ARRAY_BUFFER, 16 * sizeof(GLfloat), diamond, GL_STATIC_DRAW);
+    glVertexAttribPointer(loc, 4, GL_FLOAT, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(0);
 
-    glBindFragDataLocation( shader.program, 0, "color" );
+    //glBindFragDataLocation( shader.program, 0, "outputF" );
 
     shader.Link();
 

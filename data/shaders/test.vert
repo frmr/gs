@@ -1,8 +1,10 @@
 #version 150
 
-in vec2 in_Position;
- 
+precision highp float;
+
+in vec4 position;
+
 void main(void)
 {
-    gl_Position = vec4(in_Position, 0.0);
+    gl_Position = position;// + vec4(10,10,0,1);
 }

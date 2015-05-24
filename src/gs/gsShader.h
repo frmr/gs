@@ -24,11 +24,12 @@ namespace gs
     private:
         bool    CompileShader( const GLuint shader, const string& filename );
         string  LoadShaderFromFile( const string &filename ) const;
+        void    PrintProgramLog() const;
         void    PrintShaderLog( const GLuint shader ) const;
 
     public:
         GLuint  GetAttribLocation( const string& attrib );
-        GLint  GetUniformLocation( const string& uniform ) const;
+        GLint   GetUniformLocation( const string& uniform ) const;
         bool    Link();
         bool    Use() const;
 
