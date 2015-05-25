@@ -1,7 +1,9 @@
 #ifndef GS_CAMERA_H
 #define GS_CAMERA_H
 
+#include "gsInputState.h"
 #include "gsMatrixStack.h"
+#include "../matrix/Matrices.h"
 
 namespace gs
 {
@@ -23,8 +25,9 @@ namespace gs
             void NormalizeLongitude();
 
         public:
-            void ApplyTransformation( gs::MatrixStack& matrix ) const;
+            void ApplyTransformation( gs::MatrixStack<Matrix4>& matrix ) const;
             void Move( const double latitudeChange, const double longitudeChange );
+            void Update( const InputState& input );
 
         public:
             Camera();

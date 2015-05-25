@@ -92,8 +92,11 @@
 		<Unit filename="src/gs/gsEdge.h" />
 		<Unit filename="src/gs/gsGlobe.cpp" />
 		<Unit filename="src/gs/gsGlobe.h" />
-		<Unit filename="src/gs/gsMatrixStack.cpp" />
+		<Unit filename="src/gs/gsInputState.cpp" />
+		<Unit filename="src/gs/gsInputState.h" />
 		<Unit filename="src/gs/gsMatrixStack.h" />
+		<Unit filename="src/gs/gsProjectionMatrix.cpp" />
+		<Unit filename="src/gs/gsProjectionMatrix.h" />
 		<Unit filename="src/gs/gsShader.cpp" />
 		<Unit filename="src/gs/gsShader.h" />
 		<Unit filename="src/gs/gsTile.h" />

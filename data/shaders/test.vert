@@ -3,8 +3,10 @@
 precision highp float;
 
 in vec4 position;
+uniform mat4 modelView;
+uniform mat4 projection;
 
 void main(void)
 {
-    gl_Position = position;// + vec4(10,10,0,1);
+    gl_Position = position * modelView * projection;
 }

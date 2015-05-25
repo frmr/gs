@@ -5,22 +5,33 @@
 
 #include <GL/gl3w.h>
 
-#include "../matrix/Matrices.h"
-
 namespace gs
 {
+    template<typename T>
     class MatrixStack
     {
     private:
-        std::stack<Matrix4> matrices;
+        std::stack<T> matrices;
 
     public:
-        Matrix4 top;
+        T top;
 
     public:
-        void    SendUniform( const GLint location ) const;
-        void    Push();
-        void    Pop();
+        void SendUniform( const GLint location ) const
+        {
+            glUniformMatrix4fv( location, 1, false, top.get() );
+        }
+
+        void Push()
+        {
+            matrices.push( top );
+        }
+
+        void Pop()
+        {
+            top = matrices.top();
+            matrices.pop();
+        }
 
     };
 }
