@@ -2,15 +2,20 @@
 
 #include <GL/gl3w.h>
 
+#include <iostream>
+
+using std::cerr;
+using std::endl;
+
 void gs::Camera::NormalizeLatitude()
 {
-    if ( latitude < -90.0f )
+    if ( latitude < -89.8f )
     {
-        latitude = -90.0f;
+        latitude = -89.9f;
     }
-    else if ( latitude > 90.0f )
+    else if ( latitude > 89.9f )
     {
-        latitude = 90.0f;
+        latitude = 89.9f;
     }
 }
 
@@ -26,13 +31,12 @@ void gs::Camera::NormalizeLongitude()
     }
 }
 
-void gs::Camera::ApplyTransformation( gs::MatrixStack<Matrix4>& matrix ) const
+void gs::Camera::ApplyTransformation( gs::MatrixStack<Matrix4>& modelView ) const
 {
-    matrix.top.identity();
-    //matrix.top.rotateY( longitude );
-    //matrix.top.rotateX( latitude );
-    //matrix.top.translate( 0.0f, 0.0f, minZoomDistance + ( 1.0f - zoom ) * ( maxZoomDistance - minZoomDistance ) );
-    matrix.top.translate( longitude, latitude, 0.0f );
+    modelView.top.identity();
+    modelView.top.rotateY( -longitude );
+    modelView.top.rotateX( -latitude );
+    modelView.top.translate( position.GetX(), position.GetY(), position.GetZ() );
 }
 
 void gs::Camera::Move( const double latitudeChange, const double longitudeChange )
@@ -41,36 +45,49 @@ void gs::Camera::Move( const double latitudeChange, const double longitudeChange
     NormalizeLatitude();
     longitude += longitudeChange;
     NormalizeLongitude();
+
+    position[0] = cos( longitude * 3.14159265f / 180.0f );
+    position[1] = sin( longitude * 3.14159265f / 180.0f );
+    position[2] = tan( latitude * 3.14159265f / 180.0f );
+
+    position.Unit();
+    position *= minZoomDistance + ( 1.0f - zoom ) * ( maxZoomDistance - minZoomDistance );
+
+    cerr << latitude << " " << longitude << endl;
+    cerr << position.GetX() << " " << position.GetY() << " " << position.GetZ() << endl;
 }
 
 void gs::Camera::Update( const InputState& input )
 {
     //TODO: Zoom should affect movement speed
     float multiplier = ( ( input.GetUp() ^ input.GetDown() ) || ( input.GetLeft() ^ input.GetRight() ) ) ? 0.707f : 1.0f;
+
+    float latitudeChange = 0.0f;
+    float longitudeChange = 0.0f;
+
     if ( input.GetUp() )
     {
-        latitude += multiplier;
+        latitudeChange += multiplier;
     }
     if ( input.GetDown() )
     {
-        latitude -= multiplier;
+        latitudeChange -= multiplier;
     }
     if ( input.GetLeft() )
     {
-        longitude -= multiplier;
+        longitudeChange -= multiplier;
     }
     if ( input.GetRight() )
     {
-        longitude += multiplier;
+        longitudeChange += multiplier;
     }
+
+    Move( latitudeChange, longitudeChange );
 }
 
 gs::Camera::Camera()
     :   latitude( 0.0f ),
         longitude( 0.0f ),
-        zoom( 0.0f ),
-        x( 0.0 ),
-        y( 0.0 ),
-        z( maxZoomDistance )
+        zoom( 0.0f )
 {
 }

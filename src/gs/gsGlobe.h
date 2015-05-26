@@ -28,7 +28,7 @@ namespace gs
         //vector<gs::Edge>    edges;
 
     public:
-        void Draw( const gs::MatrixStack<Matrix4>& modelView, const gs::MatrixStack<gs::ProjectionMatrix>& projection ) const;
+        void Draw( const gs::MatrixStack<Matrix4>& modelView, const gs::ProjectionMatrix& projection ) const;
 
     public:
         Globe();

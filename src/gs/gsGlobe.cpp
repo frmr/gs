@@ -5,14 +5,14 @@
 using std::cerr;
 using std::endl;
 
-void gs::Globe::Draw( const gs::MatrixStack<Matrix4>& modelView, const gs::MatrixStack<gs::ProjectionMatrix>& projection ) const
+void gs::Globe::Draw( const gs::MatrixStack<Matrix4>& modelView, const gs::ProjectionMatrix& projection ) const
 {
     shader.Use();
     glEnableVertexAttribArray( 0 );
     glBindBuffer( GL_ARRAY_BUFFER, vbo );
 
     glUniformMatrix4fv( modelViewLocation, 1, false, modelView.top.get() );
-    glUniformMatrix4fv( projectionLocation, 1, false, projection.top.get() );
+    glUniformMatrix4fv( projectionLocation, 1, false, projection.get() );
 
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 }

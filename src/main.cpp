@@ -51,7 +51,7 @@ namespace gs
             return false;
         }
 
-        //SDL_GL_SetSwapInterval(0);
+        SDL_GL_SetSwapInterval(1);
 
         return true;
     }
@@ -80,7 +80,7 @@ namespace gs
         return true;
     }
 
-    void Render( SDL_Window* window, gs::MatrixStack<Matrix4>& modelView, gs::MatrixStack<gs::ProjectionMatrix>& projection, const gs::Camera& camera, const gs::Globe globe )
+    void Render( SDL_Window* window, gs::MatrixStack<Matrix4>& modelView, gs::ProjectionMatrix& projection, const gs::Camera& camera, const gs::Globe globe )
     {
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -124,8 +124,8 @@ int main(int argc, char* argv[] )
     }
 
     gs::MatrixStack<Matrix4> modelView;
-    gs::MatrixStack<gs::ProjectionMatrix> projection;
-    projection.top.SetOrthographic( -2.0f, 2.0f, -2.0f, 2.0f, 5, 100 );
+    gs::ProjectionMatrix projection;
+    projection.SetOrthographic( -2.0f, 2.0f, -2.0f, 2.0f, 5, 100 );
     gs::Globe globe;
     gs::InputState input;
     gs::Camera camera;

@@ -3,6 +3,7 @@
 
 #include "gsInputState.h"
 #include "gsMatrixStack.h"
+#include "gsVec3.h"
 #include "../matrix/Matrices.h"
 
 namespace gs
@@ -13,10 +14,10 @@ namespace gs
             constexpr static float maxZoomDistance = 10.0f;
             constexpr static float minZoomDistance = 2.0f;
 
-            float latitude;
-            float longitude;
-            float zoom;     //between 0.0 and 1.0
-            float x, y, z;
+            float       latitude;
+            float       longitude;
+            float       zoom;     //between 0.0 and 1.0
+            gs::Vec3f   position;
 
 
 
