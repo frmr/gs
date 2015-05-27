@@ -14,7 +14,7 @@ VoronoiEvent::VoronoiEvent()
 VoronoiEvent::VoronoiEvent(mpvec3 p)
 {
     polar = acos(p.z);
-    
+
     const long double PI = M_PIl;
     azimuth = atan2(p.y, p.x);
     azimuth /= 2.0 * PI;
@@ -26,7 +26,7 @@ VoronoiEvent::VoronoiEvent(mpvec3 p)
     polar_small = 0.0;
 }
 
-SiteEvent::SiteEvent(mpvec3 p, VoronoiCell* b) : VoronoiEvent(p) 
+SiteEvent::SiteEvent(mpvec3 p, VoronoiCell* b) : VoronoiEvent(p)
 {
     cell = b;
     ce = NULL;
@@ -42,7 +42,7 @@ CircleEvent::CircleEvent(long double polar, long double polar_small, mpvec3 c, S
 {
     this->polar = polar;
     this->polar_small = polar_small;
-    
+
     const long double PI = M_PIl;
     azimuth = atan2(c.y, c.x);
     azimuth /= 2.0 * PI;

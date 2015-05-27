@@ -95,8 +95,6 @@
 		<Unit filename="src/gs/gsInputState.cpp" />
 		<Unit filename="src/gs/gsInputState.h" />
 		<Unit filename="src/gs/gsMatrixStack.h" />
-		<Unit filename="src/gs/gsProjectionMatrix.cpp" />
-		<Unit filename="src/gs/gsProjectionMatrix.h" />
 		<Unit filename="src/gs/gsShader.cpp" />
 		<Unit filename="src/gs/gsShader.h" />
 		<Unit filename="src/gs/gsTile.h" />
@@ -105,6 +103,8 @@
 		<Unit filename="src/matrix/Matrices.cpp" />
 		<Unit filename="src/matrix/Matrices.h" />
 		<Unit filename="src/matrix/Vectors.h" />
+		<Unit filename="src/voronoi/glm/CMakeLists.txt" />
+		<Unit filename="src/voronoi/glm/copying.txt" />
 		<Unit filename="src/voronoi/glm/core/_detail.hpp" />
 		<Unit filename="src/voronoi/glm/core/_fixes.hpp" />
 		<Unit filename="src/voronoi/glm/core/_swizzle.hpp" />
@@ -326,6 +326,23 @@
 		<Unit filename="src/voronoi/glm/gtx/wrap.hpp" />
 		<Unit filename="src/voronoi/glm/gtx/wrap.inl" />
 		<Unit filename="src/voronoi/glm/virtrev/xstream.hpp" />
+		<Unit filename="src/voronoi/src/beachline.cpp" />
+		<Unit filename="src/voronoi/src/beachline.h" />
+		<Unit filename="src/voronoi/src/mp_sample_generator.cpp" />
+		<Unit filename="src/voronoi/src/mp_sample_generator.h" />
+		<Unit filename="src/voronoi/src/mpreal/mpvec3.cpp" />
+		<Unit filename="src/voronoi/src/mpreal/mpvec3.h" />
+		<Unit filename="src/voronoi/src/priqueue.cpp" />
+		<Unit filename="src/voronoi/src/priqueue.h" />
+		<Unit filename="src/voronoi/src/voronoi.cpp" />
+		<Unit filename="src/voronoi/src/voronoi.h" />
+		<Unit filename="src/voronoi/src/voronoi_cell.cpp" />
+		<Unit filename="src/voronoi/src/voronoi_cell.h" />
+		<Unit filename="src/voronoi/src/voronoi_event.cpp" />
+		<Unit filename="src/voronoi/src/voronoi_event.h" />
+		<Unit filename="src/voronoi/src/voronoi_event_compare.h" />
+		<Unit filename="src/voronoi/src/voronoi_generator.cpp" />
+		<Unit filename="src/voronoi/src/voronoi_generator.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

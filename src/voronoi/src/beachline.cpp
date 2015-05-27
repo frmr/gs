@@ -33,7 +33,6 @@ long double SkipNode::getRangeEnd(long double sweepline, long double shift)
     return range_end;
 }
 
-
 constexpr long double PI2 = M_PIl*2.0;
 constexpr long double PI2i = 0.5/M_PIl;
 
@@ -180,7 +179,7 @@ void BeachLine::findAndInsert(SkipNode* node, long double sweepline)
     bool done = false;
     while (!done)
     {
-        if (curr->skips[skip_level]->getRangeEnd(sweepline, shift) > 
+        if (curr->skips[skip_level]->getRangeEnd(sweepline, shift) >
             curr->getRangeEnd(sweepline, shift))
         {
             curr = curr->skips[skip_level];
@@ -218,7 +217,7 @@ void BeachLine::insertAfter(SkipNode* node, SkipNode* at)
         node->prev = node;
         linked_list = node;
 
-        for (int i = 0; i < 8; i++) 
+        for (int i = 0; i < 8; i++)
         {
             node->skips[i] = node;
             node->p_skips[i] = node;
@@ -249,7 +248,7 @@ int log2(int n)
       {
         n >>= S[i];
         r |= S[i];
-      } 
+      }
     }
 
     return r;

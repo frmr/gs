@@ -84,7 +84,7 @@ void VoronoiGenerator::generatePoints(int points)
 void VoronoiGenerator::writeDataToFile()
 {
     std::ofstream file;
-    file.open("output/voronoi_data", std::ios::out | std::ios::trunc); 
+    file.open("output/voronoi_data", std::ios::out | std::ios::trunc);
 
     if (!file.is_open())
     {

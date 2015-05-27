@@ -4,7 +4,7 @@ precision highp float;
 
 in vec4 position;
 in vec3 colorVert;
-out vec3 colorFrag;
+flat out vec3 colorFrag;
 
 uniform mat4 projection;
 uniform mat4 modelView;

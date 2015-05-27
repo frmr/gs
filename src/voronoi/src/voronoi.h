@@ -11,7 +11,7 @@
 #include "voronoi_event_compare.h"
 #include "priqueue.h"
 
-#include "gtest/gtest_prod.h"
+//#include "gtest/gtest_prod.h"
 
 
 class Voronoi
@@ -25,7 +25,7 @@ class Voronoi
     private:
 
         VoronoiEventCompare voronoi_event_comp;
-        
+
         long double sweepline_large;
         long double sweepline_small;
 
@@ -50,12 +50,12 @@ class Voronoi
         void removeCircleEvent(SiteEvent* site);
 
         // tests
-        FRIEND_TEST(VoronoiTests, TestIntersect);
-        FRIEND_TEST(VoronoiTests, TestIntersectDegenerateParabola);
-        FRIEND_TEST(VoronoiTests, TestVerifyResult);
-        FRIEND_TEST(VoronoiTests, TestBeachLine);
-        FRIEND_TEST(VoronoiTests, TestCircumcenter);
-        FRIEND_TEST(VoronoiTests, TestCircleBottom);
+//        FRIEND_TEST(VoronoiTests, TestIntersect);
+//        FRIEND_TEST(VoronoiTests, TestIntersectDegenerateParabola);
+//        FRIEND_TEST(VoronoiTests, TestVerifyResult);
+//        FRIEND_TEST(VoronoiTests, TestBeachLine);
+//        FRIEND_TEST(VoronoiTests, TestCircumcenter);
+//        FRIEND_TEST(VoronoiTests, TestCircleBottom);
 
 };
 

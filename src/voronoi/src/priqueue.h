@@ -5,7 +5,7 @@
 #include "voronoi_event_compare.h"
 #include <random>
 
-#include "gtest/gtest_prod.h"
+//#include "gtest/gtest_prod.h"
 
 class PriQueueNode
 {
@@ -47,14 +47,14 @@ class PriQueue
         void addSkips(PriQueueNode* node, PriQueueNode** previous);
 
         // tests
-        FRIEND_TEST(PriQueueTests, TestInsertLinkedList);
-        FRIEND_TEST(PriQueueTests, TestInsertOutOfOrderLinkedList);
-        FRIEND_TEST(PriQueueTests, TestInsertReverseOrderLinkedList);
-        FRIEND_TEST(PriQueueTests, TestInsertSkips);
-        FRIEND_TEST(PriQueueTests, TestEraseSkips);
-        FRIEND_TEST(PriQueueTests, TestEraseHeadSkips);
-        FRIEND_TEST(PriQueueTests, TestEraseTailSkips);
-        FRIEND_TEST(PriQueueTests, TestErasePopPushSkips);
+//        FRIEND_TEST(PriQueueTests, TestInsertLinkedList);
+//        FRIEND_TEST(PriQueueTests, TestInsertOutOfOrderLinkedList);
+//        FRIEND_TEST(PriQueueTests, TestInsertReverseOrderLinkedList);
+//        FRIEND_TEST(PriQueueTests, TestInsertSkips);
+//        FRIEND_TEST(PriQueueTests, TestEraseSkips);
+//        FRIEND_TEST(PriQueueTests, TestEraseHeadSkips);
+//        FRIEND_TEST(PriQueueTests, TestEraseTailSkips);
+//        FRIEND_TEST(PriQueueTests, TestErasePopPushSkips);
 };
 
 #endif

@@ -95,4 +95,7 @@ gs::Globe::Globe()
 
     //index array for vertices
     //vertex array for normals
+
+
+
 }

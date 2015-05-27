@@ -2,7 +2,7 @@
 
 precision highp float;
 
-in vec3 colorFrag;
+flat in vec3 colorFrag;
 
 void main(void)
 {

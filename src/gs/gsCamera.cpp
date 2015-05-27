@@ -57,8 +57,8 @@ void gs::Camera::Move( const double latitudeChange, const double longitudeChange
 
     UpdateViewMatrix();
 
-    cerr << latitude << " " << longitude << endl;
-    cerr << position.GetX() << " " << position.GetY() << " " << position.GetZ() << endl;
+    //cerr << latitude << " " << longitude << endl;
+    //cerr << position.GetX() << " " << position.GetY() << " " << position.GetZ() << endl;
 }
 
 bool gs::Camera::SetOrthographic( const float left, const float right, const float bottom, const float top, const float nearVal, const float farVal )
@@ -103,7 +103,7 @@ void gs::Camera::UpdateViewMatrix()
 {
     viewMatrix.identity();
     viewMatrix.rotateY( -longitude );
-    viewMatrix.rotateX( -latitude );
+    viewMatrix.rotateX( latitude );
     viewMatrix.translate( 0.0f, 0.0f, -10.0f );
     //viewMatrix.translate( -position.GetX(), -position.GetY(), -position.GetZ() );
 }
