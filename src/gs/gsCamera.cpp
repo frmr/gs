@@ -53,7 +53,7 @@ void gs::Camera::Move( const double latitudeChange, const double longitudeChange
     position[2] = sin( longitude * 3.14159265f / 180.0f );
 
     position.Unit();
-    position *= minZoomDistance + ( 1.0f - zoom ) * ( maxZoomDistance - minZoomDistance );
+    //position *= minZoomDistance + ( 1.0f - zoom ) * ( maxZoomDistance - minZoomDistance );
 
     UpdateViewMatrix();
 
@@ -61,7 +61,7 @@ void gs::Camera::Move( const double latitudeChange, const double longitudeChange
     //cerr << position.GetX() << " " << position.GetY() << " " << position.GetZ() << endl;
 }
 
-bool gs::Camera::SetOrthographic( const float left, const float right, const float bottom, const float top, const float nearVal, const float farVal )
+void gs::Camera::SetOrthographic( const float left, const float right, const float bottom, const float top, const float nearVal, const float farVal )
 {
     projectionMatrix[0] = 2 / ( right - left );
     projectionMatrix[5]  = 2 / ( top - bottom );
@@ -71,7 +71,7 @@ bool gs::Camera::SetOrthographic( const float left, const float right, const flo
     projectionMatrix[14] = -( farVal + nearVal ) / ( farVal - nearVal );
 }
 
-void gs::Camera::Update( const InputState& input )
+void gs::Camera::Update( InputState& input )
 {
     //TODO: Zoom should affect movement speed
     float multiplier = ( ( input.GetUp() ^ input.GetDown() ) || ( input.GetLeft() ^ input.GetRight() ) ) ? 0.707f : 1.0f;
@@ -95,6 +95,24 @@ void gs::Camera::Update( const InputState& input )
     {
         longitudeChange += multiplier;
     }
+    if ( input.GetMouseWheelUp() )
+    {
+        zoom -= 0.2f;
+        if ( zoom < minZoom )
+        {
+            zoom = minZoom;
+        }
+    }
+    if ( input.GetMouseWheelDown() )
+    {
+        zoom += 0.2f;
+        if ( zoom > maxZoom )
+        {
+            zoom = maxZoom;
+        }
+    }
+
+    SetOrthographic( -zoom, zoom, -zoom, zoom, 0, 100 );
 
     Move( latitudeChange, longitudeChange );
 }
@@ -111,6 +129,6 @@ void gs::Camera::UpdateViewMatrix()
 gs::Camera::Camera()
     :   latitude( 0.0f ),
         longitude( 0.0f ),
-        zoom( 0.0f )
+        zoom( 2.0f )
 {
 }

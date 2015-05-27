@@ -50,6 +50,11 @@ void gs::InputState::Update()
             else if ( event.button.button == SDL_BUTTON_MIDDLE )    { middleMouse = true; }
             else if ( event.button.button == SDL_BUTTON_RIGHT )     { rightMouse = true; }
         }
+        else if ( event.type == SDL_MOUSEWHEEL )
+        {
+            if ( event.wheel.y > 0 )    { mouseWheelUp = true; }
+            else                        { mouseWheelDown = true; }
+        }
         else if ( event.type == SDL_QUIT )
         {
             exit = true;
@@ -79,6 +84,20 @@ bool gs::InputState::GetPause()
 bool gs::InputState::GetLeftMouse() const   { return leftMouse; }
 bool gs::InputState::GetMiddleMouse() const { return middleMouse; }
 bool gs::InputState::GetRightMouse() const  { return rightMouse; }
+
+bool gs::InputState::GetMouseWheelUp()
+{
+    bool old = mouseWheelUp;
+    mouseWheelUp = false;
+    return old;
+}
+
+bool gs::InputState::GetMouseWheelDown()
+{
+    bool old = mouseWheelDown;
+    mouseWheelDown = false;
+    return old;
+}
 
 gs::InputState::InputState()
 {

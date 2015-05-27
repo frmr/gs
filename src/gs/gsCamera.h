@@ -11,8 +11,8 @@ namespace gs
     class Camera
     {
         private:
-            constexpr static float maxZoomDistance = 10.0f;
-            constexpr static float minZoomDistance = 2.0f;
+            constexpr static float maxZoom = 10.0f;
+            constexpr static float minZoom = 0.05f;
 
             float       latitude;
             float       longitude;
@@ -31,8 +31,8 @@ namespace gs
             Matrix4 GetViewMatrix() const;
             Matrix4 GetProjectionMatrix() const;
             void    Move( const double latitudeChange, const double longitudeChange );
-            bool    SetOrthographic( const float left, const float right, const float bottom, const float top, const float nearVal, const float farVal );
-            void    Update( const InputState& input );
+            void    SetOrthographic( const float left, const float right, const float bottom, const float top, const float nearVal, const float farVal );
+            void    Update( InputState& input );
             void    UpdateViewMatrix();
 
         public:

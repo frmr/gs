@@ -22,6 +22,9 @@ namespace gs
         bool 	middleMouse;
         bool 	rightMouse;
 
+        bool    mouseWheelUp;
+        bool    mouseWheelDown;
+
     public:
         void	ResetAll();
         //void	Update( const EngineConfig &engineCfg );
@@ -36,8 +39,12 @@ namespace gs
         bool    GetPause();
 
         bool 	GetLeftMouse() const;
-        bool 	GetRightMouse() const;
         bool 	GetMiddleMouse() const;
+        bool 	GetRightMouse() const;
+
+
+        bool    GetMouseWheelUp();
+        bool    GetMouseWheelDown();
 
     public:
         InputState(); //binding config
