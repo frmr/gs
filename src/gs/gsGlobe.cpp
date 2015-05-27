@@ -45,20 +45,27 @@ gs::Globe::Globe()
     {  0.0,  0.0,  1.0  }, /* Blue */
     {  1.0,  1.0,  1.0  } }; /* White */
 
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
+    glGenVertexArrays( 1, &vao );
+    glBindVertexArray( vao );
 
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glGenBuffers( 1, &vbo );
+    glBindBuffer( GL_ARRAY_BUFFER, vbo );
 
+    GLuint positionLocation = shader.GetAttribLocation( "position" );
 
-    GLuint loc = shader.GetAttribLocation("position");
+    glBufferData( GL_ARRAY_BUFFER, 16 * sizeof(GLfloat), diamond, GL_STATIC_DRAW );
+    glVertexAttribPointer( positionLocation, 4, GL_FLOAT, GL_FALSE, 0, 0 );
+    glEnableVertexAttribArray( positionLocation );
 
-    glBufferData(GL_ARRAY_BUFFER, 16 * sizeof(GLfloat), diamond, GL_STATIC_DRAW);
-    glVertexAttribPointer(loc, 4, GL_FLOAT, GL_FALSE, 0, 0);
-    glEnableVertexAttribArray(0);
+    GLuint colorBuffer;
+    glGenBuffers( 1, &colorBuffer );
+    glBindBuffer( GL_ARRAY_BUFFER, colorBuffer );
 
-    //glBindFragDataLocation( shader.program, 0, "outputF" );
+    GLuint colorLocation = shader.GetAttribLocation( "colorVert" );
+
+    glBufferData( GL_ARRAY_BUFFER, 12 * sizeof(GLfloat), colors, GL_STATIC_DRAW );
+    glVertexAttribPointer( colorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0 );
+    glEnableVertexAttribArray( colorLocation );
 
     shader.Link();
 
