@@ -4,17 +4,17 @@
 #include <stack>
 
 #include <GL/gl3w.h>
+#include "../matrix/Matrices.h"
 
 namespace gs
 {
-    template<typename T>
     class MatrixStack
     {
     private:
-        std::stack<T> matrices;
+        std::stack<Matrix4> matrices;
 
     public:
-        T top;
+        Matrix4 top;
 
     public:
         void SendUniform( const GLint location ) const

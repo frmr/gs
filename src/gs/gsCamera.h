@@ -19,16 +19,20 @@ namespace gs
             float       zoom;     //between 0.0 and 1.0
             gs::Vec3f   position;
 
-
+            Matrix4     viewMatrix;
+            Matrix4     projectionMatrix;
 
         private:
             void NormalizeLatitude();
             void NormalizeLongitude();
 
         public:
-            void ApplyTransformation( gs::MatrixStack<Matrix4>& matrix ) const;
-            void Move( const double latitudeChange, const double longitudeChange );
-            void Update( const InputState& input );
+            //void ApplyTransformation( gs::MatrixStack<Matrix4>& matrix ) const;
+            Matrix4 GetViewMatrix() const;
+            Matrix4 GetProjectionMatrix() const;
+            void    Move( const double latitudeChange, const double longitudeChange );
+            bool    SetOrthographic( const float left, const float right, const float bottom, const float top, const float nearVal, const float farVal );
+            void    Update( const InputState& input );
 
         public:
             Camera();

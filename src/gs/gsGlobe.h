@@ -4,12 +4,13 @@
 #include <vector>
 
 #include <GL/gl3w.h>
+#include "../matrix/Matrices.h"
 
+#include "gsCamera.h"
 #include "gsMatrixStack.h"
-#include "gsProjectionMatrix.h"
 #include "gsShader.h"
 
-#include "../matrix/Matrices.h"
+
 
 using std::vector;
 
@@ -28,7 +29,8 @@ namespace gs
         //vector<gs::Edge>    edges;
 
     public:
-        void Draw( const gs::MatrixStack<Matrix4>& modelView, const gs::ProjectionMatrix& projection ) const;
+        void Draw( const gs::Camera& worldCamera ) const;
+        void Update();
 
     public:
         Globe();

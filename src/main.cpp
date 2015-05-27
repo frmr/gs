@@ -7,7 +7,6 @@
 #include "gs/gsGlobe.h"
 #include "gs/gsInputState.h"
 #include "gs/gsMatrixStack.h"
-#include "gs/gsProjectionMatrix.h"
 
 using std::cout;
 using std::cerr;
@@ -80,14 +79,11 @@ namespace gs
         return true;
     }
 
-    void Render( SDL_Window* window, gs::MatrixStack<Matrix4>& modelView, gs::ProjectionMatrix& projection, const gs::Camera& camera, const gs::Globe globe )
+    void Render( SDL_Window* window, const gs::Camera& worldCamera, const gs::Camera& interfaceCamera, const gs::Globe globe )
     {
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear( GL_COLOR_BUFFER_BIT );
 
-        modelView.Push();
-            camera.ApplyTransformation( modelView );
-            globe.Draw( modelView, projection );
-        modelView.Pop();
+        globe.Draw( worldCamera );
 
         SDL_GL_SwapWindow( window );
     }
@@ -123,22 +119,24 @@ int main(int argc, char* argv[] )
         running = false;
     }
 
-    gs::MatrixStack<Matrix4> modelView;
-    gs::ProjectionMatrix projection;
-    projection.SetOrthographic( -10.0f, 10.0f, -10.0f, 10.0f, 1, 100 );
     gs::Globe globe;
     gs::InputState input;
+
     gs::Camera worldCamera;
+    worldCamera.SetOrthographic( -10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 100.0f );
+
     gs::Camera interfaceCamera;
+    interfaceCamera.SetOrthographic( 0.0f, screenWidth, 0.0f, screenHeight, 0.0f, 10.0f );
 
     while ( running )
     {
         input.Update();
         running = !(input.GetExit() || input.GetPause());
 
-        camera.Update( input );
+        worldCamera.Update( input );
+        globe.Update();
 
-        gs::Render( window, modelView, projection, camera, globe );
+        gs::Render( window, worldCamera, interfaceCamera, globe );
     }
 
     SDL_GL_DeleteContext( context );

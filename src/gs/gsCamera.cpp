@@ -31,15 +31,24 @@ void gs::Camera::NormalizeLongitude()
     }
 }
 
-void gs::Camera::ApplyTransformation( gs::MatrixStack<Matrix4>& modelView ) const
-{
-    //modelView.top.identity();
-    modelView.top.rotateY( -longitude );
-    modelView.top.rotateX( -latitude );
-    //modelView.top.translate( -position.GetX(), -position.GetY(), -position.GetZ() );
-    //modelView.top.translate( 0.0f, 0.0f, -position.GetZ() );
-    modelView.top.translate( 0.0f, 0.0f, -10.0f );
+//void gs::Camera::ApplyTransformation( gs::MatrixStack<Matrix4>& modelView ) const
+//{
+//    //modelView.top.identity();
+//    modelView.top.rotateY( -longitude );
+//    modelView.top.rotateX( -latitude );
+//    //modelView.top.translate( -position.GetX(), -position.GetY(), -position.GetZ() );
+//    //modelView.top.translate( 0.0f, 0.0f, -position.GetZ() );
+//    modelView.top.translate( 0.0f, 0.0f, -10.0f );
+//}
 
+Matrix4 gs::Camera::GetViewMatrix() const
+{
+    return viewMatrix;
+}
+
+Matrix4 gs::Camera::GetProjectionMatrix() const
+{
+    return projectionMatrix;
 }
 
 void gs::Camera::Move( const double latitudeChange, const double longitudeChange )
@@ -50,14 +59,30 @@ void gs::Camera::Move( const double latitudeChange, const double longitudeChange
     NormalizeLongitude();
 
     position[0] = cos( longitude * 3.14159265f / 180.0f );
-    position[1] = sin( longitude * 3.14159265f / 180.0f );
-    position[2] = tan( latitude * 3.14159265f / 180.0f );
+    position[1] = tan( latitude * 3.14159265f / 180.0f );
+    position[2] = sin( longitude * 3.14159265f / 180.0f );
 
     position.Unit();
     position *= minZoomDistance + ( 1.0f - zoom ) * ( maxZoomDistance - minZoomDistance );
 
+    viewMatrix.identity();
+    viewMatrix.rotateY( -longitude );
+    viewMatrix.rotateX( -latitude );
+    viewMatrix.translate( 0.0f, 0.0f, -10.0f );
+    //viewMatrix.translate( -position.GetX(), -position.GetY(), -position.GetZ() );
+
     cerr << latitude << " " << longitude << endl;
     cerr << position.GetX() << " " << position.GetY() << " " << position.GetZ() << endl;
+}
+
+bool gs::Camera::SetOrthographic( const float left, const float right, const float bottom, const float top, const float nearVal, const float farVal )
+{
+    projectionMatrix[0] = 2 / ( right - left );
+    projectionMatrix[5]  = 2 / ( top - bottom );
+    projectionMatrix[10] = -2 / ( farVal - nearVal );
+    projectionMatrix[12] = -( right + left ) / ( right - left );
+    projectionMatrix[13] = -( top + bottom ) / ( top - bottom );
+    projectionMatrix[14] = -( farVal + nearVal ) / ( farVal - nearVal );
 }
 
 void gs::Camera::Update( const InputState& input )

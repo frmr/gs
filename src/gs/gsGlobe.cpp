@@ -5,17 +5,22 @@
 using std::cerr;
 using std::endl;
 
-void gs::Globe::Draw( const gs::MatrixStack<Matrix4>& modelView, const gs::ProjectionMatrix& projection ) const
+void gs::Globe::Draw( const gs::Camera& worldCamera ) const
 {
     shader.Use();
     glEnableVertexAttribArray( 0 );
     glBindBuffer( GL_ARRAY_BUFFER, vbo );
 
-    glUniformMatrix4fv( modelViewLocation, 1, false, modelView.top.get() );
-    glUniformMatrix4fv( projectionLocation, 1, false, projection.get() );
+    glUniformMatrix4fv( modelViewLocation, 1, false, worldCamera.GetViewMatrix().get() );
+    glUniformMatrix4fv( projectionLocation, 1, false, worldCamera.GetProjectionMatrix().get() );
 
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     //glDrawArrays(GL_LINE_LOOP, 0, 4);
+}
+
+void gs::Globe::Update()
+{
+
 }
 
 gs::Globe::Globe()
