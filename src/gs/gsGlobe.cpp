@@ -15,6 +15,7 @@ void gs::Globe::Draw( const gs::MatrixStack<Matrix4>& modelView, const gs::Proje
     glUniformMatrix4fv( projectionLocation, 1, false, projection.get() );
 
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+    //glDrawArrays(GL_LINE_LOOP, 0, 4);
 }
 
 gs::Globe::Globe()

@@ -33,10 +33,13 @@ void gs::Camera::NormalizeLongitude()
 
 void gs::Camera::ApplyTransformation( gs::MatrixStack<Matrix4>& modelView ) const
 {
-    modelView.top.identity();
+    //modelView.top.identity();
     modelView.top.rotateY( -longitude );
     modelView.top.rotateX( -latitude );
-    modelView.top.translate( position.GetX(), position.GetY(), position.GetZ() );
+    //modelView.top.translate( -position.GetX(), -position.GetY(), -position.GetZ() );
+    //modelView.top.translate( 0.0f, 0.0f, -position.GetZ() );
+    modelView.top.translate( 0.0f, 0.0f, -10.0f );
+
 }
 
 void gs::Camera::Move( const double latitudeChange, const double longitudeChange )

@@ -125,10 +125,11 @@ int main(int argc, char* argv[] )
 
     gs::MatrixStack<Matrix4> modelView;
     gs::ProjectionMatrix projection;
-    projection.SetOrthographic( -2.0f, 2.0f, -2.0f, 2.0f, 5, 100 );
+    projection.SetOrthographic( -10.0f, 10.0f, -10.0f, 10.0f, 1, 100 );
     gs::Globe globe;
     gs::InputState input;
-    gs::Camera camera;
+    gs::Camera worldCamera;
+    gs::Camera interfaceCamera;
 
     while ( running )
     {
