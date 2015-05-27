@@ -33,6 +33,7 @@ namespace gs
             void    Move( const double latitudeChange, const double longitudeChange );
             bool    SetOrthographic( const float left, const float right, const float bottom, const float top, const float nearVal, const float farVal );
             void    Update( const InputState& input );
+            void    UpdateViewMatrix();
 
         public:
             Camera();

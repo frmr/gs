@@ -20,7 +20,11 @@ namespace gs
     {
     private:
         GLuint              vao;
+
         GLuint              vbo;
+        GLuint              colorBuffer;
+        GLuint              indexBuffer;
+
         gs::Shader          shader;
         GLint               modelViewLocation;
         GLint               projectionLocation;

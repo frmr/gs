@@ -73,7 +73,7 @@ namespace gs
         glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxSize);
         cerr << "Tex size: " << maxSize << endl;
 
-        glClearColor( 1.0f, 0.0f, 0.0f, 1.0f );
+        glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
         //glViewport( 0, 0, 1024, 768 );
 
         return true;
@@ -81,7 +81,9 @@ namespace gs
 
     void Render( SDL_Window* window, const gs::Camera& worldCamera, const gs::Camera& interfaceCamera, const gs::Globe globe )
     {
-        glClear( GL_COLOR_BUFFER_BIT );
+        glEnable( GL_DEPTH_TEST );
+        glCullFace( GL_BACK );
+        glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
         globe.Draw( worldCamera );
 
@@ -123,7 +125,7 @@ int main(int argc, char* argv[] )
     gs::InputState input;
 
     gs::Camera worldCamera;
-    worldCamera.SetOrthographic( -10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 100.0f );
+    worldCamera.SetOrthographic( -2.0f, 2.0f, -2.0f, 2.0f, 1.0f, 100.0f );
 
     gs::Camera interfaceCamera;
     interfaceCamera.SetOrthographic( 0.0f, screenWidth, 0.0f, screenHeight, 0.0f, 10.0f );

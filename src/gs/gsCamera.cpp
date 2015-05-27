@@ -31,16 +31,6 @@ void gs::Camera::NormalizeLongitude()
     }
 }
 
-//void gs::Camera::ApplyTransformation( gs::MatrixStack<Matrix4>& modelView ) const
-//{
-//    //modelView.top.identity();
-//    modelView.top.rotateY( -longitude );
-//    modelView.top.rotateX( -latitude );
-//    //modelView.top.translate( -position.GetX(), -position.GetY(), -position.GetZ() );
-//    //modelView.top.translate( 0.0f, 0.0f, -position.GetZ() );
-//    modelView.top.translate( 0.0f, 0.0f, -10.0f );
-//}
-
 Matrix4 gs::Camera::GetViewMatrix() const
 {
     return viewMatrix;
@@ -65,11 +55,7 @@ void gs::Camera::Move( const double latitudeChange, const double longitudeChange
     position.Unit();
     position *= minZoomDistance + ( 1.0f - zoom ) * ( maxZoomDistance - minZoomDistance );
 
-    viewMatrix.identity();
-    viewMatrix.rotateY( -longitude );
-    viewMatrix.rotateX( -latitude );
-    viewMatrix.translate( 0.0f, 0.0f, -10.0f );
-    //viewMatrix.translate( -position.GetX(), -position.GetY(), -position.GetZ() );
+    UpdateViewMatrix();
 
     cerr << latitude << " " << longitude << endl;
     cerr << position.GetX() << " " << position.GetY() << " " << position.GetZ() << endl;
@@ -111,6 +97,15 @@ void gs::Camera::Update( const InputState& input )
     }
 
     Move( latitudeChange, longitudeChange );
+}
+
+void gs::Camera::UpdateViewMatrix()
+{
+    viewMatrix.identity();
+    viewMatrix.rotateY( -longitude );
+    viewMatrix.rotateX( -latitude );
+    viewMatrix.translate( 0.0f, 0.0f, -10.0f );
+    //viewMatrix.translate( -position.GetX(), -position.GetY(), -position.GetZ() );
 }
 
 gs::Camera::Camera()
