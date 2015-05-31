@@ -119,7 +119,7 @@ bool gs::Shader::Use() const
 {
     if ( !linked )
     {
-        cerr << "gs::Shader::Use() in gsShader.cpp: Cannot use " << name << " before linking." << endl;
+        //cerr << "gs::Shader::Use() in gsShader.cpp: Cannot use " << name << " before linking." << endl;
         return false;
     }
     glUseProgram( program );

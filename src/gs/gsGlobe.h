@@ -1,6 +1,7 @@
 #ifndef GS_GLOBE_H
 #define GS_GLOBE_H
 
+#include <string>
 #include <vector>
 
 #include <GL/gl3w.h>
@@ -11,7 +12,7 @@
 #include "gsShader.h"
 
 
-
+using std::string;
 using std::vector;
 
 namespace gs
@@ -21,16 +22,24 @@ namespace gs
     private:
         GLuint              vao;
 
-        GLuint              vbo;
-        GLuint              colorBuffer;
-        GLuint              indexBuffer;
+        //TODO: Make these const
+        GLuint      positionVbo;
+        GLuint      normalVbo;
+        GLuint      colorVbo;
+        GLuint      texCoordVbo;
+        GLuint      fogVbo;
+        GLuint      indexBuffer;
 
         gs::Shader          shader;
-        GLint               modelViewLocation;
-        GLint               projectionLocation;
+        GLint               modelViewMatrixLocation;
+        GLint               projectionMatrixLocation;
+        GLint               normalMatrixLocation;
         //vector<gs::Vec3>    vertices;
         //vector<gs::Tile>    tiles;
         //vector<gs::Edge>    edges;
+
+    private:
+        GLuint  CreateVbo( const void* data, const int size, const int components, const string& name );
 
     public:
         void Draw( const gs::Camera& worldCamera ) const;

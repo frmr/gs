@@ -10,10 +10,16 @@ void gs::Globe::Draw( const gs::Camera& worldCamera ) const
     shader.Use();
     glEnableVertexAttribArray( 0 );
 
-    glUniformMatrix4fv( modelViewLocation, 1, false, worldCamera.GetViewMatrix().get() ); //TODO: multiply by model matrix if needed
-    glUniformMatrix4fv( projectionLocation, 1, false, worldCamera.GetProjectionMatrix().get() );
+    //get the inverse model view matrix
+    Matrix4 inverseModelViewMatrix = worldCamera.GetViewMatrix();
+    inverseModelViewMatrix.invert();
 
-    glBindBuffer( GL_ARRAY_BUFFER, vbo );
+    //pass matrices to shaders
+    glUniformMatrix4fv( modelViewMatrixLocation, 1, false, worldCamera.GetViewMatrix().get() ); //TODO: multiply by model matrix if needed
+    glUniformMatrix4fv( projectionMatrixLocation, 1, false, worldCamera.GetProjectionMatrix().get() );
+    glUniformMatrix4fv( normalMatrixLocation, 1, false, inverseModelViewMatrix.getTranspose() );
+
+    //glBindBuffer( GL_ARRAY_BUFFER, positionVbo );
     glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, indexBuffer );
 
     glDrawElements( GL_TRIANGLE_STRIP, 6, GL_UNSIGNED_BYTE, 0 );
@@ -25,6 +31,21 @@ void gs::Globe::Draw( const gs::Camera& worldCamera ) const
 void gs::Globe::Update()
 {
 
+}
+
+GLuint gs::Globe::CreateVbo( const void* data, const int size, const int components, const string& name )
+{
+    GLuint vbo;
+    glGenBuffers( 1, &vbo );
+    glBindBuffer( GL_ARRAY_BUFFER, vbo );
+
+    GLuint location = shader.GetAttribLocation( name );
+
+    glBufferData( GL_ARRAY_BUFFER, size * sizeof(GLfloat), data, GL_STATIC_DRAW );
+    glVertexAttribPointer( location, components, GL_FLOAT, GL_FALSE, 0, 0 );
+    glEnableVertexAttribArray( location );
+
+    return vbo;
 }
 
 gs::Globe::Globe()
@@ -44,11 +65,11 @@ gs::Globe::Globe()
     { -1.0,  0.0, 0.0, 1.0  } }; /* Left point */
 
     /* The four vericies of a tetrahedron */
-    const GLfloat tetrahedron[4][4] = {
-    {  1.0,  1.0,  1.0, 1.0  },   /* index 0 */
-    { -1.0, -1.0,  1.0, 1.0  },   /* index 1 */
-    { -1.0,  1.0, -1.0, 1.0  },   /* index 2 */
-    {  1.0, -1.0, -1.0, 1.0  } }; /* index 3 */
+    const GLfloat tetrahedron[4][3] = {
+    {  1.0,  1.0,  1.0 },   /* index 0 */
+    { -1.0, -1.0,  1.0 },   /* index 1 */
+    { -1.0,  1.0, -1.0 },   /* index 2 */
+    {  1.0, -1.0, -1.0 } }; /* index 3 */
 
     const GLfloat colors[4][3] = {
     {  1.0,  0.0,  0.0  }, /* Red */
@@ -56,31 +77,26 @@ gs::Globe::Globe()
     {  0.0,  0.0,  1.0  }, /* Blue */
     {  1.0,  1.0,  1.0  } }; /* White */
 
+    const GLfloat texCoords[4][2] = {
+    { 0.0, 0.0 },
+    { 0.0, 0.0 },
+    { 0.0, 0.0 },
+    { 0.0, 0.0 } };
+
+    const GLfloat fog[4] = { 1.0, 1.0, 0.0, 0.0 };
+
     const GLubyte indices[6] = { 0, 1, 2, 3, 0, 1 };
     //const GLubyte indices[4] = { 0, 1, 2, 3 };
 
     glGenVertexArrays( 1, &vao );
     glBindVertexArray( vao );
 
-    //positions
-    glGenBuffers( 1, &vbo );
-    glBindBuffer( GL_ARRAY_BUFFER, vbo );
+    positionVbo = CreateVbo( tetrahedron, 12, 3, "positionVert" );
+    normalVbo = CreateVbo( tetrahedron, 12, 3, "normalVert" );
+    colorVbo = CreateVbo( colors, 12, 3, "colorVert" );
+    texCoordVbo = CreateVbo( texCoords, 12, 2, "texCoordVert" );
+    fogVbo = CreateVbo( fog, 12, 1, "fogVert" );
 
-    GLuint positionLocation = shader.GetAttribLocation( "position" );
-
-    glBufferData( GL_ARRAY_BUFFER, 16 * sizeof(GLfloat), tetrahedron, GL_STATIC_DRAW );
-    glVertexAttribPointer( positionLocation, 4, GL_FLOAT, GL_FALSE, 0, 0 );
-    glEnableVertexAttribArray( positionLocation );
-
-    //colors
-    glGenBuffers( 1, &colorBuffer );
-    glBindBuffer( GL_ARRAY_BUFFER, colorBuffer );
-
-    GLuint colorLocation = shader.GetAttribLocation( "colorVert" );
-
-    glBufferData( GL_ARRAY_BUFFER, 12 * sizeof(GLfloat), colors, GL_STATIC_DRAW );
-    glVertexAttribPointer( colorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0 );
-    glEnableVertexAttribArray( colorLocation );
 
     //indices
     glGenBuffers( 1, &indexBuffer );
@@ -90,8 +106,9 @@ gs::Globe::Globe()
 
     shader.Link();
 
-    modelViewLocation = shader.GetUniformLocation( "modelView" );
-    projectionLocation = shader.GetUniformLocation( "projection" );
+    modelViewMatrixLocation = shader.GetUniformLocation( "modelViewMatrix" );
+    projectionMatrixLocation = shader.GetUniformLocation( "projectionMatrix" );
+    normalMatrixLocation = shader.GetUniformLocation( "normalMatrix" );
 
     //index array for vertices
     //vertex array for normals
