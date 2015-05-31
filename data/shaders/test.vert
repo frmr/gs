@@ -3,7 +3,6 @@
 precision highp float;
 
 in vec3     positionVert;
-in vec3     normalVert;
 in vec3     colorVert;
 in vec2     texCoordVert;
 in float    fogVert;
@@ -20,7 +19,8 @@ uniform mat4 normalMatrix;
 void main(void)
 {
     gl_Position = projectionMatrix * modelViewMatrix * vec4(positionVert, 1.0);
-    normalFrag = normalize((normalMatrix * vec4(normalVert, 1.0)).xyz);
+    //normalFrag = normalize((normalMatrix * vec4(positionVert, 1.0)).xyz);
+    normalFrag = normalize(positionVert);
     colorFrag = colorVert;
     texCoordFrag = texCoordVert;
     fogFrag = fogVert;

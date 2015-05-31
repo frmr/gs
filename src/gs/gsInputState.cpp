@@ -15,9 +15,18 @@ void gs::InputState::ResetAll()
 	rightMouse = false;
 }
 
+void gs::InputState::ResetPresses()
+{
+    exit = false;
+    pause = false;
+    mouseWheelUp = false;
+    mouseWheelDown = false;
+}
+
 //void InputState::Update( const EngineConfig &engineCfg )
 void gs::InputState::Update()
 {
+    ResetPresses();
 	SDL_Event event;
 
 	while ( SDL_PollEvent( &event ) )
@@ -67,37 +76,15 @@ bool gs::InputState::GetDown() const	{ return down; }
 bool gs::InputState::GetLeft() const	{ return left; }
 bool gs::InputState::GetRight() const	{ return right; }
 
-bool gs::InputState::GetExit()
-{
-    bool old = exit;
-    exit = false;
-    return old;
-}
-
-bool gs::InputState::GetPause()
-{
-    bool old = pause;
-    pause = false;
-    return old;
-}
+bool gs::InputState::GetExit() const    { return exit; }
+bool gs::InputState::GetPause() const   { return pause; }
 
 bool gs::InputState::GetLeftMouse() const   { return leftMouse; }
 bool gs::InputState::GetMiddleMouse() const { return middleMouse; }
 bool gs::InputState::GetRightMouse() const  { return rightMouse; }
 
-bool gs::InputState::GetMouseWheelUp()
-{
-    bool old = mouseWheelUp;
-    mouseWheelUp = false;
-    return old;
-}
-
-bool gs::InputState::GetMouseWheelDown()
-{
-    bool old = mouseWheelDown;
-    mouseWheelDown = false;
-    return old;
-}
+bool gs::InputState::GetMouseWheelUp() const    { return mouseWheelUp; }
+bool gs::InputState::GetMouseWheelDown() const  { return mouseWheelDown; }
 
 gs::InputState::InputState()
 {

@@ -28,10 +28,6 @@ void VoronoiGenerator::generateTessellation(int points)
 {
     generatePoints(points);
 
-    // generate voronoi tessellation
-    struct timeval stp;
-    gettimeofday(&stp,NULL);
-
     Voronoi voronoi;
     voronoi.construct(cell_vector);
 
@@ -42,13 +38,6 @@ void VoronoiGenerator::generateTessellation(int points)
         b->sortCorners();
         b->computeCentroid();
     }
-
-    struct timeval etp;
-    gettimeofday(&etp,NULL);
-    double t = (etp.tv_sec - stp.tv_sec) + (etp.tv_usec - stp.tv_usec)/1000000.0;
-    std::cout << "Voronoi tessellation time: " << t << "s\n";
-
-    writeDataToFile();
 }
 
 // This method populates the cell_vector with VoronoiCells.

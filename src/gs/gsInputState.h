@@ -27,6 +27,7 @@ namespace gs
 
     public:
         void	ResetAll();
+        void    ResetPresses();
         //void	Update( const EngineConfig &engineCfg );
         void	Update();
 
@@ -35,16 +36,16 @@ namespace gs
         bool 	GetLeft() const;
         bool 	GetRight() const;
 
-        bool 	GetExit();
-        bool    GetPause();
+        bool 	GetExit() const;
+        bool    GetPause() const;
 
         bool 	GetLeftMouse() const;
         bool 	GetMiddleMouse() const;
         bool 	GetRightMouse() const;
 
 
-        bool    GetMouseWheelUp();
-        bool    GetMouseWheelDown();
+        bool    GetMouseWheelUp() const;
+        bool    GetMouseWheelDown() const;
 
     public:
         InputState(); //binding config

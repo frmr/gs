@@ -2,13 +2,14 @@
 
 #include <iostream>
 
+#include "../voronoi/src/voronoi_generator.h"
+
 using std::cerr;
 using std::endl;
 
 void gs::Globe::Draw( const gs::Camera& worldCamera ) const
 {
     shader.Use();
-    glEnableVertexAttribArray( 0 );
 
     //get the inverse model view matrix
     Matrix4 inverseModelViewMatrix = worldCamera.GetViewMatrix();
@@ -24,7 +25,7 @@ void gs::Globe::Draw( const gs::Camera& worldCamera ) const
 
     glDrawElements( GL_TRIANGLE_STRIP, 6, GL_UNSIGNED_BYTE, 0 );
 
-    //glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+    //glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     //glDrawArrays(GL_LINE_LOOP, 0, 4);
 }
 
@@ -51,18 +52,13 @@ GLuint gs::Globe::CreateVbo( const void* data, const int size, const int compone
 gs::Globe::Globe()
     :   shader( "test", "data/shaders/test.vert", "data/shaders/test.frag" )
 {
-//    /* We're going to create a simple diamond made from lines */
-//    const GLfloat diamond[4][2] = {
-//    {  0.0,  1.0  }, /* Top point */
-//    {  1.0,  0.0  }, /* Right point */
-//    {  0.0, -1.0  }, /* Bottom point */
-//    { -1.0,  0.0  } }; /* Left point */
+    VoronoiGenerator vg;
+    vg.generateTessellation( 1000 );
 
-    const GLfloat diamond[4][4] = {
-    {  0.0,  1.0, 0.0, 1.0  }, /* Top point */
-    {  1.0,  0.0, 0.0, 1.0  }, /* Right point */
-    {  0.0, -1.0, 0.0, 1.0  }, /* Bottom point */
-    { -1.0,  0.0, 0.0, 1.0  } }; /* Left point */
+    for (auto& cell : vg.cell_vector)
+    {
+        cerr << cell->centroid.x << " " << cell->centroid.y << " " << cell->centroid.z << endl;
+    }
 
     /* The four vericies of a tetrahedron */
     const GLfloat tetrahedron[4][3] = {
@@ -92,7 +88,6 @@ gs::Globe::Globe()
     glBindVertexArray( vao );
 
     positionVbo = CreateVbo( tetrahedron, 12, 3, "positionVert" );
-    normalVbo = CreateVbo( tetrahedron, 12, 3, "normalVert" );
     colorVbo = CreateVbo( colors, 12, 3, "colorVert" );
     texCoordVbo = CreateVbo( texCoords, 12, 2, "texCoordVert" );
     fogVbo = CreateVbo( fog, 12, 1, "fogVert" );

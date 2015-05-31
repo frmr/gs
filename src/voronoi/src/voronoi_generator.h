@@ -15,11 +15,10 @@ class VoronoiGenerator
         ~VoronoiGenerator();
 
         void generateTessellation(int points);
-
+        std::vector<VoronoiCell*> cell_vector;
     private:
 
         MPSampleGenerator sample_generator;
-        std::vector<VoronoiCell*> cell_vector;
 
         void generatePoints(int points);
         void writeDataToFile();
