@@ -11,7 +11,7 @@ namespace gs
     class Camera
     {
         private:
-            constexpr static float maxZoom = 10.0f;
+            constexpr static float maxZoom = 100.0f;
             constexpr static float minZoom = 0.05f;
 
             float       latitude;

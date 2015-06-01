@@ -16,7 +16,7 @@ uniform mat4 projectionMatrix;
 uniform mat4 modelViewMatrix;
 uniform mat4 normalMatrix;
 
-void main(void)
+void main()
 {
     gl_Position = projectionMatrix * modelViewMatrix * vec4(positionVert, 1.0);
     //normalFrag = normalize((normalMatrix * vec4(positionVert, 1.0)).xyz);

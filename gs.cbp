@@ -97,6 +97,7 @@
 		<Unit filename="src/gs/gsMatrixStack.h" />
 		<Unit filename="src/gs/gsShader.cpp" />
 		<Unit filename="src/gs/gsShader.h" />
+		<Unit filename="src/gs/gsTile.cpp" />
 		<Unit filename="src/gs/gsTile.h" />
 		<Unit filename="src/gs/gsVec3.h" />
 		<Unit filename="src/main.cpp" />

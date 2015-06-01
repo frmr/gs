@@ -13,21 +13,6 @@ namespace gs
 
     public:
 
-        T GetX() const
-        {
-            return x;
-        }
-
-        T GetY() const
-        {
-            return y;
-        }
-
-        T GetZ() const
-        {
-            return z;
-        }
-
         T Length() const
         {
             return sqrt( x * x + y * y + z * z );

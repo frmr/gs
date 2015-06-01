@@ -33,6 +33,7 @@ namespace gs
         GLint       modelViewMatrixLocation;
         GLint       projectionMatrixLocation;
         GLint       normalMatrixLocation;
+        int         numOfIndices;
 
         //vector<gs::Vec3>    vertices;
         vector<gs::Tile>    tiles;
@@ -41,6 +42,7 @@ namespace gs
     private:
         vector<gs::Tile>    ConstructTiles( const int quantity ) const;
         GLuint              CreateVbo( const void* data, const int size, const int components, const string& name );
+        GLuint              CreateVbo( const int size, const int components, const string& name );
 
     public:
         void Draw( const gs::Camera& worldCamera ) const;
