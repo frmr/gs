@@ -54,13 +54,11 @@ void gs::Tile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, con
 
     //append indices to vector
     //indexVector.reserve( indexVector.size() + 3 * vertices.size() );
-    //cerr << "----" << endl;
     for ( unsigned int i = 1; i < vertices.size() - 1; ++i )
     {
         indexVector.push_back( bufferOffset );
         indexVector.push_back( bufferOffset + i );
         indexVector.push_back( bufferOffset + i + 1 );
-        //cerr << bufferOffset << " " << bufferOffset + i << " " << bufferOffset + i + 1 << endl;
     }
 }
 

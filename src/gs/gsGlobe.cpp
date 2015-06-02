@@ -4,6 +4,7 @@
 
 #include "../voronoi/src/voronoi_generator.h"
 #include "gsRandomRange.h"
+#include "../cck/cck.h"
 
 using std::cerr;
 using std::endl;
@@ -66,7 +67,8 @@ GLuint gs::Globe::CreateVbo( const int elements, const int components, const str
 gs::Globe::Globe()
     :   shader( "test", "data/shaders/test.vert", "data/shaders/test.frag" )
 {
-    gs::RandomRange randColor( 0.0f, 255.0f );
+    //generate world
+
 
     int numOfTiles = 10000;
     tiles.reserve( numOfTiles );
@@ -75,6 +77,7 @@ gs::Globe::Globe()
     vg.generateTessellation( numOfTiles );
 
     int vertexCount = 0;
+    gs::RandomRange randColor( 0.0f, 255.0f );
 
     for ( auto& cell : vg.cell_vector )
     {
@@ -88,7 +91,6 @@ gs::Globe::Globe()
     }
 
     //determine tile neighbours
-    //generate world
 
     glGenVertexArrays( 1, &vao );
     glBindVertexArray( vao );
