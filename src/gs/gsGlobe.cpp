@@ -70,7 +70,11 @@ GLuint gs::Globe::CreateVbo( const int elements, const int components, const str
 gs::Globe::Globe()
     :   shader( "test", "data/shaders/test.vert", "data/shaders/test.frag" )
 {
-    int numOfTiles = 10;
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_real_distribution<float> dist(0.0f, 255.0f);
+
+    int numOfTiles = 100;
     tiles.reserve( numOfTiles );
 
     VoronoiGenerator vg;
@@ -85,7 +89,7 @@ gs::Globe::Globe()
         {
             cellVertices.push_back( gs::Vec3f( corner.x, corner.y, corner.z ) );
         }
-        tiles.push_back( gs::Tile( vertexCount, cellVertices ) );
+        tiles.push_back( gs::Tile( vertexCount, cellVertices, dist, mt ) );
         vertexCount += cell->corners.size();
     }
 
@@ -159,9 +163,13 @@ gs::Globe::Globe()
     projectionMatrixLocation = shader.GetUniformLocation( "projectionMatrix" );
     normalMatrixLocation = shader.GetUniformLocation( "normalMatrix" );
 
-    //index array for vertices
-    //vertex array for normals
-
+    glBindBuffer( GL_ARRAY_BUFFER, positionVbo );
+    GLfloat* data =  new GLfloat[100];
+    glGetBufferSubData( GL_ARRAY_BUFFER, 0, 100, data);
+    for ( int i = 0; i < 100; ++i )
+    {
+        //cerr << data[i] << endl;
+    }
 
 
 }

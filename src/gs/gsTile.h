@@ -3,6 +3,7 @@
 
 #include <GL/gl3w.h>
 
+#include <random>
 #include <vector>
 
 #include "gsVec3.h"
@@ -32,9 +33,8 @@ namespace gs
         //void Update( )
         void InitBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint texCoordVbo, const GLuint fogVbo, vector<GLuint>& indexVector ) const;
 
-
     public:
-        Tile( const int bufferOffset, const vector<gs::Vec3f>& vertices );
+        Tile( const int bufferOffset, const vector<gs::Vec3f>& vertices, std::uniform_real_distribution<float> dist, std::mt19937& mt );
     };
 }
 

@@ -55,7 +55,7 @@ namespace gs
         return true;
     }
 
-    bool InitOpenGl()
+    bool InitOpenGl( const int screenWidth, const int screenHeight )
     {
         if ( gl3wInit() )
         {
@@ -74,7 +74,7 @@ namespace gs
         cerr << "Tex size: " << maxSize << endl;
 
         glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
-        //glViewport( 0, 0, 1024, 768 );
+        glViewport( 0, 0, screenWidth, screenHeight);
 
         return true;
     }
@@ -116,7 +116,7 @@ int main(int argc, char* argv[] )
         running = false;
     }
 
-    if ( !gs::InitOpenGl() )
+    if ( !gs::InitOpenGl( screenWidth, screenHeight ) )
     {
         cerr << "main() in main.cpp: Failed to initialise OpenGL." << endl;
         running = false;
@@ -126,7 +126,7 @@ int main(int argc, char* argv[] )
     gs::InputState input;
 
     gs::Camera worldCamera;
-    worldCamera.SetOrthographic( -2.0f, 2.0f, -2.0f, 2.0f, 1.0f, 100.0f );
+    worldCamera.SetOrthographic( -2.0f, 2.0f, -2.0f, 2.0f, -100.0f, 100.0f );
 
     gs::Camera interfaceCamera;
     interfaceCamera.SetOrthographic( 0.0f, screenWidth, 0.0f, screenHeight, 0.0f, 10.0f );

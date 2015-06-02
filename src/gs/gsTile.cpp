@@ -16,7 +16,7 @@ void gs::Tile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, con
         positionArray[3*i+2] = vertices[i].z;
     }
     glBindBuffer( GL_ARRAY_BUFFER, positionVbo );
-    glBufferSubData( GL_ARRAY_BUFFER, 3 * bufferOffset, 3 * vertices.size(), positionArray );
+    glBufferSubData( GL_ARRAY_BUFFER, 3 * bufferOffset * sizeof(GLfloat), 3 * vertices.size() * sizeof(GLfloat), positionArray );
     delete[] positionArray;
 
     //load color data
@@ -28,7 +28,7 @@ void gs::Tile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, con
         colorArray[3*i+2] = color.z;
     }
     glBindBuffer( GL_ARRAY_BUFFER, colorVbo );
-    glBufferSubData( GL_ARRAY_BUFFER, 3 * bufferOffset, 3 * vertices.size(), colorArray );
+    glBufferSubData( GL_ARRAY_BUFFER, 3 * bufferOffset * sizeof(GLfloat), 3 * vertices.size() * sizeof(GLfloat), colorArray );
     delete[] colorArray;
 
     //load texCoord data
@@ -39,7 +39,7 @@ void gs::Tile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, con
         texCoordArray[2*i+1] = 0.0f;
     }
     glBindBuffer( GL_ARRAY_BUFFER, texCoordVbo );
-    glBufferSubData( GL_ARRAY_BUFFER, 2 * bufferOffset, 2 * vertices.size(), texCoordArray );
+    glBufferSubData( GL_ARRAY_BUFFER, 2 * bufferOffset * sizeof(GLfloat), 2 * vertices.size() * sizeof(GLfloat), texCoordArray );
     delete[] texCoordArray;
 
     //load fog data
@@ -49,7 +49,7 @@ void gs::Tile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, con
         fogArray[i] = 0.0f;
     }
     glBindBuffer( GL_ARRAY_BUFFER, fogVbo );
-    glBufferSubData( GL_ARRAY_BUFFER, bufferOffset, vertices.size(), fogArray );
+    glBufferSubData( GL_ARRAY_BUFFER, bufferOffset * sizeof(GLfloat), vertices.size() * sizeof(GLfloat), fogArray );
     delete[] fogArray;
 
     //append indices to vector
@@ -64,10 +64,10 @@ void gs::Tile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, con
     }
 }
 
-gs::Tile::Tile( const int bufferOffset, const vector<gs::Vec3f>& vertices )
+gs::Tile::Tile( const int bufferOffset, const vector<gs::Vec3f>& vertices, std::uniform_real_distribution<float> dist, std::mt19937& mt )
     :   bufferOffset( bufferOffset ),
         vertices( vertices ),
-        color( 1.0f, 0.0f, 0.0f ),
+        color( (float)dist(mt)/255.0f, (float)dist(mt)/255.0f, (float)dist(mt)/255.0f ),
         fog( false )
 {
 }
