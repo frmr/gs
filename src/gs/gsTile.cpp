@@ -62,10 +62,21 @@ void gs::Tile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, con
     }
 }
 
-gs::Tile::Tile( const int bufferOffset, const vector<gs::Vec3f>& vertices, gs::RandomRange& randColor )
+gs::Tile::Tile( const int bufferOffset, const vector<gs::Vec3f>& vertices, const cck::Globe& terrain, gs::RandomRange& randColor )
     :   bufferOffset( bufferOffset ),
         vertices( vertices ),
-        color( randColor.Sample()/255.0f, randColor.Sample()/255.0f, randColor.Sample()/255.0f ),
+        //color( randColor.Sample()/255.0f, randColor.Sample()/255.0f, randColor.Sample()/255.0f ),
         fog( false )
 {
+    cck::Vec3 center;
+    for ( const auto& vertex : vertices )
+    {
+        center += cck::Vec3( vertex.x, vertex.y, vertex.z );
+    }
+    center /= vertices.size();
+
+    double height;
+    int id;
+    terrain.SampleData( center.ToGeographic(), height, id );
+    color = ( height > 0.0001 ) ? gs::Vec3f( 0.0f, 1.0f, 0.0f ) : gs::Vec3f( 0.0f, 0.0f, 1.0f );
 }

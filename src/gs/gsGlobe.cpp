@@ -29,6 +29,14 @@ void gs::Globe::Draw( const gs::Camera& worldCamera ) const
     glDrawElements( GL_TRIANGLES, numOfIndices, GL_UNSIGNED_INT, 0 );
 }
 
+cck::Globe gs::Globe::GenerateTerrain() const
+{
+    cck::Globe terrain( 6370.0, 0 ); //TODO: random seed
+    terrain.SetNoiseParameters( 8, 0.75, 0.00015 );
+    terrain.AddNode( 8, 57.0, 44.0, -0.3, 0.75, 1200.0 );
+    return terrain;
+}
+
 void gs::Globe::Update()
 {
 
@@ -68,7 +76,7 @@ gs::Globe::Globe()
     :   shader( "test", "data/shaders/test.vert", "data/shaders/test.frag" )
 {
     //generate world
-
+    cck::Globe terrain = GenerateTerrain();
 
     int numOfTiles = 10000;
     tiles.reserve( numOfTiles );
@@ -86,7 +94,7 @@ gs::Globe::Globe()
         {
             cellVertices.push_back( gs::Vec3f( corner.x, corner.y, corner.z ) );
         }
-        tiles.push_back( gs::Tile( vertexCount, cellVertices, randColor ) );
+        tiles.push_back( gs::Tile( vertexCount, cellVertices, terrain, randColor ) );
         vertexCount += cell->corners.size();
     }
 

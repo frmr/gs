@@ -45,8 +45,9 @@ namespace gs
         GLuint              CreateVbo( const int size, const int components, const string& name );
 
     public:
-        void Draw( const gs::Camera& worldCamera ) const;
-        void Update();
+        void        Draw( const gs::Camera& worldCamera ) const;
+        cck::Globe  GenerateTerrain() const;
+        void        Update();
 
     public:
         Globe();
