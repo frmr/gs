@@ -95,6 +95,7 @@
 		<Unit filename="src/gs/gsInputState.cpp" />
 		<Unit filename="src/gs/gsInputState.h" />
 		<Unit filename="src/gs/gsMatrixStack.h" />
+		<Unit filename="src/gs/gsRandomRange.h" />
 		<Unit filename="src/gs/gsShader.cpp" />
 		<Unit filename="src/gs/gsShader.h" />
 		<Unit filename="src/gs/gsTile.cpp" />

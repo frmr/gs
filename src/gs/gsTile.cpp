@@ -64,10 +64,10 @@ void gs::Tile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, con
     }
 }
 
-gs::Tile::Tile( const int bufferOffset, const vector<gs::Vec3f>& vertices, std::uniform_real_distribution<float> dist, std::mt19937& mt )
+gs::Tile::Tile( const int bufferOffset, const vector<gs::Vec3f>& vertices, gs::RandomRange& randColor )
     :   bufferOffset( bufferOffset ),
         vertices( vertices ),
-        color( (float)dist(mt)/255.0f, (float)dist(mt)/255.0f, (float)dist(mt)/255.0f ),
+        color( randColor.Sample()/255.0f, randColor.Sample()/255.0f, randColor.Sample()/255.0f ),
         fog( false )
 {
 }

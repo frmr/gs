@@ -14,6 +14,7 @@ namespace gs
             constexpr static float maxZoom = 10.0f;
             constexpr static float minZoom = 0.05f;
 
+            float       aspectRatio;
             float       latitude;
             float       longitude;
             float       zoom;     //between 0.0 and 1.0
@@ -36,8 +37,8 @@ namespace gs
             void    UpdateViewMatrix();
 
         public:
-            Camera();
-            Camera( const double latitude, const double longitude );
+            Camera( const float aspectRatio );
+            Camera( const float aspectRatio, const double latitude, const double longitude );
     };
 }
 

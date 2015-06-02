@@ -2,10 +2,9 @@
 #define GS_TILE_H
 
 #include <GL/gl3w.h>
-
-#include <random>
 #include <vector>
 
+#include "gsRandomRange.h"
 #include "gsVec3.h"
 
 using std::vector;
@@ -34,7 +33,7 @@ namespace gs
         void InitBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint texCoordVbo, const GLuint fogVbo, vector<GLuint>& indexVector ) const;
 
     public:
-        Tile( const int bufferOffset, const vector<gs::Vec3f>& vertices, std::uniform_real_distribution<float> dist, std::mt19937& mt );
+        Tile( const int bufferOffset, const vector<gs::Vec3f>& vertices, gs::RandomRange& randColor );
     };
 }
 

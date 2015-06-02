@@ -112,7 +112,7 @@ void gs::Camera::Update( InputState& input )
         }
     }
 
-    SetOrthographic( -zoom, zoom, -zoom, zoom, 0, 100 );
+    SetOrthographic( -zoom * aspectRatio, zoom * aspectRatio, -zoom, zoom, 0, 100 );
 
     Move( latitudeChange, longitudeChange );
 }
@@ -126,8 +126,9 @@ void gs::Camera::UpdateViewMatrix()
     //viewMatrix.translate( -position.GetX(), -position.GetY(), -position.GetZ() );
 }
 
-gs::Camera::Camera()
-    :   latitude( 0.0f ),
+gs::Camera::Camera( const float aspectRatio )
+    :   aspectRatio( aspectRatio ),
+        latitude( 0.0f ),
         longitude( 0.0f ),
         zoom( 2.0f )
 {

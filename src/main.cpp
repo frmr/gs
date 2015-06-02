@@ -125,10 +125,12 @@ int main(int argc, char* argv[] )
     gs::Globe globe;
     gs::InputState input;
 
-    gs::Camera worldCamera;
+    float aspectRatio = (float) screenWidth / (float) screenHeight;
+
+    gs::Camera worldCamera( aspectRatio );
     worldCamera.SetOrthographic( -2.0f, 2.0f, -2.0f, 2.0f, -100.0f, 100.0f );
 
-    gs::Camera interfaceCamera;
+    gs::Camera interfaceCamera( aspectRatio );
     interfaceCamera.SetOrthographic( 0.0f, screenWidth, 0.0f, screenHeight, 0.0f, 10.0f );
 
     while ( running )
