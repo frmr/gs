@@ -1,6 +1,7 @@
 #include "gsTile.h"
 
 #include <iostream>
+#include <limits>
 
 using std::cerr;
 using std::endl;
@@ -65,7 +66,7 @@ void gs::Tile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, con
 gs::Tile::Tile( const int bufferOffset, const vector<gs::Vec3f>& vertices, const cck::Globe& terrain, gs::RandomRange& randColor )
     :   bufferOffset( bufferOffset ),
         vertices( vertices ),
-        //color( randColor.Sample()/255.0f, randColor.Sample()/255.0f, randColor.Sample()/255.0f ),
+        color( randColor.Sample()/255.0f, randColor.Sample()/255.0f, randColor.Sample()/255.0f ),
         fog( false )
 {
     cck::Vec3 center;
@@ -75,8 +76,8 @@ gs::Tile::Tile( const int bufferOffset, const vector<gs::Vec3f>& vertices, const
     }
     center /= vertices.size();
 
-    double height;
+    double height = std::numeric_limits<double>::min();
     int id;
     terrain.SampleData( center.ToGeographic(), height, id );
-    color = ( height > 0.0001 ) ? gs::Vec3f( 0.0f, 1.0f, 0.0f ) : gs::Vec3f( 0.0f, 0.0f, 1.0f );
+    //color = ( height > 0.0001 ) ? gs::Vec3f( 0.0f, 1.0f, 0.0f ) : gs::Vec3f( 0.0f, 0.0f, 1.0f );
 }

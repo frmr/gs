@@ -25,6 +25,7 @@ namespace gs
     public:
         //void Update( )
         void InitBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint texCoordVbo, const GLuint fogVbo, vector<GLuint>& indexVector ) const;
+        //void MapToTexture( vector<gs::Texture>& textures );
 
     public:
         Tile( const int bufferOffset, const vector<gs::Vec3f>& vertices, const cck::Globe& terrain, gs::RandomRange& randColor );

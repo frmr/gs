@@ -81,6 +81,27 @@
 		</Linker>
 		<Unit filename="include/GL/gl3w.h" />
 		<Unit filename="include/GL/glcorearb.h" />
+		<Unit filename="src/cck/cck.h" />
+		<Unit filename="src/cck/cckBoundBox.cpp" />
+		<Unit filename="src/cck/cckBoundBox.h" />
+		<Unit filename="src/cck/cckError.h" />
+		<Unit filename="src/cck/cckGeoCoord.cpp" />
+		<Unit filename="src/cck/cckGeoCoord.h" />
+		<Unit filename="src/cck/cckGlobe.cpp" />
+		<Unit filename="src/cck/cckGlobe.h" />
+		<Unit filename="src/cck/cckGlobeBspTree.cpp" />
+		<Unit filename="src/cck/cckGlobeEdge.cpp" />
+		<Unit filename="src/cck/cckGlobeLink.cpp" />
+		<Unit filename="src/cck/cckGlobeNode.cpp" />
+		<Unit filename="src/cck/cckGlobeSegment.cpp" />
+		<Unit filename="src/cck/cckGlobeSide.cpp" />
+		<Unit filename="src/cck/cckGlobeTriangle.cpp" />
+		<Unit filename="src/cck/cckMath.cpp" />
+		<Unit filename="src/cck/cckMath.h" />
+		<Unit filename="src/cck/cckSimplexNoise.cpp" />
+		<Unit filename="src/cck/cckSimplexNoise.h" />
+		<Unit filename="src/cck/cckVec3.cpp" />
+		<Unit filename="src/cck/cckVec3.h" />
 		<Unit filename="src/gl3w/gl3w.c">
 			<Option compilerVar="CC" />
 		</Unit>
