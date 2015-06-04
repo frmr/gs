@@ -96,7 +96,7 @@ gs::Tile::Tile( const int bufferOffset, const vector<gs::Vec3f>& vertices, const
     cck::Vec3 center;
     for ( const auto& vertex : vertices )
     {
-        center += cck::Vec3( vertex.x, vertex.y, vertex.z );
+        center += cck::Vec3( vertex.z, vertex.x, vertex.y );
     }
     center /= vertices.size();
 

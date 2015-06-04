@@ -46,6 +46,7 @@ namespace gs
         vector<gs::Tile>    ConstructTiles( const int quantity ) const;
         GLuint              CreateVbo( const void* data, const int size, const int components, const string& name );
         GLuint              CreateVbo( const int size, const int components, const string& name );
+        int                 GenerateTiles( const int numOfTiles );
 
     public:
         void        Draw( const gs::Camera& worldCamera ) const;
