@@ -6,8 +6,22 @@
 using std::cerr;
 using std::endl;
 
-void gs::Tile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint texCoordVbo, const GLuint fogVbo, vector<GLuint>& indexVector ) const
+void gs::Tile::SetColor() //delete
 {
+    color = gs::Vec3f( 1.0f, 1.0f, 0.0f );
+}
+
+void gs::Tile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint texCoordVbo, const GLuint fogVbo, vector<GLuint>& indexVector ) //const
+{
+    if ( bufferOffset == 0 )
+    {
+        color = gs::Vec3f( 1.0f, 0.0f, 0.0f );
+        for ( auto link : links )
+        {
+            link.target->SetColor();
+        }
+    }
+
     //load position data
     GLfloat* positionArray = new GLfloat[3*vertices.size()];
     for ( unsigned int i = 0; i < vertices.size(); ++i )
@@ -63,10 +77,20 @@ void gs::Tile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, con
     }
 }
 
-gs::Tile::Tile( const int bufferOffset, const vector<gs::Vec3f>& vertices, const cck::Globe& terrain, gs::RandomRange& randColor )
+bool gs::Tile::AddLink( const gs::Link& link )
+{
+    if ( links.size() == vertices.size() )
+    {
+        return false;
+    }
+    links.push_back( link );
+    return true;
+}
+
+gs::Tile::Tile( const int bufferOffset, const vector<gs::Vec3f>& vertices, const cck::Globe& terrain )
     :   bufferOffset( bufferOffset ),
         vertices( vertices ),
-        color( randColor.Sample()/255.0f, randColor.Sample()/255.0f, randColor.Sample()/255.0f ),
+        //color( randColor.Sample()/255.0f, randColor.Sample()/255.0f, randColor.Sample()/255.0f ),
         fog( false )
 {
     cck::Vec3 center;
@@ -79,5 +103,5 @@ gs::Tile::Tile( const int bufferOffset, const vector<gs::Vec3f>& vertices, const
     double height = std::numeric_limits<double>::min();
     int id;
     terrain.SampleData( center.ToGeographic(), height, id );
-    //color = ( height > 0.0001 ) ? gs::Vec3f( 0.0f, 1.0f, 0.0f ) : gs::Vec3f( 0.0f, 0.0f, 1.0f );
+    color = ( height > 0.0001 ) ? gs::Vec3f( 0.0f, 1.0f, 0.0f ) : gs::Vec3f( 0.0f, 0.0f, 1.0f );
 }

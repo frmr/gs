@@ -54,7 +54,7 @@ void gs::Shader::PrintProgramLog() const
     glGetProgramInfoLog( program, length, &length, log );
     log[length] = (GLchar)'\0';
     fprintf( stderr, "%s\n", log );
-    delete log;
+    delete[] log;
 }
 
 void gs::Shader::PrintShaderLog( const GLuint shader ) const
@@ -65,7 +65,7 @@ void gs::Shader::PrintShaderLog( const GLuint shader ) const
     glGetShaderInfoLog( shader, length, &length, log );
     log[length] = (GLchar)'\0';
     fprintf( stderr, "%s\n",  log );
-    delete log;
+    delete[] log;
 }
 
 GLuint gs::Shader::GetAttribLocation( const string& attrib )

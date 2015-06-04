@@ -13,6 +13,9 @@ void gs::InputState::ResetAll()
 	leftMouse = false;
 	middleMouse = false;
 	rightMouse = false;
+
+	mouseWheelUp = false;
+	mouseWheelDown = false;
 }
 
 void gs::InputState::ResetPresses()

@@ -110,11 +110,13 @@
 		<Unit filename="src/gs/gsCellLink.h" />
 		<Unit filename="src/gs/gsConfig.cpp" />
 		<Unit filename="src/gs/gsConfig.h" />
+		<Unit filename="src/gs/gsEdge.cpp" />
 		<Unit filename="src/gs/gsEdge.h" />
 		<Unit filename="src/gs/gsGlobe.cpp" />
 		<Unit filename="src/gs/gsGlobe.h" />
 		<Unit filename="src/gs/gsInputState.cpp" />
 		<Unit filename="src/gs/gsInputState.h" />
+		<Unit filename="src/gs/gsLink.h" />
 		<Unit filename="src/gs/gsMatrixStack.h" />
 		<Unit filename="src/gs/gsRandomRange.h" />
 		<Unit filename="src/gs/gsShader.cpp" />

@@ -33,7 +33,19 @@ cck::Globe gs::Globe::GenerateTerrain() const
 {
     cck::Globe terrain( 6370.0, 0 ); //TODO: random seed
     terrain.SetNoiseParameters( 8, 0.75, 0.00015 );
-    terrain.AddNode( 8, 57.0, 44.0, -0.3, 0.75, 1200.0 );
+
+    terrain.AddNode( 0,   52.0,   -4.0,   -0.2,   0.5,    600.0 );    //Britain
+    terrain.AddNode( 1,   46.0,   2.0,    -0.2,   0.5,    600.0 );    //France
+    terrain.AddNode( 2,   40.0,   -4.0,   -0.2,   1.0,    750.0 );    //Iberia
+    terrain.AddNode( 3,   50.0,   10.0,   -0.3,   0.75,   500.0 );    //Germany
+    terrain.AddNode( 4,   42.0,   15.0,   -0.3,   0.75,   550.0 );    //Italy
+
+    terrain.LinkNodes( 1,     2,  -1.6,   4.0,    150.0,  50.0 );     //France, Iberia
+    terrain.LinkNodes( 1,     3,  -0.3,   0.75,   150.0,  50.0 );     //France, Germany
+    terrain.LinkNodes( 1,     4,  -0.3,   5.0,    150.0,  50.0 );     //France, Italy
+    terrain.LinkNodes( 4,     2,  -0.3,   0.75,   150.0,  50.0 );     //Italy, Iberia
+    terrain.LinkNodes( 3,     4,  -0.3,   5.0,    150.0,  50.0 );     //Germany, Italy
+
     return terrain;
 }
 
@@ -78,28 +90,58 @@ gs::Globe::Globe()
     //generate world
     cck::Globe terrain = GenerateTerrain();
 
+    //generate voronoi sphere
     int numOfTiles = 10000;
-    tiles.reserve( numOfTiles );
-
     VoronoiGenerator vg;
     vg.generateTessellation( numOfTiles );
 
+    //count vertices and initialise tiles
     int vertexCount = 0;
-    gs::RandomRange randColor( 0.0f, 255.0f );
+    tiles.reserve( numOfTiles );
 
-    for ( auto& cell : vg.cell_vector )
+    for ( const auto& cell : vg.cell_vector )
     {
         vector<gs::Vec3f> cellVertices;
-        for ( auto& corner : cell->corners )
+        for ( const auto& corner : cell->corners )
         {
             cellVertices.push_back( gs::Vec3f( corner.x, corner.y, corner.z ) );
         }
-        tiles.push_back( gs::Tile( vertexCount, cellVertices, terrain, randColor ) );
+
+        tiles.push_back( std::make_shared<gs::Tile>( vertexCount, cellVertices, terrain ) );
         vertexCount += cell->corners.size();
+
+        //create edge and link to other tile if initialised
+        for ( unsigned int i = 0; i < cellVertices.size(); ++i )
+        {
+            gs::Vec3f v0 = cellVertices[i];
+            gs::Vec3f v1 = cellVertices[( i == cellVertices.size() - 1 ) ? 0 : i + 1];
+
+            bool foundEdge = false;
+            for ( const auto& edge : edges )
+            {
+                if ( edge->HasVertices( v0, v1 ) )
+                {
+                    edge->AddTile( tiles.back() );
+
+                    //link tiles of each side of the edge to eachother
+                    vector<shared_ptr<gs::Tile>> edgeTiles = edge->GetTiles();
+                    edgeTiles.front()->AddLink( gs::Link( edgeTiles.back(), edge ) );
+                    edgeTiles.back()->AddLink( gs::Link( edgeTiles.front(), edge ) );
+
+                    foundEdge = true;
+                    break;
+                }
+            }
+
+            if ( !foundEdge )
+            {
+                edges.push_back( std::make_shared<gs::Edge>( v0, v1 ) );
+                edges.back()->AddTile( tiles.back() );
+            }
+        }
     }
 
-    //determine tile neighbours
-
+    //create vao
     glGenVertexArrays( 1, &vao );
     glBindVertexArray( vao );
 
@@ -113,7 +155,7 @@ gs::Globe::Globe()
 
     for ( auto& tile : tiles )
     {
-        tile.InitBuffers( positionVbo, colorVbo, texCoordVbo, fogVbo, indexVector );
+        tile->InitBuffers( positionVbo, colorVbo, texCoordVbo, fogVbo, indexVector );
     }
 
     GLuint* indexArray = new GLuint[indexVector.size()];

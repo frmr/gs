@@ -1,6 +1,7 @@
 #ifndef GS_GLOBE_H
 #define GS_GLOBE_H
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -8,10 +9,12 @@
 #include "../matrix/Matrices.h"
 
 #include "gsCamera.h"
+#include "gsEdge.h"
 #include "gsMatrixStack.h"
 #include "gsShader.h"
 #include "gsTile.h"
 
+using std::shared_ptr;
 using std::string;
 using std::vector;
 
@@ -36,8 +39,8 @@ namespace gs
         int         numOfIndices;
 
         //vector<gs::Vec3>    vertices;
-        vector<gs::Tile>    tiles;
-        //vector<gs::Edge>    edges;
+        vector<shared_ptr<gs::Tile>>    tiles;
+        vector<shared_ptr<gs::Edge>>    edges;
 
     private:
         vector<gs::Tile>    ConstructTiles( const int quantity ) const;

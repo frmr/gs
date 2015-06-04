@@ -111,6 +111,12 @@ namespace gs
             return *this;
         }
 
+        template<typename U>
+        bool operator==( const U& rhs ) const
+        {
+            return ( x == rhs.x && y == rhs.y && z == rhs.z );
+        }
+
         T& operator[]( const int i )
         {
             if      ( i == 0 )  { return x; }
