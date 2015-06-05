@@ -10,6 +10,7 @@ namespace gs
     {
     public:
         T   x, y, z;
+        static constexpr T epsilon = (T) 0.00000001;
 
     public:
 
@@ -114,7 +115,12 @@ namespace gs
         template<typename U>
         bool operator==( const U& rhs ) const
         {
-            return ( x == rhs.x && y == rhs.y && z == rhs.z );
+            return ( x <= rhs.x + epsilon &&
+                     x >= rhs.x - epsilon &&
+                     y <= rhs.y + epsilon &&
+                     y >= rhs.y - epsilon &&
+                     z <= rhs.z + epsilon &&
+                     z >= rhs.z - epsilon );
         }
 
         T& operator[]( const int i )

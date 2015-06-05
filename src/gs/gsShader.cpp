@@ -1,5 +1,6 @@
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
 #include "gsShader.h"
 
@@ -20,30 +21,15 @@ bool gs::Shader::CompileShader( const GLuint shader, const string& filename )
         cerr << "gs::Shader::CompileShader() in gsShader.cpp: Failed to compile " << filename << " when loading " << name << "." << endl;
         return false;
     }
-
     return true;
 }
 
 string gs::Shader::LoadShaderFromFile( const string &filename ) const
 {
-    string content;
-    std::ifstream fileStream( filename.c_str(), std::ios::in );
-
-    if( !fileStream.is_open() )
-    {
-        cerr << "gs::Shader::LoadShaderFromFile() in gsShader.cpp: Could not open " << filename << " when loading " << name << "." << endl;
-        return "";
-    }
-
-    string line = "";
-    while( !fileStream.eof() )
-    {
-        std::getline( fileStream, line );
-        content.append( line + "\n" );
-    }
-
-    fileStream.close();
-    return content;
+    std::ifstream shaderFile( filename );
+    std::ostringstream buffer;
+    buffer << shaderFile.rdbuf();
+    return buffer.str();
 }
 
 void gs::Shader::PrintProgramLog() const

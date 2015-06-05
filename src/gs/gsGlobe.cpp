@@ -1,6 +1,7 @@
 #include "gsGlobe.h"
 
 #include <iostream>
+#include <unordered_map>
 
 #include "../voronoi/src/voronoi_generator.h"
 #include "gsRandomRange.h"
@@ -181,6 +182,8 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
         tiles.push_back( std::make_shared<gs::Tile>( vertexCount, cellVertices, terrain ) );
         vertexCount += cell->corners.size();
 
+        //std::unordered_map<
+
         //create edge and link to other tile if initialised
         for ( unsigned int i = 0; i < cellVertices.size(); ++i )
         {
@@ -194,7 +197,7 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
                 {
                     edge->AddTile( tiles.back() );
 
-                    //link tiles of each side of the edge to eachother
+                    //link tiles on each side of the edge to each other
                     vector<shared_ptr<gs::Tile>> edgeTiles = edge->GetTiles();
                     edgeTiles.front()->AddLink( gs::Link( edgeTiles.back(), edge ) );
                     edgeTiles.back()->AddLink( gs::Link( edgeTiles.front(), edge ) );

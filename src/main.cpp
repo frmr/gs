@@ -83,6 +83,7 @@ namespace gs
     void Render( SDL_Window* window, const gs::Camera& worldCamera, const gs::Camera& interfaceCamera, const gs::Globe globe )
     {
         glEnable( GL_DEPTH_TEST );
+        glEnable( GL_CULL_FACE );
         glCullFace( GL_BACK );
 
         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
