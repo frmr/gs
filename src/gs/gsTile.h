@@ -21,6 +21,7 @@ namespace gs
         {
 
         };
+        bool visited;
     private:
         const GLuint            bufferOffset;
         const vector<gs::Vec3f> vertices;

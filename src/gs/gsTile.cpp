@@ -9,6 +9,15 @@ using std::endl;
 void gs::Tile::SetColor() //delete
 {
     color = gs::Vec3f( 1.0f, 1.0f, 0.0f );
+    visited = true;
+    for ( auto link : links )
+    {
+        if ( !link.target->visited )
+        {
+            link.target->SetColor();
+        }
+
+    }
 }
 
 void gs::Tile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint texCoordVbo, const GLuint fogVbo, vector<GLuint>& indexVector ) //const
@@ -18,7 +27,11 @@ void gs::Tile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, con
         color = gs::Vec3f( 1.0f, 0.0f, 0.0f );
         for ( auto link : links )
         {
-            link.target->SetColor();
+            if ( !link.target->visited )
+            {
+                link.target->SetColor();
+            }
+
         }
     }
 

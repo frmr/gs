@@ -1,11 +1,13 @@
 #include "gsGlobe.h"
 
 #include <iostream>
-#include <unordered_map>
 
 #include "../voronoi/src/voronoi_generator.h"
-#include "gsRandomRange.h"
 #include "../cck/cck.h"
+
+#include "gsBinarySearchTree.h"
+#include "gsRandomRange.h"
+
 
 using std::cerr;
 using std::endl;
@@ -171,6 +173,8 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
     int vertexCount = 0;
     tiles.reserve( numOfTiles );
 
+    gs::BinarySearchTree<float, shared_ptr<gs::Edge>> bst;
+
     for ( const auto& cell : vg.cell_vector )
     {
         vector<gs::Vec3f> cellVertices;
@@ -182,38 +186,32 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
         tiles.push_back( std::make_shared<gs::Tile>( vertexCount, cellVertices, terrain ) );
         vertexCount += cell->corners.size();
 
-        //std::unordered_map<
-
         //create edge and link to other tile if initialised
         for ( unsigned int i = 0; i < cellVertices.size(); ++i )
         {
             gs::Vec3f v0 = cellVertices[i];
             gs::Vec3f v1 = cellVertices[( i == cellVertices.size() - 1 ) ? 0 : i + 1];
+            gs::Vec3f sum = v0 + v1;
 
-            bool foundEdge = false;
-            for ( const auto& edge : edges )
+            shared_ptr<shared_ptr<Edge>> edge = bst.GetData( sum.x );
+            if ( bst.GetData( sum.x ) == nullptr )
             {
-                if ( edge->HasVertices( v0, v1 ) )
-                {
-                    edge->AddTile( tiles.back() );
-
-                    //link tiles on each side of the edge to each other
-                    vector<shared_ptr<gs::Tile>> edgeTiles = edge->GetTiles();
-                    edgeTiles.front()->AddLink( gs::Link( edgeTiles.back(), edge ) );
-                    edgeTiles.back()->AddLink( gs::Link( edgeTiles.front(), edge ) );
-
-                    foundEdge = true;
-                    break;
-                }
+                auto newEdge = std::make_shared<gs::Edge>( v0, v1 );
+                newEdge->AddTile( tiles.back() );
+                edges.push_back( newEdge );
+                bst.Add( sum.x, newEdge );
             }
-
-            if ( !foundEdge )
+            else
             {
-                edges.push_back( std::make_shared<gs::Edge>( v0, v1 ) );
-                edges.back()->AddTile( tiles.back() );
+                (*edge)->AddTile( tiles.back() );
+                //link tiles on each side of the edge to each other
+                vector<shared_ptr<gs::Tile>> edgeTiles = (*edge)->GetTiles();
+                edgeTiles.front()->AddLink( gs::Link( edgeTiles.back(), *edge ) );
+                edgeTiles.back()->AddLink( gs::Link( edgeTiles.front(), *edge ) );
             }
         }
     }
+    cerr << edges.size() << endl;
 
     return vertexCount;
 }
