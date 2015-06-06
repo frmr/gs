@@ -1,4 +1,4 @@
-#version 150
+#version 150 core
 
 precision highp float;
 
@@ -7,10 +7,10 @@ in vec3     colorVert;
 in vec2     texCoordVert;
 in float    fogVert;
 
-out vec3    normalFrag;
-out vec3    colorFrag;
-out vec2    texCoordFrag;
-out float   fogFrag;
+smooth  out vec3    normalFrag;
+flat    out vec3    colorFrag;
+smooth  out vec2    texCoordFrag;
+flat    out float   fogFrag;
 
 uniform mat4 projectionMatrix;
 uniform mat4 modelViewMatrix;

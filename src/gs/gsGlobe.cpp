@@ -195,13 +195,6 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
 
     for ( const auto& cell : vg.cell_vector )
     {
-        //cerr << cell->corners.size() << endl;
-
-//        if ( cell->corners.size() == 0 )
-//        {
-//            continue;
-//        }
-
         vector<shared_ptr<gs::Vertex>> cellVertices;
         for ( const auto& corner : cell->corners )
         {
@@ -282,68 +275,6 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
 
     delete[] buckets;
 
-    //gs::BinarySearchTree<float, shared_ptr<gs::Edge>> bst;
-    //gs::BinarySearchTree<int, shared_ptr<gs::Edge>> bst;
-
-//    for ( const auto& cell : vg.cell_vector )
-//    {
-//        vector<gs::Vec3f> cellVertices;
-//        for ( const auto& corner : cell->corners )
-//        {
-//            cellVertices.push_back( gs::Vec3f( corner.x, corner.y, corner.z ) );
-//        }
-//
-//        tiles.push_back( std::make_shared<gs::Tile>( vertexCount, cellVertices, terrain ) );
-//        vertexCount += cell->corners.size();
-//
-//        //create edge and link to other tile if initialised
-//        for ( unsigned int i = 0; i < cellVertices.size(); ++i )
-//        {
-//            gs::Vec3f v0 = cellVertices[i];
-//            gs::Vec3f v1 = cellVertices[( i == cellVertices.size() - 1 ) ? 0 : i + 1];
-//
-//            gs::Vec3f ave = ( v0 + v1 ) / 2.0f;
-//
-//            int v0x = (int) ( v0 * 1000 ).x;
-//            int v1x = (int) ( v1 * 1000 ).x;
-//            int v0y = (int) ( v0 * 1000 ).y;
-//            int v1y = (int) ( v1 * 1000 ).y;
-//            int v0z = (int) ( v0 * 1000 ).z;
-//            int v1z = (int) ( v1 * 1000 ).z;
-//
-//
-//            int sum = v0x + v1x + v0y + v1y + v0z + v1z;
-//            //float sum = v0.x + v1.x;
-//            //cerr << sum << endl;
-//
-//            //gs::Vec3f sum = v0 + v1;
-//
-//
-//            shared_ptr<shared_ptr<Edge>> edge = bst.GetData( ave.x );
-//            if ( bst.GetData( ave.x ) == nullptr )
-//            {
-//                auto newEdge = std::make_shared<gs::Edge>( v0, v1 );
-//                newEdge->AddTile( tiles.back() );
-//                edges.push_back( newEdge );
-//                bst.Add( ave.x, newEdge );
-//            }
-//            else
-//            {
-//                (*edge)->AddTile( tiles.back() );
-//
-//                if ( !(*edge)->HasVertices( v0, v1 ) )
-//                {
-//                    //cerr << "Does not have vertices: " << endl << "\t" << v0.x << " " << (*edge)->v0.x << endl << "\t" << v1.x << " " << (*edge)->v1.x << endl;
-//                    cerr << ave.x << " " << (((*edge)->v0 + (*edge)->v1) / 2.0f).x << endl;
-//                }
-//
-//                //link tiles on each side of the edge to each other
-//                vector<shared_ptr<gs::Tile>> edgeTiles = (*edge)->GetTiles();
-//                edgeTiles.front()->AddLink( gs::Link( edgeTiles.back(), *edge ) );
-//                edgeTiles.back()->AddLink( gs::Link( edgeTiles.front(), *edge ) );
-//            }
-//        }
-//    }
     cerr << "Vertices: " << vertices.size() << endl;
     cerr << "Edges: " << edges.size() << endl;
 
@@ -351,7 +282,7 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
     {
         if ( edge->GetTiles().size() != 2 )
         {
-            cerr << "Incomplete edge: " << edge->GetTiles().size() << endl;
+            cerr << "gs::Globe::GenerateTiles() in gsGlobe.cpp: Incomplete edge: " << edge->GetTiles().size() << endl;
         }
     }
 
@@ -362,7 +293,7 @@ gs::Globe::Globe()
     :   shader( "test", "data/shaders/test.vert", "data/shaders/test.frag" )
 {
     //generate voronoi sphere
-    int numOfTiles = 10000;
+    int numOfTiles = 16000;
     int numOfVertices = GenerateTiles( numOfTiles );
 
     //create vao
@@ -396,6 +327,8 @@ gs::Globe::Globe()
     glBufferData( GL_ELEMENT_ARRAY_BUFFER, numOfIndices * sizeof(GLuint), indexArray, GL_STATIC_DRAW );
 
     delete[] indexArray;
+
+    shader.SetFragOutput( "colorOut" );
 
     shader.Link();
 

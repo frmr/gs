@@ -101,6 +101,11 @@ bool gs::Shader::Link()
     return true;
 }
 
+void gs::Shader::SetFragOutput( const string& attrib )
+{
+    glBindFragDataLocation( program, 0, attrib.c_str() );
+}
+
 bool gs::Shader::Use() const
 {
     if ( !linked )
@@ -113,7 +118,7 @@ bool gs::Shader::Use() const
 }
 
 gs::Shader::Shader( const string& name, const string& vertexFilename, const string& fragmentFilename )
-    :   nextAttribLocation( 0 ),
+    :   nextAttribLocation( 1 ),
         linked( false ),
         name( name ),
         vertexShader( glCreateShader( GL_VERTEX_SHADER ) ),

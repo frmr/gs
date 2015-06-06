@@ -31,6 +31,7 @@ namespace gs
         GLuint  GetAttribLocation( const string& attrib );
         GLint   GetUniformLocation( const string& uniform ) const;
         bool    Link();
+        void    SetFragOutput( const string& attrib );
         bool    Use() const;
 
     public:
