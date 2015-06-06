@@ -38,7 +38,7 @@ namespace gs
         GLint       normalMatrixLocation;
         int         numOfIndices;
 
-        //vector<gs::Vec3>    vertices;
+        //vector<shared_ptr<gs::Vec3>>    vertices;
         vector<shared_ptr<gs::Tile>>    tiles;
         vector<shared_ptr<gs::Edge>>    edges;
 

@@ -11,11 +11,12 @@ namespace gs
     class BinarySearchTree
     {
     private:
+
         class Node
         {
         private:
             K                   key;
-            D                   data;
+            shared_ptr<D>       data;
             shared_ptr<Node>    left;
             shared_ptr<Node>    right;
 
@@ -24,7 +25,7 @@ namespace gs
             {
                 if ( newKey < key )
                 {
-                    if ( left == NULL )
+                    if ( left == nullptr )
                     {
                         left = std::make_shared<Node>( newKey, newData );
                         return true;
@@ -36,7 +37,7 @@ namespace gs
                 }
                 else if ( newKey > key )
                 {
-                    if ( right == NULL )
+                    if ( right == nullptr )
                     {
                         right = std::make_shared<Node>( newKey, newData );
                         return true;
@@ -72,7 +73,7 @@ namespace gs
             {
                 if ( refKey < key )
                 {
-                    return ( left == nullptr ) ? nullptr: left->GetData( refKey );
+                    return ( left == nullptr ) ? nullptr : left->GetData( refKey );
                 }
                 else if ( refKey > key )
                 {
@@ -80,13 +81,13 @@ namespace gs
                 }
                 else
                 {
-                    return std::make_shared<D>( data );
+                    return data;
                 }
             }
 
         public:
             Node( const K& key, const D& data )
-                :   key( key ), data( data ), left( nullptr ), right ( nullptr )
+                :   key( key ), data( std::make_shared<D>( data ) ), left( nullptr ), right ( nullptr )
             {
             }
         };

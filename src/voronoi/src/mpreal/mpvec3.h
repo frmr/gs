@@ -5,7 +5,7 @@
 
 // This class implements 3 dimensional long double vectors
 
-constexpr long double M_PIl = 3.1415926535;
+constexpr long double M_PIl = 3.141592653589793238462643383279502884197;
 
 class mpvec3
 {

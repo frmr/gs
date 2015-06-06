@@ -14,7 +14,7 @@ void gs::Tile::SetColor() //delete
     {
         if ( !link.target->visited )
         {
-            link.target->SetColor();
+            //link.target->SetColor();
         }
 
     }
@@ -114,7 +114,7 @@ gs::Tile::Tile( const int bufferOffset, const vector<gs::Vec3f>& vertices, const
     center /= vertices.size();
 
     double height = std::numeric_limits<double>::min();
-    int id;
+    int id = -1;
     terrain.SampleData( center.ToGeographic(), height, id );
-    color = ( height > 0.0001 ) ? gs::Vec3f( 0.0f, 1.0f, 0.0f ) : gs::Vec3f( 0.0f, 0.0f, 1.0f );
+    color = ( height > 0.0001 ) ? gs::Vec3f( 0.0f, ( 8.0f * (float) id ) / 255.0f, 0.0f ) : gs::Vec3f( 0.0f, 0.0f, 1.0f );
 }

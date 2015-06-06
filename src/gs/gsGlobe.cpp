@@ -174,6 +174,7 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
     tiles.reserve( numOfTiles );
 
     gs::BinarySearchTree<float, shared_ptr<gs::Edge>> bst;
+    //gs::BinarySearchTree<int, shared_ptr<gs::Edge>> bst;
 
     for ( const auto& cell : vg.cell_vector )
     {
@@ -191,19 +192,41 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
         {
             gs::Vec3f v0 = cellVertices[i];
             gs::Vec3f v1 = cellVertices[( i == cellVertices.size() - 1 ) ? 0 : i + 1];
-            gs::Vec3f sum = v0 + v1;
 
-            shared_ptr<shared_ptr<Edge>> edge = bst.GetData( sum.x );
-            if ( bst.GetData( sum.x ) == nullptr )
+            gs::Vec3f ave = ( v0 + v1 ) / 2.0f;
+
+            int v0x = (int) ( v0 * 1000 ).x;
+            int v1x = (int) ( v1 * 1000 ).x;
+            int v0y = (int) ( v0 * 1000 ).y;
+            int v1y = (int) ( v1 * 1000 ).y;
+            int v0z = (int) ( v0 * 1000 ).z;
+            int v1z = (int) ( v1 * 1000 ).z;
+
+
+            int sum = v0x + v1x + v0y + v1y + v0z + v1z;
+            //float sum = v0.x + v1.x;
+            //cerr << sum << endl;
+
+            //gs::Vec3f sum = v0 + v1;
+
+
+            shared_ptr<shared_ptr<Edge>> edge = bst.GetData( ave.x );
+            if ( bst.GetData( ave.x ) == nullptr )
             {
                 auto newEdge = std::make_shared<gs::Edge>( v0, v1 );
                 newEdge->AddTile( tiles.back() );
                 edges.push_back( newEdge );
-                bst.Add( sum.x, newEdge );
+                bst.Add( ave.x, newEdge );
             }
             else
             {
                 (*edge)->AddTile( tiles.back() );
+
+                if ( !(*edge)->HasVertices( v0, v1 ) )
+                {
+                    cerr << "Does not have vertices: " << v0.x << " " << (*edge)->v0.x << " " << (*edge)->v1.x << " " << ave.x << endl;
+                }
+
                 //link tiles on each side of the edge to each other
                 vector<shared_ptr<gs::Tile>> edgeTiles = (*edge)->GetTiles();
                 edgeTiles.front()->AddLink( gs::Link( edgeTiles.back(), *edge ) );
@@ -212,6 +235,14 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
         }
     }
     cerr << edges.size() << endl;
+
+    for ( auto edge : edges )
+    {
+        if ( edge->GetTiles().size() != 2 )
+        {
+            cerr << edge->GetTiles().size() << endl;
+        }
+    }
 
     return vertexCount;
 }

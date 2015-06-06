@@ -10,7 +10,7 @@ namespace gs
     {
     public:
         T   x, y, z;
-        static constexpr T epsilon = (T) 0.000001;
+        static constexpr T epsilon = (T) 0.0000001;
 
     public:
 

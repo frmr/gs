@@ -16,6 +16,8 @@ namespace gs
     {
     private:
         vector<shared_ptr<gs::Tile>> tiles;
+
+    public:
         const gs::Vec3f v0;
         const gs::Vec3f v1;
 

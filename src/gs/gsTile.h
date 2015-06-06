@@ -17,11 +17,8 @@ namespace gs
     class Tile
     {
     public:
-        enum class Climate
-        {
 
-        };
-        bool visited;
+        bool visited; //delete
     private:
         const GLuint            bufferOffset;
         const vector<gs::Vec3f> vertices;
