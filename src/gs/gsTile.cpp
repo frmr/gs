@@ -31,7 +31,6 @@ void gs::Tile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, con
             {
                 link.target->SetColor();
             }
-
         }
     }
 
@@ -39,9 +38,9 @@ void gs::Tile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, con
     GLfloat* positionArray = new GLfloat[3*vertices.size()];
     for ( unsigned int i = 0; i < vertices.size(); ++i )
     {
-        positionArray[3*i] = vertices[i].x;
-        positionArray[3*i+1] = vertices[i].y;
-        positionArray[3*i+2] = vertices[i].z;
+        positionArray[3*i] = (float) vertices[i]->position.x;
+        positionArray[3*i+1] = (float) vertices[i]->position.y;
+        positionArray[3*i+2] = (float) vertices[i]->position.z;
     }
     glBindBuffer( GL_ARRAY_BUFFER, positionVbo );
     glBufferSubData( GL_ARRAY_BUFFER, 3 * bufferOffset * sizeof(GLfloat), 3 * vertices.size() * sizeof(GLfloat), positionArray );
@@ -82,6 +81,9 @@ void gs::Tile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, con
 
     //append indices to vector
     //indexVector.reserve( indexVector.size() + 3 * vertices.size() );
+
+
+
     for ( unsigned int i = 1; i < vertices.size() - 1; ++i )
     {
         indexVector.push_back( bufferOffset );
@@ -100,7 +102,7 @@ bool gs::Tile::AddLink( const gs::Link& link )
     return true;
 }
 
-gs::Tile::Tile( const int bufferOffset, const vector<gs::Vec3f>& vertices, const cck::Globe& terrain )
+gs::Tile::Tile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const cck::Globe& terrain )
     :   bufferOffset( bufferOffset ),
         vertices( vertices ),
         //color( randColor.Sample()/255.0f, randColor.Sample()/255.0f, randColor.Sample()/255.0f ),
@@ -109,7 +111,7 @@ gs::Tile::Tile( const int bufferOffset, const vector<gs::Vec3f>& vertices, const
     cck::Vec3 center;
     for ( const auto& vertex : vertices )
     {
-        center += cck::Vec3( vertex.z, vertex.x, vertex.y );
+        center += cck::Vec3( vertex->position.z, vertex->position.x, vertex->position.y );
     }
     center /= vertices.size();
 

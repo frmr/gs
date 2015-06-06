@@ -7,12 +7,14 @@
 #include "../cck/cck.h"
 #include "gsLink.h"
 #include "gsVec3.h"
+#include "gsVertex.h"
 
 using std::vector;
 
 namespace gs
 {
     class Link;
+    class Vertex;
 
     class Tile
     {
@@ -20,12 +22,12 @@ namespace gs
 
         bool visited; //delete
     private:
-        const GLuint            bufferOffset;
-        const vector<gs::Vec3f> vertices;
-        gs::Vec3f               color;
-        bool                    fog;
+        const GLuint                            bufferOffset;
+        const vector<shared_ptr<gs::Vertex>>    vertices;
+        gs::Vec3f                               color;
+        bool                                    fog;
 
-        vector<gs::Link>        links;
+        vector<gs::Link>                        links;
 
         //owner
         //controller
@@ -40,7 +42,7 @@ namespace gs
         void SetColor(); //delete
 
     public:
-        Tile( const int bufferOffset, const vector<gs::Vec3f>& vertices, const cck::Globe& terrain );
+        Tile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const cck::Globe& terrain );
     };
 }
 

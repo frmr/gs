@@ -13,6 +13,7 @@
 #include "gsMatrixStack.h"
 #include "gsShader.h"
 #include "gsTile.h"
+#include "gsVertex.h"
 
 using std::shared_ptr;
 using std::string;
@@ -38,7 +39,7 @@ namespace gs
         GLint       normalMatrixLocation;
         int         numOfIndices;
 
-        //vector<shared_ptr<gs::Vec3>>    vertices;
+        vector<shared_ptr<gs::Vertex>>  vertices;
         vector<shared_ptr<gs::Tile>>    tiles;
         vector<shared_ptr<gs::Edge>>    edges;
 
@@ -47,6 +48,7 @@ namespace gs
         GLuint              CreateVbo( const void* data, const int size, const int components, const string& name );
         GLuint              CreateVbo( const int size, const int components, const string& name );
         int                 GenerateTiles( const int numOfTiles );
+        static unsigned int HashDouble( const double val, const int buckets );
 
     public:
         void        Draw( const gs::Camera& worldCamera ) const;

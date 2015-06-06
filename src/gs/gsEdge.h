@@ -2,7 +2,7 @@
 #define GS_EDGE_H
 
 #include "gsTile.h"
-#include "gsVec3.h"
+#include "gsVertex.h"
 
 #include <memory>
 
@@ -18,17 +18,18 @@ namespace gs
         vector<shared_ptr<gs::Tile>> tiles;
 
     public:
-        const gs::Vec3f v0;
-        const gs::Vec3f v1;
+        const shared_ptr<gs::Vertex> v0;
+        const shared_ptr<gs::Vertex> v1;
 
     public:
         bool                            AddTile( const shared_ptr<gs::Tile>& newTile );
         bool                            BordersTile( const shared_ptr<gs::Tile>& refTile ) const;
         vector<shared_ptr<gs::Tile>>    GetTiles() const;
-        bool                            HasVertices( const gs::Vec3f& v0, const gs::Vec3f& v1 ) const;
+        bool                            HasVertex( const shared_ptr<gs::Vertex>& refVertex ) const;
+        //bool                            HasVertices( const gs::Vertex& refv0, const gs::Vertex& refv1 ) const;
 
     public:
-        Edge( const gs::Vec3f& v0, const gs::Vec3f& v1 );
+        Edge( const shared_ptr<gs::Vertex>& v0, const shared_ptr<gs::Vertex>& v1 );
     };
 }
 

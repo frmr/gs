@@ -27,12 +27,18 @@ vector<shared_ptr<gs::Tile>> gs::Edge::GetTiles() const
     return tiles;
 }
 
-bool gs::Edge::HasVertices( const gs::Vec3f& refv0, const gs::Vec3f& refv1 ) const
+bool gs::Edge::HasVertex( const shared_ptr<gs::Vertex>& refVertex ) const
 {
-    return ( ( refv0 == v0 && refv1 == v1 ) || ( refv0 == v1 && refv1 == v0 ) );
+    //return ( v0->position == refVertex->position || v1->position == refVertex->position );
+    return ( v0 == refVertex || v1 == refVertex );
 }
 
-gs::Edge::Edge( const gs::Vec3f& v0, const gs::Vec3f& v1 )
+//bool gs::Edge::HasVertices( const gs::Vertex& refv0, const gs::Vertex& refv1 ) const
+//{
+//    return ( ( refv0.position == v0.position && refv1.position == v1.position ) || ( refv0.position == v1.position && refv1.position == v0.position ) );
+//}
+
+gs::Edge::Edge( const shared_ptr<gs::Vertex>& v0, const shared_ptr<gs::Vertex>& v1 )
     :   v0( v0 ),
         v1( v1 )
 {

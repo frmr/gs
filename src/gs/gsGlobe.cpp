@@ -161,6 +161,21 @@ GLuint gs::Globe::CreateVbo( const int elements, const int components, const str
     return vbo;
 }
 
+//val must be between 0 and 1
+unsigned int gs::Globe::HashDouble( const double val, const int buckets )
+{
+    int hashVal = ( ( (unsigned int) ( val / 1.0 * (double) buckets ) ) + buckets ) / 2;
+    if ( hashVal > buckets - 1 )
+    {
+        hashVal = buckets - 1;
+    }
+    else if ( hashVal < 0 )
+    {
+        hashVal = 0;
+    }
+    return (unsigned int) hashVal;
+}
+
 int gs::Globe::GenerateTiles( const int numOfTiles )
 {
     VoronoiGenerator vg;
@@ -173,74 +188,170 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
     int vertexCount = 0;
     tiles.reserve( numOfTiles );
 
-    gs::BinarySearchTree<float, shared_ptr<gs::Edge>> bst;
-    //gs::BinarySearchTree<int, shared_ptr<gs::Edge>> bst;
+    //join identical vertices
+    constexpr unsigned int bucketDim = 256;
+    double errorMargin = 0.000001;
+    auto* buckets = new vector<shared_ptr<gs::Vertex>>[bucketDim][bucketDim][bucketDim];
 
     for ( const auto& cell : vg.cell_vector )
     {
-        vector<gs::Vec3f> cellVertices;
+        //cerr << cell->corners.size() << endl;
+
+//        if ( cell->corners.size() == 0 )
+//        {
+//            continue;
+//        }
+
+        vector<shared_ptr<gs::Vertex>> cellVertices;
         for ( const auto& corner : cell->corners )
         {
-            cellVertices.push_back( gs::Vec3f( corner.x, corner.y, corner.z ) );
+            const gs::Vec3d gsCorner( corner.x, corner.y, corner.z );
+            //hash to buckets
+            unsigned int xHash = HashDouble( gsCorner.x, bucketDim );
+            unsigned int yHash = HashDouble( gsCorner.y, bucketDim );
+            unsigned int zHash = HashDouble( gsCorner.z, bucketDim );
+
+            bool foundVertex = false;
+
+            for ( unsigned int xi = ( ( xHash == 0 ) ? xHash : xHash - 1 ); xi <= ( ( xHash == bucketDim - 1 ) ? xHash : xHash + 1 ); ++xi )
+            {
+                for ( unsigned int yi = ( ( yHash == 0 ) ? yHash : yHash - 1 ); yi <= ( ( yHash == bucketDim - 1 ) ? yHash : yHash + 1 ); ++yi )
+                {
+                    for ( unsigned int zi = ( ( zHash == 0 ) ? zHash : zHash - 1 ); zi <= ( ( zHash == bucketDim - 1 ) ? zHash : zHash + 1 ); ++zi )
+                    {
+                        for ( auto v : buckets[xi][yi][zi] )
+                        {
+                            if ( v->position.x < gsCorner.x + errorMargin &&
+                                 v->position.x > gsCorner.x - errorMargin &&
+                                 v->position.y < gsCorner.y + errorMargin &&
+                                 v->position.y > gsCorner.y - errorMargin &&
+                                 v->position.z < gsCorner.z + errorMargin &&
+                                 v->position.z > gsCorner.z - errorMargin )
+                            {
+                                cellVertices.push_back( v );
+                                foundVertex = true;
+                                break;
+                            }
+                        }
+                    }
+                    if ( foundVertex ) { break; }
+                }
+                if ( foundVertex ) { break; }
+            }
+
+            if ( !foundVertex )
+            {
+                auto newVertex = std::make_shared<gs::Vertex>( gsCorner );
+                cellVertices.push_back( newVertex );
+                vertices.push_back( newVertex );
+                buckets[xHash][yHash][zHash].push_back( newVertex );
+            }
         }
 
         tiles.push_back( std::make_shared<gs::Tile>( vertexCount, cellVertices, terrain ) );
-        vertexCount += cell->corners.size();
+        vertexCount += cellVertices.size();
 
-        //create edge and link to other tile if initialised
         for ( unsigned int i = 0; i < cellVertices.size(); ++i )
         {
-            gs::Vec3f v0 = cellVertices[i];
-            gs::Vec3f v1 = cellVertices[( i == cellVertices.size() - 1 ) ? 0 : i + 1];
+            auto v0 = cellVertices[i];
+            auto v1 = cellVertices[( i == cellVertices.size() - 1 ) ? 0 : i + 1];
 
-            gs::Vec3f ave = ( v0 + v1 ) / 2.0f;
+            auto edge = v0->GetEdgeWith( v1 );
+            //cerr << edge << endl;
 
-            int v0x = (int) ( v0 * 1000 ).x;
-            int v1x = (int) ( v1 * 1000 ).x;
-            int v0y = (int) ( v0 * 1000 ).y;
-            int v1y = (int) ( v1 * 1000 ).y;
-            int v0z = (int) ( v0 * 1000 ).z;
-            int v1z = (int) ( v1 * 1000 ).z;
-
-
-            int sum = v0x + v1x + v0y + v1y + v0z + v1z;
-            //float sum = v0.x + v1.x;
-            //cerr << sum << endl;
-
-            //gs::Vec3f sum = v0 + v1;
-
-
-            shared_ptr<shared_ptr<Edge>> edge = bst.GetData( ave.x );
-            if ( bst.GetData( ave.x ) == nullptr )
+            if ( edge == nullptr )
             {
                 auto newEdge = std::make_shared<gs::Edge>( v0, v1 );
                 newEdge->AddTile( tiles.back() );
+                v0->AddEdge( newEdge );
+                v1->AddEdge( newEdge );
                 edges.push_back( newEdge );
-                bst.Add( ave.x, newEdge );
             }
             else
             {
-                (*edge)->AddTile( tiles.back() );
-
-                if ( !(*edge)->HasVertices( v0, v1 ) )
-                {
-                    cerr << "Does not have vertices: " << v0.x << " " << (*edge)->v0.x << " " << (*edge)->v1.x << " " << ave.x << endl;
-                }
+                edge->AddTile( tiles.back() );
 
                 //link tiles on each side of the edge to each other
-                vector<shared_ptr<gs::Tile>> edgeTiles = (*edge)->GetTiles();
-                edgeTiles.front()->AddLink( gs::Link( edgeTiles.back(), *edge ) );
-                edgeTiles.back()->AddLink( gs::Link( edgeTiles.front(), *edge ) );
+                vector<shared_ptr<gs::Tile>> edgeTiles = edge->GetTiles();
+                edgeTiles.front()->AddLink( gs::Link( edgeTiles.back(), edge ) );
+                edgeTiles.back()->AddLink( gs::Link( edgeTiles.front(), edge ) );
             }
         }
+
     }
-    cerr << edges.size() << endl;
+
+    delete[] buckets;
+
+    //gs::BinarySearchTree<float, shared_ptr<gs::Edge>> bst;
+    //gs::BinarySearchTree<int, shared_ptr<gs::Edge>> bst;
+
+//    for ( const auto& cell : vg.cell_vector )
+//    {
+//        vector<gs::Vec3f> cellVertices;
+//        for ( const auto& corner : cell->corners )
+//        {
+//            cellVertices.push_back( gs::Vec3f( corner.x, corner.y, corner.z ) );
+//        }
+//
+//        tiles.push_back( std::make_shared<gs::Tile>( vertexCount, cellVertices, terrain ) );
+//        vertexCount += cell->corners.size();
+//
+//        //create edge and link to other tile if initialised
+//        for ( unsigned int i = 0; i < cellVertices.size(); ++i )
+//        {
+//            gs::Vec3f v0 = cellVertices[i];
+//            gs::Vec3f v1 = cellVertices[( i == cellVertices.size() - 1 ) ? 0 : i + 1];
+//
+//            gs::Vec3f ave = ( v0 + v1 ) / 2.0f;
+//
+//            int v0x = (int) ( v0 * 1000 ).x;
+//            int v1x = (int) ( v1 * 1000 ).x;
+//            int v0y = (int) ( v0 * 1000 ).y;
+//            int v1y = (int) ( v1 * 1000 ).y;
+//            int v0z = (int) ( v0 * 1000 ).z;
+//            int v1z = (int) ( v1 * 1000 ).z;
+//
+//
+//            int sum = v0x + v1x + v0y + v1y + v0z + v1z;
+//            //float sum = v0.x + v1.x;
+//            //cerr << sum << endl;
+//
+//            //gs::Vec3f sum = v0 + v1;
+//
+//
+//            shared_ptr<shared_ptr<Edge>> edge = bst.GetData( ave.x );
+//            if ( bst.GetData( ave.x ) == nullptr )
+//            {
+//                auto newEdge = std::make_shared<gs::Edge>( v0, v1 );
+//                newEdge->AddTile( tiles.back() );
+//                edges.push_back( newEdge );
+//                bst.Add( ave.x, newEdge );
+//            }
+//            else
+//            {
+//                (*edge)->AddTile( tiles.back() );
+//
+//                if ( !(*edge)->HasVertices( v0, v1 ) )
+//                {
+//                    //cerr << "Does not have vertices: " << endl << "\t" << v0.x << " " << (*edge)->v0.x << endl << "\t" << v1.x << " " << (*edge)->v1.x << endl;
+//                    cerr << ave.x << " " << (((*edge)->v0 + (*edge)->v1) / 2.0f).x << endl;
+//                }
+//
+//                //link tiles on each side of the edge to each other
+//                vector<shared_ptr<gs::Tile>> edgeTiles = (*edge)->GetTiles();
+//                edgeTiles.front()->AddLink( gs::Link( edgeTiles.back(), *edge ) );
+//                edgeTiles.back()->AddLink( gs::Link( edgeTiles.front(), *edge ) );
+//            }
+//        }
+//    }
+    cerr << "Vertices: " << vertices.size() << endl;
+    cerr << "Edges: " << edges.size() << endl;
 
     for ( auto edge : edges )
     {
         if ( edge->GetTiles().size() != 2 )
         {
-            cerr << edge->GetTiles().size() << endl;
+            cerr << "Incomplete edge: " << edge->GetTiles().size() << endl;
         }
     }
 

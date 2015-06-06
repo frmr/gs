@@ -1,8 +1,11 @@
 #ifndef GS_BINARY_SEARCH_TREE
 #define GS_BINARY_SEARCH_TREE
 
+#include <iostream>
 #include <memory>
 
+using std::cerr;
+using std::endl;
 using std::shared_ptr;
 
 namespace gs
