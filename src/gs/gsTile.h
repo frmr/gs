@@ -29,12 +29,12 @@ namespace gs
         bool visited; //delete
 
     protected:
+        Type                                    surface;
+
         const GLuint                            bufferOffset;
         const vector<shared_ptr<gs::Vertex>>    vertices;
         gs::Vec3f                               color;
         bool                                    fog;
-
-        Type                                    surface;
 
         vector<gs::Link<gs::Tile>>              allLinks;
         vector<gs::Link<gs::LandTile>>          landLinks;
@@ -58,7 +58,7 @@ namespace gs
         void SetColor(); //delete
 
     public:
-        Tile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices );
+        Tile( const Type surface, const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices );
     };
 }
 

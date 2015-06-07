@@ -20,12 +20,7 @@ namespace gs
         bool ice;
 
     public:
-        WaterTile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices )
-            :   Tile( bufferOffset, vertices )
-        {
-            color = gs::Vec3f( 0.0f, 0.0f, 1.0f );
-        }
-
+        WaterTile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices );
     };
 }
 

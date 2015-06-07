@@ -131,6 +131,7 @@
 		<Unit filename="src/gs/gsVec3.h" />
 		<Unit filename="src/gs/gsVertex.cpp" />
 		<Unit filename="src/gs/gsVertex.h" />
+		<Unit filename="src/gs/gsWaterTile.cpp" />
 		<Unit filename="src/gs/gsWaterTile.h" />
 		<Unit filename="src/main.cpp" />
 		<Unit filename="src/matrix/Matrices.cpp" />

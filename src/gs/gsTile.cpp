@@ -130,8 +130,9 @@ Type gs::Tile::GetSurface() const
     return surface;
 }
 
-gs::Tile::Tile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices )
-    :   bufferOffset( bufferOffset ),
+gs::Tile::Tile( const Type surface, const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices )
+    :   surface( surface ),
+        bufferOffset( bufferOffset ),
         vertices( vertices ),
         //color( randColor.Sample()/255.0f, randColor.Sample()/255.0f, randColor.Sample()/255.0f ),
         fog( false )

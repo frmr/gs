@@ -1,7 +1,6 @@
 #ifndef GS_EDGE_H
 #define GS_EDGE_H
 
-#include "gsTile.h"
 #include "gsVertex.h"
 
 #include <memory>

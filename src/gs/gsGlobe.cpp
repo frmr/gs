@@ -3,7 +3,6 @@
 #include <iostream>
 
 #include "../voronoi/src/voronoi_generator.h"
-#include "../cck/cck.h"
 
 #include "gsBinarySearchTree.h"
 #include "gsRandomRange.h"
@@ -241,7 +240,7 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
         //create new tile
         double sampleHeight;
         int sampleId;
-        terrain.SampleData( cck::Vec3( cell->centroid.x, cell->centroid.y, cell->centroid.z ).toGeographic(), sampleHeight, sampleId );
+        terrain.SampleData( cck::Vec3( cell->centroid.x, cell->centroid.y, cell->centroid.z ).ToGeographic(), sampleHeight, sampleId );
         if ( sampleHeight > 0.00001 )
         {
             auto newTile = std::make_shared<gs::LandTile>( vertexCount, cellVertices, sampleHeight, sampleId );
@@ -321,7 +320,7 @@ gs::Globe::Globe()
 
     vector<GLuint> indexVector;
 
-    for ( auto& tile : tiles )
+    for ( auto& tile : allTiles )
     {
         tile->InitBuffers( positionVbo, colorVbo, texCoordVbo, fogVbo, indexVector );
     }

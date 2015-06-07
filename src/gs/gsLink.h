@@ -2,7 +2,6 @@
 #define GS_LINK_H
 
 #include "gsEdge.h"
-#include "gsTile.h"
 
 #include <memory>
 
@@ -11,7 +10,6 @@ using std::shared_ptr;
 namespace gs
 {
     class Edge;
-    class Tile;
 
     template<typename T>
     class Link
