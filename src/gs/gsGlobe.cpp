@@ -7,7 +7,7 @@
 
 #include "gsBinarySearchTree.h"
 #include "gsRandomRange.h"
-
+#include "gsSpreader.h"
 
 using std::cerr;
 using std::endl;
@@ -186,7 +186,7 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
 
     //count vertices and initialise tiles
     int vertexCount = 0;
-    tiles.reserve( numOfTiles );
+    allTiles.reserve( numOfTiles );
 
     //join identical vertices
     constexpr unsigned int bucketDim = 256;
@@ -214,12 +214,9 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
                     {
                         for ( auto v : buckets[xi][yi][zi] )
                         {
-                            if ( v->position.x < gsCorner.x + errorMargin &&
-                                 v->position.x > gsCorner.x - errorMargin &&
-                                 v->position.y < gsCorner.y + errorMargin &&
-                                 v->position.y > gsCorner.y - errorMargin &&
-                                 v->position.z < gsCorner.z + errorMargin &&
-                                 v->position.z > gsCorner.z - errorMargin )
+                            if ( v->position.x < gsCorner.x + errorMargin && v->position.x > gsCorner.x - errorMargin &&
+                                 v->position.y < gsCorner.y + errorMargin && v->position.y > gsCorner.y - errorMargin &&
+                                 v->position.z < gsCorner.z + errorMargin && v->position.z > gsCorner.z - errorMargin )
                             {
                                 cellVertices.push_back( v );
                                 foundVertex = true;
@@ -241,28 +238,44 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
             }
         }
 
-        tiles.push_back( std::make_shared<gs::Tile>( vertexCount, cellVertices, terrain ) );
+        //create new tile
+        double sampleHeight;
+        int sampleId;
+        terrain.SampleData( cck::Vec3( cell->centroid.x, cell->centroid.y, cell->centroid.z ).toGeographic(), sampleHeight, sampleId );
+        if ( sampleHeight > 0.00001 )
+        {
+            auto newTile = std::make_shared<gs::LandTile>( vertexCount, cellVertices, sampleHeight, sampleId );
+            allTiles.push_back( std::dynamic_pointer_cast<gs::Tile>( newTile ) );
+            landTiles.push_back( newTile );
+        }
+        else
+        {
+            auto newTile = std::make_shared<gs::WaterTile>( vertexCount, cellVertices );
+            allTiles.push_back( std::dynamic_pointer_cast<gs::Tile>( newTile ) );
+            waterTiles.push_back( newTile );
+        }
+
         vertexCount += cellVertices.size();
 
+        //create edges
         for ( unsigned int i = 0; i < cellVertices.size(); ++i )
         {
             auto v0 = cellVertices[i];
             auto v1 = cellVertices[( i == cellVertices.size() - 1 ) ? 0 : i + 1];
 
             auto edge = v0->GetEdgeWith( v1 );
-            //cerr << edge << endl;
 
             if ( edge == nullptr )
             {
                 auto newEdge = std::make_shared<gs::Edge>( v0, v1 );
-                newEdge->AddTile( tiles.back() );
+                newEdge->AddTile( allTiles.back() );
                 v0->AddEdge( newEdge );
                 v1->AddEdge( newEdge );
                 edges.push_back( newEdge );
             }
             else
             {
-                edge->AddTile( tiles.back() );
+                edge->AddTile( allTiles.back() );
 
                 //link tiles on each side of the edge to each other
                 vector<shared_ptr<gs::Tile>> edgeTiles = edge->GetTiles();
@@ -282,7 +295,7 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
     {
         if ( edge->GetTiles().size() != 2 )
         {
-            cerr << "gs::Globe::GenerateTiles() in gsGlobe.cpp: Incomplete edge: " << edge->GetTiles().size() << endl;
+            cerr << "gs::Globe::GenerateTiles() in gsGlobe.cpp: Edge has " << edge->GetTiles().size() << " adjacent face." << endl;
         }
     }
 
@@ -293,8 +306,8 @@ gs::Globe::Globe()
     :   shader( "test", "data/shaders/test.vert", "data/shaders/test.frag" )
 {
     //generate voronoi sphere
-    int numOfTiles = 16000;
-    int numOfVertices = GenerateTiles( numOfTiles );
+    const int numOfTiles = 16000;
+    const int numOfVertices = GenerateTiles( numOfTiles );
 
     //create vao
     glGenVertexArrays( 1, &vao );

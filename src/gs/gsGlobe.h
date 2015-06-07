@@ -8,6 +8,7 @@
 #include <GL/gl3w.h>
 #include "../matrix/Matrices.h"
 
+#include "../cck/cck.h"
 #include "gsCamera.h"
 #include "gsEdge.h"
 #include "gsMatrixStack.h"
@@ -39,9 +40,11 @@ namespace gs
         GLint       normalMatrixLocation;
         int         numOfIndices;
 
-        vector<shared_ptr<gs::Vertex>>  vertices;
-        vector<shared_ptr<gs::Tile>>    tiles;
-        vector<shared_ptr<gs::Edge>>    edges;
+        vector<shared_ptr<gs::Vertex>>      vertices;
+        vector<shared_ptr<gs::Edge>>        edges;
+        vector<shared_ptr<gs::Tile>>        allTiles;
+        vector<shared_ptr<gs::LandTile>>    landTiles;
+        vector<shared_ptr<gs::WaterTile>>   waterTiles;
 
     private:
         vector<gs::Tile>    ConstructTiles( const int quantity ) const;

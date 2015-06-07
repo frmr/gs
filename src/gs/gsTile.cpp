@@ -1,5 +1,8 @@
 #include "gsTile.h"
 
+#include "gsLandTile.h"
+#include "gsWaterTile.h"
+
 #include <iostream>
 #include <limits>
 
@@ -102,21 +105,35 @@ bool gs::Tile::AddLink( const gs::Link& link )
     return true;
 }
 
-gs::Tile::Tile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const cck::Globe& terrain )
+bool gs::Tile::AddLink( const gs::Link<gs::LandTile>& link )
+{
+    if ( landLinks.size() == vertices.size() )
+    {
+        return false;
+    }
+    landLinks.push_back( link );
+    return true;
+}
+
+bool gs::Tile::AddLink( const gs::Link<gs::WaterTile>& link )
+{
+    if ( waterLinks.size() == vertices.size() )
+    {
+        return false;
+    }
+    waterLinks.push_back( link );
+    return true;
+}
+
+Type gs::Tile::GetSurface() const
+{
+    return surface;
+}
+
+gs::Tile::Tile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices )
     :   bufferOffset( bufferOffset ),
         vertices( vertices ),
         //color( randColor.Sample()/255.0f, randColor.Sample()/255.0f, randColor.Sample()/255.0f ),
         fog( false )
 {
-    cck::Vec3 center;
-    for ( const auto& vertex : vertices )
-    {
-        center += cck::Vec3( vertex->position.z, vertex->position.x, vertex->position.y );
-    }
-    center /= vertices.size();
-
-    double height = std::numeric_limits<double>::min();
-    int id = -1;
-    terrain.SampleData( center.ToGeographic(), height, id );
-    color = ( height > 0.0001 ) ? gs::Vec3f( 0.0f, ( 8.0f * (float) id ) / 255.0f, 0.0f ) : gs::Vec3f( 0.0f, 0.0f, 1.0f );
 }

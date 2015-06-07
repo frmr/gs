@@ -29,8 +29,8 @@ vector<shared_ptr<gs::Tile>> gs::Edge::GetTiles() const
 
 bool gs::Edge::HasVertex( const shared_ptr<gs::Vertex>& refVertex ) const
 {
-    //return ( v0->position == refVertex->position || v1->position == refVertex->position );
-    return ( v0 == refVertex || v1 == refVertex );
+    return ( v0->position == refVertex->position || v1->position == refVertex->position );
+    //return ( v0 == refVertex || v1 == refVertex );
 }
 
 //bool gs::Edge::HasVertices( const gs::Vertex& refv0, const gs::Vertex& refv1 ) const

@@ -106,6 +106,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/gs/gsBinarySearchTree.h" />
+		<Unit filename="src/gs/gsBiomeSpreader.h" />
 		<Unit filename="src/gs/gsCamera.cpp" />
 		<Unit filename="src/gs/gsCamera.h" />
 		<Unit filename="src/gs/gsCellLink.h" />
@@ -117,16 +118,20 @@
 		<Unit filename="src/gs/gsGlobe.h" />
 		<Unit filename="src/gs/gsInputState.cpp" />
 		<Unit filename="src/gs/gsInputState.h" />
+		<Unit filename="src/gs/gsLandTile.cpp" />
+		<Unit filename="src/gs/gsLandTile.h" />
 		<Unit filename="src/gs/gsLink.h" />
 		<Unit filename="src/gs/gsMatrixStack.h" />
 		<Unit filename="src/gs/gsRandomRange.h" />
 		<Unit filename="src/gs/gsShader.cpp" />
 		<Unit filename="src/gs/gsShader.h" />
+		<Unit filename="src/gs/gsSpreader.h" />
 		<Unit filename="src/gs/gsTile.cpp" />
 		<Unit filename="src/gs/gsTile.h" />
 		<Unit filename="src/gs/gsVec3.h" />
 		<Unit filename="src/gs/gsVertex.cpp" />
 		<Unit filename="src/gs/gsVertex.h" />
+		<Unit filename="src/gs/gsWaterTile.h" />
 		<Unit filename="src/main.cpp" />
 		<Unit filename="src/matrix/Matrices.cpp" />
 		<Unit filename="src/matrix/Matrices.h" />

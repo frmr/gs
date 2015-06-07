@@ -13,13 +13,14 @@ namespace gs
     class Edge;
     class Tile;
 
+    template<typename T>
     class Link
     {
     public:
-        const shared_ptr<gs::Tile>  target;
+        const shared_ptr<T>         target;
         const shared_ptr<gs::Edge>  edge;
     public:
-        Link( const shared_ptr<gs::Tile> target, const shared_ptr<gs::Edge> edge )
+        Link( const shared_ptr<T> target, const shared_ptr<gs::Edge> edge )
             :   target( target ),
                 edge( edge )
         {

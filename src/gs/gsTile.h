@@ -4,7 +4,6 @@
 #include <GL/gl3w.h>
 #include <vector>
 
-#include "../cck/cck.h"
 #include "gsLink.h"
 #include "gsVec3.h"
 #include "gsVertex.h"
@@ -13,36 +12,53 @@ using std::vector;
 
 namespace gs
 {
-    class Link;
+    class LandTile;
     class Vertex;
+    class WaterTile;
 
     class Tile
     {
     public:
+        enum class Type
+        {
+            UNASSIGNED,
+            LAND,
+            WATER
+        };
 
         bool visited; //delete
-    private:
+
+    protected:
         const GLuint                            bufferOffset;
         const vector<shared_ptr<gs::Vertex>>    vertices;
         gs::Vec3f                               color;
         bool                                    fog;
 
-        vector<gs::Link>                        links;
+        Type                                    surface;
+
+        vector<gs::Link<gs::Tile>>              allLinks;
+        vector<gs::Link<gs::LandTile>>          landLinks;
+        vector<gs::Link<gs::WaterTile>>         waterLinks;
 
         //owner
         //controller
     public:
         //void Update( )
-        bool AddLink( const gs::Link& link );
+        bool AddLink( const gs::Link<gs::Tile>& link );
+        bool AddLink( const gs::Link<gs::LandTile>& link );
+        bool AddLink( const gs::Link<gs::WaterTile>& link );
+
         void InitBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint texCoordVbo, const GLuint fogVbo, vector<GLuint>& indexVector );// const;
 
         //void MapToTexture( vector<gs::Texture>& textures );
+
+        Type GetSurface() const;
 
 
         void SetColor(); //delete
 
     public:
-        Tile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const cck::Globe& terrain );
+        Tile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices );
     };
 }
 
