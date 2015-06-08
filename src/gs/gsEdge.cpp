@@ -1,5 +1,6 @@
 #include "gsEdge.h"
 #include "gsTile.h"
+#include "gsVertex.h"
 
 bool gs::Edge::AddTile( const shared_ptr<gs::Tile>& newTile )
 {

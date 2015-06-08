@@ -1,4 +1,5 @@
 #include "gsVertex.h"
+#include "gsEdge.h"
 
 void gs::Vertex::AddEdge( const shared_ptr<gs::Edge> edge )
 {

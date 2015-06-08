@@ -1,15 +1,16 @@
 #ifndef GS_EDGE_H
 #define GS_EDGE_H
 
-#include "gsVertex.h"
-
 #include <memory>
+#include <vector>
 
 using std::shared_ptr;
+using std::vector;
 
 namespace gs
 {
     class Tile;
+    class Vertex;
 
     class Edge
     {

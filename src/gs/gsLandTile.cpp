@@ -39,7 +39,7 @@ void gs::LandTile::SetBiome( const gs::LandTile::Biome newBiome )
 }
 
 gs::LandTile::LandTile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const double height, const int id )
-    :   gs::Tile( gs::Tile::Type::LAND, bufferOffset, vertices ),
+    :   gs::Tile( gs::Tile::Type::LAND, bufferOffset, vertices )
 {
     color = gs::Vec3f( 0.0f, ( 8.0f * (float) id ) / 255.0f, 0.0f );
     terrain = DetermineTerrain( height );

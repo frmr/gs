@@ -4,7 +4,6 @@
 #include <memory>
 #include <vector>
 
-#include "gsEdge.h"
 #include "gsVec3.h"
 
 using std::shared_ptr;

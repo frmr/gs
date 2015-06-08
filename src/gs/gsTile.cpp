@@ -13,7 +13,7 @@ void gs::Tile::SetColor() //delete
 {
     color = gs::Vec3f( 1.0f, 1.0f, 0.0f );
     visited = true;
-    for ( auto link : links )
+    for ( auto link : allLinks )
     {
         if ( !link.target->visited )
         {
@@ -28,7 +28,7 @@ void gs::Tile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, con
     if ( bufferOffset == 0 )
     {
         color = gs::Vec3f( 1.0f, 0.0f, 0.0f );
-        for ( auto link : links )
+        for ( auto link : allLinks )
         {
             if ( !link.target->visited )
             {
@@ -95,13 +95,13 @@ void gs::Tile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, con
     }
 }
 
-bool gs::Tile::AddLink( const gs::Link& link )
+bool gs::Tile::AddLink( const gs::Link<gs::Tile>& link )
 {
-    if ( links.size() == vertices.size() )
+    if ( allLinks.size() == vertices.size() )
     {
         return false;
     }
-    links.push_back( link );
+    allLinks.push_back( link );
     return true;
 }
 
@@ -125,7 +125,7 @@ bool gs::Tile::AddLink( const gs::Link<gs::WaterTile>& link )
     return true;
 }
 
-Type gs::Tile::GetSurface() const
+gs::Tile::Type gs::Tile::GetSurface() const
 {
     return surface;
 }
@@ -143,5 +143,9 @@ gs::Tile::Tile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& ve
         bufferOffset( bufferOffset ),
         vertices( vertices ),
         fog( false )
+{
+}
+
+gs::Tile::~Tile()
 {
 }

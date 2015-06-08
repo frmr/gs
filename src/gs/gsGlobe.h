@@ -11,10 +11,12 @@
 #include "../cck/cck.h"
 #include "gsCamera.h"
 #include "gsEdge.h"
+#include "gsLandTile.h"
 #include "gsMatrixStack.h"
 #include "gsShader.h"
 #include "gsTile.h"
 #include "gsVertex.h"
+#include "gsWaterTile.h"
 
 using std::shared_ptr;
 using std::string;
