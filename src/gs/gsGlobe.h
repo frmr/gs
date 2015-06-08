@@ -52,6 +52,7 @@ namespace gs
         GLuint              CreateVbo( const int size, const int components, const string& name );
         int                 GenerateTiles( const int numOfTiles );
         static unsigned int HashDouble( const double val, const int buckets );
+        static void         LinkTiles( const shared_ptr<gs::Tile> source, const shared_ptr<gs::Tile> dest, const shared_ptr<gs::Edge> edge );
 
     public:
         void        Draw( const gs::Camera& worldCamera ) const;

@@ -241,6 +241,7 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
         double sampleHeight;
         int sampleId;
         terrain.SampleData( cck::Vec3( cell->centroid.x, cell->centroid.y, cell->centroid.z ).ToGeographic(), sampleHeight, sampleId );
+
         if ( sampleHeight > 0.00001 )
         {
             auto newTile = std::make_shared<gs::LandTile>( vertexCount, cellVertices, sampleHeight, sampleId );
@@ -278,8 +279,9 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
 
                 //link tiles on each side of the edge to each other
                 vector<shared_ptr<gs::Tile>> edgeTiles = edge->GetTiles();
-                edgeTiles.front()->AddLink( gs::Link( edgeTiles.back(), edge ) );
-                edgeTiles.back()->AddLink( gs::Link( edgeTiles.front(), edge ) );
+
+                LinkTiles( edgeTiles.front(), edgeTiles.back(), edge );
+                LinkTiles( edgeTiles.back(), edgeTiles.front(), edge );
             }
         }
 
@@ -299,6 +301,23 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
     }
 
     return vertexCount;
+}
+
+void gs::Globe::LinkTiles( const shared_ptr<gs::Tile> source, const shared_ptr<gs::Tile> dest, const shared_ptr<gs::Edge> edge )
+{
+    source->AddLink( gs::Link<gs::Tile>( dest, edge ) );
+    if ( dest->GetSurface() == gs::Tile::Type::LAND )
+    {
+        source->AddLink( gs::Link<gs::LandTile>( std::dynamic_pointer_cast<gs::LandTile>( dest ), edge ) );
+    }
+    else if ( dest->GetSurface() == gs::Tile::Type::WATER )
+    {
+        source->AddLink( gs::Link<gs::WaterTile>( std::dynamic_pointer_cast<gs::WaterTile>( dest ), edge ) );
+    }
+    else
+    {
+        cerr << "gs::Globe::GenerateTiles() in gsGlobe.cpp: Face adjacent to edge has unassigned type." << endl;
+    }
 }
 
 gs::Globe::Globe()

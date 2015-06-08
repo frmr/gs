@@ -57,8 +57,11 @@ namespace gs
 
         void SetColor(); //delete
 
-    public:
+    protected:
         Tile( const Type surface, const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices );
+
+    public:
+        Tile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices );
     };
 }
 

@@ -134,7 +134,14 @@ gs::Tile::Tile( const Type surface, const int bufferOffset, const vector<shared_
     :   surface( surface ),
         bufferOffset( bufferOffset ),
         vertices( vertices ),
-        //color( randColor.Sample()/255.0f, randColor.Sample()/255.0f, randColor.Sample()/255.0f ),
+        fog( false )
+{
+}
+
+gs::Tile::Tile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices )
+    :   surface( gs::Tile::Type::UNASSIGNED ),
+        bufferOffset( bufferOffset ),
+        vertices( vertices ),
         fog( false )
 {
 }
