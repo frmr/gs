@@ -240,7 +240,7 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
         //create new tile
         double sampleHeight;
         int sampleId;
-        terrain.SampleData( cck::Vec3( cell->centroid.x, cell->centroid.y, cell->centroid.z ).ToGeographic(), sampleHeight, sampleId );
+        terrain.SampleData( cck::Vec3( cell->centroid.z, cell->centroid.x, cell->centroid.y ).ToGeographic(), sampleHeight, sampleId );
 
         if ( sampleHeight > 0.00001 )
         {

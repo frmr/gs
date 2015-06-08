@@ -13,7 +13,7 @@ void gs::Tile::SetColor() //delete
 {
     color = gs::Vec3f( 1.0f, 1.0f, 0.0f );
     visited = true;
-    for ( auto link : allLinks )
+    for ( auto link : landLinks )
     {
         if ( !link.target->visited )
         {
