@@ -121,6 +121,7 @@
 		<Unit filename="src/gs/gsLandTile.cpp" />
 		<Unit filename="src/gs/gsLandTile.h" />
 		<Unit filename="src/gs/gsLink.h" />
+		<Unit filename="src/gs/gsMath.h" />
 		<Unit filename="src/gs/gsMatrixStack.h" />
 		<Unit filename="src/gs/gsRandomRange.h" />
 		<Unit filename="src/gs/gsShader.cpp" />

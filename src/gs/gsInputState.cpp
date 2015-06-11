@@ -7,6 +7,8 @@ void gs::InputState::ResetAll()
 	left = false;
 	right = false;
 
+    ctrl = false;
+
     exit = false;
     pause = false;
 
@@ -24,6 +26,14 @@ void gs::InputState::ResetPresses()
     pause = false;
     mouseWheelUp = false;
     mouseWheelDown = false;
+
+    if ( ctrl )
+    {
+        up = false;
+        down = false;
+        left = false;
+        right = false;
+    }
 }
 
 //void InputState::Update( const EngineConfig &engineCfg )
@@ -40,6 +50,7 @@ void gs::InputState::Update()
             else if ( event.key.keysym.sym == SDLK_s )      { down = false; }
             else if ( event.key.keysym.sym == SDLK_a )      { left = false; }
             else if ( event.key.keysym.sym == SDLK_d )      { right = false; }
+            else if ( event.key.keysym.sym == SDLK_LCTRL )  { ctrl = false; }
             else if ( event.key.keysym.sym == SDLK_ESCAPE ) { pause = false; }
         }
         else if ( event.type == SDL_KEYDOWN )
@@ -48,6 +59,7 @@ void gs::InputState::Update()
             else if ( event.key.keysym.sym == SDLK_s )      { down = true; }
             else if ( event.key.keysym.sym == SDLK_a )      { left = true; }
             else if ( event.key.keysym.sym == SDLK_d )      { right = true; }
+            else if ( event.key.keysym.sym == SDLK_LCTRL )  { ctrl = true; }
             else if ( event.key.keysym.sym == SDLK_ESCAPE ) { pause = true; }
         }
         else if ( event.type == SDL_MOUSEBUTTONUP )
@@ -78,6 +90,8 @@ bool gs::InputState::GetUp() const      { return up; }
 bool gs::InputState::GetDown() const	{ return down; }
 bool gs::InputState::GetLeft() const	{ return left; }
 bool gs::InputState::GetRight() const	{ return right; }
+
+bool gs::InputState::GetCtrl() const    { return ctrl; }
 
 bool gs::InputState::GetExit() const    { return exit; }
 bool gs::InputState::GetPause() const   { return pause; }

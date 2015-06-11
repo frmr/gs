@@ -1,10 +1,11 @@
 #include "gsGlobe.h"
 
 #include <iostream>
+#include <random>
 
 #include "../voronoi/src/voronoi_generator.h"
 
-#include "gsBinarySearchTree.h"
+#include "gsBiomeSpreader.h"
 #include "gsRandomRange.h"
 #include "gsSpreader.h"
 
@@ -15,7 +16,7 @@ void gs::Globe::Draw( const gs::Camera& worldCamera ) const
 {
     shader.Use();
 
-    glDisable( GL_CULL_FACE );
+    //glDisable( GL_CULL_FACE );
 
     //get the inverse model view matrix
     Matrix4 inverseModelViewMatrix = worldCamera.GetViewMatrix();
@@ -175,6 +176,18 @@ unsigned int gs::Globe::HashDouble( const double val, const int buckets )
     return (unsigned int) hashVal;
 }
 
+void gs::Globe::GenerateBiomes( const int numOfSpreaders )
+{
+    vector<gs::BiomeSpreader> spreaders;
+
+    //std::
+
+    for ( const auto& tile : landTiles )
+    {
+
+    }
+}
+
 int gs::Globe::GenerateTiles( const int numOfTiles )
 {
     VoronoiGenerator vg;
@@ -326,6 +339,8 @@ gs::Globe::Globe()
     //generate voronoi sphere
     const int numOfTiles = 16000;
     const int numOfVertices = GenerateTiles( numOfTiles );
+
+    GenerateBiomes( 50 );
 
     //create vao
     glGenVertexArrays( 1, &vao );

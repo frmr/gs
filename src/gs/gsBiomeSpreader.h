@@ -14,7 +14,7 @@ namespace gs
     public:
         bool Spread()
         {
-            for ( int i = 0; i < speed; ++i )
+            for ( unsigned int i = 0; i < speed; ++i )
             {
                 //rand(0, frontier.size()-1)
                 //tile->GetUnassignedNeighbor()->SetBiome( value )

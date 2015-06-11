@@ -15,6 +15,8 @@ namespace gs
         bool 	left;
         bool 	right;
 
+        bool    ctrl;
+
         bool    exit;
         bool    pause;
 
@@ -35,6 +37,8 @@ namespace gs
         bool 	GetDown() const;
         bool 	GetLeft() const;
         bool 	GetRight() const;
+
+        bool    GetCtrl() const;
 
         bool 	GetExit() const;
         bool    GetPause() const;

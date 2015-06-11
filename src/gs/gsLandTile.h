@@ -18,6 +18,7 @@ namespace gs
         enum class Biome
         {
             UNASSIGNED,
+            LAKE,
             ICE,
             TUNDRA,
             GRASSLAND,
@@ -33,12 +34,16 @@ namespace gs
         };
 
     private:
-        bool    forested;
-        Biome   biome;
-        Terrain terrain;
+        const double    height;
+        const int       regionId;
+        const Terrain   terrain;
+        bool            forested;
+
+        Biome           biome;
+
 
     private:
-        static Terrain DetermineTerrain( const double height );
+        Terrain DetermineTerrain() const;
 
     public:
 
@@ -47,7 +52,7 @@ namespace gs
         void    SetBiome( const Biome newBiome );
 
     public:
-        LandTile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const double height, const int id );
+        LandTile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const double height, const int regionId );
 
     };
 }

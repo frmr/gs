@@ -1,4 +1,5 @@
 #include "gsCamera.h"
+#include "gsMath.h"
 
 #include <GL/gl3w.h>
 
@@ -48,9 +49,9 @@ void gs::Camera::Move( const double latitudeChange, const double longitudeChange
     longitude += longitudeChange;
     NormalizeLongitude();
 
-    position[0] = cos( longitude * 3.14159265f / 180.0f );
-    position[1] = tan( latitude * 3.14159265f / 180.0f );
-    position[2] = sin( longitude * 3.14159265f / 180.0f );
+    position[0] = cos( longitude * gs::PI / 180.0f );
+    position[1] = tan( latitude * gs::PI / 180.0f );
+    position[2] = sin( longitude * gs::PI / 180.0f );
 
     position.Unit();
     //position *= minZoomDistance + ( 1.0f - zoom ) * ( maxZoomDistance - minZoomDistance );
@@ -74,26 +75,27 @@ void gs::Camera::SetOrthographic( const float left, const float right, const flo
 void gs::Camera::Update( InputState& input )
 {
     //TODO: Zoom should affect movement speed
-    float multiplier = ( ( input.GetUp() ^ input.GetDown() ) || ( input.GetLeft() ^ input.GetRight() ) ) ? 0.707f : 1.0f;
+
+    const float multiplier = ( ( input.GetUp() ^ input.GetDown() ) || ( input.GetLeft() ^ input.GetRight() ) ) ? 0.707f : 1.0f;
 
     float latitudeChange = 0.0f;
     float longitudeChange = 0.0f;
 
     if ( input.GetUp() )
     {
-        latitudeChange += multiplier;
+        latitudeChange += ( input.GetCtrl() ) ? 90.0f : multiplier;
     }
     if ( input.GetDown() )
     {
-        latitudeChange -= multiplier;
+        latitudeChange -= ( input.GetCtrl() ) ? 90.0f : multiplier;
     }
     if ( input.GetLeft() )
     {
-        longitudeChange -= multiplier;
+        longitudeChange -= ( input.GetCtrl() ) ? 90.0f : multiplier;
     }
     if ( input.GetRight() )
     {
-        longitudeChange += multiplier;
+        longitudeChange += ( input.GetCtrl() ) ? 90.0f : multiplier;
     }
     if ( input.GetMouseWheelUp() )
     {

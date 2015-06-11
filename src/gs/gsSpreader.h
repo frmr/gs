@@ -12,7 +12,7 @@ namespace gs
     template<typename T>
     class Spreader
     {
-    private:
+    protected:
         const unsigned int  speed;
         vector<T>           frontier;
 

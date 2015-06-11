@@ -52,6 +52,7 @@ namespace gs
         vector<gs::Tile>    ConstructTiles( const int quantity ) const;
         GLuint              CreateVbo( const void* data, const int size, const int components, const string& name );
         GLuint              CreateVbo( const int size, const int components, const string& name );
+        void                GenerateBiomes( const int numOfSpreaders );
         int                 GenerateTiles( const int numOfTiles );
         static unsigned int HashDouble( const double val, const int buckets );
         static void         LinkTiles( const shared_ptr<gs::Tile> source, const shared_ptr<gs::Tile> dest, const shared_ptr<gs::Edge> edge );
