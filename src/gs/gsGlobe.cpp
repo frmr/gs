@@ -124,6 +124,20 @@ cck::Globe gs::Globe::GenerateTerrain() const
     return terrain;
 }
 
+void gs::Globe::PrintMeshProperties() const
+{
+    cerr << "Globe vertices: " << vertices.size() << endl;
+    cerr << "Globe edges: " << edges.size() << endl;
+
+    for ( auto edge : edges )
+    {
+        if ( edge->GetTiles().size() != 2 )
+        {
+            cerr << "gs::Globe::GenerateTiles() in gsGlobe.cpp: Edge has " << edge->GetTiles().size() << " adjacent face." << endl;
+        }
+    }
+}
+
 void gs::Globe::Update()
 {
 
@@ -171,6 +185,57 @@ void gs::Globe::CombineVertices( const vector<glm::dvec3>& corners, gs::Array<ve
             cellVertices.push_back( newVertex );
             vertices.push_back( newVertex );
             buckets.At( xHash, yHash, zHash ).push_back( newVertex );
+        }
+    }
+}
+
+void gs::Globe::CreateTile( const vector<shared_ptr<gs::Vertex>>& cellVertices, const int vertexCount, const cck::Globe& terrain, const cck::GeoCoord& coord )
+{
+    //create new tile
+    double sampleHeight;
+    int sampleId;
+    terrain.SampleData( coord, sampleHeight, sampleId );
+
+    if ( sampleHeight > 0.00001 )
+    {
+        auto newTile = std::make_shared<gs::LandTile>( vertexCount, cellVertices, sampleHeight, sampleId );
+        allTiles.push_back( std::dynamic_pointer_cast<gs::Tile>( newTile ) );
+        landTiles.push_back( newTile );
+    }
+    else
+    {
+        auto newTile = std::make_shared<gs::WaterTile>( vertexCount, cellVertices );
+        allTiles.push_back( std::dynamic_pointer_cast<gs::Tile>( newTile ) );
+        waterTiles.push_back( newTile );
+    }
+}
+
+void gs::Globe::CreateTileEdges( const vector<shared_ptr<gs::Vertex>>& cellVertices )
+{
+    for ( unsigned int i = 0; i < cellVertices.size(); ++i )
+    {
+        auto v0 = cellVertices[i];
+        auto v1 = cellVertices[( i == cellVertices.size() - 1 ) ? 0 : i + 1];
+
+        auto edge = v0->GetEdgeWith( v1 );
+
+        if ( edge == nullptr )
+        {
+            auto newEdge = std::make_shared<gs::Edge>( v0, v1 );
+            newEdge->AddTile( allTiles.back() );
+            v0->AddEdge( newEdge );
+            v1->AddEdge( newEdge );
+            edges.push_back( newEdge );
+        }
+        else
+        {
+            edge->AddTile( allTiles.back() );
+
+            //link tiles on each side of the edge to each other
+            vector<shared_ptr<gs::Tile>> edgeTiles = edge->GetTiles();
+
+            LinkTiles( edgeTiles.front(), edgeTiles.back(), edge );
+            LinkTiles( edgeTiles.back(), edgeTiles.front(), edge );
         }
     }
 }
@@ -253,67 +318,13 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
     {
         vector<shared_ptr<gs::Vertex>> cellVertices;
         CombineVertices( cell->corners, buckets, bucketDim, cellVertices );
-
-        //create new tile
-        double sampleHeight;
-        int sampleId;
-        terrain.SampleData( cck::Vec3( cell->centroid.z, cell->centroid.x, cell->centroid.y ).ToGeographic(), sampleHeight, sampleId );
-
-        if ( sampleHeight > 0.00001 )
-        {
-            auto newTile = std::make_shared<gs::LandTile>( vertexCount, cellVertices, sampleHeight, sampleId );
-            allTiles.push_back( std::dynamic_pointer_cast<gs::Tile>( newTile ) );
-            landTiles.push_back( newTile );
-        }
-        else
-        {
-            auto newTile = std::make_shared<gs::WaterTile>( vertexCount, cellVertices );
-            allTiles.push_back( std::dynamic_pointer_cast<gs::Tile>( newTile ) );
-            waterTiles.push_back( newTile );
-        }
-
+        CreateTile( cellVertices, vertexCount, terrain, cck::Vec3( cell->centroid.z, cell->centroid.x, cell->centroid.y ).ToGeographic() );
         vertexCount += cellVertices.size();
-
-        //create edges
-        for ( unsigned int i = 0; i < cellVertices.size(); ++i )
-        {
-            auto v0 = cellVertices[i];
-            auto v1 = cellVertices[( i == cellVertices.size() - 1 ) ? 0 : i + 1];
-
-            auto edge = v0->GetEdgeWith( v1 );
-
-            if ( edge == nullptr )
-            {
-                auto newEdge = std::make_shared<gs::Edge>( v0, v1 );
-                newEdge->AddTile( allTiles.back() );
-                v0->AddEdge( newEdge );
-                v1->AddEdge( newEdge );
-                edges.push_back( newEdge );
-            }
-            else
-            {
-                edge->AddTile( allTiles.back() );
-
-                //link tiles on each side of the edge to each other
-                vector<shared_ptr<gs::Tile>> edgeTiles = edge->GetTiles();
-
-                LinkTiles( edgeTiles.front(), edgeTiles.back(), edge );
-                LinkTiles( edgeTiles.back(), edgeTiles.front(), edge );
-            }
-        }
-
+        CreateTileEdges( cellVertices );
     }
 
-    cerr << "Vertices: " << vertices.size() << endl;
-    cerr << "Edges: " << edges.size() << endl;
-
-    for ( auto edge : edges )
-    {
-        if ( edge->GetTiles().size() != 2 )
-        {
-            cerr << "gs::Globe::GenerateTiles() in gsGlobe.cpp: Edge has " << edge->GetTiles().size() << " adjacent face." << endl;
-        }
-    }
+    buckets.Delete();
+    PrintMeshProperties();
 
     return vertexCount;
 }

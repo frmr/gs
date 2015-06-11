@@ -52,6 +52,8 @@ namespace gs
 
     private:
         void                CombineVertices( const vector<glm::dvec3>& corners, gs::Array<vector<shared_ptr<gs::Vertex>>>& buckets, const unsigned int bucketDim, vector<shared_ptr<gs::Vertex>>& cellVertices );
+        void                CreateTile( const vector<shared_ptr<gs::Vertex>>& cellVertices, const int vertexCount, const cck::Globe& terrain, const cck::GeoCoord& coord );
+        void                CreateTileEdges( const vector<shared_ptr<gs::Vertex>>& cellVertices );
         //vector<gs::Tile>    ConstructTiles( const int quantity ) const;
         GLuint              CreateVbo( const void* data, const int size, const int components, const string& name );
         GLuint              CreateVbo( const int size, const int components, const string& name );
@@ -63,6 +65,7 @@ namespace gs
     public:
         void        Draw( const gs::Camera& worldCamera ) const;
         cck::Globe  GenerateTerrain() const;
+        void        PrintMeshProperties() const;
         void        Update();
 
     public:
