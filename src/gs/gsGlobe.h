@@ -7,8 +7,10 @@
 
 #include <GL/gl3w.h>
 #include "../matrix/Matrices.h"
+#include "../voronoi/src/voronoi_generator.h"
 
 #include "../cck/cck.h"
+#include "gsArray.h"
 #include "gsCamera.h"
 #include "gsEdge.h"
 #include "gsLandTile.h"
@@ -49,12 +51,13 @@ namespace gs
         vector<shared_ptr<gs::WaterTile>>   waterTiles;
 
     private:
-        vector<gs::Tile>    ConstructTiles( const int quantity ) const;
+        void                CombineVertices( const vector<glm::dvec3>& corners, gs::Array<vector<shared_ptr<gs::Vertex>>>& buckets, const unsigned int bucketDim, vector<shared_ptr<gs::Vertex>>& cellVertices );
+        //vector<gs::Tile>    ConstructTiles( const int quantity ) const;
         GLuint              CreateVbo( const void* data, const int size, const int components, const string& name );
         GLuint              CreateVbo( const int size, const int components, const string& name );
         void                GenerateBiomes( const int numOfSpreaders );
         int                 GenerateTiles( const int numOfTiles );
-        static unsigned int HashDouble( const double val, const int buckets );
+        static unsigned int HashDouble( const double val, const int bucketDim );
         static void         LinkTiles( const shared_ptr<gs::Tile> source, const shared_ptr<gs::Tile> dest, const shared_ptr<gs::Edge> edge );
 
     public:

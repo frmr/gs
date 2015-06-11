@@ -3,8 +3,6 @@
 #include <iostream>
 #include <random>
 
-#include "../voronoi/src/voronoi_generator.h"
-
 #include "gsBiomeSpreader.h"
 #include "gsRandomRange.h"
 #include "gsSpreader.h"
@@ -131,6 +129,52 @@ void gs::Globe::Update()
 
 }
 
+void gs::Globe::CombineVertices( const vector<glm::dvec3>& corners, gs::Array<vector<shared_ptr<gs::Vertex>>>& buckets, const unsigned int bucketDim, vector<shared_ptr<gs::Vertex>>& cellVertices )
+{
+    constexpr double errorMargin = 0.000001;
+    for ( const auto& corner : corners )
+    {
+        const gs::Vec3d gsCorner( corner.x, corner.y, corner.z );
+        //hash to buckets
+        unsigned int xHash = HashDouble( gsCorner.x, bucketDim );
+        unsigned int yHash = HashDouble( gsCorner.y, bucketDim );
+        unsigned int zHash = HashDouble( gsCorner.z, bucketDim );
+
+        bool foundVertex = false;
+
+        for ( unsigned int xi = ( ( xHash == 0 ) ? xHash : xHash - 1 ); xi <= ( ( xHash == bucketDim - 1 ) ? xHash : xHash + 1 ); ++xi )
+        {
+            for ( unsigned int yi = ( ( yHash == 0 ) ? yHash : yHash - 1 ); yi <= ( ( yHash == bucketDim - 1 ) ? yHash : yHash + 1 ); ++yi )
+            {
+                for ( unsigned int zi = ( ( zHash == 0 ) ? zHash : zHash - 1 ); zi <= ( ( zHash == bucketDim - 1 ) ? zHash : zHash + 1 ); ++zi )
+                {
+                    for ( auto v : buckets.At( xi, yi, zi ) )
+                    {
+                        if ( v->position.x < gsCorner.x + errorMargin && v->position.x > gsCorner.x - errorMargin &&
+                             v->position.y < gsCorner.y + errorMargin && v->position.y > gsCorner.y - errorMargin &&
+                             v->position.z < gsCorner.z + errorMargin && v->position.z > gsCorner.z - errorMargin )
+                        {
+                            cellVertices.push_back( v );
+                            foundVertex = true;
+                            break;
+                        }
+                    }
+                }
+                if ( foundVertex ) { break; }
+            }
+            if ( foundVertex ) { break; }
+        }
+
+        if ( !foundVertex )
+        {
+            auto newVertex = std::make_shared<gs::Vertex>( gsCorner );
+            cellVertices.push_back( newVertex );
+            vertices.push_back( newVertex );
+            buckets.At( xHash, yHash, zHash ).push_back( newVertex );
+        }
+    }
+}
+
 GLuint gs::Globe::CreateVbo( const void* data, const int size, const int components, const string& name )
 {
     GLuint vbo;
@@ -162,12 +206,12 @@ GLuint gs::Globe::CreateVbo( const int elements, const int components, const str
 }
 
 //val must be between 0 and 1
-unsigned int gs::Globe::HashDouble( const double val, const int buckets )
+unsigned int gs::Globe::HashDouble( const double val, const int bucketDim )
 {
-    int hashVal = ( ( (unsigned int) ( val / 1.0 * (double) buckets ) ) + buckets ) / 2;
-    if ( hashVal > buckets - 1 )
+    int hashVal = ( ( (unsigned int) ( val / 1.0 * (double) bucketDim ) ) + bucketDim ) / 2;
+    if ( hashVal > bucketDim - 1 )
     {
-        hashVal = buckets - 1;
+        hashVal = bucketDim - 1;
     }
     else if ( hashVal < 0 )
     {
@@ -200,55 +244,15 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
     int vertexCount = 0;
     allTiles.reserve( numOfTiles );
 
-    //join identical vertices
-    constexpr unsigned int bucketDim = 256;
-    double errorMargin = 0.000001;
-    auto* buckets = new vector<shared_ptr<gs::Vertex>>[bucketDim][bucketDim][bucketDim];
+    static constexpr unsigned int bucketDim = 256;
+
+    //buckets = new vector<shared_ptr<gs::Vertex>>[bucketDim][bucketDim][bucketDim];
+    gs::Array<vector<shared_ptr<gs::Vertex>>> buckets( bucketDim, bucketDim, bucketDim );
 
     for ( const auto& cell : vg.cell_vector )
     {
         vector<shared_ptr<gs::Vertex>> cellVertices;
-        for ( const auto& corner : cell->corners )
-        {
-            const gs::Vec3d gsCorner( corner.x, corner.y, corner.z );
-            //hash to buckets
-            unsigned int xHash = HashDouble( gsCorner.x, bucketDim );
-            unsigned int yHash = HashDouble( gsCorner.y, bucketDim );
-            unsigned int zHash = HashDouble( gsCorner.z, bucketDim );
-
-            bool foundVertex = false;
-
-            for ( unsigned int xi = ( ( xHash == 0 ) ? xHash : xHash - 1 ); xi <= ( ( xHash == bucketDim - 1 ) ? xHash : xHash + 1 ); ++xi )
-            {
-                for ( unsigned int yi = ( ( yHash == 0 ) ? yHash : yHash - 1 ); yi <= ( ( yHash == bucketDim - 1 ) ? yHash : yHash + 1 ); ++yi )
-                {
-                    for ( unsigned int zi = ( ( zHash == 0 ) ? zHash : zHash - 1 ); zi <= ( ( zHash == bucketDim - 1 ) ? zHash : zHash + 1 ); ++zi )
-                    {
-                        for ( auto v : buckets[xi][yi][zi] )
-                        {
-                            if ( v->position.x < gsCorner.x + errorMargin && v->position.x > gsCorner.x - errorMargin &&
-                                 v->position.y < gsCorner.y + errorMargin && v->position.y > gsCorner.y - errorMargin &&
-                                 v->position.z < gsCorner.z + errorMargin && v->position.z > gsCorner.z - errorMargin )
-                            {
-                                cellVertices.push_back( v );
-                                foundVertex = true;
-                                break;
-                            }
-                        }
-                    }
-                    if ( foundVertex ) { break; }
-                }
-                if ( foundVertex ) { break; }
-            }
-
-            if ( !foundVertex )
-            {
-                auto newVertex = std::make_shared<gs::Vertex>( gsCorner );
-                cellVertices.push_back( newVertex );
-                vertices.push_back( newVertex );
-                buckets[xHash][yHash][zHash].push_back( newVertex );
-            }
-        }
+        CombineVertices( cell->corners, buckets, bucketDim, cellVertices );
 
         //create new tile
         double sampleHeight;
@@ -299,8 +303,6 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
         }
 
     }
-
-    delete[] buckets;
 
     cerr << "Vertices: " << vertices.size() << endl;
     cerr << "Edges: " << edges.size() << endl;
