@@ -83,19 +83,19 @@ void gs::Camera::Update( InputState& input )
 
     if ( input.GetUp() )
     {
-        latitudeChange += ( input.GetCtrl() ) ? 90.0f : multiplier;
+        latitudeChange += ( input.GetShift() ) ? 90.0f : multiplier;
     }
     if ( input.GetDown() )
     {
-        latitudeChange -= ( input.GetCtrl() ) ? 90.0f : multiplier;
+        latitudeChange -= ( input.GetShift() ) ? 90.0f : multiplier;
     }
     if ( input.GetLeft() )
     {
-        longitudeChange -= ( input.GetCtrl() ) ? 90.0f : multiplier;
+        longitudeChange -= ( input.GetShift() ) ? 90.0f : multiplier;
     }
     if ( input.GetRight() )
     {
-        longitudeChange += ( input.GetCtrl() ) ? 90.0f : multiplier;
+        longitudeChange += ( input.GetShift() ) ? 90.0f : multiplier;
     }
     if ( input.GetMouseWheelUp() )
     {

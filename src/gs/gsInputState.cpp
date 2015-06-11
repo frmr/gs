@@ -7,7 +7,7 @@ void gs::InputState::ResetAll()
 	left = false;
 	right = false;
 
-    ctrl = false;
+    shift = false;
 
     exit = false;
     pause = false;
@@ -27,7 +27,7 @@ void gs::InputState::ResetPresses()
     mouseWheelUp = false;
     mouseWheelDown = false;
 
-    if ( ctrl )
+    if ( shift )
     {
         up = false;
         down = false;
@@ -46,21 +46,21 @@ void gs::InputState::Update()
     {
         if ( event.type == SDL_KEYUP )
         {
-            if ( event.key.keysym.sym == SDLK_w )           { up = false; }
-            else if ( event.key.keysym.sym == SDLK_s )      { down = false; }
-            else if ( event.key.keysym.sym == SDLK_a )      { left = false; }
-            else if ( event.key.keysym.sym == SDLK_d )      { right = false; }
-            else if ( event.key.keysym.sym == SDLK_LCTRL )  { ctrl = false; }
-            else if ( event.key.keysym.sym == SDLK_ESCAPE ) { pause = false; }
+            if ( event.key.keysym.sym == SDLK_w )               { up = false; }
+            else if ( event.key.keysym.sym == SDLK_s )          { down = false; }
+            else if ( event.key.keysym.sym == SDLK_a )          { left = false; }
+            else if ( event.key.keysym.sym == SDLK_d )          { right = false; }
+            else if ( event.key.keysym.sym == SDLK_LSHIFT )     { shift = false; }
+            else if ( event.key.keysym.sym == SDLK_ESCAPE )     { pause = false; }
         }
         else if ( event.type == SDL_KEYDOWN )
         {
-            if ( event.key.keysym.sym == SDLK_w )           { up = true; }
-            else if ( event.key.keysym.sym == SDLK_s )      { down = true; }
-            else if ( event.key.keysym.sym == SDLK_a )      { left = true; }
-            else if ( event.key.keysym.sym == SDLK_d )      { right = true; }
-            else if ( event.key.keysym.sym == SDLK_LCTRL )  { ctrl = true; }
-            else if ( event.key.keysym.sym == SDLK_ESCAPE ) { pause = true; }
+            if ( event.key.keysym.sym == SDLK_w )               { up = true; }
+            else if ( event.key.keysym.sym == SDLK_s )          { down = true; }
+            else if ( event.key.keysym.sym == SDLK_a )          { left = true; }
+            else if ( event.key.keysym.sym == SDLK_d )          { right = true; }
+            else if ( event.key.keysym.sym == SDLK_LSHIFT )     { shift = true; }
+            else if ( event.key.keysym.sym == SDLK_ESCAPE )     { pause = true; }
         }
         else if ( event.type == SDL_MOUSEBUTTONUP )
         {
@@ -91,7 +91,7 @@ bool gs::InputState::GetDown() const	{ return down; }
 bool gs::InputState::GetLeft() const	{ return left; }
 bool gs::InputState::GetRight() const	{ return right; }
 
-bool gs::InputState::GetCtrl() const    { return ctrl; }
+bool gs::InputState::GetShift() const    { return shift; }
 
 bool gs::InputState::GetExit() const    { return exit; }
 bool gs::InputState::GetPause() const   { return pause; }
