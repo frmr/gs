@@ -128,6 +128,9 @@ void gs::Globe::PrintMeshProperties() const
 {
     cerr << "Globe vertices: " << vertices.size() << endl;
     cerr << "Globe edges: " << edges.size() << endl;
+    cerr << "Globe land tiles: " << landTiles.size() << endl;
+    cerr << "Globe water tiles: " << waterTiles.size() << endl;
+    cerr << "Globe total tiles: " << allTiles.size() << endl;
 
     for ( auto edge : edges )
     {
@@ -143,7 +146,7 @@ void gs::Globe::Update()
 
 }
 
-void gs::Globe::CombineVertices( const vector<glm::dvec3>& corners, gs::Array<vector<shared_ptr<gs::Vertex>>>& buckets, const unsigned int bucketDim, vector<shared_ptr<gs::Vertex>>& cellVertices )
+void gs::Globe::CombineVertices( const vector<glm::dvec3>& corners, gs::Array<vector<gs::VertexPtr>>& buckets, const unsigned int bucketDim, vector<gs::VertexPtr>& cellVertices )
 {
     constexpr double errorMargin = 0.000001;
     for ( const auto& corner : corners )
@@ -189,7 +192,7 @@ void gs::Globe::CombineVertices( const vector<glm::dvec3>& corners, gs::Array<ve
     }
 }
 
-void gs::Globe::CreateTile( const vector<shared_ptr<gs::Vertex>>& cellVertices, const int vertexCount, const cck::Globe& terrain, const cck::GeoCoord& coord )
+void gs::Globe::CreateTile( const vector<gs::VertexPtr>& cellVertices, const int vertexCount, const cck::Globe& terrain, const cck::GeoCoord& coord )
 {
     //create new tile
     double sampleHeight;
@@ -210,7 +213,7 @@ void gs::Globe::CreateTile( const vector<shared_ptr<gs::Vertex>>& cellVertices, 
     }
 }
 
-void gs::Globe::CreateTileEdges( const vector<shared_ptr<gs::Vertex>>& cellVertices )
+void gs::Globe::CreateTileEdges( const vector<gs::VertexPtr>& cellVertices )
 {
     for ( unsigned int i = 0; i < cellVertices.size(); ++i )
     {
@@ -232,7 +235,7 @@ void gs::Globe::CreateTileEdges( const vector<shared_ptr<gs::Vertex>>& cellVerti
             edge->AddTile( allTiles.back() );
 
             //link tiles on each side of the edge to each other
-            vector<shared_ptr<gs::Tile>> edgeTiles = edge->GetTiles();
+            vector<gs::TilePtr> edgeTiles = edge->GetTiles();
 
             LinkTiles( edgeTiles.front(), edgeTiles.back(), edge );
             LinkTiles( edgeTiles.back(), edgeTiles.front(), edge );
@@ -312,11 +315,11 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
     static constexpr unsigned int bucketDim = 256;
 
     //buckets = new vector<shared_ptr<gs::Vertex>>[bucketDim][bucketDim][bucketDim];
-    gs::Array<vector<shared_ptr<gs::Vertex>>> buckets( bucketDim, bucketDim, bucketDim );
+    gs::Array<vector<gs::VertexPtr>> buckets( bucketDim, bucketDim, bucketDim );
 
     for ( const auto& cell : vg.cell_vector )
     {
-        vector<shared_ptr<gs::Vertex>> cellVertices;
+        vector<gs::VertexPtr> cellVertices;
         CombineVertices( cell->corners, buckets, bucketDim, cellVertices );
         CreateTile( cellVertices, vertexCount, terrain, cck::Vec3( cell->centroid.z, cell->centroid.x, cell->centroid.y ).ToGeographic() );
         vertexCount += cellVertices.size();
@@ -329,7 +332,7 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
     return vertexCount;
 }
 
-void gs::Globe::LinkTiles( const shared_ptr<gs::Tile> source, const shared_ptr<gs::Tile> dest, const shared_ptr<gs::Edge> edge )
+void gs::Globe::LinkTiles( const gs::TilePtr source, const gs::TilePtr dest, const gs::EdgePtr edge )
 {
     source->AddLink( gs::Link<gs::Tile>( dest, edge ) );
     if ( dest->GetSurface() == gs::Tile::Type::LAND )

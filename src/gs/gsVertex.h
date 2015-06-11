@@ -29,6 +29,8 @@ namespace gs
     public:
         Vertex( const gs::Vec3d& position );
     };
+
+    typedef shared_ptr<gs::Vertex> VertexPtr;
 }
 
 #endif // GS_VERTEX_H

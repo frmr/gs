@@ -44,23 +44,22 @@ namespace gs
         GLint       normalMatrixLocation;
         int         numOfIndices;
 
-        vector<shared_ptr<gs::Vertex>>      vertices;
-        vector<shared_ptr<gs::Edge>>        edges;
-        vector<shared_ptr<gs::Tile>>        allTiles;
-        vector<shared_ptr<gs::LandTile>>    landTiles;
-        vector<shared_ptr<gs::WaterTile>>   waterTiles;
+        vector<gs::VertexPtr>       vertices;
+        vector<gs::EdgePtr>         edges;
+        vector<gs::TilePtr>         allTiles;
+        vector<gs::LandTilePtr>     landTiles;
+        vector<gs::WaterTilePtr>    waterTiles;
 
     private:
-        void                CombineVertices( const vector<glm::dvec3>& corners, gs::Array<vector<shared_ptr<gs::Vertex>>>& buckets, const unsigned int bucketDim, vector<shared_ptr<gs::Vertex>>& cellVertices );
-        void                CreateTile( const vector<shared_ptr<gs::Vertex>>& cellVertices, const int vertexCount, const cck::Globe& terrain, const cck::GeoCoord& coord );
-        void                CreateTileEdges( const vector<shared_ptr<gs::Vertex>>& cellVertices );
-        //vector<gs::Tile>    ConstructTiles( const int quantity ) const;
+        void                CombineVertices( const vector<glm::dvec3>& corners, gs::Array<vector<gs::VertexPtr>>& buckets, const unsigned int bucketDim, vector<gs::VertexPtr>& cellVertices );
+        void                CreateTile( const vector<gs::VertexPtr>& cellVertices, const int vertexCount, const cck::Globe& terrain, const cck::GeoCoord& coord );
+        void                CreateTileEdges( const vector<gs::VertexPtr>& cellVertices );
         GLuint              CreateVbo( const void* data, const int size, const int components, const string& name );
         GLuint              CreateVbo( const int size, const int components, const string& name );
         void                GenerateBiomes( const int numOfSpreaders );
         int                 GenerateTiles( const int numOfTiles );
         static unsigned int HashDouble( const double val, const int bucketDim );
-        static void         LinkTiles( const shared_ptr<gs::Tile> source, const shared_ptr<gs::Tile> dest, const shared_ptr<gs::Edge> edge );
+        static void         LinkTiles( const gs::TilePtr source, const gs::TilePtr dest, const gs::EdgePtr edge );
 
     public:
         void        Draw( const gs::Camera& worldCamera ) const;

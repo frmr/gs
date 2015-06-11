@@ -64,6 +64,8 @@ namespace gs
         Tile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices );
         virtual ~Tile();
     };
+
+    typedef shared_ptr<gs::Tile> TilePtr;
 }
 
 #endif // GS_TILE_H

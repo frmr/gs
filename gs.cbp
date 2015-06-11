@@ -105,6 +105,7 @@
 		<Unit filename="src/gl3w/gl3w.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/gs/gsArray.h" />
 		<Unit filename="src/gs/gsBinarySearchTree.h" />
 		<Unit filename="src/gs/gsBiomeSpreader.h" />
 		<Unit filename="src/gs/gsCamera.cpp" />

@@ -53,8 +53,9 @@ namespace gs
 
     public:
         LandTile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const double height, const int regionId );
-
     };
+
+    typedef shared_ptr<gs::LandTile> LandTilePtr;
 }
 
 #endif // GS_LAND_TILE_H

@@ -22,6 +22,8 @@ namespace gs
     public:
         WaterTile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices );
     };
+
+    typedef shared_ptr<gs::WaterTile> WaterTilePtr;
 }
 
 #endif // GS_WATER_TILE_H

@@ -31,6 +31,8 @@ namespace gs
     public:
         Edge( const shared_ptr<gs::Vertex>& v0, const shared_ptr<gs::Vertex>& v1 );
     };
+
+    typedef shared_ptr<gs::Edge> EdgePtr;
 }
 
 #endif // GS_EDGE_H
