@@ -5,14 +5,18 @@
 #include <time.h>
 
 MPSampleGenerator::MPSampleGenerator()
+    :   seed(time(NULL)),
+        re(seed)
+
 {
-    seed = time(NULL);
     //std::cout << "seed = " << seed << "\n";
 
     unif = std::uniform_real_distribution<long double>(0.0,1.0);
 }
 
-MPSampleGenerator::MPSampleGenerator(unsigned int seed) : seed(seed)
+MPSampleGenerator::MPSampleGenerator(unsigned int seed)
+    :   seed(seed),
+        re(seed)
 {
     unif = std::uniform_real_distribution<long double>(0.0,1.0);
 }

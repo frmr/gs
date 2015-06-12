@@ -1,5 +1,6 @@
 #include "gsGlobe.h"
 
+#include <ctime>
 #include <iostream>
 #include <random>
 
@@ -32,7 +33,8 @@ void gs::Globe::Draw( const gs::Camera& worldCamera ) const
 
 cck::Globe gs::Globe::GenerateTerrain() const
 {
-    cck::Globe terrain( 6370.0, 0 ); //TODO: random seed
+    //cck::Globe terrain( 6370.0, std::time( 0 ) );
+    cck::Globe terrain( 6370.0, 0 );
     terrain.SetNoiseParameters( 8, 0.75, 0.00015 );
 
     terrain.AddNode( 0,   52.0,   -4.0,   -0.2,   0.5,    600.0 );    //Britain
@@ -204,12 +206,24 @@ void gs::Globe::CreateTile( const vector<gs::VertexPtr>& cellVertices, const int
         auto newTile = std::make_shared<gs::LandTile>( vertexCount, cellVertices, sampleHeight, sampleId );
         allTiles.push_back( std::dynamic_pointer_cast<gs::Tile>( newTile ) );
         landTiles.push_back( newTile );
+
+        //add tile to all cell vertices
+        for ( auto& v : cellVertices )
+        {
+            v->AddTile( std::dynamic_pointer_cast<gs::Tile>( newTile ) );
+        }
     }
     else
     {
         auto newTile = std::make_shared<gs::WaterTile>( vertexCount, cellVertices );
         allTiles.push_back( std::dynamic_pointer_cast<gs::Tile>( newTile ) );
         waterTiles.push_back( newTile );
+
+        //add tile to all cell vertices
+        for ( auto& v : cellVertices )
+        {
+            v->AddTile( std::dynamic_pointer_cast<gs::Tile>( newTile ) );
+        }
     }
 }
 
@@ -300,14 +314,15 @@ void gs::Globe::GenerateBiomes( const int numOfSpreaders )
     }
 }
 
+#include <cstdlib>
 void gs::Globe::GenerateRivers( const int numOfRivers )
 {
-
+    //pick numOfRivers random vertices
 }
 
 int gs::Globe::GenerateTiles( const int numOfTiles )
 {
-    VoronoiGenerator vg;
+    VoronoiGenerator vg( std::time( 0 ) );
     vg.generateTessellation( numOfTiles );
 
     //generate world
@@ -360,6 +375,11 @@ gs::Globe::Globe()
     //generate voronoi sphere
     const int numOfTiles = 16000;
     const int numOfVertices = GenerateTiles( numOfTiles );
+
+    for ( auto& v : vertices )
+    {
+        v->CalculateHeight();
+    }
 
     GenerateRivers( 20 );
     GenerateBiomes( 50 );

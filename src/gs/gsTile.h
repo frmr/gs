@@ -30,6 +30,7 @@ namespace gs
 
     protected:
         Type                                    surface;
+        const double                            height;
 
         const GLuint                            bufferOffset;
         const vector<shared_ptr<gs::Vertex>>    vertices;
@@ -44,24 +45,23 @@ namespace gs
         //controller
     public:
         //void Update( )
-        bool AddLink( const gs::Link<gs::Tile>& link );
-        bool AddLink( const gs::Link<gs::LandTile>& link );
-        bool AddLink( const gs::Link<gs::WaterTile>& link );
+        bool    AddLink( const gs::Link<gs::Tile>& link );
+        bool    AddLink( const gs::Link<gs::LandTile>& link );
+        bool    AddLink( const gs::Link<gs::WaterTile>& link );
 
-        void InitBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint texCoordVbo, const GLuint fogVbo, vector<GLuint>& indexVector );// const;
+        double  GetHeight() const;
+        void    InitBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint texCoordVbo, const GLuint fogVbo, vector<GLuint>& indexVector );// const;
 
-        //void MapToTexture( vector<gs::Texture>& textures );
+        //void  MapToTexture( vector<gs::Texture>& textures );
 
-        Type GetSurface() const;
-
-
-        void SetColor(); //delete
+        Type    GetSurface() const;
+        void    SetColor(); //delete
 
     protected:
-        Tile( const Type surface, const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices );
+        Tile( const Type surface, const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const double height );
 
     public:
-        Tile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices );
+        //Tile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices );
         virtual ~Tile();
     };
 

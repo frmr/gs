@@ -34,7 +34,6 @@ namespace gs
         };
 
     private:
-        const double    height;
         const int       regionId;
         const Terrain   terrain;
         bool            forested;

@@ -1,5 +1,5 @@
-#ifndef GS_ARRAY3_H
-#define GS_ARRAY3_H
+#ifndef GS_ARRAY_H
+#define GS_ARRAY_H
 
 #include <vector>
 

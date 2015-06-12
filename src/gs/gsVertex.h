@@ -12,6 +12,7 @@ using std::vector;
 namespace gs
 {
     class Edge;
+    class Tile;
 
     class Vertex
     {
@@ -19,10 +20,15 @@ namespace gs
         const gs::Vec3d position;
 
     private:
-        vector<shared_ptr<gs::Edge>> edges;
+        vector<shared_ptr<gs::Edge>>    edges;
+        vector<shared_ptr<gs::Tile>>    tiles;
+
+        double                          height;
 
     public:
         void                            AddEdge( const shared_ptr<gs::Edge> edge );
+        void                            AddTile( const shared_ptr<gs::Tile> tile );
+        void                            CalculateHeight();
         vector<shared_ptr<gs::Edge>>    GetEdges() const;
         shared_ptr<gs::Edge>            GetEdgeWith( const shared_ptr<gs::Vertex> refVertex ) const;
 

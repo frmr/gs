@@ -125,26 +125,33 @@ bool gs::Tile::AddLink( const gs::Link<gs::WaterTile>& link )
     return true;
 }
 
+double gs::Tile::GetHeight() const
+{
+    return height;
+}
+
 gs::Tile::Type gs::Tile::GetSurface() const
 {
     return surface;
 }
 
-gs::Tile::Tile( const Type surface, const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices )
+gs::Tile::Tile( const Type surface, const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const double height )
     :   surface( surface ),
+        height( height ),
         bufferOffset( bufferOffset ),
         vertices( vertices ),
         fog( false )
 {
 }
 
-gs::Tile::Tile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices )
-    :   surface( gs::Tile::Type::UNASSIGNED ),
-        bufferOffset( bufferOffset ),
-        vertices( vertices ),
-        fog( false )
-{
-}
+//gs::Tile::Tile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices )
+//    :   surface( gs::Tile::Type::UNASSIGNED ),
+//        height( 0.0 ),
+//        bufferOffset( bufferOffset ),
+//        vertices( vertices ),
+//        fog( false )
+//{
+//}
 
 gs::Tile::~Tile()
 {
