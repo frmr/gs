@@ -12,7 +12,7 @@ namespace gs
     {
     private:
         const vector<size_t>    dims;
-        vector<T>               data;
+        T*                      data;
 
     public:
         T&  At( const size_t i )
@@ -32,26 +32,35 @@ namespace gs
 
         void Delete()
         {
-            data.clear();
+            if ( data != NULL )
+            {
+                delete[] data;
+                data = NULL;
+            }
         }
 
     public:
         Array( const size_t xDim )
-            :   dims( { xDim } )
+            :   dims( { xDim } ),
+                data( new T[xDim] )
         {
-            data.resize( xDim );
         }
 
         Array( const size_t xDim, const size_t yDim )
-            :   dims( { xDim, yDim } )
+            :   dims( { xDim, yDim } ),
+                data( new T[xDim * yDim] )
         {
-            data.resize( xDim * yDim );
         }
 
         Array( const size_t xDim, const size_t yDim, const size_t zDim )
-            :   dims( { xDim, yDim, zDim } )
+            :   dims( { xDim, yDim, zDim } ),
+                data( new T[xDim * yDim * zDim] )
         {
-            data.resize( xDim * yDim * zDim );
+        }
+
+        ~Array()
+        {
+            Delete();
         }
     };
 }

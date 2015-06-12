@@ -300,6 +300,11 @@ void gs::Globe::GenerateBiomes( const int numOfSpreaders )
     }
 }
 
+void gs::Globe::GenerateRivers( const int numOfRivers )
+{
+
+}
+
 int gs::Globe::GenerateTiles( const int numOfTiles )
 {
     VoronoiGenerator vg;
@@ -356,6 +361,7 @@ gs::Globe::Globe()
     const int numOfTiles = 16000;
     const int numOfVertices = GenerateTiles( numOfTiles );
 
+    GenerateRivers( 20 );
     GenerateBiomes( 50 );
 
     //create vao

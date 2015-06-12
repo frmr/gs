@@ -57,6 +57,7 @@ namespace gs
         GLuint              CreateVbo( const void* data, const int size, const int components, const string& name );
         GLuint              CreateVbo( const int size, const int components, const string& name );
         void                GenerateBiomes( const int numOfSpreaders );
+        void                GenerateRivers( const int numOfRivers );
         int                 GenerateTiles( const int numOfTiles );
         static unsigned int HashDouble( const double val, const int bucketDim );
         static void         LinkTiles( const gs::TilePtr source, const gs::TilePtr dest, const gs::EdgePtr edge );
