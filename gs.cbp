@@ -110,7 +110,6 @@
 		<Unit filename="src/gs/gsBiomeSpreader.h" />
 		<Unit filename="src/gs/gsCamera.cpp" />
 		<Unit filename="src/gs/gsCamera.h" />
-		<Unit filename="src/gs/gsCellLink.h" />
 		<Unit filename="src/gs/gsConfig.cpp" />
 		<Unit filename="src/gs/gsConfig.h" />
 		<Unit filename="src/gs/gsEdge.cpp" />

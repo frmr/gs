@@ -1,26 +1,36 @@
 #ifndef GS_RANDOM_RANGE_H
 #define GS_RANDOM_RANGE_H
 
+#include <cmath>
 #include <random>
 
 namespace gs
 {
+    template<typename T>
     class RandomRange
     {
     private:
-        std::mt19937 mt;
-        std::uniform_real_distribution<float> range;
+        std::default_random_engine              engine;
+        std::uniform_real_distribution<double>  dist;
+        bool                                    round;
     public:
-        float Sample()
+        T Sample()
         {
-            return range( mt );
+            return ( round ) ? (T) std::round( dist( engine ) ) : (T) dist( engine );
         }
     public:
-        RandomRange( const float min, const float max )
+        RandomRange( const double min, const double max, const int seed )
+            :   engine( seed ),
+                dist( min, max ),
+                round( false )
         {
-            std::random_device rd;
-            mt = std::mt19937(rd());
-            range = std::uniform_real_distribution<float>( min, max );
+        }
+
+        RandomRange( const int min, const int max, const int seed )
+            :   engine( seed ),
+                dist( (double) min, (double) max ),
+                round( true )
+        {
         }
     };
 }

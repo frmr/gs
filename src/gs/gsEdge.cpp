@@ -40,8 +40,16 @@ bool gs::Edge::HasVertex( const shared_ptr<gs::Vertex>& refVertex ) const
 //    return ( ( refv0.position == v0.position && refv1.position == v1.position ) || ( refv0.position == v1.position && refv1.position == v0.position ) );
 //}
 
+void gs::Edge::SetRiver()
+{
+    river = true;
+//    v0->SetRiver();
+//    v1->SetRiver();
+}
+
 gs::Edge::Edge( const shared_ptr<gs::Vertex>& v0, const shared_ptr<gs::Vertex>& v1 )
-    :   v0( v0 ),
+    :   river( false ),
+        v0( v0 ),
         v1( v1 )
 {
 }

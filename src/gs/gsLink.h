@@ -17,13 +17,13 @@ namespace gs
     public:
         const shared_ptr<T>         target;
         const shared_ptr<gs::Edge>  edge;
+
     public:
         Link( const shared_ptr<T> target, const shared_ptr<gs::Edge> edge )
             :   target( target ),
                 edge( edge )
         {
         }
-
     };
 }
 

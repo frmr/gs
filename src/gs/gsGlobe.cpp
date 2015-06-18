@@ -2,7 +2,6 @@
 
 #include <ctime>
 #include <iostream>
-#include <random>
 
 #include "gsBiomeSpreader.h"
 #include "gsRandomRange.h"
@@ -33,8 +32,7 @@ void gs::Globe::Draw( const gs::Camera& worldCamera ) const
 
 cck::Globe gs::Globe::GenerateTerrain() const
 {
-    //cck::Globe terrain( 6370.0, std::time( 0 ) );
-    cck::Globe terrain( 6370.0, 0 );
+    cck::Globe terrain( 6370.0, std::time( 0 ) );
     terrain.SetNoiseParameters( 8, 0.75, 0.00015 );
 
     terrain.AddNode( 0,   52.0,   -4.0,   -0.2,   0.5,    600.0 );    //Britain
@@ -240,8 +238,10 @@ void gs::Globe::CreateTileEdges( const vector<gs::VertexPtr>& cellVertices )
         {
             auto newEdge = std::make_shared<gs::Edge>( v0, v1 );
             newEdge->AddTile( allTiles.back() );
-            v0->AddEdge( newEdge );
-            v1->AddEdge( newEdge );
+
+            v0->AddLink( gs::Link<gs::Vertex>( v1, newEdge ) );
+            v1->AddLink( gs::Link<gs::Vertex>( v0, newEdge ) );
+
             edges.push_back( newEdge );
         }
         else
@@ -310,14 +310,25 @@ void gs::Globe::GenerateBiomes( const int numOfSpreaders )
 
     for ( const auto& tile : landTiles )
     {
-
+        tile->SetBlackIfRiver();
     }
 }
 
-#include <cstdlib>
-void gs::Globe::GenerateRivers( const int numOfRivers )
+void gs::Globe::GenerateRivers( const int numOfSpawners )
 {
     //pick numOfRivers random vertices
+
+    gs::RandomRange<double> range( 0.0, 1.0, std::time( 0 ) );
+
+    for ( int i = 0; i < numOfSpawners && i < (int) landTiles.size(); ++i )
+    {
+        int swapTarget = i + (int) ( range.Sample() * (double) ( landTiles.size() - i - 1 ) ) + 1;
+        gs::LandTilePtr temp = landTiles[swapTarget];
+        landTiles[swapTarget] = landTiles[i];
+        landTiles[i] = temp;
+
+        landTiles[i]->SpawnRiver();
+    }
 }
 
 int gs::Globe::GenerateTiles( const int numOfTiles )
@@ -379,9 +390,10 @@ gs::Globe::Globe()
     for ( auto& v : vertices )
     {
         v->CalculateHeight();
+        v->IsRiver();
     }
 
-    GenerateRivers( 20 );
+    GenerateRivers( 1 );
     GenerateBiomes( 50 );
 
     //create vao

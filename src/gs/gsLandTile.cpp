@@ -1,4 +1,7 @@
 #include "gsLandTile.h"
+#include "gsRandomRange.h"
+
+#include <ctime>
 
 gs::LandTile::Terrain gs::LandTile::DetermineTerrain() const
 {
@@ -36,6 +39,38 @@ bool gs::LandTile::HasUnassignedBiomeNeighbors() const
 void gs::LandTile::SetBiome( const gs::LandTile::Biome newBiome )
 {
     biome = newBiome;
+}
+
+void gs::LandTile::SetBlackIfRiver() //TODO: delete
+{
+    for ( auto vert : vertices )
+    {
+        if ( vert->IsRiver() )
+        {
+            color = gs::Vec3f( 0.0, 0.0, 0.0 );
+        }
+    }
+}
+
+bool gs::LandTile::SpawnRiver()
+{
+    double probability;
+    if ( terrain == gs::LandTile::Terrain::PLAINS )
+    {
+        probability = 0.05;
+    }
+    else if ( terrain == gs::LandTile::Terrain::HILLS )
+    {
+        probability = 0.5;
+    }
+    else if ( terrain == gs::LandTile::Terrain::MOUNTAINS )
+    {
+        probability = 1.0;
+    }
+
+    gs::RandomRange<int> range( 0, vertices.size(), std::time( 0 ) );
+    //pick random vertex
+    vertices[range.Sample()]->SetRiver();
 }
 
 gs::LandTile::LandTile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const double height, const int regionId )
