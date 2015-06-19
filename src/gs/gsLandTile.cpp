@@ -20,16 +20,17 @@ gs::LandTile::Terrain gs::LandTile::DetermineTerrain() const
     }
 }
 
-shared_ptr<gs::LandTile> gs::LandTile::GetUnassignedBiomeNeighbor() const
+vector<shared_ptr<gs::LandTile>> gs::LandTile::GetUnassignedBiomeNeighbors() const
 {
+    vector<shared_ptr<gs::LandTile>> unassignedNeighbors;
     for ( const auto& link : landLinks )
     {
         if ( link.target->GetBiome() == gs::LandTile::Biome::UNASSIGNED )
         {
-            return link.target;
+            unassignedNeighbors.push_back( link.target );
         }
     }
-    return nullptr;
+    return unassignedNeighbors;
 }
 
 gs::LandTile::Biome gs::LandTile::GetBiome() const
@@ -99,6 +100,10 @@ void gs::LandTile::SetBlackIfRiver() //TODO: delete
             color = gs::Vec3f( 150.0/255.0, 150.0/255.0, 150.0/255.0 );
         else
             color = gs::Vec3f( 100.0/255.0, 100.0/255.0, 100.0/255.0 );
+    }
+    else if ( biome == gs::LandTile::Biome::UNASSIGNED )
+    {
+        color = gs::Vec3f( 1.0f, 1.0f, 1.0f );
     }
 }
 

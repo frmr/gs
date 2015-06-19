@@ -9,34 +9,8 @@
 using std::cerr;
 using std::endl;
 
-void gs::Tile::SetColor() //delete
-{
-    color = gs::Vec3f( 1.0f, 1.0f, 0.0f );
-    visited = true;
-    for ( auto link : landLinks )
-    {
-        if ( !link.target->visited )
-        {
-            //link.target->SetColor();
-        }
-
-    }
-}
-
 void gs::Tile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint texCoordVbo, const GLuint fogVbo, vector<GLuint>& indexVector ) //const
 {
-    if ( bufferOffset == 0 )
-    {
-        color = gs::Vec3f( 1.0f, 0.0f, 0.0f );
-        for ( auto link : allLinks )
-        {
-            if ( !link.target->visited )
-            {
-                link.target->SetColor();
-            }
-        }
-    }
-
     //load position data
     GLfloat* positionArray = new GLfloat[3*vertices.size()];
     for ( unsigned int i = 0; i < vertices.size(); ++i )

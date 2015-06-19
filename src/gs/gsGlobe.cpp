@@ -350,7 +350,7 @@ void gs::Globe::GenerateBiomes( const int numOfSpreaders )
     for ( int i = 0; i < numOfSpreaders && i < landTiles.size(); ++i )
     {
         //swap current tile with random tile further along in the vector
-        int index = i + (int) ( randomIndex.Sample() * (double) ( landTiles.size() - i ) );
+        unsigned int index = i + (int) ( randomIndex.Sample() * (double) ( landTiles.size() - i ) );
         gs::LandTilePtr temp = landTiles[index];
         landTiles[index] = landTiles[i];
         landTiles[i] = temp;
@@ -361,7 +361,7 @@ void gs::Globe::GenerateBiomes( const int numOfSpreaders )
 
     for ( int i = 0; i < numOfSpreaders && i < landTiles.size(); ++i )
     {
-        spreaders.push_back( gs::BiomeSpreader( randomSpeed.Sample(), landTiles[i], LookupRegionBiome( landTiles[i]->regionId ) ) );
+        spreaders.push_back( gs::BiomeSpreader( randomSpeed.Sample(), landTiles[i], LookupRegionBiome( landTiles[i]->regionId ), landTiles[i]->terrain ) );
     }
 
     //update each spreader until there is no more room to expand
@@ -375,6 +375,15 @@ void gs::Globe::GenerateBiomes( const int numOfSpreaders )
             {
                 active = true;
             }
+        }
+    }
+
+    //assign biomes to tiles that the spreaders didn't reach
+    for ( auto& tile : landTiles )
+    {
+        if ( tile->GetBiome() == gs::LandTile::Biome::UNASSIGNED )
+        {
+            tile->SetBiome( LookupRegionBiome( tile->regionId ) );
         }
     }
 

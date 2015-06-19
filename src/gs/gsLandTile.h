@@ -47,12 +47,12 @@ namespace gs
 
     public:
 
-        shared_ptr<gs::LandTile>    GetUnassignedBiomeNeighbor() const;
-        Biome                       GetBiome() const;
-        bool                        HasUnassignedBiomeNeighbors() const;
-        void                        SetBiome( const Biome newBiome );
-        void                        SetBlackIfRiver(); //TODO: delete
-        bool                        SpawnRiver();
+        vector<shared_ptr<gs::LandTile>>    GetUnassignedBiomeNeighbors() const;
+        Biome                               GetBiome() const;
+        bool                                HasUnassignedBiomeNeighbors() const;
+        void                                SetBiome( const Biome newBiome );
+        void                                SetBlackIfRiver(); //TODO: delete
+        bool                                SpawnRiver();
 
     public:
         LandTile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const double height, const int regionId );

@@ -55,7 +55,6 @@ namespace gs
         //void  MapToTexture( vector<gs::Texture>& textures );
 
         Type    GetSurface() const;
-        void    SetColor(); //delete
 
     protected:
         Tile( const Type surface, const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const double height );
