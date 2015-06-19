@@ -33,11 +33,12 @@ namespace gs
             MOUNTAINS
         };
 
-    private:
+    public:
         const int       regionId;
         const Terrain   terrain;
-        bool            forested;
 
+    private:
+        bool            forested;
         Biome           biome;
 
 
@@ -46,11 +47,12 @@ namespace gs
 
     public:
 
-        Biome   GetBiome() const;
-        bool    HasUnassignedBiomeNeighbors() const;
-        void    SetBiome( const Biome newBiome );
-        void    SetBlackIfRiver(); //TODO: delete
-        bool    SpawnRiver();
+        shared_ptr<gs::LandTile>    GetUnassignedBiomeNeighbor() const;
+        Biome                       GetBiome() const;
+        bool                        HasUnassignedBiomeNeighbors() const;
+        void                        SetBiome( const Biome newBiome );
+        void                        SetBlackIfRiver(); //TODO: delete
+        bool                        SpawnRiver();
 
     public:
         LandTile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const double height, const int regionId );

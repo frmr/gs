@@ -28,6 +28,7 @@ namespace gs
         vector<shared_ptr<gs::Tile>>    GetTiles() const;
         bool                            HasVertex( const shared_ptr<gs::Vertex>& refVertex ) const;
         //bool                            HasVertices( const gs::Vertex& refv0, const gs::Vertex& refv1 ) const;
+        bool                            IsRiver() const;
         void                            SetRiver();
 
     public:

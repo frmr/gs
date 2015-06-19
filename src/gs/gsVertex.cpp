@@ -71,7 +71,6 @@ void gs::Vertex::SetRiver( vector<int>& riverIds )
         return;
     }
 
-    river = true;
     riverIds.push_back( id );
 
     //stop if vertex touches the sea
@@ -90,6 +89,8 @@ void gs::Vertex::SetRiver( vector<int>& riverIds )
         return;
     }
 
+    river = true;
+
     gs::EdgePtr lowestEdge = nullptr;
     gs::VertexPtr lowestVertex = nullptr;
     double lowestHeight = std::numeric_limits<double>::max();
@@ -105,8 +106,16 @@ void gs::Vertex::SetRiver( vector<int>& riverIds )
         }
     }
 
-    lowestEdge->SetRiver();
-    lowestVertex->SetRiver( riverIds );
+    if ( lowestEdge != nullptr )
+    {
+        lowestEdge->SetRiver();
+        lowestVertex->SetRiver( riverIds );
+    }
+    else
+    {
+        cerr << "gs::Vertex::SetRiver() in gsVertex.cpp: No room to extend river." << endl;
+    }
+
 }
 
 gs::Vertex::Vertex( const gs::Vec3d& position )

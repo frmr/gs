@@ -35,36 +35,36 @@ cck::Globe gs::Globe::GenerateTerrain() const
     cck::Globe terrain( 6370.0, std::time( 0 ) );
     terrain.SetNoiseParameters( 8, 0.75, 0.00015 );
 
-    terrain.AddNode( 0,   52.0,   -4.0,   -0.2,   0.5,    600.0 );    //Britain
-    terrain.AddNode( 1,   46.0,   2.0,    -0.2,   0.5,    600.0 );    //France
-    terrain.AddNode( 2,   40.0,   -4.0,   -0.2,   1.0,    750.0 );    //Iberia
-    terrain.AddNode( 3,   50.0,   10.0,   -0.3,   0.75,   500.0 );    //Germany
-    terrain.AddNode( 4,   42.0,   15.0,   -0.3,   0.75,   550.0 );    //Italy
-    terrain.AddNode( 5,   65.0,   17.0,   -1.0,   1.5,    1000.0 );   //Scandinavia
-    terrain.AddNode( 6,   50.0,   25.0,   -0.2,   0.5,    800.0 );    //Poland
-    terrain.AddNode( 7,   40.0,   25.0,   -0.5,   1.5,    600.0 );    //Balkans
-    terrain.AddNode( 8,   57.0,   44.0,   -0.3,   0.75,   1200.0 );   //Russia
-    terrain.AddNode( 9,   38.0,   38.0,   -1.5,   3.0,    1000.0 );   //Turkey
-    terrain.AddNode( 10,  26.0,   44.0,   -0.5,   1.0,    1600.0 );   //Arabia
-    terrain.AddNode( 11,  35.0,   56.0,   -1.0,   2.0,    700.0 );    //Persia
-    terrain.AddNode( 12,  48.0,   68.0,   -0.2,   0.75,   1100.0 );   //Central Asia
-    terrain.AddNode( 13,  65.0,   75.0,   -0.2,   0.5,    1300.0 );   //Siberia 1
-    terrain.AddNode( 14,  65.0,   106.0,  -0.3,   0.75,   1400.0 );   //Siberia 2
-    terrain.AddNode( 15,  32.0,   88.0,   1.0,    4.0,    500.0 );    //Himalayas
-    terrain.AddNode( 29,  44.0,   95.0,   -1.0,   2.5,    800.0 );    //Xinjiang
-    terrain.AddNode( 16,  25.0,   80.0,   -0.4,   1.0,    1000.0 );   //North India
-    terrain.AddNode( 17,  15.0,   77.0,   -0.4,   1.0,    1000.0 );   //South India
-    terrain.AddNode( 18,  25.0,   102.0,  -1.0,   2.0,    700.0 );    //Burma
-    terrain.AddNode( 19,  14.0,   103.0,  -0.5,   0.75,   800.0 );    //Indochina
-    terrain.AddNode( 20,  0.0,    103.0,  -0.4,   1.0,    850.0 );    //Malaysia
-    terrain.AddNode( 21,  30.0,   107.0,  -0.5,   2.0,    400.0 );    //Inner China
-    terrain.AddNode( 22,  23.0,   115.0,  -1.0,   1.5,    600.0 );    //South China
-    terrain.AddNode( 23,  35.0,   115.0,  -0.3,   0.5,    400.0 );    //North China
-    terrain.AddNode( 24,  47.0,   109.0,  -0.5,   1.5,    900.0 );    //Mongolia
-    terrain.AddNode( 25,  38.0,   127.0,  -0.5,   0.75,   350.0 );    //Korea
-    terrain.AddNode( 26,  65.0,   144.0,  -0.5,   1.0,    800.0 );    //Siberia 3
-    terrain.AddNode( 27,  62.0,   165.0,  -1.0,   2.0,    1000.0 );   //Siberia 4
-    terrain.AddNode( 28,  36.0,   138.0,  -1.0,   1.5,    800.0 );    //Japan
+    terrain.AddNode( 0,   52.0,   -4.0,   -0.2,   0.5,    600.0 );    //Britain         GRASSLAND
+    terrain.AddNode( 1,   46.0,   2.0,    -0.2,   0.5,    600.0 );    //France          GRASSLAND
+    terrain.AddNode( 2,   40.0,   -4.0,   -0.2,   1.0,    750.0 );    //Iberia          SEMI_ARID
+    terrain.AddNode( 3,   50.0,   10.0,   -0.3,   0.75,   500.0 );    //Germany         GRASSLAND
+    terrain.AddNode( 4,   42.0,   15.0,   -0.3,   0.75,   550.0 );    //Italy           GRASSLAND
+    terrain.AddNode( 5,   65.0,   17.0,   -1.0,   1.5,    1000.0 );   //Scandinavia     GRASSLAND
+    terrain.AddNode( 6,   50.0,   25.0,   -0.2,   0.5,    800.0 );    //Poland          GRASSLAND
+    terrain.AddNode( 7,   40.0,   25.0,   -0.5,   1.5,    600.0 );    //Balkans         GRASSLAND
+    terrain.AddNode( 8,   57.0,   44.0,   -0.3,   0.75,   1200.0 );   //Russia          GRASSLAND
+    terrain.AddNode( 9,   38.0,   38.0,   -1.5,   3.0,    1000.0 );   //Turkey          SEMI_ARID
+    terrain.AddNode( 10,  26.0,   44.0,   -0.5,   1.0,    1600.0 );   //Arabia          DESERT
+    terrain.AddNode( 11,  35.0,   56.0,   -1.0,   2.0,    700.0 );    //Persia          DESERT
+    terrain.AddNode( 12,  48.0,   68.0,   -0.2,   0.75,   1100.0 );   //Central Asia    SEMI_ARID
+    terrain.AddNode( 13,  65.0,   75.0,   -0.2,   0.5,    1300.0 );   //Siberia 1       GRASSLAND
+    terrain.AddNode( 14,  65.0,   106.0,  -0.3,   0.75,   1400.0 );   //Siberia 2       GRASSLAND
+    terrain.AddNode( 15,  32.0,   88.0,   1.0,    4.0,    500.0 );    //Himalayas       SEMI_ARID
+    terrain.AddNode( 29,  44.0,   95.0,   -1.0,   2.5,    800.0 );    //Xinjiang        DESERT
+    terrain.AddNode( 16,  25.0,   80.0,   -0.4,   1.0,    1000.0 );   //North India     GRASSLAND
+    terrain.AddNode( 17,  15.0,   77.0,   -0.4,   1.0,    1000.0 );   //South India     SEMI_ARID
+    terrain.AddNode( 18,  25.0,   102.0,  -1.0,   2.0,    700.0 );    //Burma           GRASSLAND
+    terrain.AddNode( 19,  14.0,   103.0,  -0.5,   0.75,   800.0 );    //Indochina       GRASSLAND
+    terrain.AddNode( 20,  0.0,    103.0,  -0.4,   1.0,    850.0 );    //Malaysia        GRASSLAND
+    terrain.AddNode( 21,  30.0,   107.0,  -0.5,   2.0,    400.0 );    //Inner China     GRASSLAND
+    terrain.AddNode( 22,  23.0,   115.0,  -1.0,   1.5,    600.0 );    //South China     GRASSLAND
+    terrain.AddNode( 23,  35.0,   115.0,  -0.3,   0.5,    400.0 );    //North China     GRASSLAND
+    terrain.AddNode( 24,  47.0,   109.0,  -0.5,   1.5,    900.0 );    //Mongolia        SEMI_ARID
+    terrain.AddNode( 25,  38.0,   127.0,  -0.5,   0.75,   350.0 );    //Korea           GRASSLAND
+    terrain.AddNode( 26,  65.0,   144.0,  -0.5,   1.0,    800.0 );    //Siberia 3       TUNDRA
+    terrain.AddNode( 27,  62.0,   165.0,  -1.0,   2.0,    1000.0 );   //Kamchatka       TUNDRA
+    terrain.AddNode( 28,  36.0,   138.0,  -1.0,   1.5,    800.0 );    //Japan           GRASSLAND
 
     terrain.LinkNodes( 1,     2,  -1.6,   4.0,    150.0,  50.0 );     //France, Iberia
     terrain.LinkNodes( 1,     3,  -0.3,   0.75,   150.0,  50.0 );     //France, Germany
@@ -144,6 +144,40 @@ void gs::Globe::PrintMeshProperties() const
 void gs::Globe::Update()
 {
 
+}
+
+void gs::Globe::BuildBiomeTable()
+{
+    biomeTable.push_back( gs::LandTile::Biome::GRASSLAND ); //Britain
+    biomeTable.push_back( gs::LandTile::Biome::GRASSLAND ); //France
+    biomeTable.push_back( gs::LandTile::Biome::SEMI_ARID ); //Iberia
+    biomeTable.push_back( gs::LandTile::Biome::GRASSLAND ); //Germany
+    biomeTable.push_back( gs::LandTile::Biome::GRASSLAND ); //Italy
+    biomeTable.push_back( gs::LandTile::Biome::TUNDRA );    //Scandinavia
+    biomeTable.push_back( gs::LandTile::Biome::GRASSLAND ); //Poland
+    biomeTable.push_back( gs::LandTile::Biome::GRASSLAND ); //Balkans
+    biomeTable.push_back( gs::LandTile::Biome::GRASSLAND ); //Russia
+    biomeTable.push_back( gs::LandTile::Biome::SEMI_ARID ); //Turkey
+    biomeTable.push_back( gs::LandTile::Biome::DESERT );    //Arabia
+    biomeTable.push_back( gs::LandTile::Biome::DESERT );    //Persia
+    biomeTable.push_back( gs::LandTile::Biome::SEMI_ARID ); //Central Asia
+    biomeTable.push_back( gs::LandTile::Biome::GRASSLAND ); //Siberia 1
+    biomeTable.push_back( gs::LandTile::Biome::GRASSLAND ); //Siberia 2
+    biomeTable.push_back( gs::LandTile::Biome::SEMI_ARID ); //Himalayas
+    biomeTable.push_back( gs::LandTile::Biome::GRASSLAND ); //North India
+    biomeTable.push_back( gs::LandTile::Biome::SEMI_ARID ); //South India
+    biomeTable.push_back( gs::LandTile::Biome::GRASSLAND ); //Burma
+    biomeTable.push_back( gs::LandTile::Biome::GRASSLAND ); //Indochina
+    biomeTable.push_back( gs::LandTile::Biome::GRASSLAND ); //Malaysia
+    biomeTable.push_back( gs::LandTile::Biome::GRASSLAND ); //Inner China
+    biomeTable.push_back( gs::LandTile::Biome::GRASSLAND ); //South China
+    biomeTable.push_back( gs::LandTile::Biome::GRASSLAND ); //North China
+    biomeTable.push_back( gs::LandTile::Biome::SEMI_ARID ); //Mongolia
+    biomeTable.push_back( gs::LandTile::Biome::GRASSLAND ); //Korea
+    biomeTable.push_back( gs::LandTile::Biome::TUNDRA );    //Siberia 3
+    biomeTable.push_back( gs::LandTile::Biome::TUNDRA );    //Kamchatka
+    biomeTable.push_back( gs::LandTile::Biome::GRASSLAND ); //Japan
+    biomeTable.push_back( gs::LandTile::Biome::DESERT );    //Xinjiang
 }
 
 void gs::Globe::CombineVertices( const vector<glm::dvec3>& corners, gs::Array<vector<gs::VertexPtr>>& buckets, const unsigned int bucketDim, vector<gs::VertexPtr>& cellVertices )
@@ -304,10 +338,47 @@ unsigned int gs::Globe::HashDouble( const double val, const int bucketDim )
 
 void gs::Globe::GenerateBiomes( const int numOfSpreaders )
 {
+    if ( landTiles.empty() )
+    {
+        cerr << "gs::Globe::GenerateBiomes() in gsGlobe.cpp: Cannot spawn biome spreaders because there are no land tiles." << endl;
+        return;
+    }
+
+    gs::RandomRange<double> randomIndex( 0.0, 0.9999, std::time( 0 ) );
+
+    //put numOfSpreaders random land tiles at the start of the vector
+    for ( int i = 0; i < numOfSpreaders && i < landTiles.size(); ++i )
+    {
+        //swap current tile with random tile further along in the vector
+        int index = i + (int) ( randomIndex.Sample() * (double) ( landTiles.size() - i ) );
+        gs::LandTilePtr temp = landTiles[index];
+        landTiles[index] = landTiles[i];
+        landTiles[i] = temp;
+    }
+
     vector<gs::BiomeSpreader> spreaders;
+    gs::RandomRange<int> randomSpeed( 1, 4, std::time( 0 ) );
 
-    //std::
+    for ( int i = 0; i < numOfSpreaders && i < landTiles.size(); ++i )
+    {
+        spreaders.push_back( gs::BiomeSpreader( randomSpeed.Sample(), landTiles[i], LookupRegionBiome( landTiles[i]->regionId ) ) );
+    }
 
+    //update each spreader until there is no more room to expand
+    bool active = true;
+    while ( active )
+    {
+        active = false;
+        for ( auto& s : spreaders )
+        {
+            if ( s.Spread() == true )
+            {
+                active = true;
+            }
+        }
+    }
+
+    //TODO: remove this
     for ( const auto& tile : landTiles )
     {
         tile->SetBlackIfRiver();
@@ -380,6 +451,11 @@ void gs::Globe::LinkTiles( const gs::TilePtr source, const gs::TilePtr dest, con
     }
 }
 
+gs::LandTile::Biome gs::Globe::LookupRegionBiome( const int id ) const
+{
+    return biomeTable[id];
+}
+
 gs::Globe::Globe()
     :   shader( "test", "data/shaders/test.vert", "data/shaders/test.frag" )
 {
@@ -387,14 +463,16 @@ gs::Globe::Globe()
     const int numOfTiles = 16000;
     const int numOfVertices = GenerateTiles( numOfTiles );
 
+    BuildBiomeTable();
+
     for ( auto& v : vertices )
     {
         v->CalculateHeight();
         v->IsRiver();
     }
 
-    GenerateRivers( 1 );
-    GenerateBiomes( 50 );
+    GenerateRivers( 20 );
+    GenerateBiomes( 200 );
 
     //create vao
     glGenVertexArrays( 1, &vao );

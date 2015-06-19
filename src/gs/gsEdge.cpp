@@ -32,7 +32,6 @@ vector<shared_ptr<gs::Tile>> gs::Edge::GetTiles() const
 bool gs::Edge::HasVertex( const shared_ptr<gs::Vertex>& refVertex ) const
 {
     return ( v0->position == refVertex->position || v1->position == refVertex->position );
-    //return ( v0 == refVertex || v1 == refVertex );
 }
 
 //bool gs::Edge::HasVertices( const gs::Vertex& refv0, const gs::Vertex& refv1 ) const
@@ -40,11 +39,14 @@ bool gs::Edge::HasVertex( const shared_ptr<gs::Vertex>& refVertex ) const
 //    return ( ( refv0.position == v0.position && refv1.position == v1.position ) || ( refv0.position == v1.position && refv1.position == v0.position ) );
 //}
 
+bool gs::Edge::IsRiver() const
+{
+    return river;
+}
+
 void gs::Edge::SetRiver()
 {
     river = true;
-//    v0->SetRiver();
-//    v1->SetRiver();
 }
 
 gs::Edge::Edge( const shared_ptr<gs::Vertex>& v0, const shared_ptr<gs::Vertex>& v1 )

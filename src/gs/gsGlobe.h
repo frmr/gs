@@ -50,23 +50,27 @@ namespace gs
         vector<gs::LandTilePtr>     landTiles;
         vector<gs::WaterTilePtr>    waterTiles;
 
+        vector<gs::LandTile::Biome> biomeTable;
+
     private:
-        void                CombineVertices( const vector<glm::dvec3>& corners, gs::Array<vector<gs::VertexPtr>>& buckets, const unsigned int bucketDim, vector<gs::VertexPtr>& cellVertices );
-        void                CreateTile( const vector<gs::VertexPtr>& cellVertices, const int vertexCount, const cck::Globe& terrain, const cck::GeoCoord& coord );
-        void                CreateTileEdges( const vector<gs::VertexPtr>& cellVertices );
-        GLuint              CreateVbo( const void* data, const int size, const int components, const string& name );
-        GLuint              CreateVbo( const int size, const int components, const string& name );
-        void                GenerateBiomes( const int numOfSpreaders );
-        void                GenerateRivers( const int numOfSpawners );
-        int                 GenerateTiles( const int numOfTiles );
-        static unsigned int HashDouble( const double val, const int bucketDim );
-        static void         LinkTiles( const gs::TilePtr source, const gs::TilePtr dest, const gs::EdgePtr edge );
+        void                    BuildBiomeTable();
+        void                    CombineVertices( const vector<glm::dvec3>& corners, gs::Array<vector<gs::VertexPtr>>& buckets, const unsigned int bucketDim, vector<gs::VertexPtr>& cellVertices );
+        void                    CreateTile( const vector<gs::VertexPtr>& cellVertices, const int vertexCount, const cck::Globe& terrain, const cck::GeoCoord& coord );
+        void                    CreateTileEdges( const vector<gs::VertexPtr>& cellVertices );
+        GLuint                  CreateVbo( const void* data, const int size, const int components, const string& name );
+        GLuint                  CreateVbo( const int size, const int components, const string& name );
+        void                    GenerateBiomes( const int numOfSpreaders );
+        void                    GenerateRivers( const int numOfSpawners );
+        int                     GenerateTiles( const int numOfTiles );
+        static unsigned int     HashDouble( const double val, const int bucketDim );
+        static void             LinkTiles( const gs::TilePtr source, const gs::TilePtr dest, const gs::EdgePtr edge );
+        gs::LandTile::Biome     LookupRegionBiome( const int id ) const;
 
     public:
-        void        Draw( const gs::Camera& worldCamera ) const;
-        cck::Globe  GenerateTerrain() const;
-        void        PrintMeshProperties() const;
-        void        Update();
+        void                    Draw( const gs::Camera& worldCamera ) const;
+        cck::Globe              GenerateTerrain() const;
+        void                    PrintMeshProperties() const;
+        void                    Update();
 
     public:
         Globe();

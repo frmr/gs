@@ -107,6 +107,7 @@
 		</Unit>
 		<Unit filename="src/gs/gsArray.h" />
 		<Unit filename="src/gs/gsBinarySearchTree.h" />
+		<Unit filename="src/gs/gsBiomeSpreader.cpp" />
 		<Unit filename="src/gs/gsBiomeSpreader.h" />
 		<Unit filename="src/gs/gsCamera.cpp" />
 		<Unit filename="src/gs/gsCamera.h" />
