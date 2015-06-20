@@ -107,7 +107,6 @@ bool gs::Vertex::SetRiver( const int newRiverId )
 
         if ( lowestEdge == nullptr )
         {
-            cerr << "gs::Vertex::SetRiver() in gsVertex.cpp: No room to extend river." << endl; //TODO: Remove this message; it's just part of the process
             riverId = -1;
             return false;
         }

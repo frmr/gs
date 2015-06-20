@@ -2,6 +2,7 @@
 #define GS_LAND_TILE_H
 
 #include "gsTile.h"
+#include "gsRandomRange.h"
 #include "gsVertex.h"
 
 #include <memory>
@@ -52,7 +53,7 @@ namespace gs
         bool                                HasUnassignedBiomeNeighbors() const;
         void                                SetBiome( const Biome newBiome );
         void                                SetBlackIfRiver(); //TODO: delete
-        bool                                SpawnRiver( const int newRiverId );
+        bool                                SpawnRiver( const int newRiverId, gs::RandomRange<double>& rand );
 
     public:
         LandTile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const double height, const int regionId );

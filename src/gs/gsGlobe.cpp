@@ -398,16 +398,16 @@ void gs::Globe::GenerateRivers( const int numOfSpawners )
 {
     //pick numOfRivers random vertices
 
-    gs::RandomRange<double> range( 0.0, 1.0, std::time( 0 ) );
+    gs::RandomRange<double> rand( 0.0, 0.9999, std::time( 0 ) );
 
     for ( int i = 0; i < numOfSpawners && i < (int) landTiles.size(); ++i )
     {
-        int swapTarget = i + (int) ( range.Sample() * (double) ( landTiles.size() - i - 1 ) ) + 1;
+        int swapTarget = i + (int) ( rand.Sample() * (double) ( landTiles.size() - i ) ) + 1;
         gs::LandTilePtr temp = landTiles[swapTarget];
         landTiles[swapTarget] = landTiles[i];
         landTiles[i] = temp;
 
-        landTiles[i]->SpawnRiver( i );
+        landTiles[i]->SpawnRiver( i, rand );
     }
 }
 
@@ -480,7 +480,7 @@ gs::Globe::Globe()
         v->IsRiver();
     }
 
-    GenerateRivers( 20 );
+    GenerateRivers( 50 );
     GenerateBiomes( 200 );
 
     //create vao

@@ -107,7 +107,7 @@ void gs::LandTile::SetBlackIfRiver() //TODO: delete
     }
 }
 
-bool gs::LandTile::SpawnRiver( const int newRiverId )
+bool gs::LandTile::SpawnRiver( const int newRiverId, gs::RandomRange<double>& rand )
 {
     double probability;
     if ( terrain == gs::LandTile::Terrain::PLAINS )
@@ -123,9 +123,10 @@ bool gs::LandTile::SpawnRiver( const int newRiverId )
         probability = 1.0;
     }
 
-    gs::RandomRange<int> range( 0, vertices.size()-1, std::time( 0 ) );
-    //pick random vertex
-    vertices[range.Sample()]->SetRiver( newRiverId );
+    if ( rand.Sample() > probability )
+    {
+        vertices[(int) ( rand.Sample() * (double) vertices.size() )]->SetRiver( newRiverId );
+    }
 }
 
 gs::LandTile::LandTile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const double height, const int regionId )
