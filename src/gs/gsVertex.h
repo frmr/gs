@@ -18,8 +18,8 @@ namespace gs
     class Vertex
     {
     public:
-        const int       id;
-        const gs::Vec3d position;
+        const int           id;
+        const gs::Vec3d     position;
 
     private:
         static int idCounter;
@@ -29,7 +29,7 @@ namespace gs
         vector<gs::Link<gs::Vertex>>    links;
 
         double                          height;
-        bool                            river;
+        int                             riverId;
 
     private:
         bool                            CompareTargetHeights( const gs::Link<gs::Vertex>& a, const gs::Link<gs::Vertex>& b ) const;
@@ -42,9 +42,7 @@ namespace gs
         shared_ptr<gs::Edge>            GetEdgeWith( const shared_ptr<gs::Vertex> refVertex ) const;
         double                          GetHeight() const;
         bool                            IsRiver() const;
-        void                            SetRiver();
-        void                            SetRiver( vector<int>& riverIds );
-        void                            SortLinksByHeight();
+        bool                            SetRiver( const int newRiverId );
 
     public:
         Vertex( const gs::Vec3d& position );

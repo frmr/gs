@@ -57,14 +57,6 @@ void gs::LandTile::SetBiome( const gs::LandTile::Biome newBiome )
 
 void gs::LandTile::SetBlackIfRiver() //TODO: delete
 {
-//    for ( auto link : landLinks )
-//    {
-//        if ( link.edge->IsRiver() )
-//        {
-//            color = gs::Vec3f( 0.0, 0.0, 0.0 );
-//        }
-//    }
-
     if ( biome == gs::LandTile::Biome::DESERT )
     {
         if ( terrain == gs::LandTile::Terrain::PLAINS )
@@ -105,9 +97,17 @@ void gs::LandTile::SetBlackIfRiver() //TODO: delete
     {
         color = gs::Vec3f( 1.0f, 1.0f, 1.0f );
     }
+
+        for ( auto link : landLinks )
+    {
+        if ( link.edge->IsRiver() )
+        {
+            color = gs::Vec3f( 0.0, 0.0, 0.0 );
+        }
+    }
 }
 
-bool gs::LandTile::SpawnRiver()
+bool gs::LandTile::SpawnRiver( const int newRiverId )
 {
     double probability;
     if ( terrain == gs::LandTile::Terrain::PLAINS )
@@ -125,7 +125,7 @@ bool gs::LandTile::SpawnRiver()
 
     gs::RandomRange<int> range( 0, vertices.size()-1, std::time( 0 ) );
     //pick random vertex
-    vertices[range.Sample()]->SetRiver();
+    vertices[range.Sample()]->SetRiver( newRiverId );
 }
 
 gs::LandTile::LandTile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const double height, const int regionId )

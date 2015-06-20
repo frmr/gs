@@ -347,7 +347,7 @@ void gs::Globe::GenerateBiomes( const int numOfSpreaders )
     gs::RandomRange<double> randomIndex( 0.0, 0.9999, std::time( 0 ) );
 
     //put numOfSpreaders random land tiles at the start of the vector
-    for ( int i = 0; i < numOfSpreaders && i < landTiles.size(); ++i )
+    for ( unsigned int i = 0; i < (unsigned int) numOfSpreaders && i < landTiles.size(); ++i )
     {
         //swap current tile with random tile further along in the vector
         unsigned int index = i + (int) ( randomIndex.Sample() * (double) ( landTiles.size() - i ) );
@@ -359,7 +359,7 @@ void gs::Globe::GenerateBiomes( const int numOfSpreaders )
     vector<gs::BiomeSpreader> spreaders;
     gs::RandomRange<int> randomSpeed( 1, 4, std::time( 0 ) );
 
-    for ( int i = 0; i < numOfSpreaders && i < landTiles.size(); ++i )
+    for ( unsigned int i = 0; i < (unsigned int ) numOfSpreaders && i < landTiles.size(); ++i )
     {
         spreaders.push_back( gs::BiomeSpreader( randomSpeed.Sample(), landTiles[i], LookupRegionBiome( landTiles[i]->regionId ), landTiles[i]->terrain ) );
     }
@@ -407,7 +407,7 @@ void gs::Globe::GenerateRivers( const int numOfSpawners )
         landTiles[swapTarget] = landTiles[i];
         landTiles[i] = temp;
 
-        landTiles[i]->SpawnRiver();
+        landTiles[i]->SpawnRiver( i );
     }
 }
 

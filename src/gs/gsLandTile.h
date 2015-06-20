@@ -52,7 +52,7 @@ namespace gs
         bool                                HasUnassignedBiomeNeighbors() const;
         void                                SetBiome( const Biome newBiome );
         void                                SetBlackIfRiver(); //TODO: delete
-        bool                                SpawnRiver();
+        bool                                SpawnRiver( const int newRiverId );
 
     public:
         LandTile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const double height, const int regionId );

@@ -55,72 +55,82 @@ double gs::Vertex::GetHeight() const
 
 bool gs::Vertex::IsRiver() const
 {
-    return river;
+    return ( riverId != -1 );
 }
 
-void gs::Vertex::SetRiver()
+bool gs::Vertex::SetRiver( const int newRiverId )
 {
-    vector<int> riverIds;
-    SetRiver( riverIds );
-}
-
-void gs::Vertex::SetRiver( vector<int>& riverIds )
-{
-    if ( river )
+    if ( riverId == newRiverId )
     {
-        return;
+        //river converges with itself, which is impossible
+        return false;
+    }
+    else if ( riverId != -1 )
+    {
+        //two rivers converge
+        return true;
     }
 
-    riverIds.push_back( id );
+    //else, the vertex is not already a river
 
     //stop if vertex touches the sea
-    bool coastal = false;
     for ( const auto& tile : tiles )
     {
         if ( tile->GetSurface() == gs::Tile::Type::WATER )
         {
-            coastal = true;
-            break;
+            return true;
         }
     }
 
-    if ( coastal )
+    riverId = newRiverId;
+
+    vector<int> visitedIds;
+
+    bool childSucceeded = false;
+
+    while ( !childSucceeded )
     {
-        return;
-    }
+        gs::EdgePtr lowestEdge = nullptr;
+        gs::VertexPtr lowestVertex = nullptr;
+        double lowestHeight = std::numeric_limits<double>::max();
 
-    river = true;
-
-    gs::EdgePtr lowestEdge = nullptr;
-    gs::VertexPtr lowestVertex = nullptr;
-    double lowestHeight = std::numeric_limits<double>::max();
-
-    for ( auto& link : links )
-    {
-        bool targetVisited = ( std::find( riverIds.begin(), riverIds.end(), link.target->id ) != riverIds.end() );
-        if ( !targetVisited && link.target->GetHeight() < lowestHeight )
+        for ( auto& link : links )
         {
-            lowestEdge = link.edge;
-            lowestVertex = link.target;
-            lowestHeight = link.target->GetHeight();
+            bool targetVisited = ( std::find( visitedIds.begin(), visitedIds.end(), link.target->id ) != visitedIds.end() );
+            if ( !targetVisited && link.target->GetHeight() < lowestHeight )
+            {
+                lowestEdge = link.edge;
+                lowestVertex = link.target;
+                lowestHeight = link.target->GetHeight();
+            }
         }
-    }
 
-    if ( lowestEdge != nullptr )
-    {
-        lowestEdge->SetRiver();
-        lowestVertex->SetRiver( riverIds );
-    }
-    else
-    {
-        cerr << "gs::Vertex::SetRiver() in gsVertex.cpp: No room to extend river." << endl;
-    }
+        if ( lowestEdge == nullptr )
+        {
+            cerr << "gs::Vertex::SetRiver() in gsVertex.cpp: No room to extend river." << endl; //TODO: Remove this message; it's just part of the process
+            riverId = -1;
+            return false;
+        }
+        else
+        {
+            childSucceeded = lowestVertex->SetRiver( newRiverId );
+            if ( childSucceeded )
+            {
+                lowestEdge->SetRiver();
+            }
+            else
+            {
+                visitedIds.push_back( lowestVertex->id );
+            }
+        }
 
+    }
+    return true;
 }
 
 gs::Vertex::Vertex( const gs::Vec3d& position )
     :   id( idCounter++ ),
         position( position ),
-        river( false )
+        riverId( -1 )
 {
 }

@@ -106,8 +106,8 @@ int main(int argc, char* argv[] )
         running = false;
     }
 
-    int screenWidth = 1024;
-    int screenHeight = 768;
+    int screenWidth = 1600;
+    int screenHeight = 900;
 
     SDL_Window* window = NULL;
     SDL_GLContext context = NULL;
