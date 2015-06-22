@@ -2,6 +2,7 @@
 #define GS_VEC3_H
 
 #include <cmath>
+#include "gsVec2.h"
 
 namespace gs
 {
@@ -36,6 +37,10 @@ namespace gs
             return *this;
         }
 
+        gs::Vec2<T> ToVec2()
+        {
+            return gs::Vec2<T>( x, y );
+        }
 
         template<typename U>
         Vec3<T> operator+( const Vec3<U>& rhs ) const

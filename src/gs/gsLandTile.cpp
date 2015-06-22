@@ -2,6 +2,8 @@
 #include "gsRandomRange.h"
 #include "gsGlobe.h"
 
+#include "../EasyBMP/EasyBMP.h"
+
 #include <ctime>
 
 gs::LandTile::Terrain gs::LandTile::DetermineTerrain() const
@@ -18,6 +20,11 @@ gs::LandTile::Terrain gs::LandTile::DetermineTerrain() const
     {
         return gs::LandTile::Terrain::MOUNTAINS;
     }
+}
+
+void gs::LandTile::GenerateTexture()
+{
+    texture = new gs::TileTexture( vertices );
 }
 
 vector<shared_ptr<gs::LandTile>> gs::LandTile::GetUnassignedBiomeNeighbors() const
@@ -134,7 +141,8 @@ gs::LandTile::LandTile( const int bufferOffset, const vector<shared_ptr<gs::Vert
         regionId( regionId ),
         terrain( DetermineTerrain() ),
         forested( false ),
-        biome( gs::LandTile::Biome::UNASSIGNED )
+        biome( gs::LandTile::Biome::UNASSIGNED ),
+        texture( NULL )
 {
     if ( terrain == gs::LandTile::Terrain::PLAINS )
     {
@@ -149,4 +157,6 @@ gs::LandTile::LandTile( const int bufferOffset, const vector<shared_ptr<gs::Vert
         color = gs::Vec3f( 0.4, 0.4, 0.4 );
     }
     //color = gs::Vec3f( 0.0f, ( 8.0f * (float) id ) / 255.0f, 0.0f );
+
+
 }

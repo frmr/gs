@@ -3,6 +3,7 @@
 
 #include "gsTile.h"
 #include "gsRandomRange.h"
+#include "gsTileTexture.h"
 #include "gsVertex.h"
 
 #include <memory>
@@ -35,19 +36,21 @@ namespace gs
         };
 
     public:
-        const int       regionId;
-        const Terrain   terrain;
+        const int                   regionId;
+        const Terrain               terrain;
 
     private:
-        bool            forested;
-        Biome           biome;
+        bool                        forested;
+        Biome                       biome;
+        gs::TileTexture*            texture;
 
 
     private:
-        Terrain DetermineTerrain() const;
+        Terrain                             DetermineTerrain() const;
 
     public:
 
+        void                                GenerateTexture();
         vector<shared_ptr<gs::LandTile>>    GetUnassignedBiomeNeighbors() const;
         Biome                               GetBiome() const;
         bool                                HasUnassignedBiomeNeighbors() const;

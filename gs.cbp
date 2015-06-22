@@ -81,6 +81,11 @@
 		</Linker>
 		<Unit filename="include/GL/gl3w.h" />
 		<Unit filename="include/GL/glcorearb.h" />
+		<Unit filename="src/EasyBMP/EasyBMP.cpp" />
+		<Unit filename="src/EasyBMP/EasyBMP.h" />
+		<Unit filename="src/EasyBMP/EasyBMP_BMP.h" />
+		<Unit filename="src/EasyBMP/EasyBMP_DataStructures.h" />
+		<Unit filename="src/EasyBMP/EasyBMP_VariousBMPutilities.h" />
 		<Unit filename="src/cck/cck.h" />
 		<Unit filename="src/cck/cckBoundBox.cpp" />
 		<Unit filename="src/cck/cckBoundBox.h" />
@@ -130,6 +135,10 @@
 		<Unit filename="src/gs/gsSpreader.h" />
 		<Unit filename="src/gs/gsTile.cpp" />
 		<Unit filename="src/gs/gsTile.h" />
+		<Unit filename="src/gs/gsTileGroup.cpp" />
+		<Unit filename="src/gs/gsTileGroup.h" />
+		<Unit filename="src/gs/gsTileGroupManager.h" />
+		<Unit filename="src/gs/gsTileTexture.h" />
 		<Unit filename="src/gs/gsVec3.h" />
 		<Unit filename="src/gs/gsVertex.cpp" />
 		<Unit filename="src/gs/gsVertex.h" />
