@@ -1,7 +1,7 @@
 #ifndef GS_TILE_H
 #define GS_TILE_H
 
-#include <GL/gl3w.h>
+#include "../gl3w/gl3w.h"
 #include <vector>
 
 #include "gsLink.h"
@@ -28,8 +28,13 @@ namespace gs
 
         bool visited; //delete
 
+    public:
+        const int                               id;
+
     protected:
+        static int                              idCounter;
         Type                                    surface;
+        const gs::Vec3f                         centroid;
         const double                            height;
 
         const GLuint                            bufferOffset;
@@ -57,7 +62,7 @@ namespace gs
         Type    GetSurface() const;
 
     protected:
-        Tile( const Type surface, const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const double height );
+        Tile( const Type surface, const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3f& centroid, const double height );
 
     public:
         //Tile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices );

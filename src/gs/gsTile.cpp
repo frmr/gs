@@ -9,6 +9,8 @@
 using std::cerr;
 using std::endl;
 
+int gs::Tile::idCounter = 0;
+
 void gs::Tile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint texCoordVbo, const GLuint fogVbo, vector<GLuint>& indexVector ) //const
 {
     //load position data
@@ -109,8 +111,10 @@ gs::Tile::Type gs::Tile::GetSurface() const
     return surface;
 }
 
-gs::Tile::Tile( const Type surface, const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const double height )
-    :   surface( surface ),
+gs::Tile::Tile( const Type surface, const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3f& centroid, const double height )
+    :   id( idCounter++ ),
+        surface( surface ),
+        centroid( centroid ),
         height( height ),
         bufferOffset( bufferOffset ),
         vertices( vertices ),

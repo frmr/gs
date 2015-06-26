@@ -3,7 +3,7 @@
 
 #include <stack>
 
-#include <GL/gl3w.h>
+#include "../gl3w/gl3w.h"
 #include "../matrix/Matrices.h"
 
 namespace gs

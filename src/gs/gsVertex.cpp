@@ -127,7 +127,7 @@ bool gs::Vertex::SetRiver( const int newRiverId )
     return true;
 }
 
-gs::Vertex::Vertex( const gs::Vec3d& position )
+gs::Vertex::Vertex( const gs::Vec3f& position )
     :   id( idCounter++ ),
         position( position ),
         riverId( -1 )

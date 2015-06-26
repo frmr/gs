@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include <GL/gl3w.h>
+#include "../gl3w/gl3w.h"
 
 using std::string;
 

@@ -185,7 +185,7 @@ void gs::Globe::CombineVertices( const vector<glm::dvec3>& corners, gs::Array<ve
     constexpr double errorMargin = 0.000001;
     for ( const auto& corner : corners )
     {
-        const gs::Vec3d gsCorner( corner.x, corner.y, corner.z );
+        const gs::Vec3f gsCorner( (float) corner.x, (float) corner.y, (float) corner.z );
         //hash to buckets
         unsigned int xHash = HashDouble( gsCorner.x, bucketDim );
         unsigned int yHash = HashDouble( gsCorner.y, bucketDim );
@@ -226,16 +226,18 @@ void gs::Globe::CombineVertices( const vector<glm::dvec3>& corners, gs::Array<ve
     }
 }
 
-void gs::Globe::CreateTile( const vector<gs::VertexPtr>& cellVertices, const int vertexCount, const cck::Globe& terrain, const cck::GeoCoord& coord )
+void gs::Globe::CreateTile( const vector<gs::VertexPtr>& cellVertices, const int vertexCount, const cck::Globe& terrain, const cck::Vec3& centroid )
 {
     //create new tile
     double sampleHeight;
     int sampleId;
-    terrain.SampleData( coord, sampleHeight, sampleId );
+    terrain.SampleData( centroid.ToGeographic(), sampleHeight, sampleId );
+
+    gs::Vec3f gsCentroid( centroid.x, centroid.y, centroid.z );
 
     if ( sampleHeight > 0.00001 )
     {
-        auto newTile = std::make_shared<gs::LandTile>( vertexCount, cellVertices, sampleHeight, sampleId );
+        auto newTile = std::make_shared<gs::LandTile>( vertexCount, cellVertices, gsCentroid, sampleHeight, sampleId );
         allTiles.push_back( std::dynamic_pointer_cast<gs::Tile>( newTile ) );
         landTiles.push_back( newTile );
 
@@ -247,7 +249,7 @@ void gs::Globe::CreateTile( const vector<gs::VertexPtr>& cellVertices, const int
     }
     else
     {
-        auto newTile = std::make_shared<gs::WaterTile>( vertexCount, cellVertices );
+        auto newTile = std::make_shared<gs::WaterTile>( vertexCount, cellVertices, gsCentroid );
         allTiles.push_back( std::dynamic_pointer_cast<gs::Tile>( newTile ) );
         waterTiles.push_back( newTile );
 
@@ -432,7 +434,7 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
     {
         vector<gs::VertexPtr> cellVertices;
         CombineVertices( cell->corners, buckets, bucketDim, cellVertices );
-        CreateTile( cellVertices, vertexCount, terrain, cck::Vec3( cell->centroid.z, cell->centroid.x, cell->centroid.y ).ToGeographic() );
+        CreateTile( cellVertices, vertexCount, terrain, cck::Vec3( cell->centroid.z, cell->centroid.x, cell->centroid.y ) );
         vertexCount += cellVertices.size();
         CreateTileEdges( cellVertices );
     }
@@ -494,6 +496,11 @@ gs::Globe::Globe()
     fogVbo = CreateVbo( numOfVertices, 1, "fogVert" );
 
     vector<GLuint> indexVector;
+
+    for ( auto& tile : landTiles )
+    {
+        tile->GenerateTexture();
+    }
 
     for ( auto& tile : allTiles )
     {

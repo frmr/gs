@@ -65,6 +65,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-pedantic-errors" />
+			<Add option="-pedantic" />
 			<Add option="-std=c++11" />
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
@@ -79,8 +80,6 @@
 			<Add option="-lSDL2main" />
 			<Add option="-lSDL2" />
 		</Linker>
-		<Unit filename="include/GL/gl3w.h" />
-		<Unit filename="include/GL/glcorearb.h" />
 		<Unit filename="src/EasyBMP/EasyBMP.cpp" />
 		<Unit filename="src/EasyBMP/EasyBMP.h" />
 		<Unit filename="src/EasyBMP/EasyBMP_BMP.h" />
@@ -110,6 +109,8 @@
 		<Unit filename="src/gl3w/gl3w.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/gl3w/gl3w.h" />
+		<Unit filename="src/gl3w/glcorearb.h" />
 		<Unit filename="src/gs/gsArray.h" />
 		<Unit filename="src/gs/gsBinarySearchTree.h" />
 		<Unit filename="src/gs/gsBiomeSpreader.cpp" />
@@ -138,7 +139,9 @@
 		<Unit filename="src/gs/gsTileGroup.cpp" />
 		<Unit filename="src/gs/gsTileGroup.h" />
 		<Unit filename="src/gs/gsTileGroupManager.h" />
+		<Unit filename="src/gs/gsTileTexture.cpp" />
 		<Unit filename="src/gs/gsTileTexture.h" />
+		<Unit filename="src/gs/gsVec2.h" />
 		<Unit filename="src/gs/gsVec3.h" />
 		<Unit filename="src/gs/gsVertex.cpp" />
 		<Unit filename="src/gs/gsVertex.h" />

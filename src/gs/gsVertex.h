@@ -19,10 +19,10 @@ namespace gs
     {
     public:
         const int           id;
-        const gs::Vec3d     position;
+        const gs::Vec3f     position;
 
     private:
-        static int idCounter;
+        static int          idCounter;
 
         vector<shared_ptr<gs::Edge>>    edges;
         vector<shared_ptr<gs::Tile>>    tiles;
@@ -45,7 +45,7 @@ namespace gs
         bool                            SetRiver( const int newRiverId );
 
     public:
-        Vertex( const gs::Vec3d& position );
+        Vertex( const gs::Vec3f& position );
     };
 
     typedef shared_ptr<gs::Vertex> VertexPtr;

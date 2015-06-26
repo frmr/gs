@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include <SDL.h>
-#include <GL/gl3w.h>
+#include "gl3w/gl3w.h"
 
 #include "gs/gsCamera.h"
 #include "gs/gsGlobe.h"

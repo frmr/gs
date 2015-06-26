@@ -20,7 +20,7 @@ namespace gs
         bool ice;
 
     public:
-        WaterTile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices );
+        WaterTile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3f& centroid );
     };
 
     typedef shared_ptr<gs::WaterTile> WaterTilePtr;

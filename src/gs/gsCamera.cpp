@@ -1,7 +1,7 @@
 #include "gsCamera.h"
 #include "gsMath.h"
 
-#include <GL/gl3w.h>
+#include "../gl3w/gl3w.h"
 
 #include <iostream>
 

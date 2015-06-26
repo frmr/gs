@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include <GL/gl3w.h>
+#include "../gl3w/gl3w.h"
 #include "../matrix/Matrices.h"
 #include "../voronoi/src/voronoi_generator.h"
 
@@ -55,7 +55,7 @@ namespace gs
     private:
         void                    BuildBiomeTable();
         void                    CombineVertices( const vector<glm::dvec3>& corners, gs::Array<vector<gs::VertexPtr>>& buckets, const unsigned int bucketDim, vector<gs::VertexPtr>& cellVertices );
-        void                    CreateTile( const vector<gs::VertexPtr>& cellVertices, const int vertexCount, const cck::Globe& terrain, const cck::GeoCoord& coord );
+        void                    CreateTile( const vector<gs::VertexPtr>& cellVertices, const int vertexCount, const cck::Globe& terrain, const cck::Vec3& centroid );
         void                    CreateTileEdges( const vector<gs::VertexPtr>& cellVertices );
         GLuint                  CreateVbo( const void* data, const int size, const int components, const string& name );
         GLuint                  CreateVbo( const int size, const int components, const string& name );

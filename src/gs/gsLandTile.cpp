@@ -24,7 +24,7 @@ gs::LandTile::Terrain gs::LandTile::DetermineTerrain() const
 
 void gs::LandTile::GenerateTexture()
 {
-    texture = new gs::TileTexture( vertices );
+    texture = new gs::TileTexture( id, vertices, allLinks, centroid );
 }
 
 vector<shared_ptr<gs::LandTile>> gs::LandTile::GetUnassignedBiomeNeighbors() const
@@ -136,8 +136,8 @@ bool gs::LandTile::SpawnRiver( const int newRiverId, gs::RandomRange<double>& ra
     }
 }
 
-gs::LandTile::LandTile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const double height, const int regionId )
-    :   gs::Tile( gs::Tile::Type::LAND, bufferOffset, vertices, height ),
+gs::LandTile::LandTile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3f& centroid, const double height, const int regionId )
+    :   gs::Tile( gs::Tile::Type::LAND, bufferOffset, vertices, centroid, height ),
         regionId( regionId ),
         terrain( DetermineTerrain() ),
         forested( false ),
