@@ -26,12 +26,15 @@ mpvec3* MPSampleGenerator::getJitteredSamplesMP(int n)
 {
     mpvec3* samples = new mpvec3[n*n];
 
+    const long double minBound = 0.0;
+    const long double maxBound = 1.0;
+
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < n; j++)
         {
-            long double x = unif(re);
-            long double y = unif(re);
+            long double x = minBound + unif(re) * maxBound;
+            long double y = minBound + unif(re) * maxBound;
 
             samples[i*n + j] = mpvec3((x+i)/n, (y+j)/n, 0.0);
         }

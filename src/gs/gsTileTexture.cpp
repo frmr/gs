@@ -6,21 +6,6 @@
 using std::cerr;
 using std::endl;
 
-gs::Vec2f gs::TileTexture::ComputeRelativePoint( const gs::Vec3f& uAxis, const gs::Vec3f& vAxis, const gs::Vec3f& p )
-{
-//    gs::Vec3f pVec = point - vert0;
-//
-//    const float dotUU = VectorDot( uAxis, uAxis );
-//    const float dotUV = VectorDot( uAxis, vAxis );
-//    const float dotUP = VectorDot( uAxis, p );
-//    const float dot22 = VectorDot( vec02, vec02 );
-//    const float dot2p = VectorDot( vec02, pVec );
-//
-//    const float invDenom = 1.0f / ( dot11 * dot22 - dot12 * dot12 );
-//    const float u = ( dot22 * dot1p - dot12 * dot2p ) * invDenom;
-//    const float v = ( dot11 * dot2p - dot12 * dot1p ) * invDenom;
-}
-
 gs::TileTexture::TileTexture( const int id, const vector<gs::VertexPtr>& worldVertices, const vector<gs::Link<gs::Tile>>& links, const gs::Vec3f& centroid )
 {
     //TODO: Make this safer by checking for presence of first and second vertices
@@ -62,8 +47,24 @@ gs::TileTexture::TileTexture( const int id, const vector<gs::VertexPtr>& worldVe
     maxCoord -= minCoord;
     minCoord -= minCoord; //should be (0,0)
 
-    constexpr int pixelsPerUnit = 1000;
+    constexpr int pixelsPerUnit = 4000;
 
-    file.SetSize( (int) ( maxCoord.x * pixelsPerUnit ), (int) ( maxCoord.y * pixelsPerUnit ) );
+    width = (int) ( maxCoord.x * pixelsPerUnit ) + 1;
+    width = ( width < 1 ) ? 1 : width;
+    height = (int) ( maxCoord.y * pixelsPerUnit ) + 1;
+    height = ( height < 1 ) ? 1 : height;
+
+    file.SetSize( width, height );
+    for ( const auto& coord : relativeCoords )
+    {
+        int x = (int) ( coord.x * pixelsPerUnit );
+        x = ( x < 1 ) ? 1 : x;
+        int y = (int) ( coord.y * pixelsPerUnit );
+        y = ( y < 1 ) ? 1 : y;
+        cerr << x << " " << y << endl;
+        file(x,y)->Red = 255;
+        file(x,y)->Green = 0;
+        file(x,y)->Blue = 0;
+    }
     file.WriteToFile( ( "data/textures/procedural/" + std::to_string( id ) + ".bmp" ).c_str() );
 }

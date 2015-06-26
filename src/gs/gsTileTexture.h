@@ -24,7 +24,6 @@ namespace gs
 
         BMP file;
     private:
-        static gs::Vec2f ComputeRelativePoint( const gs::Vec3f& uAxis, const gs::Vec3f& vAxis, const gs::Vec3f& p );
 
     public:
         TileTexture( const int id, const vector<gs::VertexPtr>& worldVertices, const vector<gs::Link<gs::Tile>>& links, const gs::Vec3f& centroid );
