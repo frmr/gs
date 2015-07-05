@@ -6,6 +6,26 @@
 using std::cerr;
 using std::endl;
 
+void gs::TileTexture::DeleteTextureData()
+{
+    //delete image;
+}
+
+int gs::TileTexture::GetArea() const
+{
+    return width * height;
+}
+
+int gs::TileTexture::GetHeight() const
+{
+    return height;
+}
+
+int gs::TileTexture::GetWidth() const
+{
+    return width;
+}
+
 gs::TileTexture::TileTexture( const int id, const vector<gs::VertexPtr>& worldVertices, const vector<gs::Link<gs::Tile>>& links, const gs::Vec3f& centroid )
 {
     //TODO: Make this safer by checking for presence of first and second vertices
@@ -47,24 +67,30 @@ gs::TileTexture::TileTexture( const int id, const vector<gs::VertexPtr>& worldVe
     maxCoord -= minCoord;
     minCoord -= minCoord; //should be (0,0)
 
-    constexpr int pixelsPerUnit = 4000;
+    constexpr int pixelsPerUnit = 1000;
 
     width = (int) ( maxCoord.x * pixelsPerUnit ) + 1;
     width = ( width < 1 ) ? 1 : width;
     height = (int) ( maxCoord.y * pixelsPerUnit ) + 1;
     height = ( height < 1 ) ? 1 : height;
 
-    file.SetSize( width, height );
+    image = new BMP();
+    image->SetSize( width, height );
     for ( const auto& coord : relativeCoords )
     {
         int x = (int) ( coord.x * pixelsPerUnit );
-        x = ( x < 1 ) ? 1 : x;
+        //x = ( x < 0 ) ? 0 : x;
         int y = (int) ( coord.y * pixelsPerUnit );
-        y = ( y < 1 ) ? 1 : y;
-        cerr << x << " " << y << endl;
-        file(x,y)->Red = 255;
-        file(x,y)->Green = 0;
-        file(x,y)->Blue = 0;
+        //y = ( y < 0 ) ? 0 : y;
+        //cerr << width << " " << height << " " << x << " " << y << endl;
+        (*image)(x,y)->Red = 255;
+        (*image)(x,y)->Green = 0;
+        (*image)(x,y)->Blue = 0;
     }
-    file.WriteToFile( ( "data/textures/procedural/" + std::to_string( id ) + ".bmp" ).c_str() );
+    image->WriteToFile( ( "data/textures/procedural/" + std::to_string( id ) + ".bmp" ).c_str() );
+}
+
+gs::TileTexture::~TileTexture()
+{
+    DeleteTextureData();
 }

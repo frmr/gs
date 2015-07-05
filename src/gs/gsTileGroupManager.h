@@ -4,8 +4,11 @@
 #include "gsTileGroup.h"
 #include "gsTileTexture.h"
 
+#include <iostream>
 #include <vector>
 
+using std::cerr;
+using std::endl;
 using std::vector;
 
 namespace gs
@@ -13,23 +16,15 @@ namespace gs
     class TileGroupManager
     {
     private:
-        vector<gs::TileGroup> tileGroups;
+        GLint                   textureDim;
+        vector<gs::TileGroup>   tileGroups;
 
     public:
-        void Add( const gs::TileTexture& texture, const GLuint bufferEnd )
-        {
-            if ( !tileGroup.end()->Add( texture, bufferEnd ) )
-            {
-                tileGroups.push_back( gs::TileGroup( tileGroups.end()->GetBufferEnd() + 1 ) );
-                tileGroup.end()->Add( texture, bufferEnd );
-            }
-        }
+        void Add( const gs::TileTexture& texture, const GLuint bufferEnd );
+        void SetTextureSize( const GLint newTextureDim );
 
     public:
-        TileGroupManager()
-        {
-            tileGroups.push_back( gs::TileGroup() );
-        }
+        TileGroupManager( const GLint textureDim = 1024 );
     };
 }
 

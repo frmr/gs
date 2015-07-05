@@ -70,10 +70,6 @@ namespace gs
             return false;
         }
 
-        GLint maxSize;
-        glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxSize);
-        cerr << "Tex size: " << maxSize << endl;
-
         glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
         glViewport( 0, 0, screenWidth, screenHeight);
 

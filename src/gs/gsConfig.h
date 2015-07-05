@@ -14,6 +14,8 @@ namespace gs
         int     screenHeight;
         bool    fullscreen;
 
+        string  textureDirectory;
+
     public:
         int     GetScreenWidth() const;
         int     GetScreenHeight() const;

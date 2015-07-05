@@ -4,6 +4,8 @@
 #include "gsVec2.h"
 #include "gsVec3.h"
 
+#include <algorithm>
+
 namespace gs
 {
     constexpr double PI = 3.14159265359;
@@ -28,6 +30,12 @@ namespace gs
         return gs::Vec3<T>( vecA.y * vecB.z - vecA.z * vecB.y,
                             vecA.z * vecB.x - vecA.x * vecB.z,
                             vecA.x * vecB.y - vecA.y * vecB.x );
+    }
+
+    template <typename T>
+    T Clip( const T& n, const T& lower, const T& upper )
+    {
+        return std::max( lower, std::min( n, upper ) );
     }
 }
 

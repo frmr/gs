@@ -22,6 +22,16 @@ gs::LandTile::Terrain gs::LandTile::DetermineTerrain() const
     }
 }
 
+void gs::LandTile::AddToTileGroup( gs::TileGroupManager& manager )
+{
+    manager.Add( *texture, bufferOffset + vertices.size() );
+}
+
+void gs::LandTile::DeleteLocalTextureData()
+{
+    delete texture;
+}
+
 void gs::LandTile::GenerateTexture()
 {
     texture = new gs::TileTexture( id, vertices, allLinks, centroid );
@@ -133,6 +143,11 @@ bool gs::LandTile::SpawnRiver( const int newRiverId, gs::RandomRange<double>& ra
     if ( rand.Sample() > probability )
     {
         vertices[(int) ( rand.Sample() * (double) vertices.size() )]->SetRiver( newRiverId );
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }
 

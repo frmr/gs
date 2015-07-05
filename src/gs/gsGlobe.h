@@ -17,6 +17,7 @@
 #include "gsMatrixStack.h"
 #include "gsShader.h"
 #include "gsTile.h"
+#include "gsTileGroupManager.h"
 #include "gsVertex.h"
 #include "gsWaterTile.h"
 
@@ -50,7 +51,9 @@ namespace gs
         vector<gs::LandTilePtr>     landTiles;
         vector<gs::WaterTilePtr>    waterTiles;
 
-        vector<gs::LandTile::Biome> biomeTable;
+        vector<gs::LandTile::Biome> biomeTable; //TODO: Would be better as a gs::Array
+
+        gs::TileGroupManager        groupManager;
 
     private:
         void                    BuildBiomeTable();
@@ -65,6 +68,7 @@ namespace gs
         static unsigned int     HashDouble( const double val, const int bucketDim );
         static void             LinkTiles( const gs::TilePtr source, const gs::TilePtr dest, const gs::EdgePtr edge );
         gs::LandTile::Biome     LookupRegionBiome( const int id ) const;
+        void                    SetTileGroupTextureSize();
 
     public:
         void                    Draw( const gs::Camera& worldCamera ) const;

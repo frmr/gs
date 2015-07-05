@@ -6,6 +6,7 @@
 #include "gsBiomeSpreader.h"
 #include "gsRandomRange.h"
 #include "gsSpreader.h"
+#include "gsTileGroupManager.h"
 
 using std::cerr;
 using std::endl;
@@ -358,6 +359,7 @@ void gs::Globe::GenerateBiomes( const int numOfSpreaders )
         landTiles[i] = temp;
     }
 
+    //generate spreaders
     vector<gs::BiomeSpreader> spreaders;
     gs::RandomRange<int> randomSpeed( 1, 4, std::time( 0 ) );
 
@@ -467,6 +469,14 @@ gs::LandTile::Biome gs::Globe::LookupRegionBiome( const int id ) const
     return biomeTable[id];
 }
 
+void gs::Globe::SetTileGroupTextureSize()
+{
+    GLint maxSize;
+    glGetIntegerv( GL_MAX_TEXTURE_SIZE, &maxSize );
+    maxSize = 200;
+    groupManager.SetTextureSize( maxSize );
+}
+
 gs::Globe::Globe()
     :   shader( "test", "data/shaders/test.vert", "data/shaders/test.frag" )
 {
@@ -495,12 +505,16 @@ gs::Globe::Globe()
     texCoordVbo = CreateVbo( numOfVertices, 2, "texCoordVert" );
     fogVbo = CreateVbo( numOfVertices, 1, "fogVert" );
 
-    vector<GLuint> indexVector;
+    SetTileGroupTextureSize();
 
     for ( auto& tile : landTiles )
     {
         tile->GenerateTexture();
+        tile->AddToTileGroup( groupManager );
+        tile->DeleteLocalTextureData();
     }
+
+    vector<GLuint> indexVector;
 
     for ( auto& tile : allTiles )
     {

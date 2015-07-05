@@ -9,8 +9,10 @@ using std::endl;
 
 bool gs::Shader::CompileShader( const GLuint shader, const string& filename )
 {
-    const char* const source = LoadShaderFromFile( filename ).c_str();
-    glShaderSource( shader, 1, &source, NULL );
+    const string sourceString = LoadShaderFromFile( filename );
+    const char* const sourceChar = sourceString.c_str();
+    const GLint length = sourceString.size();
+    glShaderSource( shader, 1, &sourceChar, &length );
     glCompileShader( shader );
     PrintShaderLog( shader );
 

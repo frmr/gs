@@ -3,7 +3,9 @@
 
 #include "gsTile.h"
 #include "gsRandomRange.h"
+#include "gsTileGroupManager.h"
 #include "gsTileTexture.h"
+#include "gsVec2.h"
 #include "gsVertex.h"
 
 #include <memory>
@@ -43,6 +45,7 @@ namespace gs
         bool                        forested;
         Biome                       biome;
         gs::TileTexture*            texture;
+        gs::Vec2f                   textureCoords;
 
 
     private:
@@ -50,6 +53,8 @@ namespace gs
 
     public:
 
+        void                                AddToTileGroup( gs::TileGroupManager& manager );
+        void                                DeleteLocalTextureData();
         void                                GenerateTexture();
         vector<shared_ptr<gs::LandTile>>    GetUnassignedBiomeNeighbors() const;
         Biome                               GetBiome() const;

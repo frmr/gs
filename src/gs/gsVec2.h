@@ -132,6 +132,7 @@ namespace gs
 
     typedef	Vec2<float>     Vec2f;
     typedef	Vec2<double>    Vec2d;
+    typedef Vec2<int>       Vec2i;
 }
 
 #endif // GS_VEC2_H
