@@ -36,61 +36,31 @@ gs::TileGroup::Rectangle::Rectangle( const gs::Vec2i& minCoord, const gs::Vec2i&
 
 bool gs::TileGroup::Add( const gs::TileTexture& tileTexture, const GLuint tileBufferEnd )
 {
-    double worstFitRatio = std::numeric_limits<double>::max();
-//    vector<gs::TileGroup::Rectangle>::iterator worstFitRectangle;
-
-//    for ( auto it = rectangles.begin(); it != rectangles.end(); ++it )
-//    {
-//        cerr << tileTexture.GetWidth() << " " << tileTexture.GetHeight() << endl;
-//        cerr << it->width << " " << it->height << endl;
-//        //TODO: check if tile texture can be rotated to fit the rectangle
-//        if ( tileTexture.GetWidth() <= it->width && tileTexture.GetHeight() <= it->height )
-//        {
-//            double fitRatio = (double) tileTexture.GetArea() / (double) it->area;
-//            if ( fitRatio < worstFitRatio )
-//            {
-//                worstFitRatio = fitRatio;
-//                worstFitRectangle = it;
-//            }
-//        }
-//    }
-
-    int worstFitIndex = -1;
-
-    for ( int i = 0; i < rectangles.size(); ++i )
+    //TODO: Improve bin packing
+    //if tile texture doesn't fit on current shelf
+    if ( tileTexture.GetWidth() >= textureDim - shelfCursor.x )
     {
-        if ( !rectangles[i].used )
-        {
-            if ( tileTexture.GetWidth() <= rectangles[i].width && tileTexture.GetHeight() <= rectangles[i].height )
-            {
-                double fitRatio = (double) tileTexture.GetArea() / (double) rectangles[i].area;
-                if ( fitRatio < worstFitRatio )
-                {
-                    worstFitRatio = fitRatio;
-                    worstFitIndex = i;
-                }
-            }
-        }
-
+        //create new shelf
+        shelfCursor.x = 0;
+        shelfCursor.y = shelfTop;
     }
 
-    if ( worstFitRatio > 1.0 )
+    //if tile texture is taller than current shelf
+    if ( tileTexture.GetHeight() > shelfTop - shelfCursor.y )
     {
-        rectangles.clear();
+        //raise the shelf
+        shelfTop = shelfCursor.y + tileTexture.GetHeight();
+    }
+
+    if ( shelfTop > textureDim )
+    {
         return false;
     }
     else
     {
-        //cerr << "Adding " << bufferBegin << " with " << tileTexture.GetWidth() << " " << tileTexture.GetHeight() << " at " << rectangles[worstFitIndex].minCoord.x << " " << rectangles[worstFitIndex].minCoord.y << endl;
         bufferEnd = tileBufferEnd;
-
-        //add tile texture to image
-        tileTexture.AddToTileGroupTexture( image, rectangles[worstFitIndex].minCoord );
-
-        //split used rectangle
-        vector<gs::TileGroup::Rectangle> newRectangles = rectangles[worstFitIndex].Split( gs::Vec2i( tileTexture.GetWidth(), tileTexture.GetHeight() ) );
-        rectangles.insert( rectangles.end(), newRectangles.begin(), newRectangles.end() );
-        rectangles[worstFitIndex].used = true;
+        tileTexture.AddToTileGroupTexture( image, shelfCursor );
+        shelfCursor.x += tileTexture.GetWidth();
         return true;
     }
 }
@@ -122,17 +92,21 @@ void gs::TileGroup::WriteToFile() const
     image->WriteToFile( ( "data/textures/procedural/" + std::to_string( bufferBegin ) + ".bmp" ).c_str() );
 }
 
-gs::TileGroup::TileGroup()
-    :   bufferBegin( 0 )
-{
-}
+//gs::TileGroup::TileGroup()
+//    :   bufferBegin( 0 )
+//{
+//}
 
 gs::TileGroup::TileGroup( const GLuint bufferBegin, const int textureDim )
-    :   bufferBegin( bufferBegin )
+    :   textureDim( textureDim ),
+        bufferBegin( bufferBegin ),
+        bufferEnd( 0 ),
+        shelfCursor( 0, 0 ),
+        shelfTop( 0 )
 {
     image = new BMP();
     image->SetSize( textureDim, textureDim );
-    rectangles.push_back( gs::TileGroup::Rectangle( gs::Vec2i( 0, 0 ), gs::Vec2i( textureDim, textureDim ) ) );
+    //rectangles.push_back( gs::TileGroup::Rectangle( gs::Vec2i( 0, 0 ), gs::Vec2i( textureDim, textureDim ) ) );
     cerr << "New tile group at " << bufferBegin << endl;
 }
 

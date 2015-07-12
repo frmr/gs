@@ -18,7 +18,6 @@ void gs::TileTexture::AddToTileGroupTexture( BMP* tileGroupTexture, const gs::Ve
             (*tileGroupTexture)(coord.x + x, coord.y + y)->Red = color.x;
             (*tileGroupTexture)(coord.x + x, coord.y + y)->Green = color.y;
             (*tileGroupTexture)(coord.x + x, coord.y + y)->Blue = color.z;
-
         }
     }
 }
@@ -104,23 +103,6 @@ gs::TileTexture::TileTexture( const int id, const vector<gs::VertexPtr>& worldVe
         (*image)(x,y)->Green = 0;
         (*image)(x,y)->Blue = 0;
     }
-
-    //delete
-    gs::Vec3i color( colorGenerator.Sample(), colorGenerator.Sample(), colorGenerator.Sample() );
-    for (int x = 0; x < width; ++x)
-    {
-        for (int y = 0; y < height; ++y )
-        {
-            (*image)(x,y)->Red = color.x;
-            (*image)(x,y)->Green = color.y;
-            (*image)(x,y)->Blue = color.z;
-        }
-    }
-    if ( id < 100 )
-    {
-        //image->WriteToFile( ( "data/textures/procedural/" + std::to_string( id ) + "a.bmp" ).c_str() );
-    }
-
 }
 
 gs::TileTexture::~TileTexture()

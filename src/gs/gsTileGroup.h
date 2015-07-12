@@ -37,12 +37,16 @@ namespace gs
     private:
         //texture id
         //pointer to image data (to be deleted eventually)
+        const int           textureDim;
         const GLuint        bufferBegin;
         GLuint              bufferEnd;
 
+        gs::Vec2i           shelfCursor;
+        int                 shelfTop;
+
         BMP*                image;
 
-        vector<Rectangle>   rectangles;
+        //vector<Rectangle>   rectangles;
 
     public:
         bool    Add( const gs::TileTexture& tileTexture, const GLuint tileBufferEnd );
@@ -53,7 +57,7 @@ namespace gs
         void    WriteToFile() const;
 
     public:
-        TileGroup();
+        //TileGroup();
         TileGroup( const GLuint bufferBegin, const int textureDim );
         ~TileGroup();
     };

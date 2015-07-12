@@ -473,7 +473,7 @@ void gs::Globe::SetTileGroupTextureSize()
 {
     GLint maxSize;
     glGetIntegerv( GL_MAX_TEXTURE_SIZE, &maxSize );
-    maxSize = 4096;
+    maxSize = 1024;
     groupManager.SetTextureSize( maxSize );
 }
 
