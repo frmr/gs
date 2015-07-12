@@ -147,6 +147,23 @@ void gs::Globe::Update()
 
 }
 
+void gs::Globe::AssignBufferOffsetsToTiles()
+{
+    GLuint bufferOffset = 0;
+
+    for ( auto& tile : landTiles )
+    {
+        tile.SetBufferOffset( bufferOffset );
+    }
+
+    bufferOffset = 0;
+
+    for ( auto& tile : waterTiles )
+    {
+        tile.SetBufferOffset( bufferOffset );
+    }
+}
+
 void gs::Globe::BuildBiomeTable()
 {
     biomeTable.push_back( gs::LandTile::Biome::GRASSLAND ); //Britain
@@ -436,8 +453,7 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
     {
         vector<gs::VertexPtr> cellVertices;
         CombineVertices( cell->corners, buckets, bucketDim, cellVertices );
-        CreateTile( cellVertices, vertexCount, terrain, cck::Vec3( cell->centroid.z, cell->centroid.x, cell->centroid.y ) );
-        vertexCount += cellVertices.size();
+        CreateTile( cellVertices, terrain, cck::Vec3( cell->centroid.z, cell->centroid.x, cell->centroid.y ) );
         CreateTileEdges( cellVertices );
     }
 
@@ -494,6 +510,8 @@ gs::Globe::Globe()
 
     GenerateRivers( 50 );
     GenerateBiomes( 200 );
+
+    AssignBufferOffsetsToTiles();
 
     //create vao
     glGenVertexArrays( 1, &vao );

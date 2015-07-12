@@ -59,12 +59,13 @@ namespace gs
         vector<shared_ptr<gs::LandTile>>    GetUnassignedBiomeNeighbors() const;
         Biome                               GetBiome() const;
         bool                                HasUnassignedBiomeNeighbors() const;
+        void                                InitBuffers();
         void                                SetBiome( const Biome newBiome );
         void                                SetBlackIfRiver(); //TODO: delete
         bool                                SpawnRiver( const int newRiverId, gs::RandomRange<double>& rand );
 
     public:
-        LandTile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3f& centroid, const double height, const int regionId );
+        LandTile( const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3f& centroid, const double height, const int regionId );
     };
 
     typedef shared_ptr<gs::LandTile> LandTilePtr;

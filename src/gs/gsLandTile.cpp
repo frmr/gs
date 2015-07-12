@@ -22,6 +22,19 @@ gs::LandTile::Terrain gs::LandTile::DetermineTerrain() const
     }
 }
 
+void gs::LandTile::InitTexCoordBuffer( const GLuint texCoordVbo )
+{
+    GLfloat* texCoordArray = new GLfloat[2*vertices.size()];
+    for ( unsigned int i = 0; i < vertices.size(); ++i )
+    {
+        texCoordArray[2*i] = 0.0f;
+        texCoordArray[2*i+1] = 0.0f;
+    }
+    glBindBuffer( GL_ARRAY_BUFFER, texCoordVbo );
+    glBufferSubData( GL_ARRAY_BUFFER, 2 * bufferOffset * sizeof(GLfloat), 2 * vertices.size() * sizeof(GLfloat), texCoordArray );
+    delete[] texCoordArray;
+}
+
 void gs::LandTile::AddToTileGroup( gs::TileGroupManager& manager )
 {
     manager.Add( *texture, bufferOffset + vertices.size() );
@@ -65,6 +78,16 @@ bool gs::LandTile::HasUnassignedBiomeNeighbors() const
         }
     }
     return false;
+}
+
+void gs::LandTile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo, const GLuint texCoordVbo, vector<GLuint>& indexVector ) //const
+{
+    InitPositionBuffer( positionVbo );
+    InitColorBuffer( colorVbo );
+    InitFogBuffer( fogVbo );
+    InitTexCoordBuffer( texCoordVbo );
+
+    AddVerticesToIndexVector( indexVector );
 }
 
 void gs::LandTile::SetBiome( const gs::LandTile::Biome newBiome )
@@ -151,8 +174,8 @@ bool gs::LandTile::SpawnRiver( const int newRiverId, gs::RandomRange<double>& ra
     }
 }
 
-gs::LandTile::LandTile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3f& centroid, const double height, const int regionId )
-    :   gs::Tile( gs::Tile::Type::LAND, bufferOffset, vertices, centroid, height ),
+gs::LandTile::LandTile( const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3f& centroid, const double height, const int regionId )
+    :   gs::Tile( gs::Tile::Type::LAND, vertices, centroid, height ),
         regionId( regionId ),
         terrain( DetermineTerrain() ),
         forested( false ),

@@ -14,12 +14,14 @@
 #include "gsCamera.h"
 #include "gsEdge.h"
 #include "gsLandTile.h"
+#include "gsLandTileBuffer.h"
 #include "gsMatrixStack.h"
 #include "gsShader.h"
 #include "gsTile.h"
 #include "gsTileGroupManager.h"
 #include "gsVertex.h"
 #include "gsWaterTile.h"
+#include "gsWaterTileBuffer.h"
 
 using std::shared_ptr;
 using std::string;
@@ -32,12 +34,8 @@ namespace gs
     private:
         GLuint              vao;
 
-        //TODO: Make these const
-        GLuint      positionVbo;
-        GLuint      colorVbo;
-        GLuint      texCoordVbo;
-        GLuint      fogVbo;
-        GLuint      indexBuffer;
+        gs::LandTileBuffer  landVbo;
+        gs::WaterTileBuffer waterVbo;
 
         gs::Shader  shader;
         GLint       modelViewMatrixLocation;
@@ -56,6 +54,7 @@ namespace gs
         gs::TileGroupManager        groupManager;
 
     private:
+        void                    AssignBufferOffsetsToTiles();
         void                    BuildBiomeTable();
         void                    CombineVertices( const vector<glm::dvec3>& corners, gs::Array<vector<gs::VertexPtr>>& buckets, const unsigned int bucketDim, vector<gs::VertexPtr>& cellVertices );
         void                    CreateTile( const vector<gs::VertexPtr>& cellVertices, const int vertexCount, const cck::Globe& terrain, const cck::Vec3& centroid );
