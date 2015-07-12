@@ -8,6 +8,7 @@
 #include "gsVertex.h"
 #include "gsTile.h"
 #include "gsLink.h"
+#include "gsRandomRange.h" //TODO: delete
 
 #include "../EasyBMP/EasyBMP.h"
 
@@ -25,10 +26,15 @@ namespace gs
         BMP*        image;
 
     public:
+        static gs::RandomRange<int> colorGenerator; //TODO: delete
+
+        void    AddToTileGroupTexture( BMP* tileGroupTexture, const gs::Vec2i& coord ) const;
         void    DeleteTextureData();
         int     GetArea() const;
         int     GetHeight() const;
         int     GetWidth() const;
+
+
 
     public:
         TileTexture( const int id, const vector<gs::VertexPtr>& worldVertices, const vector<gs::Link<gs::Tile>>& links, const gs::Vec3f& centroid );

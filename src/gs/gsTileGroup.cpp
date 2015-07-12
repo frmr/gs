@@ -83,7 +83,11 @@ bool gs::TileGroup::Add( const gs::TileTexture& tileTexture, const GLuint tileBu
     {
         //cerr << "Adding " << bufferBegin << " with " << tileTexture.GetWidth() << " " << tileTexture.GetHeight() << " at " << rectangles[worstFitIndex].minCoord.x << " " << rectangles[worstFitIndex].minCoord.y << endl;
         bufferEnd = tileBufferEnd;
+
         //add tile texture to image
+        tileTexture.AddToTileGroupTexture( image, rectangles[worstFitIndex].minCoord );
+
+        //split used rectangle
         vector<gs::TileGroup::Rectangle> newRectangles = rectangles[worstFitIndex].Split( gs::Vec2i( tileTexture.GetWidth(), tileTexture.GetHeight() ) );
         rectangles.insert( rectangles.end(), newRectangles.begin(), newRectangles.end() );
         rectangles[worstFitIndex].used = true;
@@ -111,6 +115,11 @@ GLuint gs::TileGroup::GetBufferEnd() const
 void gs::TileGroup::InitBuffers() const
 {
     //
+}
+
+void gs::TileGroup::WriteToFile() const
+{
+    image->WriteToFile( ( "data/textures/procedural/" + std::to_string( bufferBegin ) + ".bmp" ).c_str() );
 }
 
 gs::TileGroup::TileGroup()

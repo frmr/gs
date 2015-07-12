@@ -2,6 +2,11 @@
 
 void gs::TileGroupManager::Add( const gs::TileTexture& texture, const GLuint bufferEnd )
 {
+    if ( tileGroups.empty() )
+    {
+        tileGroups.push_back( gs::TileGroup( 0, textureDim ) );
+    }
+
     if ( !tileGroups.back().Add( texture, bufferEnd ) )
     {
         tileGroups.push_back( gs::TileGroup( tileGroups.back().GetBufferEnd() + 1, textureDim ) );
@@ -17,8 +22,15 @@ void gs::TileGroupManager::SetTextureSize( const GLint newTextureDim )
     textureDim = newTextureDim;
 }
 
+void gs::TileGroupManager::WriteTileGroupsToFile() const
+{
+    for ( const auto& tg : tileGroups )
+    {
+        tg.WriteToFile();
+    }
+}
+
 gs::TileGroupManager::TileGroupManager( const GLint textureDim )
     :   textureDim( textureDim )
 {
-    tileGroups.push_back( gs::TileGroup( 0, textureDim ) );
 }

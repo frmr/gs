@@ -473,7 +473,7 @@ void gs::Globe::SetTileGroupTextureSize()
 {
     GLint maxSize;
     glGetIntegerv( GL_MAX_TEXTURE_SIZE, &maxSize );
-    maxSize = 200;
+    maxSize = 4096;
     groupManager.SetTextureSize( maxSize );
 }
 
@@ -513,6 +513,8 @@ gs::Globe::Globe()
         tile->AddToTileGroup( groupManager );
         tile->DeleteLocalTextureData();
     }
+
+    groupManager.WriteTileGroupsToFile();
 
     vector<GLuint> indexVector;
 

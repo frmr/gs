@@ -22,6 +22,7 @@ namespace gs
     public:
         void Add( const gs::TileTexture& texture, const GLuint bufferEnd );
         void SetTextureSize( const GLint newTextureDim );
+        void WriteTileGroupsToFile() const;
 
     public:
         TileGroupManager( const GLint textureDim = 1024 );

@@ -26,8 +26,6 @@ namespace gs
             WATER
         };
 
-        bool visited; //delete
-
     public:
         const int                               id;
 

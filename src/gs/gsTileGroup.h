@@ -50,6 +50,7 @@ namespace gs
         void    Draw() const;
         GLuint  GetBufferEnd() const;
         void    InitBuffers() const;
+        void    WriteToFile() const;
 
     public:
         TileGroup();
