@@ -30,7 +30,7 @@ namespace gs
         GLuint CreateVbo( const int elements, const int components, gs::Shader& shader, const string& name );
 
     public:
-        void Bind();
+        void Bind() const;
 
         bool Update( const GLuint tileIndex, const gs::Vec3f& newColor, const bool newFog );
 

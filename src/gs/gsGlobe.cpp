@@ -27,10 +27,6 @@ void gs::Globe::Draw( const gs::Camera& worldCamera ) const
     glUniformMatrix4fv( normalMatrixLocation, 1, false, inverseModelViewMatrix.getTranspose() );
 
     groupManager.DrawAll();
-
-    //draw
-    //glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, indexBuffer );
-    //glDrawElements( GL_TRIANGLES, numOfIndices, GL_UNSIGNED_INT, 0 );
 }
 
 cck::Globe gs::Globe::GenerateTerrain() const
@@ -523,16 +519,18 @@ gs::Globe::Globe()
     landBuffer = std::make_shared<gs::LandTileBuffer>( landTiles, shader );
     //waterBuffer = std::make_shared<gs::WaterTileBuffer>( waterTiles );
 
+    landBuffer->Bind();
+
     SetTileGroupTextureSize();
 
     //Add tile to tile groups
-//    for ( auto& tile : landTiles )
-//    {
-//        tile->GenerateTexture();
-//        //tile->AddToTileGroup( groupManager );
-//        groupManager.Add( tile );
-//        tile->DeleteLocalTextureData();
-//    }
+    for ( auto& tile : landTiles )
+    {
+        tile->GenerateTexture();
+        //tile->AddToTileGroup( groupManager );
+        groupManager.Add( tile );
+        tile->DeleteLocalTextureData();
+    }
 
     //groupManager.WriteTileGroupsToFile();
 

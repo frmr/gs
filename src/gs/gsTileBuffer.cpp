@@ -28,7 +28,7 @@ void gs::TileBuffer::InitIndexBuffer( const vector<GLuint>& indexVector ) const
     delete[] indexArray;
 }
 
-void gs::TileBuffer::Bind()
+void gs::TileBuffer::Bind() const
 {
     glBindVertexArray( vao );
     glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, indexBuffer );
@@ -36,7 +36,7 @@ void gs::TileBuffer::Bind()
 
 bool gs::TileBuffer::Update( const GLuint tileIndex, const gs::Vec3f& newColor, const bool newFog )
 {
-
+    return true;
 }
 
 gs::TileBuffer::TileBuffer( const int size, gs::Shader& shader, const vector<GLuint>& indexVector )

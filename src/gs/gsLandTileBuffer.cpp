@@ -1,5 +1,10 @@
 #include "gsLandTileBuffer.h"
 
+#include <iostream>
+
+using std::cerr;
+using std::endl;
+
 vector<GLuint> gs::LandTileBuffer::BuildIndexVector( vector<gs::LandTilePtr>& landTiles ) const
 {
     vector<GLuint> indexVector;

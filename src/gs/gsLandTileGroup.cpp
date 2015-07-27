@@ -26,7 +26,7 @@ bool gs::LandTileGroup::Add( const gs::LandTilePtr& landTile )
     }
     else
     {
-        bufferEnd = landTile->GetBufferEnd();
+        bufferEnd = landTile->GetIndexBufferEnd();
         landTile->GetTexture()->AddToTileGroupTexture( image, shelfCursor );
         shelfCursor.x += landTile->GetTexture()->GetWidth();
         return true;
@@ -40,9 +40,10 @@ void gs::LandTileGroup::DeleteLocalTextureData()
 
 void gs::LandTileGroup::Draw() const
 {
-    //bind index array
     //bind texture
     //draw
+    //glDrawElements( GL_TRIANGLES, numOfIndices, GL_UNSIGNED_INT, 0 );
+    glDrawElements( GL_TRIANGLES, bufferEnd, GL_UNSIGNED_INT, (void*)( bufferBegin ) );
 }
 
 void gs::LandTileGroup::WriteToFile() const

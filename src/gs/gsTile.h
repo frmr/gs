@@ -62,6 +62,8 @@ namespace gs
         GLuint  GetBufferEnd() const;
         GLuint  GetBufferOffset() const;
         double  GetHeight() const;
+        GLuint  GetIndexBufferEnd() const;
+        GLuint  GetIndexBufferOffset() const;
         size_t  GetNumOfVertices() const;
         Type    GetSurface() const;
 

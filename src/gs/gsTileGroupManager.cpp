@@ -14,7 +14,7 @@ void gs::TileGroupManager::Add( const LandTilePtr& landTile )
         landTileGroups.push_back( gs::LandTileGroup( landTileGroups.back().GetBufferEnd() + 1, textureDim ) );
         if ( !landTileGroups.back().Add( landTile ) )
         {
-            cerr << "gs::TileGroupManager::Add() in src/gs/TileGroupManager.h: Could not add tile texture to empty tile group. Tile texture is too large." << endl;
+            cerr << "gs::TileGroupManager::Add() in src/gs/gsTileGroupManager.h: Could not add tile texture to empty tile group. Tile texture is too large." << endl;
         }
     }
 }
