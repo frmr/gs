@@ -14,11 +14,13 @@ namespace gs
 {
     class WaterTileBuffer : public gs::TileBuffer
     {
+    private:
+        vector<GLuint> BuildIndexVector( vector<gs::WaterTilePtr>& waterTiles ) const;
+        size_t CountVertices( const vector<gs::WaterTilePtr>& waterTiles ) const;
+
     public:
-        bool Add( gs::WaterTile& tile, vector<GLuint>& indexVector )
-        {
-            tile.InitBuffers( positionVbo, colorVbo, fogVbo, indexVector );
-        }
+        WaterTileBuffer( vector<gs::WaterTilePtr>& waterTiles, gs::Shader& shader );
     };
 }
+
 #endif // GS_WATER_TILE_BUFFER_H

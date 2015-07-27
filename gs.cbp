@@ -127,7 +127,10 @@
 		<Unit filename="src/gs/gsInputState.h" />
 		<Unit filename="src/gs/gsLandTile.cpp" />
 		<Unit filename="src/gs/gsLandTile.h" />
+		<Unit filename="src/gs/gsLandTileBuffer.cpp" />
 		<Unit filename="src/gs/gsLandTileBuffer.h" />
+		<Unit filename="src/gs/gsLandTileGroup.cpp" />
+		<Unit filename="src/gs/gsLandTileGroup.h" />
 		<Unit filename="src/gs/gsLink.h" />
 		<Unit filename="src/gs/gsMath.h" />
 		<Unit filename="src/gs/gsMatrixStack.h" />
@@ -151,6 +154,7 @@
 		<Unit filename="src/gs/gsVertex.h" />
 		<Unit filename="src/gs/gsWaterTile.cpp" />
 		<Unit filename="src/gs/gsWaterTile.h" />
+		<Unit filename="src/gs/gsWaterTileBuffer.cpp" />
 		<Unit filename="src/gs/gsWaterTileBuffer.h" />
 		<Unit filename="src/main.cpp" />
 		<Unit filename="src/matrix/Matrices.cpp" />

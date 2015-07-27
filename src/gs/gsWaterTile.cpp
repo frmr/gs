@@ -1,6 +1,6 @@
 #include "gsWaterTile.h"
 
-void gs::WaterTile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo, vector<GLuint>& indexVector ) //const
+void gs::WaterTile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo ) //const
 {
     InitPositionBuffer( positionVbo );
     InitColorBuffer( colorVbo );

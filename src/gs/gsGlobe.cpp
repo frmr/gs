@@ -149,20 +149,20 @@ void gs::Globe::Update()
 
 }
 
-void gs::Globe::AssignBufferOffsetsToTiles()
+void gs::Globe::AssignBufferOffsets()
 {
     GLuint bufferOffset = 0;
 
     for ( auto& tile : landTiles )
     {
-        tile->SetBufferOffset( bufferOffset );
+        bufferOffset = tile->SetBufferOffset( bufferOffset );
     }
 
     bufferOffset = 0;
 
     for ( auto& tile : waterTiles )
     {
-        tile->SetBufferOffset( bufferOffset );
+        bufferOffset = tile->SetBufferOffset( bufferOffset );
     }
 }
 
@@ -514,44 +514,29 @@ gs::Globe::Globe()
     //Generate planet
     GenerateRivers( 50 );
     GenerateBiomes( 200 );
+    //GenerateCultures( 150 );
+    //GenerateStates( 150 );
 
-    //Assign buffer offsets
-    AssignBufferOffsetsToTiles();
+    AssignBufferOffsets();
+
+    //Allocate memory for buffers and initialise tile data
+    landBuffer = std::make_shared<gs::LandTileBuffer>( landTiles, shader );
+    //waterBuffer = std::make_shared<gs::WaterTileBuffer>( waterTiles );
 
     SetTileGroupTextureSize();
 
     //Add tile to tile groups
-    for ( auto& tile : landTiles )
-    {
-        tile->GenerateTexture();
-        //tile->AddToTileGroup( groupManager );
-        groupManager.Add( tile );
-        tile->DeleteLocalTextureData();
-    }
+//    for ( auto& tile : landTiles )
+//    {
+//        tile->GenerateTexture();
+//        //tile->AddToTileGroup( groupManager );
+//        groupManager.Add( tile );
+//        tile->DeleteLocalTextureData();
+//    }
 
-    groupManager.WriteTileGroupsToFile();
-
-    //allocate memory for buffers
-    landBuffer = std::make_shared<gs::LandTileBuffer>( landTiles.size(), shader );
-    waterBuffer = std::make_shared<gs::WaterTileBuffer>( waterTiles.size(), shader );
-
-    groupManager.PopulateIndexVectors();
-
-    GLuint* indexArray = new GLuint[indexVector.size()]; //TODO: replace with gs::Array
-    for ( unsigned int i = 0; i < indexVector.size(); ++i )
-    {
-        indexArray[i] = indexVector[i];
-    }
-
-    numOfIndices = indexVector.size();
-
-    //indices
-
-
-    delete[] indexArray;
+    //groupManager.WriteTileGroupsToFile();
 
     shader.SetFragOutput( "colorOut" );
-
     shader.Link();
 
     modelViewMatrixLocation = shader.GetUniformLocation( "modelViewMatrix" );

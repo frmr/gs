@@ -11,18 +11,6 @@ using std::endl;
 
 int gs::Tile::idCounter = 0;
 
-void gs::Tile::AddVerticesToIndexVector( vector<GLuint>& indexVector )
-{
-    indexVector.reserve( indexVector.size() + 3 * vertices.size() );
-
-    for ( unsigned int i = 1; i < vertices.size() - 1; ++i )
-    {
-        indexVector.push_back( bufferOffset );
-        indexVector.push_back( bufferOffset + i );
-        indexVector.push_back( bufferOffset + i + 1 );
-    }
-}
-
 void gs::Tile::InitColorBuffer( const GLuint colorVbo ) //TODO: const
 {
     GLfloat* colorArray = new GLfloat[3*vertices.size()];
@@ -61,6 +49,19 @@ void gs::Tile::InitPositionBuffer( const GLuint positionVbo ) //TODO: const
     glBindBuffer( GL_ARRAY_BUFFER, positionVbo );
     glBufferSubData( GL_ARRAY_BUFFER, 3 * bufferOffset * sizeof(GLfloat), 3 * vertices.size() * sizeof(GLfloat), positionArray );
     delete[] positionArray;
+}
+
+void gs::Tile::AddVerticesToIndexVector( vector<GLuint>& indexVector )
+{
+    indexBufferOffset = indexVector.size();
+    indexVector.reserve( indexVector.size() + 3 * vertices.size() );
+
+    for ( unsigned int i = 1; i < vertices.size() - 1; ++i )
+    {
+        indexVector.push_back( bufferOffset );
+        indexVector.push_back( bufferOffset + i );
+        indexVector.push_back( bufferOffset + i + 1 );
+    }
 }
 
 bool gs::Tile::AddLink( const gs::Link<gs::Tile>& link )
@@ -108,15 +109,20 @@ double gs::Tile::GetHeight() const
     return height;
 }
 
+size_t  gs::Tile::GetNumOfVertices() const
+{
+    return vertices.size();
+}
+
 gs::Tile::Type gs::Tile::GetSurface() const
 {
     return surface;
 }
 
-void gs::Tile::SetBufferOffset( GLuint& vertexCount )
+GLuint gs::Tile::SetBufferOffset( const GLuint vertexCount )
 {
     bufferOffset = vertexCount;
-    vertexCount += vertices.size();
+    return vertexCount + vertices.size();
 }
 
 gs::Tile::Tile( const Type surface, const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3f& centroid, const double height )

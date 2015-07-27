@@ -55,7 +55,7 @@ namespace gs
         gs::TileGroupManager        groupManager;
 
     private:
-        void                    AssignBufferOffsetsToTiles();
+        void                    AssignBufferOffsets();
         void                    BuildBiomeTable();
         void                    CombineVertices( const vector<glm::dvec3>& corners, gs::Array<vector<gs::VertexPtr>>& buckets, const unsigned int bucketDim, vector<gs::VertexPtr>& cellVertices );
         void                    CreateTile( const vector<gs::VertexPtr>& cellVertices, const cck::Globe& terrain, const cck::Vec3& centroid );

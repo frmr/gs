@@ -46,6 +46,11 @@ void gs::LandTile::GenerateTexture()
     texture = new gs::TileTexture( id, vertices, allLinks, centroid );
 }
 
+gs::TileTexture* gs::LandTile::GetTexture() const
+{
+    return texture;
+}
+
 vector<shared_ptr<gs::LandTile>> gs::LandTile::GetUnassignedBiomeNeighbors() const
 {
     vector<shared_ptr<gs::LandTile>> unassignedNeighbors;

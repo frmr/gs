@@ -15,7 +15,7 @@ namespace gs
         T*                      data;
 
     public:
-        T&  At( const size_t i )
+        T& At( const size_t i )
         {
             return data[ i ];
         }

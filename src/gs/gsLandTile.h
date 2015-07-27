@@ -49,10 +49,12 @@ namespace gs
 
     private:
         Terrain                             DetermineTerrain() const;
+        void                                InitTexCoordBuffer( const GLuint texCoordVbo );
 
     public:
         void                                DeleteLocalTextureData();
         void                                GenerateTexture();
+        gs::TileTexture*                    GetTexture() const;
         vector<shared_ptr<gs::LandTile>>    GetUnassignedBiomeNeighbors() const;
         Biome                               GetBiome() const;
         bool                                HasUnassignedBiomeNeighbors() const;

@@ -18,18 +18,12 @@ namespace gs
     private:
         GLuint  texCoordVbo;
 
-    public:
-        bool Add( gs::LandTile& tile )
-        {
-            tile.InitBuffers( positionVbo, colorVbo, fogVbo, texCoordVbo );
-        }
+    private:
+        vector<GLuint> BuildIndexVector( vector<gs::LandTilePtr>& landTiles) const;
+        size_t CountVertices( const vector<gs::LandTilePtr>& landTiles ) const;
 
     public:
-        LandTileBuffer( const GLuint size, gs::Shader& shader )
-            :   TileBuffer( size, shader )
-        {
-
-        }
+        LandTileBuffer( vector<gs::LandTilePtr>& landTiles, gs::Shader& shader );
     };
 }
 
