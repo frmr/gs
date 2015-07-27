@@ -16,37 +16,20 @@ namespace gs
     class TileGroup
     {
     private:
-        class Rectangle
-        {
-        public:
-            gs::Vec2i   minCoord;
-            gs::Vec2i   maxCoord;
-            int         width;
-            int         height;
-            int         area;
-            bool        used;
-
-        public:
-            //splits always occur from the same corner
-            vector<Rectangle> Split( const gs::Vec2i& coord ) const;
-
-        public:
-            Rectangle( const gs::Vec2i& minCoord, const gs::Vec2i& maxCoord );
-        };
-
-    private:
         //texture id
         //pointer to image data (to be deleted eventually)
         const int           textureDim;
         const GLuint        bufferBegin;
         GLuint              bufferEnd;
 
+        GLuint              indexBuffer;
+
         gs::Vec2i           shelfCursor;
         int                 shelfTop;
 
         BMP*                image;
 
-        //vector<Rectangle>   rectangles;
+        vector<gs::TilePtr> tiles;
 
     public:
         bool    Add( const gs::TileTexture& tileTexture, const GLuint tileBufferEnd );
@@ -54,6 +37,7 @@ namespace gs
         void    Draw() const;
         GLuint  GetBufferEnd() const;
         void    InitBuffers() const;
+        void    PopulateIndexBuffer();
         void    WriteToFile() const;
 
     public:

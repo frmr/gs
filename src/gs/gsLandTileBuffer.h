@@ -3,8 +3,13 @@
 
 #include "../gl3w/gl3w.h"
 
+#include <vector>
+
 #include "gsLandTile.h"
+#include "gsShader.h"
 #include "gsTileBuffer.h"
+
+using std::vector;
 
 namespace gs
 {
@@ -17,6 +22,13 @@ namespace gs
         bool Add( gs::LandTile& tile )
         {
             tile.InitBuffers( positionVbo, colorVbo, fogVbo, texCoordVbo );
+        }
+
+    public:
+        LandTileBuffer( const GLuint size, gs::Shader& shader )
+            :   TileBuffer( size, shader )
+        {
+
         }
     };
 }

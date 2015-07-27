@@ -34,8 +34,11 @@ gs::TileGroup::Rectangle::Rectangle( const gs::Vec2i& minCoord, const gs::Vec2i&
 {
 }
 
-bool gs::TileGroup::Add( const gs::TileTexture& tileTexture, const GLuint tileBufferEnd )
+//bool gs::TileGroup::Add( const gs::TileTexture& tileTexture, const GLuint tileBufferEnd )
+bool gs::TileGroup::Add( const gs::LandTilePtr& landTile )
 {
+    //add landTile to tiles as static cast to TilePtr
+
     //TODO: Improve bin packing
     //if tile texture doesn't fit on current shelf
     if ( tileTexture.GetWidth() >= textureDim - shelfCursor.x )
@@ -58,9 +61,12 @@ bool gs::TileGroup::Add( const gs::TileTexture& tileTexture, const GLuint tileBu
     }
     else
     {
-        bufferEnd = tileBufferEnd;
-        tileTexture.AddToTileGroupTexture( image, shelfCursor );
+        //bufferEnd = tileBufferEnd;
+        bufferEnd = landTile.GetBufferEnd();
+        landTile->GetTileTexture().AddToTileGroupTexture( image, shelfCursor );
         shelfCursor.x += tileTexture.GetWidth();
+
+
         return true;
     }
 }
@@ -82,9 +88,13 @@ GLuint gs::TileGroup::GetBufferEnd() const
     return bufferEnd;
 }
 
-void gs::TileGroup::InitBuffers() const
+void gs::TileGroup::PopulateIndexBuffer()
 {
-    //
+    vector<GLuint> indexVector;
+    for ( const auto& tile : tiles )
+    {
+        tile->
+    }
 }
 
 void gs::TileGroup::WriteToFile() const
@@ -104,6 +114,11 @@ gs::TileGroup::TileGroup( const GLuint bufferBegin, const int textureDim )
         shelfCursor( 0, 0 ),
         shelfTop( 0 )
 {
+
+    glGenBuffers( 1, &indexBuffer );
+    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, indexBuffer );
+    glBufferData( GL_ELEMENT_ARRAY_BUFFER, numOfIndices * sizeof(GLuint), indexArray, GL_STATIC_DRAW );
+
     image = new BMP();
     image->SetSize( textureDim, textureDim );
     //rectangles.push_back( gs::TileGroup::Rectangle( gs::Vec2i( 0, 0 ), gs::Vec2i( textureDim, textureDim ) ) );

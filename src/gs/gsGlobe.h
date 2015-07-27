@@ -24,6 +24,7 @@
 #include "gsWaterTileBuffer.h"
 
 using std::shared_ptr;
+using std::unique_ptr;
 using std::string;
 using std::vector;
 
@@ -34,8 +35,8 @@ namespace gs
     private:
         GLuint              vao;
 
-        gs::LandTileBuffer  landVbo;
-        gs::WaterTileBuffer waterVbo;
+        shared_ptr<gs::LandTileBuffer>  landBuffer; //TODO: unique_ptr
+        shared_ptr<gs::WaterTileBuffer> waterBuffer;
 
         gs::Shader  shader;
         GLint       modelViewMatrixLocation;
@@ -57,9 +58,9 @@ namespace gs
         void                    AssignBufferOffsetsToTiles();
         void                    BuildBiomeTable();
         void                    CombineVertices( const vector<glm::dvec3>& corners, gs::Array<vector<gs::VertexPtr>>& buckets, const unsigned int bucketDim, vector<gs::VertexPtr>& cellVertices );
-        void                    CreateTile( const vector<gs::VertexPtr>& cellVertices, const int vertexCount, const cck::Globe& terrain, const cck::Vec3& centroid );
+        void                    CreateTile( const vector<gs::VertexPtr>& cellVertices, const cck::Globe& terrain, const cck::Vec3& centroid );
         void                    CreateTileEdges( const vector<gs::VertexPtr>& cellVertices );
-        GLuint                  CreateVbo( const void* data, const int size, const int components, const string& name );
+        //GLuint                  CreateVbo( const void* data, const int size, const int components, const string& name );
         GLuint                  CreateVbo( const int size, const int components, const string& name );
         void                    GenerateBiomes( const int numOfSpreaders );
         void                    GenerateRivers( const int numOfSpawners );

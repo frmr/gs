@@ -93,6 +93,16 @@ bool gs::Tile::AddLink( const gs::Link<gs::WaterTile>& link )
     return true;
 }
 
+GLuint  gs::Tile::GetBufferEnd() const
+{
+    return bufferOffset + vertices.size() - 1;
+}
+
+GLuint  gs::Tile::GetBufferOffset() const
+{
+    return bufferOffset;
+}
+
 double gs::Tile::GetHeight() const
 {
     return height;

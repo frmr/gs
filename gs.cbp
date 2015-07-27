@@ -137,6 +137,7 @@
 		<Unit filename="src/gs/gsSpreader.h" />
 		<Unit filename="src/gs/gsTile.cpp" />
 		<Unit filename="src/gs/gsTile.h" />
+		<Unit filename="src/gs/gsTileBuffer.cpp" />
 		<Unit filename="src/gs/gsTileBuffer.h" />
 		<Unit filename="src/gs/gsTileGroup.cpp" />
 		<Unit filename="src/gs/gsTileGroup.h" />

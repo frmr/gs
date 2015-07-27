@@ -6,7 +6,7 @@ void gs::WaterTile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo
     InitColorBuffer( colorVbo );
     InitFogBuffer( fogVbo );
 
-    AddVerticesToIndexVector( indexVector );
+    //AddVerticesToIndexVector( indexVector );
 }
 
 gs::WaterTile::WaterTile( const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3f& centroid )

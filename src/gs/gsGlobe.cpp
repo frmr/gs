@@ -26,9 +26,11 @@ void gs::Globe::Draw( const gs::Camera& worldCamera ) const
     glUniformMatrix4fv( projectionMatrixLocation, 1, false, worldCamera.GetProjectionMatrix().get() );
     glUniformMatrix4fv( normalMatrixLocation, 1, false, inverseModelViewMatrix.getTranspose() );
 
+    groupManager.DrawAll();
+
     //draw
-    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, indexBuffer );
-    glDrawElements( GL_TRIANGLES, numOfIndices, GL_UNSIGNED_INT, 0 );
+    //glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, indexBuffer );
+    //glDrawElements( GL_TRIANGLES, numOfIndices, GL_UNSIGNED_INT, 0 );
 }
 
 cck::Globe gs::Globe::GenerateTerrain() const
@@ -153,14 +155,14 @@ void gs::Globe::AssignBufferOffsetsToTiles()
 
     for ( auto& tile : landTiles )
     {
-        tile.SetBufferOffset( bufferOffset );
+        tile->SetBufferOffset( bufferOffset );
     }
 
     bufferOffset = 0;
 
     for ( auto& tile : waterTiles )
     {
-        tile.SetBufferOffset( bufferOffset );
+        tile->SetBufferOffset( bufferOffset );
     }
 }
 
@@ -244,7 +246,7 @@ void gs::Globe::CombineVertices( const vector<glm::dvec3>& corners, gs::Array<ve
     }
 }
 
-void gs::Globe::CreateTile( const vector<gs::VertexPtr>& cellVertices, const int vertexCount, const cck::Globe& terrain, const cck::Vec3& centroid )
+void gs::Globe::CreateTile( const vector<gs::VertexPtr>& cellVertices, const cck::Globe& terrain, const cck::Vec3& centroid )
 {
     //create new tile
     double sampleHeight;
@@ -255,7 +257,7 @@ void gs::Globe::CreateTile( const vector<gs::VertexPtr>& cellVertices, const int
 
     if ( sampleHeight > 0.00001 )
     {
-        auto newTile = std::make_shared<gs::LandTile>( vertexCount, cellVertices, gsCentroid, sampleHeight, sampleId );
+        auto newTile = std::make_shared<gs::LandTile>( cellVertices, gsCentroid, sampleHeight, sampleId );
         allTiles.push_back( std::dynamic_pointer_cast<gs::Tile>( newTile ) );
         landTiles.push_back( newTile );
 
@@ -267,7 +269,7 @@ void gs::Globe::CreateTile( const vector<gs::VertexPtr>& cellVertices, const int
     }
     else
     {
-        auto newTile = std::make_shared<gs::WaterTile>( vertexCount, cellVertices, gsCentroid );
+        auto newTile = std::make_shared<gs::WaterTile>( cellVertices, gsCentroid );
         allTiles.push_back( std::dynamic_pointer_cast<gs::Tile>( newTile ) );
         waterTiles.push_back( newTile );
 
@@ -311,20 +313,20 @@ void gs::Globe::CreateTileEdges( const vector<gs::VertexPtr>& cellVertices )
     }
 }
 
-GLuint gs::Globe::CreateVbo( const void* data, const int size, const int components, const string& name )
-{
-    GLuint vbo;
-    glGenBuffers( 1, &vbo );
-    glBindBuffer( GL_ARRAY_BUFFER, vbo );
-
-    GLuint location = shader.GetAttribLocation( name );
-
-    glBufferData( GL_ARRAY_BUFFER, size * sizeof(GLfloat), data, GL_STATIC_DRAW );
-    glVertexAttribPointer( location, components, GL_FLOAT, GL_FALSE, 0, 0 );
-    glEnableVertexAttribArray( location );
-
-    return vbo;
-}
+//GLuint gs::Globe::CreateVbo( const void* data, const int size, const int components, const string& name )
+//{
+//    GLuint vbo;
+//    glGenBuffers( 1, &vbo );
+//    glBindBuffer( GL_ARRAY_BUFFER, vbo );
+//
+//    GLuint location = shader.GetAttribLocation( name );
+//
+//    glBufferData( GL_ARRAY_BUFFER, size * sizeof(GLfloat), data, GL_STATIC_DRAW );
+//    glVertexAttribPointer( location, components, GL_FLOAT, GL_FALSE, 0, 0 );
+//    glEnableVertexAttribArray( location );
+//
+//    return vbo;
+//}
 
 GLuint gs::Globe::CreateVbo( const int elements, const int components, const string& name )
 {
@@ -500,48 +502,42 @@ gs::Globe::Globe()
     const int numOfTiles = 16000;
     const int numOfVertices = GenerateTiles( numOfTiles );
 
+    //build biome table
     BuildBiomeTable();
 
+    //Calculate vertex heights
     for ( auto& v : vertices )
     {
         v->CalculateHeight();
-        v->IsRiver();
     }
 
+    //Generate planet
     GenerateRivers( 50 );
     GenerateBiomes( 200 );
 
+    //Assign buffer offsets
     AssignBufferOffsetsToTiles();
-
-    //create vao
-    glGenVertexArrays( 1, &vao );
-    glBindVertexArray( vao );
-
-    //copy data to vram
-    positionVbo = CreateVbo( numOfVertices, 3, "positionVert" );
-    colorVbo = CreateVbo( numOfVertices, 3, "colorVert");
-    texCoordVbo = CreateVbo( numOfVertices, 2, "texCoordVert" );
-    fogVbo = CreateVbo( numOfVertices, 1, "fogVert" );
 
     SetTileGroupTextureSize();
 
+    //Add tile to tile groups
     for ( auto& tile : landTiles )
     {
         tile->GenerateTexture();
-        tile->AddToTileGroup( groupManager );
+        //tile->AddToTileGroup( groupManager );
+        groupManager.Add( tile );
         tile->DeleteLocalTextureData();
     }
 
     groupManager.WriteTileGroupsToFile();
 
-    vector<GLuint> indexVector;
+    //allocate memory for buffers
+    landBuffer = std::make_shared<gs::LandTileBuffer>( landTiles.size(), shader );
+    waterBuffer = std::make_shared<gs::WaterTileBuffer>( waterTiles.size(), shader );
 
-    for ( auto& tile : allTiles )
-    {
-        tile->InitBuffers( positionVbo, colorVbo, texCoordVbo, fogVbo, indexVector );
-    }
+    groupManager.PopulateIndexVectors();
 
-    GLuint* indexArray = new GLuint[indexVector.size()];
+    GLuint* indexArray = new GLuint[indexVector.size()]; //TODO: replace with gs::Array
     for ( unsigned int i = 0; i < indexVector.size(); ++i )
     {
         indexArray[i] = indexVector[i];
@@ -550,9 +546,7 @@ gs::Globe::Globe()
     numOfIndices = indexVector.size();
 
     //indices
-    glGenBuffers( 1, &indexBuffer );
-    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, indexBuffer );
-    glBufferData( GL_ELEMENT_ARRAY_BUFFER, numOfIndices * sizeof(GLuint), indexArray, GL_STATIC_DRAW );
+
 
     delete[] indexArray;
 

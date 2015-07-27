@@ -59,6 +59,8 @@ namespace gs
         bool    AddLink( const gs::Link<gs::LandTile>& link );
         bool    AddLink( const gs::Link<gs::WaterTile>& link );
 
+        GLuint  GetBufferEnd() const;
+        GLuint  GetBufferOffset() const;
         double  GetHeight() const;
         Type    GetSurface() const;
 

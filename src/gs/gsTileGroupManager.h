@@ -1,6 +1,7 @@
 #ifndef GS_TILE_GROUP_MANAGER_H
 #define GS_TILE_GROUP_MANAGER_H
 
+#include "gsLandTile.h"
 #include "gsTileGroup.h"
 #include "gsTileTexture.h"
 
@@ -20,7 +21,9 @@ namespace gs
         vector<gs::TileGroup>   tileGroups;
 
     public:
-        void Add( const gs::TileTexture& texture, const GLuint bufferEnd );
+        void Add( const gs::LandTilePtr& landTile );
+        void DrawAll() const;
+        void PopulateIndexBuffers();
         void SetTextureSize( const GLint newTextureDim );
         void WriteTileGroupsToFile() const;
 

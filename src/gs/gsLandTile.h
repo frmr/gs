@@ -3,7 +3,6 @@
 
 #include "gsTile.h"
 #include "gsRandomRange.h"
-#include "gsTileGroupManager.h"
 #include "gsTileTexture.h"
 #include "gsVec2.h"
 #include "gsVertex.h"
@@ -52,14 +51,12 @@ namespace gs
         Terrain                             DetermineTerrain() const;
 
     public:
-
-        void                                AddToTileGroup( gs::TileGroupManager& manager );
         void                                DeleteLocalTextureData();
         void                                GenerateTexture();
         vector<shared_ptr<gs::LandTile>>    GetUnassignedBiomeNeighbors() const;
         Biome                               GetBiome() const;
         bool                                HasUnassignedBiomeNeighbors() const;
-        void                                InitBuffers();
+        void                                InitBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo, const GLuint texCoordVbo );
         void                                SetBiome( const Biome newBiome );
         void                                SetBlackIfRiver(); //TODO: delete
         bool                                SpawnRiver( const int newRiverId, gs::RandomRange<double>& rand );

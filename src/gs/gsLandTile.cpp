@@ -1,6 +1,7 @@
 #include "gsLandTile.h"
 #include "gsRandomRange.h"
 #include "gsGlobe.h"
+#include "gsTileGroupManager.h"
 
 #include "../EasyBMP/EasyBMP.h"
 
@@ -33,11 +34,6 @@ void gs::LandTile::InitTexCoordBuffer( const GLuint texCoordVbo )
     glBindBuffer( GL_ARRAY_BUFFER, texCoordVbo );
     glBufferSubData( GL_ARRAY_BUFFER, 2 * bufferOffset * sizeof(GLfloat), 2 * vertices.size() * sizeof(GLfloat), texCoordArray );
     delete[] texCoordArray;
-}
-
-void gs::LandTile::AddToTileGroup( gs::TileGroupManager& manager )
-{
-    manager.Add( *texture, bufferOffset + vertices.size() );
 }
 
 void gs::LandTile::DeleteLocalTextureData()
@@ -80,14 +76,14 @@ bool gs::LandTile::HasUnassignedBiomeNeighbors() const
     return false;
 }
 
-void gs::LandTile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo, const GLuint texCoordVbo, vector<GLuint>& indexVector ) //const
+void gs::LandTile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo, const GLuint texCoordVbo ) //const
 {
     InitPositionBuffer( positionVbo );
     InitColorBuffer( colorVbo );
     InitFogBuffer( fogVbo );
     InitTexCoordBuffer( texCoordVbo );
 
-    AddVerticesToIndexVector( indexVector );
+    //AddVerticesToIndexVector( indexVector );
 }
 
 void gs::LandTile::SetBiome( const gs::LandTile::Biome newBiome )
