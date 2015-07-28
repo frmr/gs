@@ -38,10 +38,17 @@ namespace gs
         shared_ptr<gs::LandTileBuffer>  landBuffer; //TODO: unique_ptr
         shared_ptr<gs::WaterTileBuffer> waterBuffer;
 
-        gs::Shader  shader;
-        GLint       modelViewMatrixLocation;
-        GLint       projectionMatrixLocation;
-        GLint       normalMatrixLocation;
+        gs::Shader  landShader;
+        gs::Shader  waterShader;
+
+        GLint       modelViewMatrixLocationLand;
+        GLint       projectionMatrixLocationLand;
+        GLint       normalMatrixLocationLand;
+
+        GLint       modelViewMatrixLocationWater;
+        GLint       projectionMatrixLocationWater;
+        GLint       normalMatrixLocationWater;
+
         int         numOfIndices;
 
         vector<gs::VertexPtr>       vertices;

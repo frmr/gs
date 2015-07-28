@@ -43,7 +43,7 @@ void gs::LandTileGroup::DeleteLocalTextureData()
 void gs::LandTileGroup::Draw() const
 {
     //bind texture
-    glDrawElements( GL_TRIANGLES, bufferEnd - bufferBegin + 1, GL_UNSIGNED_INT, (void*) ( bufferBegin * sizeof(GLuint) )  );
+    glDrawElements( GL_TRIANGLES, ( bufferEnd - bufferBegin ) + 1, GL_UNSIGNED_INT, (void*) ( bufferBegin * sizeof(GLuint) )  );
     //glDrawElements( GL_TRIANGLES, bufferEnd - bufferBegin + 1, GL_UNSIGNED_INT, (void*) ( bufferBegin )  );
 }
 

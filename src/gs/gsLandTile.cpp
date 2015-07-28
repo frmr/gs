@@ -137,7 +137,7 @@ void gs::LandTile::SetBlackIfRiver() //TODO: delete
         color = gs::Vec3f( 1.0f, 1.0f, 1.0f );
     }
 
-        for ( auto link : landLinks )
+    for ( auto link : landLinks )
     {
         if ( link.edge->IsRiver() )
         {

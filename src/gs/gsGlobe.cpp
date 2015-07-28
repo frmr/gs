@@ -13,23 +13,29 @@ using std::endl;
 
 void gs::Globe::Draw( const gs::Camera& worldCamera ) const
 {
-    shader.Use();
-
     //glDisable( GL_CULL_FACE );
 
     //get the inverse model view matrix
     Matrix4 inverseModelViewMatrix = worldCamera.GetViewMatrix();
     inverseModelViewMatrix.invert();
 
+    //Draw land tiles
+    landShader.Use();
     //pass matrices to shaders
-    glUniformMatrix4fv( modelViewMatrixLocation, 1, false, worldCamera.GetViewMatrix().get() ); //TODO: multiply by model matrix if needed
-    glUniformMatrix4fv( projectionMatrixLocation, 1, false, worldCamera.GetProjectionMatrix().get() );
-    glUniformMatrix4fv( normalMatrixLocation, 1, false, inverseModelViewMatrix.getTranspose() );
-
+    glUniformMatrix4fv( modelViewMatrixLocationLand, 1, false, worldCamera.GetViewMatrix().get() ); //TODO: multiply by model matrix if needed
+    glUniformMatrix4fv( projectionMatrixLocationLand, 1, false, worldCamera.GetProjectionMatrix().get() );
+    glUniformMatrix4fv( normalMatrixLocationLand, 1, false, inverseModelViewMatrix.getTranspose() );
     landBuffer->Bind();
     groupManager.DrawLandTileGroups();
-//    waterBuffer->Bind();
-//    groupManager.DrawWaterTileGroup();
+
+    //Draw water tiles
+    waterShader.Use();
+    //pass matrices to shaders
+    glUniformMatrix4fv( modelViewMatrixLocationWater, 1, false, worldCamera.GetViewMatrix().get() ); //TODO: multiply by model matrix if needed
+    glUniformMatrix4fv( projectionMatrixLocationWater, 1, false, worldCamera.GetProjectionMatrix().get() );
+    glUniformMatrix4fv( normalMatrixLocationWater, 1, false, inverseModelViewMatrix.getTranspose() );
+    waterBuffer->Bind();
+    groupManager.DrawWaterTileGroup();
 }
 
 cck::Globe gs::Globe::GenerateTerrain() const
@@ -333,7 +339,7 @@ GLuint gs::Globe::CreateVbo( const int elements, const int components, const str
     glGenBuffers( 1, &vbo );
     glBindBuffer( GL_ARRAY_BUFFER, vbo );
 
-    GLuint location = shader.GetAttribLocation( name );
+    GLuint location = landShader.GetAttribLocation( name );
 
     glBufferData( GL_ARRAY_BUFFER, elements * components * sizeof(GLfloat), NULL, GL_STATIC_DRAW );
     glVertexAttribPointer( location, components, GL_FLOAT, GL_FALSE, 0, 0 );
@@ -495,7 +501,8 @@ void gs::Globe::SetTileGroupTextureSize()
 }
 
 gs::Globe::Globe()
-    :   shader( "test", "data/shaders/test.vert", "data/shaders/test.frag" )
+    :   landShader( "test", "data/shaders/test.vert", "data/shaders/test.frag" ),
+        waterShader( "water", "data/shaders/water.vert", "data/shaders/water.frag" )
 {
     //generate voronoi sphere
     const int numOfTiles = 16000;
@@ -518,12 +525,11 @@ gs::Globe::Globe()
 
     AssignBufferOffsets();
 
-    //Allocate memory for buffers and initialise tile data
-    landBuffer = std::make_shared<gs::LandTileBuffer>( landTiles, shader );
-
-    landBuffer->Bind();
-
     SetTileGroupTextureSize();
+
+    //Allocate memory for land buffer and initialise tile data
+    landBuffer = std::make_shared<gs::LandTileBuffer>( landTiles, landShader );
+    landBuffer->Bind();
 
     //Add land tiles to tile groups
     for ( auto& tile : landTiles )
@@ -533,20 +539,31 @@ gs::Globe::Globe()
         tile->DeleteLocalTextureData();
     }
 
-//    waterBuffer = std::make_shared<gs::WaterTileBuffer>( waterTiles, shader );
-//    waterBuffer->Bind();
-//    //Add water tiles to tile group
-//    for ( auto& tile : waterTiles )
-//    {
-//        groupManager.Add( tile );
-//    }
+    landShader.SetFragOutput( "colorOut" );
+    landShader.Link();
+
+    modelViewMatrixLocationLand = landShader.GetUniformLocation( "modelViewMatrix" );
+    projectionMatrixLocationLand = landShader.GetUniformLocation( "projectionMatrix" );
+    normalMatrixLocationLand = landShader.GetUniformLocation( "normalMatrix" );
+
+
+
+    //Allocate memory for water buffer and initialise tile data
+    waterBuffer = std::make_shared<gs::WaterTileBuffer>( waterTiles, waterShader );
+    waterBuffer->Bind();
+
+    //Add water tiles to tile group
+    for ( auto& tile : waterTiles )
+    {
+        groupManager.Add( tile );
+    }
+
+    waterShader.SetFragOutput( "colorOut" );
+    waterShader.Link();
+
+    modelViewMatrixLocationWater = waterShader.GetUniformLocation( "modelViewMatrix" );
+    projectionMatrixLocationWater = waterShader.GetUniformLocation( "projectionMatrix" );
+    normalMatrixLocationWater = waterShader.GetUniformLocation( "normalMatrix" );
 
     //groupManager.WriteTileGroupsToFile();
-
-    shader.SetFragOutput( "colorOut" );
-    shader.Link();
-
-    modelViewMatrixLocation = shader.GetUniformLocation( "modelViewMatrix" );
-    projectionMatrixLocation = shader.GetUniformLocation( "projectionMatrix" );
-    normalMatrixLocation = shader.GetUniformLocation( "normalMatrix" );
 }
