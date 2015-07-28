@@ -26,7 +26,10 @@ void gs::Globe::Draw( const gs::Camera& worldCamera ) const
     glUniformMatrix4fv( projectionMatrixLocation, 1, false, worldCamera.GetProjectionMatrix().get() );
     glUniformMatrix4fv( normalMatrixLocation, 1, false, inverseModelViewMatrix.getTranspose() );
 
-    groupManager.DrawAll();
+    landBuffer->Bind();
+    groupManager.DrawLandTileGroups();
+//    waterBuffer->Bind();
+//    groupManager.DrawWaterTileGroup();
 }
 
 cck::Globe gs::Globe::GenerateTerrain() const
@@ -421,7 +424,7 @@ void gs::Globe::GenerateRivers( const int numOfSpawners )
 
     for ( int i = 0; i < numOfSpawners && i < (int) landTiles.size(); ++i )
     {
-        int swapTarget = i + (int) ( rand.Sample() * (double) ( landTiles.size() - i ) ) + 1;
+        int swapTarget = i + (int) ( rand.Sample() * (double) ( landTiles.size() - i ) );
         gs::LandTilePtr temp = landTiles[swapTarget];
         landTiles[swapTarget] = landTiles[i];
         landTiles[i] = temp;
@@ -517,20 +520,26 @@ gs::Globe::Globe()
 
     //Allocate memory for buffers and initialise tile data
     landBuffer = std::make_shared<gs::LandTileBuffer>( landTiles, shader );
-    //waterBuffer = std::make_shared<gs::WaterTileBuffer>( waterTiles );
 
     landBuffer->Bind();
 
     SetTileGroupTextureSize();
 
-    //Add tile to tile groups
+    //Add land tiles to tile groups
     for ( auto& tile : landTiles )
     {
         tile->GenerateTexture();
-        //tile->AddToTileGroup( groupManager );
         groupManager.Add( tile );
         tile->DeleteLocalTextureData();
     }
+
+//    waterBuffer = std::make_shared<gs::WaterTileBuffer>( waterTiles, shader );
+//    waterBuffer->Bind();
+//    //Add water tiles to tile group
+//    for ( auto& tile : waterTiles )
+//    {
+//        groupManager.Add( tile );
+//    }
 
     //groupManager.WriteTileGroupsToFile();
 

@@ -1,9 +1,11 @@
 #include "gsLandTileGroup.h"
+#include <iostream>
+
+using std::cerr;
+using std::endl;
 
 bool gs::LandTileGroup::Add( const gs::LandTilePtr& landTile )
 {
-    //add landTile to tiles as static cast to TilePtr
-
     //TODO: Improve bin packing
     //if tile texture doesn't fit on current shelf
     if ( landTile->GetTexture()->GetWidth() >= textureDim - shelfCursor.x )
@@ -41,9 +43,8 @@ void gs::LandTileGroup::DeleteLocalTextureData()
 void gs::LandTileGroup::Draw() const
 {
     //bind texture
-    //draw
-    //glDrawElements( GL_TRIANGLES, numOfIndices, GL_UNSIGNED_INT, 0 );
-    glDrawElements( GL_TRIANGLES, bufferEnd, GL_UNSIGNED_INT, (void*)( bufferBegin ) );
+    glDrawElements( GL_TRIANGLES, bufferEnd - bufferBegin + 1, GL_UNSIGNED_INT, (void*) ( bufferBegin * sizeof(GLuint) )  );
+    //glDrawElements( GL_TRIANGLES, bufferEnd - bufferBegin + 1, GL_UNSIGNED_INT, (void*) ( bufferBegin )  );
 }
 
 void gs::LandTileGroup::WriteToFile() const

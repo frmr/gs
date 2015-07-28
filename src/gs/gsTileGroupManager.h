@@ -4,6 +4,8 @@
 #include "gsLandTile.h"
 #include "gsLandTileGroup.h"
 #include "gsTileTexture.h"
+#include "gsWaterTile.h"
+#include "gsWaterTileGroup.h"
 
 #include <iostream>
 #include <vector>
@@ -19,10 +21,14 @@ namespace gs
     private:
         GLint                       textureDim;
         vector<gs::LandTileGroup>   landTileGroups;
+        gs::WaterTileGroup          waterTileGroup;
 
     public:
         void Add( const gs::LandTilePtr& landTile );
+        void Add( const gs::WaterTilePtr& waterTile );
         void DrawAll() const;
+        void DrawLandTileGroups() const;
+        void DrawWaterTileGroup() const;
         void SetTextureSize( const GLint newTextureDim );
         void WriteTileGroupsToFile() const;
 

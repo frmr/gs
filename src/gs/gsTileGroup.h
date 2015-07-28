@@ -22,6 +22,7 @@ namespace gs
 
     public:
         virtual void    Draw() const = 0;
+        GLuint          GetBufferBegin() const;
         GLuint          GetBufferEnd() const;
 
     public:

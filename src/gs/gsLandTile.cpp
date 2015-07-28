@@ -87,8 +87,6 @@ void gs::LandTile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo,
     InitColorBuffer( colorVbo );
     InitFogBuffer( fogVbo );
     InitTexCoordBuffer( texCoordVbo );
-
-    //AddVerticesToIndexVector( indexVector );
 }
 
 void gs::LandTile::SetBiome( const gs::LandTile::Biome newBiome )

@@ -5,6 +5,11 @@
 using std::cerr;
 using std::endl;
 
+GLuint gs::TileGroup::GetBufferBegin() const
+{
+    return bufferBegin;
+}
+
 GLuint gs::TileGroup::GetBufferEnd() const
 {
     return bufferEnd;

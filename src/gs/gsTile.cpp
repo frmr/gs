@@ -111,7 +111,7 @@ double gs::Tile::GetHeight() const
 
 GLuint gs::Tile::GetIndexBufferEnd() const
 {
-    return indexBufferOffset + 3 * ( vertices.size() - 2 );
+    return indexBufferOffset + ( 3 * ( vertices.size() - 2 ) ) - 1;
 }
 
 GLuint  gs::Tile::GetIndexBufferOffset() const
