@@ -4,6 +4,13 @@
 using std::cerr;
 using std::endl;
 
+GLuint gs::LandTileGroup::GenerateTextureId()
+{
+    GLuint id;
+    glGenTextures( 1, &id );
+    return id;
+}
+
 bool gs::LandTileGroup::Add( const gs::LandTilePtr& landTile )
 {
     //TODO: Improve bin packing
@@ -29,7 +36,8 @@ bool gs::LandTileGroup::Add( const gs::LandTilePtr& landTile )
     else
     {
         bufferEnd = landTile->GetIndexBufferEnd();
-        landTile->GetTexture()->AddToTileGroupTexture( image, shelfCursor );
+        //landTile->GetTexture()->AddToTileGroupTexture( image, shelfCursor );
+        landTile->AddToTileGroupTexture( texture, shelfCursor );
         shelfCursor.x += landTile->GetTexture()->GetWidth();
         return true;
     }
@@ -37,29 +45,45 @@ bool gs::LandTileGroup::Add( const gs::LandTilePtr& landTile )
 
 void gs::LandTileGroup::DeleteLocalTextureData()
 {
-    //delete image;
+    //delete texture; //TODO: uncomment
 }
 
 void gs::LandTileGroup::Draw() const
 {
     //bind texture
     glDrawElements( GL_TRIANGLES, ( bufferEnd - bufferBegin ) + 1, GL_UNSIGNED_INT, (void*) ( bufferBegin * sizeof(GLuint) )  );
-    //glDrawElements( GL_TRIANGLES, bufferEnd - bufferBegin + 1, GL_UNSIGNED_INT, (void*) ( bufferBegin )  );
+}
+
+void gs::LandTileGroup::LoadTexture() const
+{
+    glBindTexture( GL_TEXTURE_2D, textureId );
 }
 
 void gs::LandTileGroup::WriteToFile() const
 {
-    image->WriteToFile( ( "data/textures/procedural/" + std::to_string( bufferBegin ) + ".bmp" ).c_str() );
+    //texture->WriteToFile( ( "data/textures/procedural/" + std::to_string( bufferBegin ) + ".bmp" ).c_str() );
+    BMP image;
+    image.SetSize( textureDim, textureDim );
+    for ( int x = 0; x < textureDim; ++x )
+    {
+        for ( int y = 0; y < textureDim; ++y )
+        {
+            image(x,y)->Red = (int) texture->GetRed( x, y );
+            image(x,y)->Green = (int) texture->GetGreen( x, y );
+            image(x,y)->Blue = (int) texture->GetBlue( x, y );
+        }
+    }
+    image.WriteToFile( ( "data/textures/procedural/" + std::to_string( bufferBegin ) + ".bmp" ).c_str() );
 }
 
 gs::LandTileGroup::LandTileGroup( const GLuint bufferBegin, const int textureDim )
     :   TileGroup( bufferBegin ),
         textureDim( textureDim ),
+        textureId( GenerateTextureId() ),
         shelfCursor( 0, 0 ),
         shelfTop( 0 )
 {
-    image = new BMP();
-    image->SetSize( textureDim, textureDim );
+    texture = new gs::Texture( textureDim, textureDim );
 }
 
 gs::LandTileGroup::~LandTileGroup()

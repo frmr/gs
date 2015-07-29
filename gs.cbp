@@ -138,6 +138,8 @@
 		<Unit filename="src/gs/gsShader.cpp" />
 		<Unit filename="src/gs/gsShader.h" />
 		<Unit filename="src/gs/gsSpreader.h" />
+		<Unit filename="src/gs/gsTexture.cpp" />
+		<Unit filename="src/gs/gsTexture.h" />
 		<Unit filename="src/gs/gsTile.cpp" />
 		<Unit filename="src/gs/gsTile.h" />
 		<Unit filename="src/gs/gsTileBuffer.cpp" />
@@ -146,8 +148,6 @@
 		<Unit filename="src/gs/gsTileGroup.h" />
 		<Unit filename="src/gs/gsTileGroupManager.cpp" />
 		<Unit filename="src/gs/gsTileGroupManager.h" />
-		<Unit filename="src/gs/gsTileTexture.cpp" />
-		<Unit filename="src/gs/gsTileTexture.h" />
 		<Unit filename="src/gs/gsVec2.h" />
 		<Unit filename="src/gs/gsVec3.h" />
 		<Unit filename="src/gs/gsVertex.cpp" />

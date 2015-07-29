@@ -3,7 +3,7 @@
 
 #include "gsTile.h"
 #include "gsRandomRange.h"
-#include "gsTileTexture.h"
+#include "gsTexture.h"
 #include "gsVec2.h"
 #include "gsVertex.h"
 
@@ -43,8 +43,10 @@ namespace gs
     private:
         bool                        forested;
         Biome                       biome;
-        gs::TileTexture*            texture;
+        gs::Texture*                texture; //TODO: make sure to delete this when pushed to vram
         gs::Vec2f                   textureCoords;
+
+        static gs::RandomRange<int> colorGenerator; //TODO: delete
 
 
     private:
@@ -52,9 +54,10 @@ namespace gs
         void                                InitTexCoordBuffer( const GLuint texCoordVbo );
 
     public:
+        void                                AddToTileGroupTexture( gs::Texture* tileGroupTexture, const gs::Vec2i& coord ) const;
         void                                DeleteLocalTextureData();
         void                                GenerateTexture();
-        gs::TileTexture*                    GetTexture() const;
+        gs::Texture*                        GetTexture() const;
         vector<shared_ptr<gs::LandTile>>    GetUnassignedBiomeNeighbors() const;
         Biome                               GetBiome() const;
         bool                                HasUnassignedBiomeNeighbors() const;

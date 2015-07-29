@@ -565,5 +565,5 @@ gs::Globe::Globe()
     projectionMatrixLocationWater = waterShader.GetUniformLocation( "projectionMatrix" );
     normalMatrixLocationWater = waterShader.GetUniformLocation( "normalMatrix" );
 
-    //groupManager.WriteTileGroupsToFile();
+    groupManager.WriteTileGroupsToFile();
 }

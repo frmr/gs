@@ -3,7 +3,7 @@
 
 #include "gsLandTile.h"
 #include "gsLandTileGroup.h"
-#include "gsTileTexture.h"
+#include "gsTexture.h"
 #include "gsWaterTile.h"
 #include "gsWaterTileGroup.h"
 
@@ -29,6 +29,7 @@ namespace gs
         void DrawAll() const;
         void DrawLandTileGroups() const;
         void DrawWaterTileGroup() const;
+        void LoadTextures() const;
         void SetTextureSize( const GLint newTextureDim );
         void WriteTileGroupsToFile() const;
 

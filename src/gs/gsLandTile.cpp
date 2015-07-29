@@ -1,11 +1,14 @@
-#include "gsLandTile.h"
-#include "gsRandomRange.h"
 #include "gsGlobe.h"
+#include "gsLandTile.h"
+#include "gsMath.h"
+#include "gsRandomRange.h"
 #include "gsTileGroupManager.h"
 
 #include "../EasyBMP/EasyBMP.h"
 
 #include <ctime>
+
+gs::RandomRange<int> gs::LandTile::colorGenerator = gs::RandomRange<int>( 0, 255, 0 );
 
 gs::LandTile::Terrain gs::LandTile::DetermineTerrain() const
 {
@@ -36,6 +39,11 @@ void gs::LandTile::InitTexCoordBuffer( const GLuint texCoordVbo )
     delete[] texCoordArray;
 }
 
+void gs::LandTile::AddToTileGroupTexture( gs::Texture* tileGroupTexture, const gs::Vec2i& coord ) const
+{
+    tileGroupTexture->Blit( texture, coord );
+}
+
 void gs::LandTile::DeleteLocalTextureData()
 {
     delete texture;
@@ -43,10 +51,68 @@ void gs::LandTile::DeleteLocalTextureData()
 
 void gs::LandTile::GenerateTexture()
 {
-    texture = new gs::TileTexture( id, vertices, allLinks, centroid );
+    //TODO: Make this safer by checking for presence of first and second vertices
+    gs::Vec3f normal = centroid;
+    normal.Unit();
+
+    //reference u-axis is from v0 to v1
+    gs::Vec3f refAxisU = ( vertices[1]->position - vertices[0]->position ).Unit();
+    //reference v-axis is the cross-product of u-axis and the tile normal
+    gs::Vec3f refAxisV = gs::Cross<float>( refAxisU, normal ).Unit(); //TODO: Second argument might actually be worldVertices[0]->position
+
+    vector<gs::Vec2f> relativeCoords;
+    relativeCoords.reserve( vertices.size() );
+
+    //use reference axes to compute relative coordinates of each world vertex
+    for ( const auto& vert : vertices )
+    {
+        //relativeCoords.push_back( ( vert->position - worldVertices[0]->position ).ToVec2() );
+        relativeCoords.push_back( gs::Vec2f( gs::Dot<float>( refAxisU, vert->position - vertices[0]->position ),
+                                             gs::Dot<float>( refAxisV, vert->position - vertices[0]->position ) ) );
+    }
+
+    //compute bounding box
+    gs::Vec2f minCoord = gs::Vec2f( std::numeric_limits<float>::max(), std::numeric_limits<float>::max() );
+    gs::Vec2f maxCoord = gs::Vec2f( std::numeric_limits<float>::min(), std::numeric_limits<float>::min() );
+    for ( const auto& coord : relativeCoords )
+    {
+        if ( coord.x < minCoord.x ) { minCoord.x = coord.x; }
+        if ( coord.y < minCoord.y ) { minCoord.y = coord.y; }
+        if ( coord.x > maxCoord.x ) { maxCoord.x = coord.x; }
+        if ( coord.y > maxCoord.y ) { maxCoord.y = coord.y; }
+    }
+
+    //shift coordinates by bounding box minimum
+    for ( auto& coord : relativeCoords )
+    {
+        coord -= minCoord;
+    }
+    maxCoord -= minCoord;
+    minCoord -= minCoord; //should be (0,0)
+
+    constexpr int pixelsPerUnit = 1000;
+
+    int width = (int) ( maxCoord.x * pixelsPerUnit ) + 1;
+    width = ( width < 1 ) ? 1 : width;
+    int height = (int) ( maxCoord.y * pixelsPerUnit ) + 1;
+    height = ( height < 1 ) ? 1 : height;
+
+    texture = new gs::Texture( width, height );
+
+    for ( const auto& coord : relativeCoords )
+    {
+        int x = (int) ( coord.x * pixelsPerUnit );
+        //x = ( x < 0 ) ? 0 : x;
+        int y = (int) ( coord.y * pixelsPerUnit );
+        //y = ( y < 0 ) ? 0 : y;
+        //cerr << width << " " << height << " " << x << " " << y << endl;
+        texture->SetRed( x, y, 255 );
+        texture->SetGreen( x, y, 0 );
+        texture->SetBlue( x, y, 0 );
+    }
 }
 
-gs::TileTexture* gs::LandTile::GetTexture() const
+gs::Texture* gs::LandTile::GetTexture() const
 {
     return texture;
 }

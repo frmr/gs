@@ -1,6 +1,7 @@
 #ifndef GS_ARRAY_H
 #define GS_ARRAY_H
 
+#include <cstddef>
 #include <vector>
 
 using std::vector;
@@ -37,6 +38,11 @@ namespace gs
                 delete[] data;
                 data = NULL;
             }
+        }
+
+        T* GetData() const
+        {
+            return data;
         }
 
     public:

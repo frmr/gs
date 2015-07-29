@@ -9,7 +9,7 @@
 #include "gsLandTile.h"
 #include "gsTile.h"
 #include "gsTileGroup.h"
-#include "gsTileTexture.h"
+#include "gsTexture.h"
 
 using std::vector;
 
@@ -18,18 +18,22 @@ namespace gs
     class LandTileGroup : public gs::TileGroup
     {
     private:
-        //texture id
-        //pointer to image data (to be deleted eventually)
         const int           textureDim;
+        const GLuint        textureId;
         gs::Vec2i           shelfCursor;
         int                 shelfTop;
-        BMP*                image;
+        //BMP*                image;
+        gs::Texture*        texture;
+
+    private:
+        static GLuint   GenerateTextureId();
 
     public:
-        bool    Add( const gs::LandTilePtr& landTile );
-        void    DeleteLocalTextureData();
-        void    Draw() const;
-        void    WriteToFile() const;
+        bool            Add( const gs::LandTilePtr& landTile );
+        void            DeleteLocalTextureData();
+        void            Draw() const;
+        void            LoadTexture() const;
+        void            WriteToFile() const;
 
     public:
         LandTileGroup( const GLuint bufferBegin, const int textureDim );

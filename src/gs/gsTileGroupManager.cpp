@@ -44,6 +44,14 @@ void gs::TileGroupManager::DrawWaterTileGroup() const
     waterTileGroup.Draw();
 }
 
+void gs::TileGroupManager::LoadTextures() const
+{
+    for ( const auto& group : landTileGroups )
+    {
+        group.LoadTexture();
+    }
+}
+
 void gs::TileGroupManager::SetTextureSize( const GLint newTextureDim )
 {
     textureDim = newTextureDim;
