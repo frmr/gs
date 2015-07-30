@@ -7,7 +7,7 @@
 using std::cerr;
 using std::endl;
 
-void gs::Texture::Blit( Texture* source, const gs::Vec2i& coord )
+void gs::Texture::Blit( shared_ptr<Texture> source, const gs::Vec2i& coord )
 {
     for ( int sourceX = 0; sourceX < source->GetWidth(); ++sourceX )
     {

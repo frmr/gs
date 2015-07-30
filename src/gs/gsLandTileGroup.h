@@ -1,6 +1,7 @@
 #ifndef GS_LAND_TILE_GROUP_H
 #define GS_LAND_TILE_GROUP_H
 
+#include <memory>
 #include <vector>
 
 #include "../gl3w/gl3w.h"
@@ -11,6 +12,7 @@
 #include "gsTileGroup.h"
 #include "gsTexture.h"
 
+using std::shared_ptr;
 using std::vector;
 
 namespace gs
@@ -18,12 +20,11 @@ namespace gs
     class LandTileGroup : public gs::TileGroup
     {
     private:
-        const int           textureDim;
-        const GLuint        textureId;
-        gs::Vec2i           shelfCursor;
-        int                 shelfTop;
-        //BMP*                image;
-        gs::Texture*        texture;
+        const int               textureDim;
+        const GLuint            textureId;
+        gs::Vec2i               shelfCursor;
+        int                     shelfTop;
+        shared_ptr<gs::Texture> texture;    //TODO: should be unique_ptr
 
     private:
         static GLuint   GenerateTextureId();

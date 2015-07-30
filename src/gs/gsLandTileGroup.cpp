@@ -45,7 +45,7 @@ bool gs::LandTileGroup::Add( const gs::LandTilePtr& landTile )
 
 void gs::LandTileGroup::DeleteLocalTextureData()
 {
-    //delete texture; //TODO: uncomment
+    texture.reset();
 }
 
 void gs::LandTileGroup::Draw() const
@@ -71,7 +71,7 @@ gs::LandTileGroup::LandTileGroup( const GLuint bufferBegin, const int textureDim
         shelfCursor( 0, 0 ),
         shelfTop( 0 )
 {
-    texture = new gs::Texture( textureDim, textureDim );
+    texture = std::make_shared<gs::Texture>( textureDim, textureDim );
 }
 
 gs::LandTileGroup::~LandTileGroup()

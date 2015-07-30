@@ -39,14 +39,14 @@ void gs::LandTile::InitTexCoordBuffer( const GLuint texCoordVbo )
     delete[] texCoordArray;
 }
 
-void gs::LandTile::AddToTileGroupTexture( gs::Texture* tileGroupTexture, const gs::Vec2i& coord ) const
+void gs::LandTile::AddToTileGroupTexture( shared_ptr<gs::Texture> tileGroupTexture, const gs::Vec2i& coord ) const
 {
     tileGroupTexture->Blit( texture, coord );
 }
 
 void gs::LandTile::DeleteLocalTextureData()
 {
-    delete texture;
+    texture.reset();
 }
 
 void gs::LandTile::GenerateTexture()
@@ -97,7 +97,7 @@ void gs::LandTile::GenerateTexture()
     int height = (int) ( maxCoord.y * pixelsPerUnit ) + 1;
     height = ( height < 1 ) ? 1 : height;
 
-    texture = new gs::Texture( width, height );
+    texture = std::make_shared<gs::Texture>( width, height );
 
     GLubyte randRed = (GLubyte) colorGenerator.Sample();
     GLubyte randBlue = (GLubyte) colorGenerator.Sample();
@@ -123,7 +123,7 @@ void gs::LandTile::GenerateTexture()
     }
 }
 
-gs::Texture* gs::LandTile::GetTexture() const
+shared_ptr<gs::Texture> gs::LandTile::GetTexture() const
 {
     return texture;
 }
@@ -271,6 +271,9 @@ gs::LandTile::LandTile( const vector<shared_ptr<gs::Vertex>>& vertices, const gs
         color = gs::Vec3f( 0.4, 0.4, 0.4 );
     }
     //color = gs::Vec3f( 0.0f, ( 8.0f * (float) id ) / 255.0f, 0.0f );
+}
 
-
+gs::LandTile::~LandTile()
+{
+    DeleteLocalTextureData();
 }

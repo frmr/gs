@@ -2,6 +2,7 @@
 #define GS_TILE_TEXTURE_H
 
 #include <limits>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -15,6 +16,7 @@
 #include "../EasyBMP/EasyBMP.h"
 #include "../gl3w/gl3w.h"
 
+using std::shared_ptr;
 using std::string;
 using std::vector;
 
@@ -29,7 +31,7 @@ namespace gs
         gs::Array<GLubyte>  data;
 
     public:
-        void    Blit( Texture* source, const gs::Vec2i& coord );
+        void    Blit( shared_ptr<Texture> source, const gs::Vec2i& coord );
         bool    CheckCoordIsValid( const int x, const int y ) const;
         int     GetArea() const;
         GLubyte GetBlue( const int x, const int y );

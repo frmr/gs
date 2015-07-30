@@ -43,7 +43,7 @@ namespace gs
     private:
         bool                        forested;
         Biome                       biome;
-        gs::Texture*                texture; //TODO: make sure to delete this when pushed to vram
+        shared_ptr<gs::Texture>     texture; //TODO: make sure to delete this when pushed to vram, and should be unique_ptr
         gs::Vec2f                   textureCoords;
 
         static gs::RandomRange<int> colorGenerator; //TODO: delete
@@ -54,10 +54,10 @@ namespace gs
         void                                InitTexCoordBuffer( const GLuint texCoordVbo );
 
     public:
-        void                                AddToTileGroupTexture( gs::Texture* tileGroupTexture, const gs::Vec2i& coord ) const;
+        void                                AddToTileGroupTexture( shared_ptr<gs::Texture> tileGroupTexture, const gs::Vec2i& coord ) const;
         void                                DeleteLocalTextureData();
         void                                GenerateTexture();
-        gs::Texture*                        GetTexture() const;
+        shared_ptr<gs::Texture>             GetTexture() const;
         vector<shared_ptr<gs::LandTile>>    GetUnassignedBiomeNeighbors() const;
         Biome                               GetBiome() const;
         bool                                HasUnassignedBiomeNeighbors() const;
@@ -68,6 +68,7 @@ namespace gs
 
     public:
         LandTile( const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3f& centroid, const double height, const int regionId );
+        ~LandTile();
     };
 
     typedef shared_ptr<gs::LandTile> LandTilePtr;
