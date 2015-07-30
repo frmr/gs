@@ -35,7 +35,7 @@ namespace gs
         bool                            CompareTargetHeights( const gs::Link<gs::Vertex>& a, const gs::Link<gs::Vertex>& b ) const;
 
     public:
-        void                            AddLink( const gs::Link<gs::Vertex> link );
+        void                            AddLink( const gs::Link<gs::Vertex>& link );
         void                            AddTile( const shared_ptr<gs::Tile> tile );
         void                            CalculateHeight();
         vector<shared_ptr<gs::Edge>>    GetEdges() const;

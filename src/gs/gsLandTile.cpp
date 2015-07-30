@@ -225,7 +225,7 @@ void gs::LandTile::SetBlackIfRiver() //TODO: delete
 
 bool gs::LandTile::SpawnRiver( const int newRiverId, gs::RandomRange<double>& rand )
 {
-    double probability;
+    double probability = 0.0;
     if ( terrain == gs::LandTile::Terrain::PLAINS )
     {
         probability = 0.05;

@@ -11,7 +11,7 @@ using std::endl;
 
 int gs::Vertex::idCounter = 0;
 
-void gs::Vertex::AddLink( const gs::Link<gs::Vertex> link )
+void gs::Vertex::AddLink( const gs::Link<gs::Vertex>& link )
 {
     links.push_back( link );
 }
@@ -130,6 +130,7 @@ bool gs::Vertex::SetRiver( const int newRiverId )
 gs::Vertex::Vertex( const gs::Vec3f& position )
     :   id( idCounter++ ),
         position( position ),
+        height( 0.0 ),
         riverId( -1 )
 {
 }
