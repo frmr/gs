@@ -9,15 +9,17 @@ using std::endl;
 
 void gs::Texture::Blit( Texture* source, const gs::Vec2i& coord )
 {
-    for ( int x = coord.x; x < source->GetWidth(); ++x )
+    for ( int sourceX = 0; sourceX < source->GetWidth(); ++sourceX )
     {
-        for ( int y = coord.y; y < source->GetHeight(); ++y )
+        for ( int sourceY = 0; sourceY < source->GetHeight(); ++sourceY )
         {
-            if ( CheckCoordIsValid( x, y ) )
+            int targetX = coord.x + sourceX;
+            int targetY = coord.y + sourceY;
+            if ( CheckCoordIsValid( targetX, targetY ) )
             {
-                data.At(x,y,0) = source->GetRed( x, y );
-                data.At(x,y,1) = source->GetGreen( x, y );
-                data.At(x,y,2) = source->GetBlue( x, y );
+                data.At( targetX, targetY, 0 ) = source->GetRed( sourceX, sourceY );
+                data.At( targetX, targetY, 1 ) = source->GetGreen( sourceX, sourceY );
+                data.At( targetX, targetY, 2 ) = source->GetBlue( sourceX, sourceY );
             }
         }
     }
@@ -29,7 +31,7 @@ bool gs::Texture::CheckCoordIsValid( const int x, const int y ) const
     {
         return true;
     }
-    cerr << "gs::Texture::Blit in src/gs/gsTexture.cpp - Cannot write coordinate (" << x << "," << y << ") in texture with dimensions (" << x << "," << y << ")" << endl;
+    cerr << "gs::Texture::Blit in src/gs/gsTexture.cpp - Invalid coordinate (" << x << "," << y << ") in texture with dimensions (" << width << "," << height << ")" << endl;
     return false;
 }
 
@@ -108,6 +110,22 @@ bool gs::Texture::SetRed( const int x, const int y, const GLubyte red )
         return true;
     }
     return false;
+}
+
+void gs::Texture::WriteToFile( const string filename )
+{
+    BMP image;
+    image.SetSize( width, height);
+    for ( int x = 0; x < width; ++x )
+    {
+        for ( int y = 0; y < height; ++y )
+        {
+            image(x,y)->Red = (int) GetRed( x, y );
+            image(x,y)->Green = (int) GetGreen( x, y );
+            image(x,y)->Blue = (int) GetBlue( x, y );
+        }
+    }
+    image.WriteToFile( filename.c_str() );
 }
 
 gs::Texture::Texture( const int width, const int height )

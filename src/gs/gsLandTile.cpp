@@ -99,6 +99,17 @@ void gs::LandTile::GenerateTexture()
 
     texture = new gs::Texture( width, height );
 
+    GLubyte randRed = (GLubyte) colorGenerator.Sample();
+    GLubyte randBlue = (GLubyte) colorGenerator.Sample();
+    GLubyte randGreen = (GLubyte) colorGenerator.Sample();
+    for ( int x = 0; x < width; ++x )
+    {
+        for ( int y = 0; y < height; ++y )
+        {
+            texture->SetColor( x, y, randRed, randGreen, randBlue );
+        }
+    }
+
     for ( const auto& coord : relativeCoords )
     {
         int x = (int) ( coord.x * pixelsPerUnit );

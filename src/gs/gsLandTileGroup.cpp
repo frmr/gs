@@ -61,19 +61,7 @@ void gs::LandTileGroup::LoadTexture() const
 
 void gs::LandTileGroup::WriteToFile() const
 {
-    //texture->WriteToFile( ( "data/textures/procedural/" + std::to_string( bufferBegin ) + ".bmp" ).c_str() );
-    BMP image;
-    image.SetSize( textureDim, textureDim );
-    for ( int x = 0; x < textureDim; ++x )
-    {
-        for ( int y = 0; y < textureDim; ++y )
-        {
-            image(x,y)->Red = (int) texture->GetRed( x, y );
-            image(x,y)->Green = (int) texture->GetGreen( x, y );
-            image(x,y)->Blue = (int) texture->GetBlue( x, y );
-        }
-    }
-    image.WriteToFile( ( "data/textures/procedural/" + std::to_string( bufferBegin ) + ".bmp" ).c_str() );
+    texture->WriteToFile( ( "data/textures/procedural/" + std::to_string( bufferBegin ) + ".bmp" ) );
 }
 
 gs::LandTileGroup::LandTileGroup( const GLuint bufferBegin, const int textureDim )
