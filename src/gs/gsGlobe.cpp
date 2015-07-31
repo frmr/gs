@@ -236,9 +236,15 @@ void gs::Globe::CombineVertices( const vector<glm::dvec3>& corners, gs::Array<ve
                         }
                     }
                 }
-                if ( foundVertex ) { break; }
+                if ( foundVertex )
+                {
+                    break;
+                }
             }
-            if ( foundVertex ) { break; }
+            if ( foundVertex )
+            {
+                break;
+            }
         }
 
         if ( !foundVertex )
@@ -317,21 +323,6 @@ void gs::Globe::CreateTileEdges( const vector<gs::VertexPtr>& cellVertices )
         }
     }
 }
-
-//GLuint gs::Globe::CreateVbo( const void* data, const int size, const int components, const string& name )
-//{
-//    GLuint vbo;
-//    glGenBuffers( 1, &vbo );
-//    glBindBuffer( GL_ARRAY_BUFFER, vbo );
-//
-//    GLuint location = shader.GetAttribLocation( name );
-//
-//    glBufferData( GL_ARRAY_BUFFER, size * sizeof(GLfloat), data, GL_STATIC_DRAW );
-//    glVertexAttribPointer( location, components, GL_FLOAT, GL_FALSE, 0, 0 );
-//    glEnableVertexAttribArray( location );
-//
-//    return vbo;
-//}
 
 GLuint gs::Globe::CreateVbo( const int elements, const int components, const string& name )
 {
@@ -453,7 +444,6 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
 
     static constexpr unsigned int bucketDim = 256;
 
-    //buckets = new vector<shared_ptr<gs::Vertex>>[bucketDim][bucketDim][bucketDim];
     gs::Array<vector<gs::VertexPtr>> buckets( bucketDim, bucketDim, bucketDim );
 
     for ( const auto& cell : vg.cell_vector )

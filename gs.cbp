@@ -58,7 +58,6 @@
 					<Add directory="include/SDL2/x86_64-w64-mingw32" />
 				</Compiler>
 				<Linker>
-					<Add option="-s" />
 					<Add directory="lib/SDL2/x86_64-w64-mingw32" />
 				</Linker>
 			</Target>
