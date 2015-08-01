@@ -135,5 +135,5 @@ gs::Shader::Shader( const string& name, const string& vertexFilename, const stri
 
 gs::Shader::~Shader()
 {
-    glDeleteProgram( program );
+    glDeleteProgram( program ); //TODO: uncomment
 }

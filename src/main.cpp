@@ -76,7 +76,7 @@ namespace gs
         return true;
     }
 
-    void Render( SDL_Window* window, const gs::Camera& worldCamera, const gs::Camera& interfaceCamera, const gs::Globe globe )
+    void Render( SDL_Window* window, const gs::Camera& worldCamera, const gs::Camera& interfaceCamera, const gs::Globe& globe )
     {
         glEnable( GL_DEPTH_TEST );
         glEnable( GL_CULL_FACE );

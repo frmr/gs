@@ -14,9 +14,6 @@ using std::endl;
 
 void gs::Globe::Draw( const gs::Camera& worldCamera ) const
 {
-    //glDisable( GL_CULL_FACE );
-
-    //get the inverse model view matrix
     Matrix4 inverseModelViewMatrix = worldCamera.GetViewMatrix();
     inverseModelViewMatrix.invert();
 
@@ -37,6 +34,8 @@ void gs::Globe::Draw( const gs::Camera& worldCamera ) const
     glUniformMatrix4fv( normalMatrixLocationWater, 1, false, inverseModelViewMatrix.getTranspose() );
     waterBuffer->Bind();
     groupManager.DrawWaterTileGroup();
+
+    //glUseProgram( 0 );
 }
 
 cck::Globe gs::Globe::GenerateTerrain() const

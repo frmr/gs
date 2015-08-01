@@ -14,6 +14,6 @@ out vec4 colorOut;
 void main()
 {
     //colorOut = vec4( colorFrag, 1.0 );
-    //colorOut = texture( tex, texCoordFrag );
-    colorOut = vec4( 1.0, 0.0, 0.0, 0.0 );
+    colorOut = texture( tex, texCoordFrag );
+    //colorOut = vec4( 1.0, 0.0, 0.0, 0.0 );
 }

@@ -50,7 +50,7 @@ void gs::LandTileGroup::DeleteLocalTextureData()
 void gs::LandTileGroup::Draw() const
 {
     glBindTexture( GL_TEXTURE_2D, textureId );
-    glUniform1i( 10, textureId );
+    //glUniform1i( 10, textureId );
     glDrawElements( GL_TRIANGLES, ( bufferEnd - bufferBegin ) + 1, GL_UNSIGNED_INT, (void*) ( bufferBegin * sizeof(GLuint) )  );
 }
 
