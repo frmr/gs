@@ -53,8 +53,8 @@ void gs::LandTile::GenerateTexture()
 {
     //TODO: Make this safer by checking for presence of first and second vertices
     //gs::Vec3f normal = centroid;
-    gs::Vec3f normal = vertices[0]->position;
-    normal.Unit();
+    //gs::Vec3f normal = vertices[0]->position;
+    //normal.Unit();
 
     //reference u-axis is from v0 to v1
     gs::Vec3f refAxisU = ( vertices[1]->position - vertices[0]->position ).Unit();
@@ -67,7 +67,6 @@ void gs::LandTile::GenerateTexture()
     //use reference axes to compute relative coordinates of each world vertex
     for ( const auto& vert : vertices )
     {
-        //relativeCoords.push_back( ( vert->position - worldVertices[0]->position ).ToVec2() );
         relativeCoords.push_back( gs::Vec2f( gs::Dot<float>( refAxisU, vert->position - vertices[0]->position ),
                                              gs::Dot<float>( refAxisV, vert->position - vertices[0]->position ) ) );
     }

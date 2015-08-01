@@ -1,6 +1,7 @@
 #include "gsTile.h"
 
 #include "gsLandTile.h"
+#include "gsMath.h"
 #include "gsWaterTile.h"
 
 #include <iostream>
@@ -139,6 +140,7 @@ gs::Tile::Tile( const Type surface, const vector<shared_ptr<gs::Vertex>>& vertic
     :   id( idCounter++ ),
         surface( surface ),
         centroid( centroid ),
+        normal( ( gs::Cross( vertices[1]->position - vertices[0]->position, vertices[2]->position - vertices[0]->position ) ).Unit() ),
         height( height ),
         vertices( vertices ),
         fog( false )
