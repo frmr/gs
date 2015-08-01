@@ -52,9 +52,9 @@ void gs::LandTile::DeleteLocalTextureData()
 void gs::LandTile::GenerateTexture()
 {
     //TODO: Make this safer by checking for presence of first and second vertices
-    //gs::Vec3f normal = centroid;
+    gs::Vec3f normal = centroid;
     //gs::Vec3f normal = vertices[0]->position;
-    //normal.Unit();
+    normal.Unit();
 
     //reference u-axis is from v0 to v1
     gs::Vec3f refAxisU = ( vertices[1]->position - vertices[0]->position ).Unit();

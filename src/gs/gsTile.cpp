@@ -140,11 +140,14 @@ gs::Tile::Tile( const Type surface, const vector<shared_ptr<gs::Vertex>>& vertic
     :   id( idCounter++ ),
         surface( surface ),
         centroid( centroid ),
-        normal( ( gs::Cross( vertices[1]->position - vertices[0]->position, vertices[2]->position - vertices[0]->position ) ).Unit() ),
+        //normal( ( gs::Cross( vertices[1]->position - vertices[0]->position, vertices[2]->position - vertices[0]->position ) ).Unit() ),
         height( height ),
         vertices( vertices ),
         fog( false )
 {
+//    cerr << centroid.x << " " << centroid.y << " " << centroid.z << endl;
+//    cerr << normal.x << " " << normal.y << " " << normal.z << endl;
+//    cerr << endl;
 }
 
 //gs::Tile::Tile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices )

@@ -33,7 +33,7 @@ namespace gs
         static int                              idCounter;
         Type                                    surface;
         const gs::Vec3f                         centroid;
-        const gs::Vec3f                         normal;
+        //const gs::Vec3f                         normal;
         const double                            height;
 
         const vector<shared_ptr<gs::Vertex>>    vertices;

@@ -263,7 +263,8 @@ void gs::Globe::CreateTile( const vector<gs::VertexPtr>& cellVertices, const cck
     //create new tile
     double sampleHeight;
     int sampleId;
-    terrain.SampleData( centroid.ToGeographic(), sampleHeight, sampleId );
+    //terrain.SampleData( centroid.ToGeographic(), sampleHeight, sampleId );
+    terrain.SampleData( cck::Vec3( centroid.z, centroid.x, centroid.y ).ToGeographic(), sampleHeight, sampleId );
 
     gs::Vec3f gsCentroid( centroid.x, centroid.y, centroid.z );
 
@@ -451,7 +452,8 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
     {
         vector<gs::VertexPtr> cellVertices;
         CombineVertices( cell->corners, buckets, bucketDim, cellVertices );
-        CreateTile( cellVertices, terrain, cck::Vec3( cell->centroid.z, cell->centroid.x, cell->centroid.y ) );
+        //CreateTile( cellVertices, terrain, cck::Vec3( cell->centroid.z, cell->centroid.x, cell->centroid.y ) );
+        CreateTile( cellVertices, terrain, cck::Vec3( cell->centroid.x, cell->centroid.y, cell->centroid.z ) );
         CreateTileEdges( cellVertices );
     }
 
