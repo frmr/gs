@@ -23,6 +23,9 @@ namespace gs
         size_t CountVertices( const vector<gs::LandTilePtr>& landTiles ) const;
 
     public:
+        void UpdateTexCoordBuffer( const gs::LandTilePtr& tile ) const;
+
+    public:
         LandTileBuffer( vector<gs::LandTilePtr>& landTiles, gs::Shader& shader );
     };
 }

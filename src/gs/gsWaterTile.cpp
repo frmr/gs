@@ -1,10 +1,10 @@
 #include "gsWaterTile.h"
 
-void gs::WaterTile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo ) //const
+void gs::WaterTile::UpdateAllBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo ) //const
 {
-    InitPositionBuffer( positionVbo );
-    InitColorBuffer( colorVbo );
-    InitFogBuffer( fogVbo );
+    UpdatePositionBuffer( positionVbo );
+    UpdateColorBuffer( colorVbo );
+    UpdateFogBuffer( fogVbo );
 }
 
 gs::WaterTile::WaterTile( const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3f& centroid )

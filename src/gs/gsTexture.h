@@ -31,20 +31,21 @@ namespace gs
         gs::Array<GLubyte>  data;
 
     public:
-        void    Blit( shared_ptr<Texture> source, const gs::Vec2i& coord );
-        bool    CheckCoordIsValid( const int x, const int y ) const;
-        int     GetArea() const;
-        GLubyte GetBlue( const int x, const int y );
-        GLubyte GetGreen( const int x, const int y );
-        int     GetHeight() const;
-        GLubyte GetRed( const int x, const int y );
-        int     GetWidth() const;
-        bool    SetBlue( const int x, const int y, const GLubyte blue );
-        bool    SetColor( const int x, const int y, const GLubyte red, const GLubyte green, const GLubyte blue );
-        bool    SetColor( const int x, const int y, const gs::Vec3f& color );
-        bool    SetGreen( const int x, const int y, const GLubyte green );
-        bool    SetRed( const int x, const int y, const GLubyte red );
-        void    WriteToFile( const string filename );
+        void        Blit( shared_ptr<Texture> source, const gs::Vec2i& offset );
+        bool        CheckCoordIsValid( const int x, const int y ) const;
+        int         GetArea() const;
+        GLubyte     GetBlue( const int x, const int y );
+        GLubyte*    GetData() const;
+        GLubyte     GetGreen( const int x, const int y );
+        int         GetHeight() const;
+        GLubyte     GetRed( const int x, const int y );
+        int         GetWidth() const;
+        bool        SetBlue( const int x, const int y, const GLubyte blue );
+        bool        SetColor( const int x, const int y, const GLubyte red, const GLubyte green, const GLubyte blue );
+        bool        SetColor( const int x, const int y, const gs::Vec3f& color );
+        bool        SetGreen( const int x, const int y, const GLubyte green );
+        bool        SetRed( const int x, const int y, const GLubyte red );
+        void        WriteToFile( const string filename );
 
     public:
         Texture( const int width, const int height );

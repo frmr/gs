@@ -15,7 +15,7 @@ bool gs::LandTileGroup::Add( const gs::LandTilePtr& landTile )
 {
     //TODO: Improve bin packing
     //if tile texture doesn't fit on current shelf
-    if ( landTile->GetTexture()->GetWidth() >= textureDim - shelfCursor.x )
+    if ( landTile->GetTexture()->GetWidth() >= textureSize - shelfCursor.x )
     {
         //create new shelf
         shelfCursor.x = 0;
@@ -29,15 +29,14 @@ bool gs::LandTileGroup::Add( const gs::LandTilePtr& landTile )
         shelfTop = shelfCursor.y + landTile->GetTexture()->GetHeight();
     }
 
-    if ( shelfTop > textureDim )
+    if ( shelfTop > textureSize )
     {
         return false;
     }
     else
     {
         bufferEnd = landTile->GetIndexBufferEnd();
-        //landTile->GetTexture()->AddToTileGroupTexture( image, shelfCursor );
-        landTile->AddToTileGroupTexture( texture, shelfCursor );
+        landTile->AddToTileGroupTexture( texture, shelfCursor, textureSize );
         shelfCursor.x += landTile->GetTexture()->GetWidth();
         return true;
     }
@@ -50,13 +49,21 @@ void gs::LandTileGroup::DeleteLocalTextureData()
 
 void gs::LandTileGroup::Draw() const
 {
-    //bind texture
+    glBindTexture( GL_TEXTURE_2D, textureId );
+    glUniform1i( 10, textureId );
     glDrawElements( GL_TRIANGLES, ( bufferEnd - bufferBegin ) + 1, GL_UNSIGNED_INT, (void*) ( bufferBegin * sizeof(GLuint) )  );
 }
 
 void gs::LandTileGroup::LoadTexture() const
 {
+    glActiveTexture( GL_TEXTURE0 );
     glBindTexture( GL_TEXTURE_2D, textureId );
+    glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB, texture->GetWidth(), texture->GetHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, texture->GetData() );
+    glGenerateMipmap(GL_TEXTURE_2D);
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
 }
 
 void gs::LandTileGroup::WriteToFile() const
@@ -64,17 +71,18 @@ void gs::LandTileGroup::WriteToFile() const
     texture->WriteToFile( ( "data/textures/procedural/" + std::to_string( bufferBegin ) + ".bmp" ) );
 }
 
-gs::LandTileGroup::LandTileGroup( const GLuint bufferBegin, const int textureDim )
+gs::LandTileGroup::LandTileGroup( const GLuint bufferBegin, const int textureSize )
     :   TileGroup( bufferBegin ),
-        textureDim( textureDim ),
+        textureSize( textureSize ),
         textureId( GenerateTextureId() ),
         shelfCursor( 0, 0 ),
         shelfTop( 0 )
 {
-    texture = std::make_shared<gs::Texture>( textureDim, textureDim );
+    texture = std::make_shared<gs::Texture>( textureSize, textureSize );
 }
 
 gs::LandTileGroup::~LandTileGroup()
 {
     DeleteLocalTextureData();
+    //TODO: delete GL texture data
 }

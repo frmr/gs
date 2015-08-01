@@ -20,7 +20,7 @@ namespace gs
     class LandTileGroup : public gs::TileGroup
     {
     private:
-        const int               textureDim;
+        const int               textureSize;
         const GLuint            textureId;
         gs::Vec2i               shelfCursor;
         int                     shelfTop;

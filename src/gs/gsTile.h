@@ -48,9 +48,9 @@ namespace gs
         //owner
         //controller
     protected:
-        void    InitColorBuffer( const GLuint colorVbo );
-        void    InitFogBuffer( const GLuint fogVbo );
-        void    InitPositionBuffer( const GLuint positionVbo );
+        void    UpdateColorBuffer( const GLuint colorVbo );
+        void    UpdateFogBuffer( const GLuint fogVbo );
+        void    UpdatePositionBuffer( const GLuint positionVbo );
 
     public:
         void    AddVerticesToIndexVector( vector<GLuint>& indexVector );

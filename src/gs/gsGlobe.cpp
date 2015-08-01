@@ -494,7 +494,7 @@ void gs::Globe::SetTileGroupTextureSize()
 }
 
 gs::Globe::Globe()
-    :   landShader( "test", "data/shaders/test.vert", "data/shaders/test.frag" ),
+    :   landShader( "land", "data/shaders/land.vert", "data/shaders/land.frag" ),
         waterShader( "water", "data/shaders/water.vert", "data/shaders/water.frag" )
 {
     //generate voronoi sphere
@@ -530,7 +530,10 @@ gs::Globe::Globe()
         tile->GenerateTexture();
         groupManager.Add( tile );
         tile->DeleteLocalTextureData();
+        landBuffer->UpdateTexCoordBuffer( tile );
     }
+
+    groupManager.LoadTextures();
 
     landShader.SetFragOutput( "colorOut" );
     landShader.Link();

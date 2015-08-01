@@ -26,22 +26,14 @@ gs::LandTile::Terrain gs::LandTile::DetermineTerrain() const
     }
 }
 
-void gs::LandTile::InitTexCoordBuffer( const GLuint texCoordVbo )
+void gs::LandTile::AddToTileGroupTexture( shared_ptr<gs::Texture> tileGroupTexture, const gs::Vec2i& tileGroupTextureOffset, const int tileGroupTextureSize ) const
 {
-    GLfloat* texCoordArray = new GLfloat[2*vertices.size()];
-    for ( unsigned int i = 0; i < vertices.size(); ++i )
+    tileGroupTexture->Blit( texture, tileGroupTextureOffset );
+    for ( auto coord : texCoords )
     {
-        texCoordArray[2*i] = 0.0f;
-        texCoordArray[2*i+1] = 0.0f;
+        coord.x = ( (float) tileGroupTextureOffset.x + coord.x ) / (float) tileGroupTextureSize;
+        coord.y = ( (float) tileGroupTextureOffset.y + coord.y ) / (float) tileGroupTextureSize;
     }
-    glBindBuffer( GL_ARRAY_BUFFER, texCoordVbo );
-    glBufferSubData( GL_ARRAY_BUFFER, 2 * bufferOffset * sizeof(GLfloat), 2 * vertices.size() * sizeof(GLfloat), texCoordArray );
-    delete[] texCoordArray;
-}
-
-void gs::LandTile::AddToTileGroupTexture( shared_ptr<gs::Texture> tileGroupTexture, const gs::Vec2i& coord ) const
-{
-    tileGroupTexture->Blit( texture, coord );
 }
 
 void gs::LandTile::DeleteLocalTextureData()
@@ -98,7 +90,7 @@ void gs::LandTile::GenerateTexture()
 
 
 
-
+    //fill with random color
     GLubyte randRed = (GLubyte) colorGenerator.Sample();
     GLubyte randBlue = (GLubyte) colorGenerator.Sample();
     GLubyte randGreen = (GLubyte) colorGenerator.Sample();
@@ -117,10 +109,7 @@ void gs::LandTile::GenerateTexture()
     for ( const auto& coord : relativeCoords )
     {
         pixelCoords.emplace_back( (int) ( coord.x * pixelsPerUnit ), (int) ( coord.y * pixelsPerUnit ) );
-    }
-    for ( const auto& coord : pixelCoords )
-    {
-        texCoords.emplace_back( (float) coord.x / (float) width, (float) coord.y / (float) height );
+        texCoords.emplace_back( (float) pixelCoords.back().x, (float) pixelCoords.back().y );
     }
 
     float riverLimit = 1.0f / (float) pixelsPerUnit * 2.0f;
@@ -193,14 +182,6 @@ bool gs::LandTile::HasUnassignedBiomeNeighbors() const
         }
     }
     return false;
-}
-
-void gs::LandTile::InitBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo, const GLuint texCoordVbo ) //const
-{
-    InitPositionBuffer( positionVbo );
-    InitColorBuffer( colorVbo );
-    InitFogBuffer( fogVbo );
-    InitTexCoordBuffer( texCoordVbo );
 }
 
 void gs::LandTile::SetBiome( const gs::LandTile::Biome newBiome )
@@ -285,6 +266,27 @@ bool gs::LandTile::SpawnRiver( const int newRiverId, gs::RandomRange<double>& ra
     {
         return false;
     }
+}
+
+void gs::LandTile::UpdateAllBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo, const GLuint texCoordVbo ) //const
+{
+    UpdatePositionBuffer( positionVbo );
+    UpdateColorBuffer( colorVbo );
+    UpdateFogBuffer( fogVbo );
+    UpdateTexCoordBuffer( texCoordVbo );
+}
+
+void gs::LandTile::UpdateTexCoordBuffer( const GLuint texCoordVbo )
+{
+    GLfloat* texCoordArray = new GLfloat[2*vertices.size()];
+    for ( unsigned int i = 0; i < texCoords.size(); ++i )
+    {
+        texCoordArray[2*i] = texCoords[i].x;
+        texCoordArray[2*i+1] = texCoords[i].y;
+    }
+    glBindBuffer( GL_ARRAY_BUFFER, texCoordVbo );
+    glBufferSubData( GL_ARRAY_BUFFER, 2 * bufferOffset * sizeof(GLfloat), 2 * vertices.size() * sizeof(GLfloat), texCoordArray );
+    delete[] texCoordArray;
 }
 
 gs::LandTile::LandTile( const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3f& centroid, const double height, const int regionId )

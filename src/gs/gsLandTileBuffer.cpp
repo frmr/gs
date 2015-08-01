@@ -25,12 +25,17 @@ size_t gs::LandTileBuffer::CountVertices( const vector<gs::LandTilePtr>& landTil
     return numOfVertices;
 }
 
+void gs::LandTileBuffer::UpdateTexCoordBuffer( const gs::LandTilePtr& tile ) const
+{
+    tile->UpdateTexCoordBuffer( texCoordVbo );
+}
+
 gs::LandTileBuffer::LandTileBuffer( vector<gs::LandTilePtr>& landTiles, gs::Shader& shader )
     :   TileBuffer( CountVertices( landTiles ), shader, BuildIndexVector( landTiles ) )
 {
     texCoordVbo = CreateVbo( CountVertices( landTiles ), 2, shader, "texCoordVert" );
     for ( auto& tile : landTiles )
     {
-        tile->InitBuffers( positionVbo, colorVbo, fogVbo, texCoordVbo );
+        tile->UpdateAllBuffers( positionVbo, colorVbo, fogVbo, texCoordVbo );
     }
 }

@@ -25,6 +25,6 @@ gs::WaterTileBuffer::WaterTileBuffer( vector<gs::WaterTilePtr>& waterTiles, gs::
 {
     for ( auto& tile : waterTiles )
     {
-        tile->InitBuffers( positionVbo, colorVbo, fogVbo );
+        tile->UpdateAllBuffers( positionVbo, colorVbo, fogVbo );
     }
 }

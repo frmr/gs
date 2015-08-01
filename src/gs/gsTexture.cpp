@@ -7,14 +7,14 @@
 using std::cerr;
 using std::endl;
 
-void gs::Texture::Blit( shared_ptr<Texture> source, const gs::Vec2i& coord )
+void gs::Texture::Blit( shared_ptr<Texture> source, const gs::Vec2i& offset )
 {
     for ( int sourceX = 0; sourceX < source->GetWidth(); ++sourceX )
     {
         for ( int sourceY = 0; sourceY < source->GetHeight(); ++sourceY )
         {
-            int targetX = coord.x + sourceX;
-            int targetY = coord.y + sourceY;
+            int targetX = offset.x + sourceX;
+            int targetY = offset.y + sourceY;
             if ( CheckCoordIsValid( targetX, targetY ) )
             {
                 data.At( targetX, targetY, 0 ) = source->GetRed( sourceX, sourceY );
@@ -43,6 +43,11 @@ int gs::Texture::GetArea() const
 GLubyte gs::Texture::GetBlue( const int x, const int y )
 {
     return CheckCoordIsValid( x, y ) ? data.At(x,y,2) : 0;
+}
+
+GLubyte* gs::Texture::GetData() const
+{
+    return data.GetData();
 }
 
 GLubyte gs::Texture::GetGreen( const int x, const int y )

@@ -12,7 +12,7 @@ using std::endl;
 
 int gs::Tile::idCounter = 0;
 
-void gs::Tile::InitColorBuffer( const GLuint colorVbo ) //TODO: const
+void gs::Tile::UpdateColorBuffer( const GLuint colorVbo ) //TODO: const
 {
     GLfloat* colorArray = new GLfloat[3*vertices.size()];
     for ( unsigned int i = 0; i < vertices.size(); ++i )
@@ -26,7 +26,7 @@ void gs::Tile::InitColorBuffer( const GLuint colorVbo ) //TODO: const
     delete[] colorArray;
 }
 
-void gs::Tile::InitFogBuffer( const GLuint fogVbo ) //TODO: const
+void gs::Tile::UpdateFogBuffer( const GLuint fogVbo ) //TODO: const
 {
     GLfloat* fogArray = new GLfloat[vertices.size()];
     for ( unsigned int i = 0; i < vertices.size(); ++i )
@@ -38,7 +38,7 @@ void gs::Tile::InitFogBuffer( const GLuint fogVbo ) //TODO: const
     delete[] fogArray;
 }
 
-void gs::Tile::InitPositionBuffer( const GLuint positionVbo ) //TODO: const
+void gs::Tile::UpdatePositionBuffer( const GLuint positionVbo ) //TODO: const
 {
     GLfloat* positionArray = new GLfloat[3*vertices.size()];
     for ( unsigned int i = 0; i < vertices.size(); ++i )

@@ -51,20 +51,20 @@ namespace gs
 
     private:
         Terrain                             DetermineTerrain() const;
-        void                                InitTexCoordBuffer( const GLuint texCoordVbo );
 
     public:
-        void                                AddToTileGroupTexture( shared_ptr<gs::Texture> tileGroupTexture, const gs::Vec2i& coord ) const;
+        void                                AddToTileGroupTexture( shared_ptr<gs::Texture> tileGroupTexture, const gs::Vec2i& tileGroupTextureOffset, const int tileGroupTextureSize ) const;
         void                                DeleteLocalTextureData();
         void                                GenerateTexture();
         shared_ptr<gs::Texture>             GetTexture() const;
         vector<shared_ptr<gs::LandTile>>    GetUnassignedBiomeNeighbors() const;
         Biome                               GetBiome() const;
         bool                                HasUnassignedBiomeNeighbors() const;
-        void                                InitBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo, const GLuint texCoordVbo );
         void                                SetBiome( const Biome newBiome );
         void                                SetBlackIfRiver(); //TODO: delete
         bool                                SpawnRiver( const int newRiverId, gs::RandomRange<double>& rand );
+        void                                UpdateAllBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo, const GLuint texCoordVbo );
+        void                                UpdateTexCoordBuffer( const GLuint texCoordVbo );
 
     public:
         LandTile( const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3f& centroid, const double height, const int regionId );
