@@ -135,12 +135,12 @@ namespace gs
             else                { return z; }
         }
 
-        operator gs::Vec3<double>() const
+        explicit operator gs::Vec3<double>() const
         {
             return Vec3<double>( (double) x, (double) y, (double) z );
         }
 
-        operator gs::Vec3<float>() const
+        explicit operator gs::Vec3<float>() const
         {
             return Vec3<float>( (float) x, (float) y, (float) z );
         }

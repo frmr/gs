@@ -54,7 +54,7 @@ void gs::LandTile::GenerateTexture()
     //TODO: Make this safer by checking for presence of first and second vertices
 
     //reference u-axis is from v0 to v1
-    const gs::Vec3d refAxisU = ( vertices[1]->position - vertices[0]->position ).Unit();
+    const gs::Vec3d refAxisU = (gs::Vec3d) ( vertices[1]->position - vertices[0]->position ).Unit();
     //reference v-axis is the cross-product of u-axis and the tile normal
     const gs::Vec3d refAxisV = gs::Cross<double>( refAxisU, normal ).Unit(); //TODO: Second argument might actually be worldVertices[0]->position
 
@@ -64,8 +64,8 @@ void gs::LandTile::GenerateTexture()
     //use reference axes to compute relative coordinates of each world vertex
     for ( const auto& vert : vertices )
     {
-        relativeCoords.emplace_back( gs::Dot<double>( refAxisU, vert->position - vertices[0]->position ),
-                                     gs::Dot<double>( refAxisV, vert->position - vertices[0]->position ) );
+        relativeCoords.emplace_back( gs::Dot<double>( refAxisU, (gs::Vec3d) ( vert->position - vertices[0]->position ) ),
+                                     gs::Dot<double>( refAxisV, (gs::Vec3d) ( vert->position - vertices[0]->position ) ) );
     }
 
     //compute bounding box
@@ -122,7 +122,7 @@ void gs::LandTile::GenerateTexture()
     //add rivers
     const gs::Vec3d xJump = refAxisU / (double) pixelsPerUnit;
     const gs::Vec3d yJump = refAxisV / (double) pixelsPerUnit;
-    gs::Vec3d pixelWorldCoord = vertices[0]->position - ( xJump * (double) pixelCoords[0].x ) - ( yJump * (double) pixelCoords[0].y ); //world coordinate of pixel (0,0)
+    gs::Vec3d pixelWorldCoord = (gs::Vec3d) vertices[0]->position - ( xJump * (double) pixelCoords[0].x ) - ( yJump * (double) pixelCoords[0].y ); //world coordinate of pixel (0,0)
 
     for ( int x = 0; x < width; ++x, pixelWorldCoord += xJump )
     {
