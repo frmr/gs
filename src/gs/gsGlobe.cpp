@@ -5,6 +5,7 @@
 
 #include "gsBiomeSpreader.h"
 #include "gsRandomRange.h"
+#include "gsMath.h" //TODO: remove
 #include "gsSpreader.h"
 #include "gsTileGroupManager.h"
 
@@ -535,8 +536,6 @@ gs::Globe::Globe()
     modelViewMatrixLocationLand = landShader.GetUniformLocation( "modelViewMatrix" );
     projectionMatrixLocationLand = landShader.GetUniformLocation( "projectionMatrix" );
     normalMatrixLocationLand = landShader.GetUniformLocation( "normalMatrix" );
-
-
 
     //Allocate memory for water buffer and initialise tile data
     waterBuffer = std::make_shared<gs::WaterTileBuffer>( waterTiles, waterShader );

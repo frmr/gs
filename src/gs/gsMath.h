@@ -5,6 +5,7 @@
 #include "gsVec3.h"
 
 #include <algorithm>
+#include <cmath>
 
 namespace gs
 {
@@ -15,7 +16,7 @@ namespace gs
     template<typename T>
     T Dot( const gs::Vec2<T>& vecA, const gs::Vec2<T>& vecB )
     {
-        return vecA.x * vecB.y + vecA.y * vecB.y;
+        return vecA.x * vecB.x + vecA.y * vecB.y;
     }
 
     template<typename T>
@@ -36,6 +37,28 @@ namespace gs
     T Clip( const T& n, const T& lower, const T& upper )
     {
         return std::max( lower, std::min( n, upper ) );
+    }
+
+    template <typename V>
+    V ClosestPointOnLine( const V& a, const V& ab, const V& p, bool clamp )
+    {
+        V ap = p - a;
+
+        double ab2 = gs::Dot( ab, ab );
+        double ap_ab = gs::Dot( ap, ab );
+        double t = ap_ab / ab2;
+        if ( clamp )
+        {
+            if ( t < 0.0 )
+            {
+                t = 0.0;
+            }
+            else if ( t > 1.0 )
+            {
+                t = 1.0;
+            }
+        }
+        return a + ab * t;
     }
 }
 

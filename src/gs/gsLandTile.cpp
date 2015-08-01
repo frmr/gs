@@ -52,7 +52,8 @@ void gs::LandTile::DeleteLocalTextureData()
 void gs::LandTile::GenerateTexture()
 {
     //TODO: Make this safer by checking for presence of first and second vertices
-    gs::Vec3f normal = centroid;
+    //gs::Vec3f normal = centroid;
+    gs::Vec3f normal = vertices[0]->position;
     normal.Unit();
 
     //reference u-axis is from v0 to v1
@@ -88,7 +89,7 @@ void gs::LandTile::GenerateTexture()
         coord -= minCoord;
     }
     maxCoord -= minCoord;
-    minCoord -= minCoord; //should be (0,0)
+    minCoord -= minCoord; //should always be (0,0)
 
     constexpr int pixelsPerUnit = 1000;
 
@@ -110,13 +111,12 @@ void gs::LandTile::GenerateTexture()
         }
     }
 
+    //mark vertices on texture
     for ( const auto& coord : relativeCoords )
     {
         int x = (int) ( coord.x * pixelsPerUnit );
-        //x = ( x < 0 ) ? 0 : x;
         int y = (int) ( coord.y * pixelsPerUnit );
-        //y = ( y < 0 ) ? 0 : y;
-        //cerr << width << " " << height << " " << x << " " << y << endl;
+
         texture->SetRed( x, y, 255 );
         texture->SetGreen( x, y, 0 );
         texture->SetBlue( x, y, 0 );

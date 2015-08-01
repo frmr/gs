@@ -111,21 +111,21 @@ namespace gs
         template<typename U>
         Vec3<T>& operator/=( const U& rhs )
         {
-            x /= rhs;
-            y /= rhs;
-            z /= rhs;
+            x /= (T) rhs;
+            y /= (T) rhs;
+            z /= (T) rhs;
             return *this;
         }
 
         template<typename U>
         bool operator==( const U& rhs ) const
         {
-            return ( x <= rhs.x + epsilon &&
-                     x >= rhs.x - epsilon &&
-                     y <= rhs.y + epsilon &&
-                     y >= rhs.y - epsilon &&
-                     z <= rhs.z + epsilon &&
-                     z >= rhs.z - epsilon );
+            return ( x <= (T) rhs.x + epsilon &&
+                     x >= (T) rhs.x - epsilon &&
+                     y <= (T) rhs.y + epsilon &&
+                     y >= (T) rhs.y - epsilon &&
+                     z <= (T) rhs.z + epsilon &&
+                     z >= (T) rhs.z - epsilon );
         }
 
         T& operator[]( const int i )

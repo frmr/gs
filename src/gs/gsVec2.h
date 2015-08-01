@@ -100,18 +100,18 @@ namespace gs
         template<typename U>
         Vec2<T>& operator/=( const U& rhs )
         {
-            x /= rhs;
-            y /= rhs;
+            x /= (T) rhs;
+            y /= (T) rhs;
             return *this;
         }
 
         template<typename U>
         bool operator==( const U& rhs ) const
         {
-            return ( x <= rhs.x + epsilon &&
-                     x >= rhs.x - epsilon &&
-                     y <= rhs.y + epsilon &&
-                     y >= rhs.y - epsilon );
+            return ( x <= (T) rhs.x + epsilon &&
+                     x >= (T) rhs.x - epsilon &&
+                     y <= (T) rhs.y + epsilon &&
+                     y >= (T) rhs.y - epsilon );
         }
 
         T& operator[]( const int i )
