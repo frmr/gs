@@ -118,26 +118,42 @@ void gs::LandTile::GenerateTexture()
     {
         pixelCoords.emplace_back( (int) ( coord.x * pixelsPerUnit ), (int) ( coord.y * pixelsPerUnit ) );
     }
+    for ( const auto& coord : pixelCoords )
+    {
+        texCoords.emplace_back( (float) coord.x / (float) width, (float) coord.y / (float) height );
+    }
+
+    float riverLimit = 1.0f / (float) pixelsPerUnit * 2.0f;
 
     //add rivers
     const gs::Vec3d xJump = refAxisU / (double) pixelsPerUnit;
     const gs::Vec3d yJump = refAxisV / (double) pixelsPerUnit;
-    gs::Vec3d pixelWorldCoord = (gs::Vec3d) vertices[0]->position - ( xJump * (double) pixelCoords[0].x ) - ( yJump * (double) pixelCoords[0].y ); //world coordinate of pixel (0,0)
 
-    for ( int x = 0; x < width; ++x, pixelWorldCoord += xJump )
+    gs::Vec3d pixelOriginWorldCoord = (gs::Vec3d) vertices[0]->position - ( xJump * (double) pixelCoords[0].x ) - ( yJump * (double) pixelCoords[0].y ); //world coordinate of pixel (0,0)
+
+    for ( int x = 0; x < width; ++x )
     {
-        for ( int y = 0; y < height; ++y, pixelWorldCoord += yJump )
+        for ( int y = 0; y < height; ++y )
         {
-            texture->SetColor( x, y, (int) ( pixelWorldCoord.x * 255.0f ), (int) ( pixelWorldCoord.y * 255.0f ), (int) ( pixelWorldCoord.z * 255.0f ) );
+            gs::Vec3d pixelWorldCoord = pixelOriginWorldCoord + xJump * x + yJump * y; //TODO: Speed this up by using xJump and yJump to increment for each pixel
+            for ( const auto& link : landLinks )
+            {
+                if ( link.edge->IsRiver() )
+                {
+                    const gs::Vec3f closestRiverPoint = gs::ClosestPointOnLine( link.edge->v0->position, link.edge->vec, (gs::Vec3f) pixelWorldCoord, true );
+                    const float riverDist = ( closestRiverPoint - (gs::Vec3d) pixelWorldCoord ).Length();
+                    if ( riverDist < riverLimit )
+                    {
+                        texture->SetColor( x, y, 0, 0, 255 );
+                    }
+                }
+            }
         }
     }
 
     //mark vertices on texture
     for ( const auto& coord : pixelCoords )
     {
-        //int x = (int) ( coord.x * pixelsPerUnit );
-        //int y = (int) ( coord.y * pixelsPerUnit );
-
         texture->SetRed( coord.x, coord.y, 255 );
         texture->SetGreen( coord.x, coord.y, 0 );
         texture->SetBlue( coord.x, coord.y, 0 );

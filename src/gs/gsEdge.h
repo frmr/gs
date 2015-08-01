@@ -4,6 +4,8 @@
 #include <memory>
 #include <vector>
 
+#include "gsVec3.h"
+
 using std::shared_ptr;
 using std::vector;
 
@@ -19,8 +21,9 @@ namespace gs
         bool                            river;
 
     public:
-        const shared_ptr<gs::Vertex> v0;
-        const shared_ptr<gs::Vertex> v1;
+        const shared_ptr<gs::Vertex>    v0;
+        const shared_ptr<gs::Vertex>    v1;
+        const gs::Vec3f                 vec;
 
     public:
         bool                            AddTile( const shared_ptr<gs::Tile>& newTile );
