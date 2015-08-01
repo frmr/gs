@@ -145,19 +145,7 @@ gs::Tile::Tile( const Type surface, const vector<shared_ptr<gs::Vertex>>& vertic
         vertices( vertices ),
         fog( false )
 {
-//    cerr << centroid.x << " " << centroid.y << " " << centroid.z << endl;
-//    cerr << normal.x << " " << normal.y << " " << normal.z << endl;
-//    cerr << endl;
 }
-
-//gs::Tile::Tile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices )
-//    :   surface( gs::Tile::Type::UNASSIGNED ),
-//        height( 0.0 ),
-//        bufferOffset( bufferOffset ),
-//        vertices( vertices ),
-//        fog( false )
-//{
-//}
 
 gs::Tile::~Tile()
 {

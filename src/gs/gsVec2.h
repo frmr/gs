@@ -119,6 +119,16 @@ namespace gs
             return ( i == 0 ) ? x : y;
         }
 
+        operator gs::Vec2<double>() const
+        {
+            return Vec2<double>( (double) x, (double) y );
+        }
+
+        operator gs::Vec2<float>() const
+        {
+            return Vec2<float>( (float) x, (float) y );
+        }
+
     public:
         Vec2<T>()
         {

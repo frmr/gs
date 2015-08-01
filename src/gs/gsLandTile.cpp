@@ -52,28 +52,25 @@ void gs::LandTile::DeleteLocalTextureData()
 void gs::LandTile::GenerateTexture()
 {
     //TODO: Make this safer by checking for presence of first and second vertices
-    //gs::Vec3f normal = centroid;
-    //gs::Vec3f normal = vertices[0]->position;
-    //normal.Unit();
 
     //reference u-axis is from v0 to v1
-    gs::Vec3f refAxisU = ( vertices[1]->position - vertices[0]->position ).Unit();
+    const gs::Vec3d refAxisU = ( vertices[1]->position - vertices[0]->position ).Unit();
     //reference v-axis is the cross-product of u-axis and the tile normal
-    gs::Vec3f refAxisV = gs::Cross<float>( refAxisU, normal ).Unit(); //TODO: Second argument might actually be worldVertices[0]->position
+    const gs::Vec3d refAxisV = gs::Cross<double>( refAxisU, normal ).Unit(); //TODO: Second argument might actually be worldVertices[0]->position
 
-    vector<gs::Vec2f> relativeCoords;
+    vector<gs::Vec2d> relativeCoords;
     relativeCoords.reserve( vertices.size() );
 
     //use reference axes to compute relative coordinates of each world vertex
     for ( const auto& vert : vertices )
     {
-        relativeCoords.push_back( gs::Vec2f( gs::Dot<float>( refAxisU, vert->position - vertices[0]->position ),
-                                             gs::Dot<float>( refAxisV, vert->position - vertices[0]->position ) ) );
+        relativeCoords.emplace_back( gs::Dot<double>( refAxisU, vert->position - vertices[0]->position ),
+                                     gs::Dot<double>( refAxisV, vert->position - vertices[0]->position ) );
     }
 
     //compute bounding box
-    gs::Vec2f minCoord = gs::Vec2f( std::numeric_limits<float>::max(), std::numeric_limits<float>::max() );
-    gs::Vec2f maxCoord = gs::Vec2f( std::numeric_limits<float>::min(), std::numeric_limits<float>::min() );
+    gs::Vec2d minCoord( std::numeric_limits<double>::max(), std::numeric_limits<double>::max() );
+    gs::Vec2d maxCoord( std::numeric_limits<double>::min(), std::numeric_limits<double>::min() );
     for ( const auto& coord : relativeCoords )
     {
         if ( coord.x < minCoord.x ) { minCoord.x = coord.x; }
@@ -99,6 +96,9 @@ void gs::LandTile::GenerateTexture()
 
     texture = std::make_shared<gs::Texture>( width, height );
 
+
+
+
     GLubyte randRed = (GLubyte) colorGenerator.Sample();
     GLubyte randBlue = (GLubyte) colorGenerator.Sample();
     GLubyte randGreen = (GLubyte) colorGenerator.Sample();
@@ -110,15 +110,37 @@ void gs::LandTile::GenerateTexture()
         }
     }
 
-    //mark vertices on texture
+
+
+    vector<gs::Vec2i> pixelCoords;
+    pixelCoords.reserve( vertices.size() );
     for ( const auto& coord : relativeCoords )
     {
-        int x = (int) ( coord.x * pixelsPerUnit );
-        int y = (int) ( coord.y * pixelsPerUnit );
+        pixelCoords.emplace_back( (int) ( coord.x * pixelsPerUnit ), (int) ( coord.y * pixelsPerUnit ) );
+    }
 
-        texture->SetRed( x, y, 255 );
-        texture->SetGreen( x, y, 0 );
-        texture->SetBlue( x, y, 0 );
+    //add rivers
+    const gs::Vec3d xJump = refAxisU / (double) pixelsPerUnit;
+    const gs::Vec3d yJump = refAxisV / (double) pixelsPerUnit;
+    gs::Vec3d pixelWorldCoord = vertices[0]->position - ( xJump * (double) pixelCoords[0].x ) - ( yJump * (double) pixelCoords[0].y ); //world coordinate of pixel (0,0)
+
+    for ( int x = 0; x < width; ++x, pixelWorldCoord += xJump )
+    {
+        for ( int y = 0; y < height; ++y, pixelWorldCoord += yJump )
+        {
+            texture->SetColor( x, y, (int) ( pixelWorldCoord.x * 255.0f ), (int) ( pixelWorldCoord.y * 255.0f ), (int) ( pixelWorldCoord.z * 255.0f ) );
+        }
+    }
+
+    //mark vertices on texture
+    for ( const auto& coord : pixelCoords )
+    {
+        //int x = (int) ( coord.x * pixelsPerUnit );
+        //int y = (int) ( coord.y * pixelsPerUnit );
+
+        texture->SetRed( coord.x, coord.y, 255 );
+        texture->SetGreen( coord.x, coord.y, 0 );
+        texture->SetBlue( coord.x, coord.y, 0 );
     }
 }
 
