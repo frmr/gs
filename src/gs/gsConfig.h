@@ -15,6 +15,9 @@ namespace gs
         bool    fullscreen;
 
         string  textureDirectory;
+        int     textureSize;
+
+        float   riverWidth;
 
     public:
         int     GetScreenWidth() const;

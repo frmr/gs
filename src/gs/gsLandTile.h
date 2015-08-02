@@ -22,7 +22,7 @@ namespace gs
     public:
         enum class Biome
         {
-            UNASSIGNED,
+            UNASSIGNED = 0,
             LAKE,
             ICE,
             TUNDRA,
@@ -33,7 +33,7 @@ namespace gs
 
         enum class Terrain
         {
-            PLAINS,
+            PLAINS = 0,
             HILLS,
             MOUNTAINS
         };
@@ -61,7 +61,6 @@ namespace gs
 
         bool                                HasUnassignedBiomeNeighbors() const;
         void                                SetBiome( const Biome newBiome );
-        void                                SetBlackIfRiver(); //TODO: delete
         bool                                SpawnRiver( const int newRiverId, gs::RandomRange<double>& rand );
         void                                UpdateAllBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo, const GLuint texCoordVbo );
         void                                UpdateTexCoordBuffer( const GLuint texCoordVbo );

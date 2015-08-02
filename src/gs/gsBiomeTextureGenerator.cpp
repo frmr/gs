@@ -38,6 +38,10 @@ gs::Vec3f gs::BiomeTextureGenerator::Sample( const gs::Vec3d& coord, const gs::L
         else
             return gs::Vec3f( 100.0/255.0, 100.0/255.0, 100.0/255.0 );
     }
+    else //unassigned
+    {
+        return gs::Vec3f();
+    }
 }
 
 gs::BiomeTextureGenerator::BiomeTextureGenerator()

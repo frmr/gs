@@ -11,5 +11,5 @@ gs::WaterTile::WaterTile( const vector<shared_ptr<gs::Vertex>>& vertices, const 
     :   gs::Tile( gs::Tile::Type::WATER, vertices, centroid, 0.0 ),
         ice( false )
 {
-    color = gs::Vec3f( 0.0f, 0.0f, 1.0f );
+    color = gs::Vec3f( 0.09f, 0.13f, 0.33f );
 }

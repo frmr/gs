@@ -392,12 +392,6 @@ void gs::Globe::GenerateBiomes( const int numOfSpreaders )
             tile->SetBiome( LookupRegionBiome( tile->regionId ) );
         }
     }
-
-    //TODO: remove this
-    for ( const auto& tile : landTiles )
-    {
-        tile->SetBlackIfRiver();
-    }
 }
 
 void gs::Globe::GenerateRivers( const int numOfSpawners )
@@ -417,7 +411,7 @@ void gs::Globe::GenerateRivers( const int numOfSpawners )
     }
 }
 
-int gs::Globe::GenerateTiles( const int numOfTiles )
+void gs::Globe::GenerateTiles( const int numOfTiles )
 {
     VoronoiGenerator vg( std::time( 0 ) );
     vg.generateTessellation( numOfTiles );
@@ -426,7 +420,7 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
     cck::Globe terrain = GenerateTerrain();
 
     //count vertices and initialise tiles
-    int vertexCount = 0;
+    //int vertexCount = 0;
     allTiles.reserve( numOfTiles );
 
     static constexpr unsigned int bucketDim = 256;
@@ -437,15 +431,12 @@ int gs::Globe::GenerateTiles( const int numOfTiles )
     {
         vector<gs::VertexPtr> cellVertices;
         CombineVertices( cell->corners, buckets, bucketDim, cellVertices );
-        //CreateTile( cellVertices, terrain, cck::Vec3( cell->centroid.z, cell->centroid.x, cell->centroid.y ) );
         CreateTile( cellVertices, terrain, cck::Vec3( cell->centroid.x, cell->centroid.y, cell->centroid.z ) );
         CreateTileEdges( cellVertices );
     }
 
     buckets.Delete();
     PrintMeshProperties();
-
-    return vertexCount;
 }
 
 void gs::Globe::LinkTiles( const gs::TilePtr source, const gs::TilePtr dest, const gs::EdgePtr edge )
@@ -484,7 +475,7 @@ gs::Globe::Globe()
 {
     //generate voronoi sphere
     const int numOfTiles = 16000;
-    const int numOfVertices = GenerateTiles( numOfTiles );
+    GenerateTiles( numOfTiles );
 
     //build biome table
     BuildBiomeTable();

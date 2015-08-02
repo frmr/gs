@@ -45,8 +45,7 @@ namespace gs
         V ap = p - a;
 
         double ab2 = gs::Dot( ab, ab );
-        double ap_ab = gs::Dot( ap, ab );
-        double t = ap_ab / ab2;
+        double t = gs::Dot( ap, ab ) / ab2;
         if ( clamp )
         {
             if ( t < 0.0 )

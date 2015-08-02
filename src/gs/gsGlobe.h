@@ -69,7 +69,7 @@ namespace gs
         void                    CreateTileEdges( const vector<gs::VertexPtr>& cellVertices );
         void                    GenerateBiomes( const int numOfSpreaders );
         void                    GenerateRivers( const int numOfSpawners );
-        int                     GenerateTiles( const int numOfTiles );
+        void                    GenerateTiles( const int numOfTiles );
         static unsigned int     HashDouble( const double val, const int bucketDim );
         static void             LinkTiles( const gs::TilePtr source, const gs::TilePtr dest, const gs::EdgePtr edge );
         gs::LandTile::Biome     LookupRegionBiome( const int id ) const;
