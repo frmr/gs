@@ -132,6 +132,6 @@ gs::Camera::Camera( const float aspectRatio )
     :   aspectRatio( aspectRatio ),
         latitude( 0.0f ),
         longitude( 0.0f ),
-        zoom(0.01f )
+        zoom( 2.0f )
 {
 }

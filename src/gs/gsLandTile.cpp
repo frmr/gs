@@ -1,3 +1,4 @@
+#include "gsBiomeTextureGenerator.h"
 #include "gsGlobe.h"
 #include "gsLandTile.h"
 #include "gsMath.h"
@@ -28,7 +29,7 @@ void gs::LandTile::AddToTileGroupTexture( shared_ptr<gs::Texture> tileGroupTextu
 {
     tileGroupTexture->Blit( texture, tileGroupTextureOffset );
     //update texture coordinates to be relative to the texture group texture
-    for ( int i = 0; i < texCoords.size(); ++i )
+    for ( unsigned int i = 0; i < texCoords.size(); ++i )
     {
         texCoords[i].x = ( (float) tileGroupTextureOffset.x + texCoords[i].x ) / (float) tileGroupTextureSize;
         texCoords[i].y = ( (float) tileGroupTextureOffset.y + texCoords[i].y ) / (float) tileGroupTextureSize;
@@ -40,7 +41,7 @@ void gs::LandTile::DeleteLocalTextureData()
     texture.reset();
 }
 
-void gs::LandTile::GenerateTexture()
+void gs::LandTile::GenerateTexture( const gs::BiomeTextureGenerator& biomeTextureGenerator )
 {
     //TODO: Make this safer by checking for presence of first and second vertices
 
@@ -78,7 +79,7 @@ void gs::LandTile::GenerateTexture()
     maxCoord -= minCoord;
     minCoord -= minCoord; //should always be (0,0)
 
-    constexpr int pixelsPerUnit = 1000;
+    constexpr int pixelsPerUnit = 2000;
 
     int width = (int) ( maxCoord.x * pixelsPerUnit ) + 1;
     width = ( width < 1 ) ? 1 : width;
@@ -90,14 +91,14 @@ void gs::LandTile::GenerateTexture()
 
 
     //color fill
-    const gs::Vec3f texColor( 0.0f, 0.5f, 0.0f );
-    for ( int x = 0; x < width; ++x )
-    {
-        for ( int y = 0; y < height; ++y )
-        {
-            texture->SetColor( x, y, texColor );
-        }
-    }
+//    const gs::Vec3f texColor( 0.0f, 0.5f, 0.0f );
+//    for ( int x = 0; x < width; ++x )
+//    {
+//        for ( int y = 0; y < height; ++y )
+//        {
+//            texture->SetColor( x, y, texColor );
+//        }
+//    }
 
 
     vector<gs::Vec2i> pixelCoords;
@@ -109,7 +110,9 @@ void gs::LandTile::GenerateTexture()
         texCoords.emplace_back( (float) pixelCoords.back().x, (float) pixelCoords.back().y );
     }
 
-    float riverLimit = 1.0f / (float) pixelsPerUnit * 2.0f;
+    //float riverLimit = 1.0f / (float) pixelsPerUnit * 2.0f;
+    const float riverLimit = 0.002f;
+    const float blendLimit = 0.008f;
 
     //add rivers
     const gs::Vec3d xJump = refAxisU / (double) pixelsPerUnit;
@@ -122,18 +125,32 @@ void gs::LandTile::GenerateTexture()
         for ( int y = 0; y < height; ++y )
         {
             gs::Vec3d pixelWorldCoord = pixelOriginWorldCoord + xJump * x + yJump * y; //TODO: Speed this up by using xJump and yJump to increment for each pixel
+            gs::Vec3f texelColor = biomeTextureGenerator.Sample( pixelWorldCoord, biome, terrain );
+
             for ( const auto& link : landLinks )
             {
+                if ( link.target->GetBiome() != biome || link.target->terrain != terrain )
+                {
+                    const gs::Vec3f closestEdgePoint = gs::ClosestPointOnLine( link.edge->v0->position, link.edge->vec, (gs::Vec3f) pixelWorldCoord, false );
+                    const float edgeDist = ( closestEdgePoint - (gs::Vec3d) pixelWorldCoord ).Length();
+                    if ( edgeDist < blendLimit )
+                    {
+                        const gs::Vec3f neighborColor = biomeTextureGenerator.Sample( pixelWorldCoord, link.target->GetBiome(), link.target->terrain );
+                        const gs::Vec3f colorDifference = neighborColor - texelColor;
+                        texelColor += colorDifference * ( ( 1.0f - ( edgeDist / blendLimit ) ) * 0.5f );
+                    }
+                }
                 if ( link.edge->IsRiver() )
                 {
                     const gs::Vec3f closestRiverPoint = gs::ClosestPointOnLine( link.edge->v0->position, link.edge->vec, (gs::Vec3f) pixelWorldCoord, true );
                     const float riverDist = ( closestRiverPoint - (gs::Vec3d) pixelWorldCoord ).Length();
                     if ( riverDist < riverLimit )
                     {
-                        texture->SetColor( x, y, 0, 0, 255 );
+                        texelColor = gs::Vec3f( 0.0f, 0.0f, 1.0f );
                     }
                 }
             }
+            texture->SetColor( x, y, texelColor );
         }
     }
 

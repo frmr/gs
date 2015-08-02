@@ -114,6 +114,8 @@
 		<Unit filename="src/gs/gsBinarySearchTree.h" />
 		<Unit filename="src/gs/gsBiomeSpreader.cpp" />
 		<Unit filename="src/gs/gsBiomeSpreader.h" />
+		<Unit filename="src/gs/gsBiomeTextureGenerator.cpp" />
+		<Unit filename="src/gs/gsBiomeTextureGenerator.h" />
 		<Unit filename="src/gs/gsCamera.cpp" />
 		<Unit filename="src/gs/gsCamera.h" />
 		<Unit filename="src/gs/gsConfig.cpp" />

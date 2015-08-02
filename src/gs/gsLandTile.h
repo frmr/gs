@@ -1,9 +1,9 @@
 #ifndef GS_LAND_TILE_H
 #define GS_LAND_TILE_H
 
-#include "gsTile.h"
 #include "gsRandomRange.h"
 #include "gsTexture.h"
+#include "gsTile.h"
 #include "gsVec2.h"
 #include "gsVertex.h"
 
@@ -15,6 +15,8 @@ using std::vector;
 
 namespace gs
 {
+    class BiomeTextureGenerator;
+
     class LandTile : public gs::Tile
     {
     public:
@@ -52,10 +54,11 @@ namespace gs
     public:
         void                                AddToTileGroupTexture( shared_ptr<gs::Texture> tileGroupTexture, const gs::Vec2i& tileGroupTextureOffset, const int tileGroupTextureSize );
         void                                DeleteLocalTextureData();
-        void                                GenerateTexture();
+        void                                GenerateTexture( const gs::BiomeTextureGenerator& biomeTextureGenerator );
+        Biome                               GetBiome() const;
         shared_ptr<gs::Texture>             GetTexture() const;
         vector<shared_ptr<gs::LandTile>>    GetUnassignedBiomeNeighbors() const;
-        Biome                               GetBiome() const;
+
         bool                                HasUnassignedBiomeNeighbors() const;
         void                                SetBiome( const Biome newBiome );
         void                                SetBlackIfRiver(); //TODO: delete

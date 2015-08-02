@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "gsBiomeSpreader.h"
+#include "gsBiomeTextureGenerator.h"
 #include "gsRandomRange.h"
 #include "gsMath.h" //TODO: remove
 #include "gsSpreader.h"
@@ -508,10 +509,12 @@ gs::Globe::Globe()
     landBuffer = std::make_shared<gs::LandTileBuffer>( landTiles, landShader );
     landBuffer->Bind();
 
+    gs::BiomeTextureGenerator biomeTextureGenerator;
+
     //Add land tiles to tile groups
     for ( auto& tile : landTiles )
     {
-        tile->GenerateTexture();
+        tile->GenerateTexture( biomeTextureGenerator );
         groupManager.Add( tile );
         tile->DeleteLocalTextureData();
         landBuffer->UpdateTexCoordBuffer( tile );
