@@ -29,6 +29,7 @@ namespace gs
         T& At( const size_t i, const size_t j, const size_t k )
         {
             return data[ i + j * dims[0] + k * dims[0] * dims[1] ];
+            //return data[ i + j * dims[0] + k * dims[0] * dims[1] ];
         }
 
         void Delete()

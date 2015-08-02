@@ -57,13 +57,34 @@ void gs::LandTileGroup::Draw() const
 void gs::LandTileGroup::LoadTexture() const
 {
     glActiveTexture( GL_TEXTURE0 );
+    glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
+    glPixelStorei( GL_PACK_ALIGNMENT, 1 );
     glBindTexture( GL_TEXTURE_2D, textureId );
-    glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB, texture->GetWidth(), texture->GetHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, texture->GetData() );
-    glGenerateMipmap(GL_TEXTURE_2D);
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
+
+    GLubyte* image = new GLubyte[textureSize * textureSize * 3];
+
+    for ( int x = 0; x < textureSize; ++x )
+    {
+        for ( int y = 0; y < textureSize; ++y )
+        {
+            image[x * textureSize * 3 + y * 3 + 0] = texture->GetRed( x, y );
+            image[x * textureSize * 3 + y * 3 + 1] = texture->GetGreen( x, y );
+            image[x * textureSize * 3 + y * 3 + 2] = texture->GetBlue( x, y );
+        }
+    }
+
+    //glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB, texture->GetWidth(), texture->GetHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, texture->GetData() );
+    glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB, texture->GetWidth(), texture->GetHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, image );
+
+    glGenerateMipmap( GL_TEXTURE_2D );
+
+//    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+//    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+//    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+//    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
+
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
 }
 
 void gs::LandTileGroup::WriteToFile() const

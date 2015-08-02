@@ -33,7 +33,7 @@ void gs::LandTileBuffer::UpdateTexCoordBuffer( const gs::LandTilePtr& tile ) con
 gs::LandTileBuffer::LandTileBuffer( vector<gs::LandTilePtr>& landTiles, gs::Shader& shader )
     :   TileBuffer( CountVertices( landTiles ), shader, BuildIndexVector( landTiles ) )
 {
-    texCoordVbo = CreateVbo( CountVertices( landTiles ), 2, shader, "texCoordVert" );
+    texCoordVbo = CreateVbo( CountVertices( landTiles ), 2, shader, "texCoordVert" ); //TODO: recounting all the vertices is inefficient; fix it?
     for ( auto& tile : landTiles )
     {
         tile->UpdateAllBuffers( positionVbo, colorVbo, fogVbo, texCoordVbo );

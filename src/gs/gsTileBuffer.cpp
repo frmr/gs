@@ -1,5 +1,11 @@
 #include "gsTileBuffer.h"
 
+void gs::TileBuffer::Bind() const
+{
+    glBindVertexArray( vao );
+    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, indexBuffer );
+}
+
 GLuint gs::TileBuffer::CreateVbo( const int elements, const int components, gs::Shader& shader, const string& name )
 {
     GLuint vbo;
@@ -26,12 +32,6 @@ void gs::TileBuffer::InitIndexBuffer( const vector<GLuint>& indexVector ) const
     glBufferData( GL_ELEMENT_ARRAY_BUFFER, indexVector.size() * sizeof(GLuint), indexArray, GL_STATIC_DRAW );
 
     delete[] indexArray;
-}
-
-void gs::TileBuffer::Bind() const
-{
-    glBindVertexArray( vao );
-    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, indexBuffer );
 }
 
 bool gs::TileBuffer::Update( const GLuint tileIndex, const gs::Vec3f& newColor, const bool newFog )
