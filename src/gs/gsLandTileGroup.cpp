@@ -67,9 +67,9 @@ void gs::LandTileGroup::LoadTexture() const
     {
         for ( int y = 0; y < textureSize; ++y )
         {
-            image[x * textureSize * 3 + y * 3 + 0] = texture->GetRed( x, y );
-            image[x * textureSize * 3 + y * 3 + 1] = texture->GetGreen( x, y );
-            image[x * textureSize * 3 + y * 3 + 2] = texture->GetBlue( x, y );
+            image[3 * ( y * textureSize + x ) + 0] = texture->GetRed( x, y );   //TODO: Work out why x and y have to be flipped
+            image[3 * ( y * textureSize + x ) + 1] = texture->GetGreen( x, y );
+            image[3 * ( y * textureSize + x ) + 2] = texture->GetBlue( x, y );
         }
     }
 

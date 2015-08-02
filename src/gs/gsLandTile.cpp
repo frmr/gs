@@ -8,8 +8,6 @@
 
 #include <ctime>
 
-gs::RandomRange<int> gs::LandTile::colorGenerator = gs::RandomRange<int>( 0, 255, 0 );
-
 gs::LandTile::Terrain gs::LandTile::DetermineTerrain() const
 {
     if ( height < 0.25 )
@@ -91,22 +89,20 @@ void gs::LandTile::GenerateTexture()
 
 
 
-    //fill with random color
-    GLubyte randRed = (GLubyte) colorGenerator.Sample();
-    GLubyte randBlue = (GLubyte) colorGenerator.Sample();
-    GLubyte randGreen = (GLubyte) colorGenerator.Sample();
+    //color fill
+    const gs::Vec3f texColor( 0.0f, 0.5f, 0.0f );
     for ( int x = 0; x < width; ++x )
     {
         for ( int y = 0; y < height; ++y )
         {
-            texture->SetColor( x, y, randRed, randGreen, randBlue );
+            texture->SetColor( x, y, texColor );
         }
     }
 
 
-
     vector<gs::Vec2i> pixelCoords;
     pixelCoords.reserve( vertices.size() );
+    texCoords.reserve( vertices.size() );
     for ( const auto& coord : relativeCoords )
     {
         pixelCoords.emplace_back( (int) ( coord.x * pixelsPerUnit ), (int) ( coord.y * pixelsPerUnit ) );
@@ -141,13 +137,13 @@ void gs::LandTile::GenerateTexture()
         }
     }
 
-    //mark vertices on texture
-    for ( const auto& coord : pixelCoords )
-    {
-        texture->SetRed( coord.x, coord.y, 255 );
-        texture->SetGreen( coord.x, coord.y, 0 );
-        texture->SetBlue( coord.x, coord.y, 0 );
-    }
+//    //mark vertices on texture
+//    for ( const auto& coord : pixelCoords )
+//    {
+//        texture->SetRed( coord.x, coord.y, 255 );
+//        texture->SetGreen( coord.x, coord.y, 0 );
+//        texture->SetBlue( coord.x, coord.y, 0 );
+//    }
 }
 
 shared_ptr<gs::Texture> gs::LandTile::GetTexture() const
@@ -310,7 +306,6 @@ gs::LandTile::LandTile( const vector<shared_ptr<gs::Vertex>>& vertices, const gs
     {
         color = gs::Vec3f( 0.4, 0.4, 0.4 );
     }
-    //color = gs::Vec3f( 0.0f, ( 8.0f * (float) id ) / 255.0f, 0.0f );
 }
 
 gs::LandTile::~LandTile()

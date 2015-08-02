@@ -46,9 +46,6 @@ namespace gs
         shared_ptr<gs::Texture>     texture; //TODO: make sure to delete this when pushed to vram, and should be unique_ptr
         vector<gs::Vec2f>           texCoords;
 
-        static gs::RandomRange<int> colorGenerator; //TODO: delete
-
-
     private:
         Terrain                             DetermineTerrain() const;
 
