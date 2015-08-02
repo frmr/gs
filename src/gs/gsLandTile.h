@@ -53,7 +53,7 @@ namespace gs
         Terrain                             DetermineTerrain() const;
 
     public:
-        void                                AddToTileGroupTexture( shared_ptr<gs::Texture> tileGroupTexture, const gs::Vec2i& tileGroupTextureOffset, const int tileGroupTextureSize ) const;
+        void                                AddToTileGroupTexture( shared_ptr<gs::Texture> tileGroupTexture, const gs::Vec2i& tileGroupTextureOffset, const int tileGroupTextureSize );
         void                                DeleteLocalTextureData();
         void                                GenerateTexture();
         shared_ptr<gs::Texture>             GetTexture() const;

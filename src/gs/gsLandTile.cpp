@@ -26,13 +26,14 @@ gs::LandTile::Terrain gs::LandTile::DetermineTerrain() const
     }
 }
 
-void gs::LandTile::AddToTileGroupTexture( shared_ptr<gs::Texture> tileGroupTexture, const gs::Vec2i& tileGroupTextureOffset, const int tileGroupTextureSize ) const
+void gs::LandTile::AddToTileGroupTexture( shared_ptr<gs::Texture> tileGroupTexture, const gs::Vec2i& tileGroupTextureOffset, const int tileGroupTextureSize )
 {
     tileGroupTexture->Blit( texture, tileGroupTextureOffset );
-    for ( auto coord : texCoords )
+    //update texture coordinates to be relative to the texture group texture
+    for ( int i = 0; i < texCoords.size(); ++i )
     {
-        coord.x = ( (float) tileGroupTextureOffset.x + coord.x ) / (float) tileGroupTextureSize;
-        coord.y = ( (float) tileGroupTextureOffset.y + coord.y ) / (float) tileGroupTextureSize;
+        texCoords[i].x = ( (float) tileGroupTextureOffset.x + texCoords[i].x ) / (float) tileGroupTextureSize;
+        texCoords[i].y = ( (float) tileGroupTextureOffset.y + texCoords[i].y ) / (float) tileGroupTextureSize;
     }
 }
 

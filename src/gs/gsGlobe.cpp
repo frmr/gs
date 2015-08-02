@@ -325,21 +325,6 @@ void gs::Globe::CreateTileEdges( const vector<gs::VertexPtr>& cellVertices )
     }
 }
 
-GLuint gs::Globe::CreateVbo( const int elements, const int components, const string& name )
-{
-    GLuint vbo;
-    glGenBuffers( 1, &vbo );
-    glBindBuffer( GL_ARRAY_BUFFER, vbo );
-
-    GLuint location = landShader.GetAttribLocation( name );
-
-    glBufferData( GL_ARRAY_BUFFER, elements * components * sizeof(GLfloat), NULL, GL_STATIC_DRAW );
-    glVertexAttribPointer( location, components, GL_FLOAT, GL_FALSE, 0, 0 );
-    glEnableVertexAttribArray( location );
-
-    return vbo;
-}
-
 //val must be between 0 and 1
 unsigned int gs::Globe::HashDouble( const double val, const int bucketDim )
 {

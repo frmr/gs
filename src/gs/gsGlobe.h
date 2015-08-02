@@ -67,7 +67,6 @@ namespace gs
         void                    CombineVertices( const vector<glm::dvec3>& corners, gs::Array<vector<gs::VertexPtr>>& buckets, const unsigned int bucketDim, vector<gs::VertexPtr>& cellVertices );
         void                    CreateTile( const vector<gs::VertexPtr>& cellVertices, const cck::Globe& terrain, const cck::Vec3& centroid );
         void                    CreateTileEdges( const vector<gs::VertexPtr>& cellVertices );
-        GLuint                  CreateVbo( const int size, const int components, const string& name );
         void                    GenerateBiomes( const int numOfSpreaders );
         void                    GenerateRivers( const int numOfSpawners );
         int                     GenerateTiles( const int numOfTiles );
