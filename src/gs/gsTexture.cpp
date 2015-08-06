@@ -15,11 +15,17 @@ void gs::Texture::Blit( shared_ptr<Texture> source, const gs::Vec2i& offset )
         {
             int targetX = offset.x + sourceX;
             int targetY = offset.y + sourceY;
+            #ifdef SAFE_TEXTURE
             if ( CheckCoordIsValid( targetX, targetY ) )
+            #endif
             {
-                data.At( targetX, targetY, 0 ) = source->GetRed( sourceX, sourceY );
-                data.At( targetX, targetY, 1 ) = source->GetGreen( sourceX, sourceY );
-                data.At( targetX, targetY, 2 ) = source->GetBlue( sourceX, sourceY );
+//                data.At( targetX, targetY, 0 ) = source->GetRed( sourceX, sourceY );
+//                data.At( targetX, targetY, 1 ) = source->GetGreen( sourceX, sourceY );
+//                data.At( targetX, targetY, 2 ) = source->GetBlue( sourceX, sourceY );
+                SetRed( targetX, targetY, source->GetRed( sourceX, sourceY ) );
+                SetGreen( targetX, targetY, source->GetGreen( sourceX, sourceY ) );
+                SetBlue( targetX, targetY, source->GetBlue( sourceX, sourceY ) );
+
             }
         }
     }
@@ -42,7 +48,13 @@ int gs::Texture::GetArea() const
 
 GLubyte gs::Texture::GetBlue( const int x, const int y )
 {
-    return CheckCoordIsValid( x, y ) ? data.At(x,y,2) : 0;
+    #ifdef SAFE_TEXTURE
+    if ( CheckCoordIsValid( x, y ) )
+    #endif
+    {
+        return data.At(x,y,2);
+    }
+    return 0;
 }
 
 GLubyte* gs::Texture::GetData() const
@@ -52,7 +64,13 @@ GLubyte* gs::Texture::GetData() const
 
 GLubyte gs::Texture::GetGreen( const int x, const int y )
 {
-    return CheckCoordIsValid( x, y ) ? data.At(x,y,1) : 0;
+    #ifdef SAFE_TEXTURE
+    if ( CheckCoordIsValid( x, y ) )
+    #endif
+    {
+        return data.At(x,y,1);
+    }
+    return 0;
 }
 
 int gs::Texture::GetHeight() const
@@ -62,7 +80,13 @@ int gs::Texture::GetHeight() const
 
 GLubyte gs::Texture::GetRed( const int x, const int y )
 {
-    return CheckCoordIsValid( x, y ) ? data.At(x,y,0) : 0;
+    #ifdef SAFE_TEXTURE
+    if ( CheckCoordIsValid( x, y ) )
+    #endif
+    {
+        return data.At(x,y,0);
+    }
+    return 0;
 }
 
 int gs::Texture::GetWidth() const
@@ -72,7 +96,9 @@ int gs::Texture::GetWidth() const
 
 bool gs::Texture::SetBlue( const int x, const int y, const GLubyte blue )
 {
+    #ifdef SAFE_TEXTURE
     if ( CheckCoordIsValid( x, y ) )
+    #endif
     {
         data.At(x,y,2) = blue;
         return true;
@@ -82,7 +108,9 @@ bool gs::Texture::SetBlue( const int x, const int y, const GLubyte blue )
 
 bool gs::Texture::SetColor( const int x, const int y, const GLubyte red, const GLubyte green, const GLubyte blue )
 {
+    #ifdef SAFE_TEXTURE
     if ( CheckCoordIsValid( x, y ) )
+    #endif
     {
         data.At(x,y,0) = red;
         data.At(x,y,1) = green;
@@ -99,7 +127,9 @@ bool gs::Texture::SetColor( const int x, const int y, const gs::Vec3f& color )
 
 bool gs::Texture::SetGreen( const int x, const int y, const GLubyte green )
 {
+    #ifdef SAFE_TEXTURE
     if ( CheckCoordIsValid( x, y ) )
+    #endif
     {
         data.At(x,y,1) = green;
         return true;
@@ -109,7 +139,9 @@ bool gs::Texture::SetGreen( const int x, const int y, const GLubyte green )
 
 bool gs::Texture::SetRed( const int x, const int y, const GLubyte red )
 {
+    #ifdef SAFE_TEXTURE
     if ( CheckCoordIsValid( x, y ) )
+    #endif
     {
         data.At(x,y,0) = red;
         return true;
@@ -117,7 +149,7 @@ bool gs::Texture::SetRed( const int x, const int y, const GLubyte red )
     return false;
 }
 
-void gs::Texture::WriteToFile( const string filename )
+void gs::Texture::WriteToFile( const string& filename )
 {
     BMP image;
     image.SetSize( width, height);

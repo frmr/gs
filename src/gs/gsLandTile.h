@@ -45,7 +45,7 @@ namespace gs
     private:
         bool                        forested;
         Biome                       biome;
-        shared_ptr<gs::Texture>     texture; //TODO: make sure to delete this when pushed to vram, and should be unique_ptr
+        shared_ptr<gs::Texture>     texture; //TODO: should be on stack, or at least unique_ptr
         vector<gs::Vec2f>           texCoords;
 
     private:

@@ -124,6 +124,8 @@
 		<Unit filename="src/gs/gsEdge.h" />
 		<Unit filename="src/gs/gsGlobe.cpp" />
 		<Unit filename="src/gs/gsGlobe.h" />
+		<Unit filename="src/gs/gsIcosphere.cpp" />
+		<Unit filename="src/gs/gsIcosphere.h" />
 		<Unit filename="src/gs/gsInputState.cpp" />
 		<Unit filename="src/gs/gsInputState.h" />
 		<Unit filename="src/gs/gsLandTile.cpp" />

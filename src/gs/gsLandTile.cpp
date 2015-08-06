@@ -93,7 +93,7 @@ void gs::LandTile::GenerateTexture( const gs::BiomeTextureGenerator& biomeTextur
     texCoords.reserve( vertices.size() );
     for ( const auto& coord : relativeCoords )
     {
-        pixelCoords.emplace_back( (int) ( coord.x * pixelsPerUnit ), (int) ( coord.y * pixelsPerUnit ) );
+        pixelCoords.emplace_back( (int) ( coord.x * pixelsPerUnit ), (int) ( coord.y * pixelsPerUnit ) ); //don't need all of them, just the first
         texCoords.emplace_back( (float) pixelCoords.back().x, (float) pixelCoords.back().y );
     }
 
@@ -275,7 +275,7 @@ gs::LandTile::LandTile( const vector<shared_ptr<gs::Vertex>>& vertices, const gs
         terrain( DetermineTerrain() ),
         forested( false ),
         biome( gs::LandTile::Biome::UNASSIGNED ),
-        texture( NULL )
+        texture( nullptr )
 {
     if ( terrain == gs::LandTile::Terrain::PLAINS )
     {

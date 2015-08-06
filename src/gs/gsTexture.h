@@ -45,7 +45,7 @@ namespace gs
         bool        SetColor( const int x, const int y, const gs::Vec3f& color );
         bool        SetGreen( const int x, const int y, const GLubyte green );
         bool        SetRed( const int x, const int y, const GLubyte red );
-        void        WriteToFile( const string filename );
+        void        WriteToFile( const string& filename );
 
     public:
         Texture( const int width, const int height );
