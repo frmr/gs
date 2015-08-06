@@ -11,6 +11,7 @@
 #include "gsLink.h"
 #include "gsRandomRange.h" //TODO: delete
 #include "gsVec2.h"
+#include "gsVec3.h"
 #include "gsVertex.h"
 
 #include "../EasyBMP/EasyBMP.h"
@@ -22,6 +23,8 @@ using std::vector;
 
 namespace gs
 {
+    typedef gs::Vec3<int> Color;
+
     class Texture
     {
     private:
@@ -42,7 +45,8 @@ namespace gs
         int         GetWidth() const;
         bool        SetBlue( const int x, const int y, const GLubyte blue );
         bool        SetColor( const int x, const int y, const GLubyte red, const GLubyte green, const GLubyte blue );
-        bool        SetColor( const int x, const int y, const gs::Vec3f& color );
+        //bool        SetColor( const int x, const int y, const gs::Vec3f& color );
+        bool        SetColor( const int x, const int y, const gs::Color& color );
         bool        SetGreen( const int x, const int y, const GLubyte green );
         bool        SetRed( const int x, const int y, const GLubyte red );
         void        WriteToFile( const string& filename );

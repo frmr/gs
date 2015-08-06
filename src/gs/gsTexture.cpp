@@ -19,9 +19,6 @@ void gs::Texture::Blit( shared_ptr<Texture> source, const gs::Vec2i& offset )
             if ( CheckCoordIsValid( targetX, targetY ) )
             #endif
             {
-//                data.At( targetX, targetY, 0 ) = source->GetRed( sourceX, sourceY );
-//                data.At( targetX, targetY, 1 ) = source->GetGreen( sourceX, sourceY );
-//                data.At( targetX, targetY, 2 ) = source->GetBlue( sourceX, sourceY );
                 SetRed( targetX, targetY, source->GetRed( sourceX, sourceY ) );
                 SetGreen( targetX, targetY, source->GetGreen( sourceX, sourceY ) );
                 SetBlue( targetX, targetY, source->GetBlue( sourceX, sourceY ) );
@@ -120,9 +117,14 @@ bool gs::Texture::SetColor( const int x, const int y, const GLubyte red, const G
     return false;
 }
 
-bool gs::Texture::SetColor( const int x, const int y, const gs::Vec3f& color )
+//bool gs::Texture::SetColor( const int x, const int y, const gs::Vec3f& color )
+//{
+//    return SetColor( x, y, (GLubyte) ( color.x * 255.0f ), (GLubyte) ( color.y * 255.0f ), (GLubyte) ( color.z * 255.0f ) );
+//}
+
+bool gs::Texture::SetColor( const int x, const int y, const gs::Color& color )
 {
-    return SetColor( x, y, (GLubyte) ( color.x * 255.0f ), (GLubyte) ( color.y * 255.0f ), (GLubyte) ( color.z * 255.0f ) );
+    return SetColor( x, y, color.x, color.y, color.z );
 }
 
 bool gs::Texture::SetGreen( const int x, const int y, const GLubyte green )

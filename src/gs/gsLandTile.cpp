@@ -122,7 +122,7 @@ void gs::LandTile::GenerateTexture( const gs::BiomeTextureGenerator& biomeTextur
         for ( int y = 0; y < height; ++y )
         {
             gs::Vec3d pixelWorldCoord = pixelOriginWorldCoord + xJump * x + yJump * y; //TODO: Speed this up by using xJump and yJump to increment for each pixel
-            gs::Vec3f texelColor = biomeTextureGenerator.Sample( pixelWorldCoord, biome, terrain );
+            gs::Color texelColor = biomeTextureGenerator.Sample( pixelWorldCoord, biome, terrain );
 
             //calculate distance to each notable edge
             vector<float> notableDistances;
@@ -140,7 +140,7 @@ void gs::LandTile::GenerateTexture( const gs::BiomeTextureGenerator& biomeTextur
                 {
                     if ( notableDistances[i] < riverLimit )
                     {
-                        texelColor = gs::Vec3f( 0.0f, 0.0f, 1.0f );
+                        texelColor = gs::Color( 0, 0, 255 );
                         break;
                     }
                 }
@@ -169,9 +169,10 @@ void gs::LandTile::GenerateTexture( const gs::BiomeTextureGenerator& biomeTextur
                         //blend
                         if ( !foundCloser )
                         {
-                            const gs::Vec3f neighborColor = biomeTextureGenerator.Sample( pixelWorldCoord, notableLinks[i].target->GetBiome(), notableLinks[i].target->terrain );
-                            const gs::Vec3f colorDifference = neighborColor - texelColor;
-                            texelColor += colorDifference * ( ( 1.0f - ( notableDistances[i] / blendLimit ) ) * 0.5f );
+                            const gs::Color neighborColor = biomeTextureGenerator.Sample( pixelWorldCoord, notableLinks[i].target->GetBiome(), notableLinks[i].target->terrain );
+                            const gs::Color colorDifference = neighborColor - texelColor;
+                            const double blendFactor = ( 1.0f - ( notableDistances[i] / blendLimit ) ) * 0.5f;
+                            texelColor += gs::Color( colorDifference.x * blendFactor, colorDifference.y * blendFactor, colorDifference.z * blendFactor );
                         }
                     }
                 }
