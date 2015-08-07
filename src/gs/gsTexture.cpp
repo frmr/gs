@@ -102,22 +102,7 @@ GLuint gs::Texture::Push() const
     glPixelStorei( GL_PACK_ALIGNMENT, 1 );
     glBindTexture( GL_TEXTURE_2D, id );
 
-    //TODO: make a new class to store texture data so it doesn't need to be copied into a new array in this method
-    GLubyte* image = new GLubyte[width * height * 3];
-
-    for ( int x = 0; x < width; ++x )
-    {
-        for ( int y = 0; y < height; ++y )
-        {
-            image[3 * ( y * width + x ) + 0] = GetRed( x, y );   //TODO: Work out why x and y have to be flipped
-            image[3 * ( y * width + x ) + 1] = GetGreen( x, y );
-            image[3 * ( y * width + x ) + 2] = GetBlue( x, y );
-        }
-    }
-
-    glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image );
-
-    delete[] image;
+    glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data.GetData() );
 
     glGenerateMipmap( GL_TEXTURE_2D );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
