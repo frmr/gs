@@ -34,7 +34,7 @@ namespace gs
         gs::Array<GLubyte>  data;
 
     public:
-        void        Blit( shared_ptr<Texture> source, const gs::Vec2i& offset );
+        void        Blit( const shared_ptr<const Texture>& source, const gs::Vec2i& offset );
         bool        CheckCoordIsValid( const int x, const int y ) const;
         int         GetArea() const;
         GLubyte     GetBlue( const int x, const int y ) const;
@@ -50,7 +50,7 @@ namespace gs
         bool        SetColor( const int x, const int y, const gs::Color& color );
         bool        SetGreen( const int x, const int y, const GLubyte green );
         bool        SetRed( const int x, const int y, const GLubyte red );
-        void        WriteToFile( const string& filename );
+        void        WriteToFile( const string& filename ) const;
 
     public:
         Texture( const int width, const int height );

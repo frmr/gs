@@ -9,14 +9,15 @@
 using std::cerr;
 using std::endl;
 
-void gs::Texture::Blit( shared_ptr<Texture> source, const gs::Vec2i& offset )
+void gs::Texture::Blit( const shared_ptr<const gs::Texture>& source, const gs::Vec2i& offset )
 {
     for ( int sourceX = 0; sourceX < source->GetWidth(); ++sourceX )
     {
         for ( int sourceY = 0; sourceY < source->GetHeight(); ++sourceY )
         {
-            int targetX = offset.x + sourceX;
-            int targetY = offset.y + sourceY;
+            const int targetX = offset.x + sourceX;
+            const int targetY = offset.y + sourceY;
+
             #ifdef SAFE_TEXTURE
             if ( CheckCoordIsValid( targetX, targetY ) )
             #endif
@@ -24,7 +25,6 @@ void gs::Texture::Blit( shared_ptr<Texture> source, const gs::Vec2i& offset )
                 SetRed( targetX, targetY, source->GetRed( sourceX, sourceY ) );
                 SetGreen( targetX, targetY, source->GetGreen( sourceX, sourceY ) );
                 SetBlue( targetX, targetY, source->GetBlue( sourceX, sourceY ) );
-
             }
         }
     }
@@ -173,7 +173,7 @@ bool gs::Texture::SetRed( const int x, const int y, const GLubyte red )
     return false;
 }
 
-void gs::Texture::WriteToFile( const string& filename )
+void gs::Texture::WriteToFile( const string& filename ) const
 {
     BMP image;
     image.SetSize( width, height);
