@@ -36,12 +36,17 @@ void gs::LandTile::AddToTileGroupTexture( shared_ptr<gs::Texture> tileGroupTextu
     }
 }
 
+void gs::LandTile::BlendTexture()
+{
+
+}
+
 void gs::LandTile::DeleteLocalTextureData()
 {
     texture.reset();
 }
 
-void gs::LandTile::GenerateTexture( const gs::BiomeTextureGenerator& biomeTextureGenerator )
+void gs::LandTile::GenerateTexture( gs::BiomeTextureGenerator& biomeTextureGenerator )
 {
     //TODO: Make this safer by checking for presence of first and second vertices
 
@@ -100,100 +105,18 @@ void gs::LandTile::GenerateTexture( const gs::BiomeTextureGenerator& biomeTextur
     const float riverLimit = 0.002f;
     const float blendLimit = 0.004f;
 
-    //add rivers
-    //const gs::Vec3d xJump = refAxisU / (double) pixelsPerUnit;
-    //const gs::Vec3d yJump = refAxisV / (double) pixelsPerUnit;
-
-    //gs::Vec3d pixelOriginWorldCoord = (gs::Vec3d) vertices[0]->position - ( xJump * (double) pixelCoords[0].x ) - ( yJump * (double) pixelCoords[0].y ); //world coordinate of pixel (0,0)
-
-    //create sublist of links to tiles that are rivers or need blending
-    //vector<gs::Link<gs::LandTile>> notableLinks;
-//    for ( const auto& link : landLinks )
-//    {
-//        if ( link.target->GetBiome() != biome || link.target->terrain != terrain || link.edge->IsRiver() )
-//        {
-//            notableLinks.push_back( link );
-//        }
-//    }
-
     //color each texel
     shared_ptr<const gs::Texture> sourceTexture = biomeTextureGenerator.GetTexture( biome, terrain );
-
-    //texture->Blit( sourceTexture, gs::Vec2i() );
-
+    const gs::Vec2i offset = biomeTextureGenerator.GetRandomOffset();
     for ( int x = 0; x < width; ++x )
     {
-        const int sourceX = x % width;
+        const int sourceX = ( x + offset.x ) % sourceTexture->GetWidth();
         for ( int  y = 0; y < height; ++y )
         {
-            const int sourceY = y % height;
+            const int sourceY = ( y + offset.y ) % sourceTexture->GetHeight();
             texture->SetColor( x, y, sourceTexture->GetRed( sourceX, sourceY ), sourceTexture->GetGreen( sourceX, sourceY ), sourceTexture->GetBlue( sourceX, sourceY ) );
         }
     }
-
-    //for ( int x = 0; x < width; ++x )
-    //{
-        //for ( int y = 0; y < height; ++y )
-        //{
-//            gs::Vec3d pixelWorldCoord = pixelOriginWorldCoord + xJump * x + yJump * y; //TODO: Speed this up by using xJump and yJump to increment for each pixel
-            //gs::Color texelColor = biomeTextureGenerator.Sample( pixelWorldCoord, biome, terrain );
-//
-//            //calculate distance to each notable edge
-//            vector<float> notableDistances;
-//            notableDistances.reserve( notableLinks.size() );
-//            for ( const auto& link : notableLinks )
-//            {
-//                const gs::Vec3f closestEdgePoint = gs::ClosestPointOnLine( link.edge->v0->position, link.edge->vec, (gs::Vec3f) pixelWorldCoord, true );
-//                notableDistances.push_back( ( closestEdgePoint - (gs::Vec3d) pixelWorldCoord ).Length() );
-//            }
-//
-//            //TODO: Use iterators
-//            for ( int i = 0; i < notableLinks.size(); ++i )
-//            {
-//                if ( notableLinks[i].edge->IsRiver() )
-//                {
-//                    if ( notableDistances[i] < riverLimit )
-//                    {
-//                        texelColor = gs::Color( 0, 0, 255 );
-//                        break;
-//                    }
-//                }
-//                else if ( notableLinks[i].target->GetBiome() != biome || notableLinks[i].target->terrain != terrain )
-//                {
-//                    if ( notableDistances[i] < blendLimit )
-//                    {
-//                        //blend if there are no closer tiles of the same biome
-//                        bool foundCloser = false;
-//                        for ( int j = 0; j < notableLinks.size(); ++j )
-//                        {
-//                            if ( i == j )
-//                            {
-//                                continue;
-//                            }
-//                            if ( notableLinks[i].target->GetBiome() == notableLinks[j].target->GetBiome() )
-//                            {
-//                                if ( notableDistances[j] < notableDistances[i] )
-//                                {
-//                                    foundCloser = true;
-//                                    break;
-//                                }
-//                            }
-//                        }
-//
-//                        //blend
-//                        if ( !foundCloser )
-//                        {
-//                            const gs::Color neighborColor = biomeTextureGenerator.Sample( pixelWorldCoord, notableLinks[i].target->GetBiome(), notableLinks[i].target->terrain );
-//                            const gs::Color colorDifference = neighborColor - texelColor;
-//                            const double blendFactor = ( 1.0f - ( notableDistances[i] / blendLimit ) ) * 0.5f;
-//                            texelColor += gs::Color( colorDifference.x * blendFactor, colorDifference.y * blendFactor, colorDifference.z * blendFactor );
-//                        }
-//                    }
-//                }
-//            }
-            //texture->SetColor( x, y, texelColor );
-        //}
-    //}
 }
 
 shared_ptr<gs::Texture> gs::LandTile::GetTexture() const

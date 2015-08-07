@@ -412,6 +412,26 @@ void gs::Globe::GenerateRivers( const int numOfSpawners )
     }
 }
 
+void gs::Globe::GenerateTextures()
+{
+    gs::BiomeTextureGenerator biomeTextureGenerator;
+
+    for ( auto& tile : landTiles )
+    {
+        tile->GenerateTexture( biomeTextureGenerator );
+    }
+
+    for ( auto& tile : landTiles )
+    {
+        tile->BlendTexture();
+        groupManager.Add( tile );
+        tile->DeleteLocalTextureData();
+        landBuffer->UpdateTexCoordBuffer( tile );
+    }
+
+    groupManager.PushTextures();
+}
+
 void gs::Globe::GenerateTiles( const int numOfTiles )
 {
     VoronoiGenerator vg( std::time( 0 ) );
@@ -501,21 +521,7 @@ gs::Globe::Globe()
     landBuffer = std::make_shared<gs::LandTileBuffer>( landTiles, landShader );
     landBuffer->Bind();
 
-
-    gs::BiomeTextureGenerator biomeTextureGenerator; //move to GenerateTextures();
-
-    //GenerateTextures();
-    //
-    //Add land tiles to tile groups
-    for ( auto& tile : landTiles )
-    {
-        tile->GenerateTexture( biomeTextureGenerator );
-        groupManager.Add( tile );
-        tile->DeleteLocalTextureData();
-        landBuffer->UpdateTexCoordBuffer( tile );
-    }
-
-    groupManager.PushTextures();
+    GenerateTextures();
 
     landShader.SetFragOutput( "colorOut" );
     landShader.Link();

@@ -44,12 +44,17 @@
 //    }
 //}
 
+gs::Vec2i gs::BiomeTextureGenerator::GetRandomOffset()
+{
+    return gs::Vec2i( randomOffset.Sample(), randomOffset.Sample() );
+}
+
 shared_ptr<const gs::Texture> gs::BiomeTextureGenerator::GetTexture( const gs::LandTile::Biome biome, const gs::LandTile::Terrain terrain ) const
 {
     if ( biome == gs::LandTile::Biome::DESERT )
     {
         if ( terrain == gs::LandTile::Terrain::PLAINS )
-            return unassigned;
+            return desertPlains;
         else if ( terrain == gs::LandTile::Terrain::HILLS )
             return unassigned;
         else
@@ -67,7 +72,7 @@ shared_ptr<const gs::Texture> gs::BiomeTextureGenerator::GetTexture( const gs::L
     else if ( biome == gs::LandTile::Biome::SEMI_ARID )
     {
         if ( terrain == gs::LandTile::Terrain::PLAINS )
-            return unassigned;
+            return semiAridPlains;
         else if ( terrain == gs::LandTile::Terrain::HILLS )
             return unassigned;
         else
@@ -82,7 +87,7 @@ shared_ptr<const gs::Texture> gs::BiomeTextureGenerator::GetTexture( const gs::L
         else
             return unassigned;
     }
-    else //unassigned
+    else
     {
         return unassigned;
     }
@@ -90,6 +95,9 @@ shared_ptr<const gs::Texture> gs::BiomeTextureGenerator::GetTexture( const gs::L
 
 gs::BiomeTextureGenerator::BiomeTextureGenerator()
     :   grassPlains( std::make_shared<const gs::Texture>( "data/textures/grassPlains.png" ) ),
-        unassigned( std::make_shared<const gs::Texture>( "data/textures/unassigned.png" ) )
+        semiAridPlains( std::make_shared<const gs::Texture>( "data/textures/semiAridPlains.png" ) ),
+        desertPlains( std::make_shared<const gs::Texture>( "data/textures/desertPlains.png" ) ),
+        unassigned( std::make_shared<const gs::Texture>( "data/textures/unassigned.png" ) ),
+        randomOffset( 0, 255, 0 )
 {
 }

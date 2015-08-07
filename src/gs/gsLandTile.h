@@ -53,8 +53,9 @@ namespace gs
 
     public:
         void                                AddToTileGroupTexture( shared_ptr<gs::Texture> tileGroupTexture, const gs::Vec2i& tileGroupTextureOffset, const int tileGroupTextureSize );
+        void                                BlendTexture();
         void                                DeleteLocalTextureData();
-        void                                GenerateTexture( const gs::BiomeTextureGenerator& biomeTextureGenerator );
+        void                                GenerateTexture( gs::BiomeTextureGenerator& biomeTextureGenerator );
         Biome                               GetBiome() const;
         shared_ptr<gs::Texture>             GetTexture() const;
         vector<shared_ptr<gs::LandTile>>    GetUnassignedBiomeNeighbors() const;
