@@ -44,11 +44,11 @@ void gs::TileGroupManager::DrawWaterTileGroup() const
     waterTileGroup.Draw();
 }
 
-void gs::TileGroupManager::LoadTextures() const
+void gs::TileGroupManager::PushTextures()
 {
-    for ( const auto& group : landTileGroups )
+    for ( auto& group : landTileGroups )
     {
-        group.LoadTexture();
+        group.PushTexture();
     }
 }
 

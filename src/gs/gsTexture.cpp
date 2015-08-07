@@ -1,6 +1,8 @@
 #include "gsTexture.h"
 #include "gsMath.h"
 
+#include "../lodepng/lodepng.h"
+
 #include <iostream>
 #include <string>
 
@@ -43,13 +45,13 @@ int gs::Texture::GetArea() const
     return width * height;
 }
 
-GLubyte gs::Texture::GetBlue( const int x, const int y )
+GLubyte gs::Texture::GetBlue( const int x, const int y ) const
 {
     #ifdef SAFE_TEXTURE
     if ( CheckCoordIsValid( x, y ) )
     #endif
     {
-        return data.At(x,y,2);
+        return data.GetAt(x,y,2);
     }
     return 0;
 }
@@ -59,13 +61,13 @@ GLubyte* gs::Texture::GetData() const
     return data.GetData();
 }
 
-GLubyte gs::Texture::GetGreen( const int x, const int y )
+GLubyte gs::Texture::GetGreen( const int x, const int y ) const
 {
     #ifdef SAFE_TEXTURE
     if ( CheckCoordIsValid( x, y ) )
     #endif
     {
-        return data.At(x,y,1);
+        return data.GetAt(x,y,1);
     }
     return 0;
 }
@@ -75,13 +77,13 @@ int gs::Texture::GetHeight() const
     return height;
 }
 
-GLubyte gs::Texture::GetRed( const int x, const int y )
+GLubyte gs::Texture::GetRed( const int x, const int y ) const
 {
     #ifdef SAFE_TEXTURE
     if ( CheckCoordIsValid( x, y ) )
     #endif
     {
-        return data.At(x,y,0);
+        return data.GetAt(x,y,0);
     }
     return 0;
 }
@@ -89,6 +91,41 @@ GLubyte gs::Texture::GetRed( const int x, const int y )
 int gs::Texture::GetWidth() const
 {
     return width;
+}
+
+GLuint gs::Texture::Push() const
+{
+    GLuint id;
+    glGenTextures( 1, &id );
+    glActiveTexture( GL_TEXTURE0 );
+    glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
+    glPixelStorei( GL_PACK_ALIGNMENT, 1 );
+    glBindTexture( GL_TEXTURE_2D, id );
+
+    //TODO: make a new class to store texture data so it doesn't need to be copied into a new array in this method
+    GLubyte* image = new GLubyte[width * height * 3];
+
+    for ( int x = 0; x < width; ++x )
+    {
+        for ( int y = 0; y < height; ++y )
+        {
+            image[3 * ( y * width + x ) + 0] = GetRed( x, y );   //TODO: Work out why x and y have to be flipped
+            image[3 * ( y * width + x ) + 1] = GetGreen( x, y );
+            image[3 * ( y * width + x ) + 2] = GetBlue( x, y );
+        }
+    }
+
+    glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image );
+
+    delete[] image;
+
+    glGenerateMipmap( GL_TEXTURE_2D );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+
+    return id;
 }
 
 bool gs::Texture::SetBlue( const int x, const int y, const GLubyte blue )
@@ -172,4 +209,27 @@ gs::Texture::Texture( const int width, const int height )
         height( height ),
         data( width, height, 3 )
 {
+}
+
+gs::Texture::Texture( const string& filename )
+    :   width( 0 ),
+        height( 0 ),
+        data( 0 )
+{
+    vector<unsigned char> image;
+    unsigned imageWidth;
+    unsigned imageHeight;
+    lodepng::decode( image, imageWidth, imageHeight, filename );
+    width = (int) imageWidth;
+    height = (int) imageHeight;
+    data.SetSize( width, height, 3 );
+    for ( int x = 0; x < width; ++x )
+    {
+        for ( int y = 0; y < height; ++y )
+        {
+            data.At(x,y,0) = image[ 4 * y * width + 4 * x + 0 ];
+            data.At(x,y,1) = image[ 4 * y * width + 4 * x + 1 ];
+            data.At(x,y,2) = image[ 4 * y * width + 4 * x + 2 ];
+        }
+    }
 }

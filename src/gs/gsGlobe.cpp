@@ -8,6 +8,7 @@
 #include "gsRandomRange.h"
 #include "gsMath.h" //TODO: remove
 #include "gsSpreader.h"
+#include "gsTexture.h"
 #include "gsTileGroupManager.h"
 
 using std::cerr;
@@ -473,6 +474,10 @@ gs::Globe::Globe()
     :   landShader( "land", "data/shaders/land.vert", "data/shaders/land.frag" ),
         waterShader( "water", "data/shaders/water.vert", "data/shaders/water.frag" )
 {
+    gs::Texture tex( "data/textures/grass.png" );
+    //gs::Texture tex( 256, 256 );
+    tex.Push();
+
     //generate voronoi sphere
     const int numOfTiles = 16000;
     GenerateTiles( numOfTiles );
@@ -508,14 +513,13 @@ gs::Globe::Globe()
     //Add land tiles to tile groups
     for ( auto& tile : landTiles )
     {
-
         tile->GenerateTexture( biomeTextureGenerator );
         groupManager.Add( tile );
         tile->DeleteLocalTextureData();
         landBuffer->UpdateTexCoordBuffer( tile );
     }
 
-    groupManager.LoadTextures();
+    groupManager.PushTextures();
 
     landShader.SetFragOutput( "colorOut" );
     landShader.Link();

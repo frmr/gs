@@ -21,19 +21,19 @@ namespace gs
     {
     private:
         const int               textureSize;
-        const GLuint            textureId;
+        GLuint                  textureId;
         gs::Vec2i               shelfCursor;
         int                     shelfTop;
         shared_ptr<gs::Texture> texture;    //TODO: should be unique_ptr
 
     private:
-        static GLuint   GenerateTextureId();
+        //static GLuint   GenerateTextureId();
 
     public:
         bool            Add( const gs::LandTilePtr& landTile );
         void            DeleteLocalTextureData();
         void            Draw() const;
-        void            LoadTexture() const;
+        void            PushTexture();
         void            WriteToFile() const;
 
     public:

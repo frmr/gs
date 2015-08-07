@@ -12,8 +12,8 @@ namespace gs
     class Array
     {
     private:
-        const vector<size_t>    dims;
-        T*                      data;
+        vector<size_t>  dims;
+        T*              data;
 
     public:
         T& At( const size_t i )
@@ -41,9 +41,35 @@ namespace gs
             }
         }
 
+        T GetAt( const size_t i ) const
+        {
+            return data[ i ];
+        }
+
+        T GetAt( const size_t i, const size_t j ) const
+        {
+            return data[ i + j * dims[0] ];
+        }
+
+        T GetAt( const size_t i, const size_t j, const size_t k ) const
+        {
+            return data[ i + j * dims[0] + k * dims[0] * dims[1] ];
+            //return data[ i + j * dims[0] + k * dims[0] * dims[1] ];
+        }
+
         T* GetData() const
         {
             return data;
+        }
+
+        void SetSize( const size_t xDim, const size_t yDim, const size_t zDim )
+        {
+            dims.clear();
+            dims.push_back( xDim );
+            dims.push_back( yDim );
+            dims.push_back( zDim );
+            Delete();
+            data = new T[xDim * yDim * zDim];
         }
 
     public:

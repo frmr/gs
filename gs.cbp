@@ -161,6 +161,8 @@
 		<Unit filename="src/gs/gsWaterTileBuffer.h" />
 		<Unit filename="src/gs/gsWaterTileGroup.cpp" />
 		<Unit filename="src/gs/gsWaterTileGroup.h" />
+		<Unit filename="src/lodepng/lodepng.cpp" />
+		<Unit filename="src/lodepng/lodepng.h" />
 		<Unit filename="src/main.cpp" />
 		<Unit filename="src/matrix/Matrices.cpp" />
 		<Unit filename="src/matrix/Matrices.h" />

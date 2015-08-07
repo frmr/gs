@@ -29,7 +29,7 @@ namespace gs
         void DrawAll() const;
         void DrawLandTileGroups() const;
         void DrawWaterTileGroup() const;
-        void LoadTextures() const;
+        void PushTextures();
         void SetTextureSize( const GLint newTextureDim );
         void WriteTileGroupsToFile() const;
 
