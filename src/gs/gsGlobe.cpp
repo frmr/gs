@@ -228,9 +228,9 @@ void gs::Globe::CombineVertices( const vector<glm::dvec3>& corners, gs::Array<ve
                 {
                     for ( auto v : buckets.At( xi, yi, zi ) )
                     {
-                        if ( v->position.x < gsCorner.x + errorMargin && v->position.x > gsCorner.x - errorMargin &&
-                             v->position.y < gsCorner.y + errorMargin && v->position.y > gsCorner.y - errorMargin &&
-                             v->position.z < gsCorner.z + errorMargin && v->position.z > gsCorner.z - errorMargin )
+                        if ( v->GetPosition().x < gsCorner.x + errorMargin && v->GetPosition().x > gsCorner.x - errorMargin &&
+                             v->GetPosition().y < gsCorner.y + errorMargin && v->GetPosition().y > gsCorner.y - errorMargin &&
+                             v->GetPosition().z < gsCorner.z + errorMargin && v->GetPosition().z > gsCorner.z - errorMargin )
                         {
                             cellVertices.push_back( v );
                             foundVertex = true;
@@ -457,6 +457,12 @@ void gs::Globe::GenerateTiles( const int numOfTiles )
     }
 
     buckets.Delete();
+
+    for ( auto& edge : edges )
+    {
+        edge->Widen();
+    }
+
     PrintMeshProperties();
 }
 

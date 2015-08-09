@@ -33,7 +33,7 @@ vector<shared_ptr<gs::Tile>> gs::Edge::GetTiles() const
 
 bool gs::Edge::HasVertex( const shared_ptr<gs::Vertex>& refVertex ) const
 {
-    return ( v0->position == refVertex->position || v1->position == refVertex->position );
+    return ( v0->GetPosition() == refVertex->GetPosition() || v1->GetPosition() == refVertex->GetPosition() );
 }
 
 bool gs::Edge::IsRiver() const
@@ -46,11 +46,23 @@ void gs::Edge::SetRiver()
     river = true;
 }
 
+void gs::Edge::Widen()
+{
+    const float length = (float) vec.Length();
+    if ( length < 0.01f )
+    {
+        vec.Unit();
+        v1->SetPosition( v1->GetPosition() + vec * ( 0.01f - length ) / 2.0f );
+        v0->SetPosition( v0->GetPosition() - vec * ( 0.01f - length ) / 2.0f );
+        vec = v1->GetPosition() - v0->GetPosition();
+    }
+}
+
 gs::Edge::Edge( const shared_ptr<gs::Vertex>& v0, const shared_ptr<gs::Vertex>& v1 )
     :   river( false ),
         id( idCounter++ ),
         v0( v0 ),
         v1( v1 ),
-        vec( v1->position - v0->position )
+        vec( v1->GetPosition() - v0->GetPosition() )
 {
 }

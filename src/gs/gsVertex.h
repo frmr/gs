@@ -19,10 +19,10 @@ namespace gs
     {
     public:
         const int           id;
-        const gs::Vec3f     position;
 
     private:
         static int          idCounter;
+        gs::Vec3f           position;
 
         vector<shared_ptr<gs::Edge>>    edges;
         vector<shared_ptr<gs::Tile>>    tiles;
@@ -41,7 +41,9 @@ namespace gs
         vector<shared_ptr<gs::Edge>>    GetEdges() const;
         shared_ptr<gs::Edge>            GetEdgeWith( const shared_ptr<gs::Vertex> refVertex ) const;
         double                          GetHeight() const;
+        gs::Vec3f                       GetPosition() const;
         bool                            IsRiver() const;
+        void                            SetPosition( const gs::Vec3f& newPosition );
         bool                            SetRiver( const int newRiverId );
 
     public:
