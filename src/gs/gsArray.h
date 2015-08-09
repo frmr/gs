@@ -73,7 +73,7 @@ namespace gs
         }
 
     public:
-        Array( const size_t xDim )
+        explicit Array( const size_t xDim )
             :   dims( { xDim } ),
                 data( new T[xDim] )
         {

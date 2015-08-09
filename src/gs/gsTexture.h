@@ -55,7 +55,7 @@ namespace gs
 
     public:
         Texture( const int width, const int height );
-        Texture( const string& filename );
+        explicit Texture( const string& filename );
     };
 }
 #endif // GS_TILE_TEXTURE_H

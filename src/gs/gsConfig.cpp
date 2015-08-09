@@ -43,13 +43,21 @@ void gs::Config::SetFullscreen( const bool newFullscreen )
 gs::Config::Config()
     :   screenWidth( 1024 ),
         screenHeight( 768 ),
-        fullscreen( false )
+        fullscreen( false ),
+        textureDirectory( "data/textures/" ),
+        textureSize( 1024 ),
+        texelsPerUnit( 1000 ),
+        riverWidth( 0.001f )
 {
 }
 
 gs::Config::Config( const string& filename )
     :   screenWidth( 1024 ),
         screenHeight( 768 ),
-        fullscreen( false )
+        fullscreen( false ),
+        textureDirectory( "data/textures/" ),
+        textureSize( 1024 ),
+        texelsPerUnit( 1000 ),
+        riverWidth( 0.001f )
 {
 }

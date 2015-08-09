@@ -27,7 +27,7 @@ namespace gs
 
     public:
         //TileGroup();
-        TileGroup( const GLuint bufferBegin );
+        explicit TileGroup( const GLuint bufferBegin );
     };
 }
 

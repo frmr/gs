@@ -37,7 +37,7 @@ namespace cck
         double          ScaledOctaveNoise( const double x, const double y, const double z, const int octaves, const double persistence, const double frequency, const double boundMin, const double boundMax ) const;
 
     public:
-        SimplexNoise( const unsigned int seed );
+        explicit SimplexNoise( const unsigned int seed );
     };
 }
 

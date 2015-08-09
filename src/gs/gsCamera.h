@@ -37,7 +37,7 @@ namespace gs
             void    UpdateViewMatrix();
 
         public:
-            Camera( const float aspectRatio );
+            explicit Camera( const float aspectRatio );
             Camera( const float aspectRatio, const double latitude, const double longitude );
     };
 }

@@ -61,9 +61,9 @@ void gs::Edge::Widen()
 
 gs::Edge::Edge( const shared_ptr<gs::Vertex>& v0, const shared_ptr<gs::Vertex>& v1 )
     :   river( false ),
+        vec( v1->GetPosition() - v0->GetPosition() ),
         id( idCounter++ ),
         v0( v0 ),
-        v1( v1 ),
-        vec( v1->GetPosition() - v0->GetPosition() )
+        v1( v1 )
 {
 }

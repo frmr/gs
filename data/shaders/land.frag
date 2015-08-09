@@ -12,8 +12,10 @@ uniform sampler2D   tex;
 out vec4 colorOut;
 
 void main()
-{
-    //colorOut = vec4( colorFrag, 1.0 );
+{    
+    //political map mode
+    //colorOut = vec4( ( texture( tex, texCoordFrag ).rgb + colorFrag ) / 2.0, 1.0 );
+    
+    //terrain map mode
     colorOut = texture( tex, texCoordFrag );
-    //colorOut = vec4( texCoordFrag, 0, 0 );
 }

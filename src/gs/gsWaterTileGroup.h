@@ -16,7 +16,7 @@ namespace gs
         void    Draw() const;
 
     public:
-        WaterTileGroup( const GLuint bufferBegin = 0 );
+        explicit WaterTileGroup( const GLuint bufferBegin = 0 );
     };
 }
 

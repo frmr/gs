@@ -16,7 +16,7 @@ namespace gs
 
         string  textureDirectory;
         int     textureSize;
-
+        int     texelsPerUnit;
         float   riverWidth;
 
     public:
@@ -30,7 +30,7 @@ namespace gs
 
     public:
         Config();
-        Config( const string &filename );
+        explicit Config( const string &filename );
     };
 }
 

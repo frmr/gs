@@ -47,7 +47,7 @@ namespace gs
         bool                            SetRiver( const int newRiverId );
 
     public:
-        Vertex( const gs::Vec3f& position );
+        explicit Vertex( const gs::Vec3f& position );
     };
 
     typedef shared_ptr<gs::Vertex> VertexPtr;

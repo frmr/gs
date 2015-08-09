@@ -142,6 +142,7 @@ gs::Tile::Tile( const Type surface, const vector<shared_ptr<gs::Vertex>>& vertic
         normal( gs::Vec3d( (double) centroid.x, (double) centroid.y, (double) centroid.z ).Unit() ),
         height( height ),
         vertices( vertices ),
+        color( 1.0f, 0.0f, 0.0f ),
         fog( false )
 {
 }

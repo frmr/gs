@@ -270,7 +270,7 @@ inline bool Vector2::equal(const Vector2& rhs, float epsilon) const {
     return fabs(x - rhs.x) < epsilon && fabs(y - rhs.y) < epsilon;
 }
 
-inline Vector2 operator*(const float a, const Vector2 vec) {
+inline Vector2 operator*(const float a, const Vector2& vec) {
     return Vector2(a*vec.x, a*vec.y);
 }
 
@@ -394,7 +394,7 @@ inline bool Vector3::equal(const Vector3& rhs, float epsilon) const {
     return fabs(x - rhs.x) < epsilon && fabs(y - rhs.y) < epsilon && fabs(z - rhs.z) < epsilon;
 }
 
-inline Vector3 operator*(const float a, const Vector3 vec) {
+inline Vector3 operator*(const float a, const Vector3& vec) {
     return Vector3(a*vec.x, a*vec.y, a*vec.z);
 }
 
@@ -517,7 +517,7 @@ inline bool Vector4::equal(const Vector4& rhs, float epsilon) const {
            fabs(z - rhs.z) < epsilon && fabs(w - rhs.w) < epsilon;
 }
 
-inline Vector4 operator*(const float a, const Vector4 vec) {
+inline Vector4 operator*(const float a, const Vector4& vec) {
     return Vector4(a*vec.x, a*vec.y, a*vec.z, a*vec.w);
 }
 

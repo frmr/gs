@@ -34,7 +34,7 @@ namespace gs
         void WriteTileGroupsToFile() const;
 
     public:
-        TileGroupManager( const GLint textureDim = 1024 );
+        explicit TileGroupManager( const GLint textureDim = 1024 );
     };
 }
 
