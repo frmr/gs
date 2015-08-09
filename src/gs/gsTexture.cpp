@@ -56,6 +56,11 @@ GLubyte gs::Texture::GetBlue( const int x, const int y ) const
     return 0;
 }
 
+gs::Color gs::Texture::GetColor( const int x, const int y ) const
+{
+    return gs::Color( data.GetAt( x, y, 0 ), data.GetAt( x, y, 1 ), data.GetAt( x, y, 2 ) );
+}
+
 GLubyte* gs::Texture::GetData() const
 {
     return data.GetData();

@@ -18,6 +18,7 @@ namespace gs
         const shared_ptr<const gs::Texture> grassPlains;
         const shared_ptr<const gs::Texture> semiAridPlains;
         const shared_ptr<const gs::Texture> desertPlains;
+        const shared_ptr<const gs::Texture> tundraPlains;
         const shared_ptr<const gs::Texture> unassigned;
         gs::RandomRange<int> randomOffset;
 

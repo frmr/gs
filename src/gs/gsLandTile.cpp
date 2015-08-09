@@ -38,7 +38,50 @@ void gs::LandTile::AddToTileGroupTexture( shared_ptr<gs::Texture> tileGroupTextu
 
 void gs::LandTile::BlendTexture()
 {
+    const float riverLimit = 0.002f;
+    const float blendLimit = 0.004f;
 
+    for ( int i = 0; i < texCoords.size(); ++i )
+    {
+//        gs::EdgePtr realEdge = vertices[i]->GetEdgeWith( vertices[(i+1)%vertices.size()]);
+//        for ( const auto& texEdge : texEdges )
+//        {
+//            if ( texEdge.id == realEdge.id )
+//            {
+//                for ( int x = 0; x < texture->GetWidth(); ++x )
+//                {
+//                    for ( int y = 0; y < texture->GetHeight(); ++y )
+//                    {
+//                        int blendCount = 1;
+//                        gs::Color texelColor = texture->GetColor( x, y );
+//
+//                        const gs::Vec2i coord( x, y );
+//
+//
+//
+//
+//                        //get distance to edge
+//                        const double t = ClosestPointOnLine(  );
+//                        const gs::Vec2i closestPoint = ;
+//                        const double dist = ( coord - closestPoint ).Length();
+//                        if ( dist < riverLimit )
+//                        {
+//                            texture->SetColor( x, y, 0, 0, 255 );
+//                            break;
+//                        }
+//                        //if distance to edge is less than riverLimit
+//
+//                        //else if distance to edge is less than blendLimit
+//                        //link.target->Get
+//                    }
+//                }
+//
+//                break;
+//            }
+//        }
+
+
+    }
 }
 
 void gs::LandTile::DeleteLocalTextureData()
@@ -93,19 +136,17 @@ void gs::LandTile::GenerateTexture( gs::BiomeTextureGenerator& biomeTextureGener
 
     texture = std::make_shared<gs::Texture>( width, height );
 
-    vector<gs::Vec2i> pixelCoords;
-    pixelCoords.reserve( vertices.size() );
+    //vector<gs::Vec2i> pixelCoords;
+    //pixelCoords.reserve( vertices.size() );
     texCoords.reserve( vertices.size() );
     for ( const auto& coord : relativeCoords )
     {
-        pixelCoords.emplace_back( (int) ( coord.x * pixelsPerUnit ), (int) ( coord.y * pixelsPerUnit ) ); //don't need all of them, just the first
-        texCoords.emplace_back( (float) pixelCoords.back().x, (float) pixelCoords.back().y );
+        //pixelCoords.emplace_back( (int) ( coord.x * pixelsPerUnit ), (int) ( coord.y * pixelsPerUnit ) ); //don't need all of them, just the first
+        //texCoords.emplace_back( (float) pixelCoords.back().x, (float) pixelCoords.back().y );
+        texCoords.emplace_back( coord.x * pixelsPerUnit, coord.y * pixelsPerUnit );
     }
 
-    const float riverLimit = 0.002f;
-    const float blendLimit = 0.004f;
-
-    //color each texel
+    //blit realistic texture onto tile texture
     shared_ptr<const gs::Texture> sourceTexture = biomeTextureGenerator.GetTexture( biome, terrain );
     const gs::Vec2i offset = biomeTextureGenerator.GetRandomOffset();
     for ( int x = 0; x < width; ++x )

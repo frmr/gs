@@ -17,10 +17,13 @@ namespace gs
     class Edge
     {
     private:
+        static int                      idCounter;
         vector<shared_ptr<gs::Tile>>    tiles;
         bool                            river;
 
+
     public:
+        const int                       id;
         const shared_ptr<gs::Vertex>    v0;
         const shared_ptr<gs::Vertex>    v1;
         const gs::Vec3f                 vec;

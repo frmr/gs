@@ -15,7 +15,7 @@ namespace gs
 
     public:
 
-        T Length() const
+        double Length() const
         {
             return sqrt( x * x + y * y + z * z );
         }

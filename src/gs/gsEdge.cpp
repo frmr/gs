@@ -2,6 +2,8 @@
 #include "gsTile.h"
 #include "gsVertex.h"
 
+int gs::Edge::idCounter = 0;
+
 bool gs::Edge::AddTile( const shared_ptr<gs::Tile>& newTile )
 {
     if ( tiles.size() == 2 )
@@ -46,6 +48,7 @@ void gs::Edge::SetRiver()
 
 gs::Edge::Edge( const shared_ptr<gs::Vertex>& v0, const shared_ptr<gs::Vertex>& v1 )
     :   river( false ),
+        id( idCounter++ ),
         v0( v0 ),
         v1( v1 ),
         vec( v1->position - v0->position )

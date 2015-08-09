@@ -39,13 +39,34 @@ namespace gs
         return std::max( lower, std::min( n, upper ) );
     }
 
+//    template <typename V>
+//    V ClosestPointOnLine( const V& a, const V& ab, const V& p, const bool clamp )
+//    {
+//        V ap = p - a;
+//
+//        const double ab2 = gs::Dot( ab, ab );
+//        const double t = gs::Dot( ap, ab ) / ab2;
+//        if ( clamp )
+//        {
+//            if ( t < 0.0 )
+//            {
+//                t = 0.0;
+//            }
+//            else if ( t > 1.0 )
+//            {
+//                t = 1.0;
+//            }
+//        }
+//        return a + ab * t;
+//    }
+
     template <typename V>
-    V ClosestPointOnLine( const V& a, const V& ab, const V& p, bool clamp )
+    double ClosestPointOnLine( const V& a, const V& ab, const V& p, const bool clamp )
     {
         V ap = p - a;
 
-        double ab2 = gs::Dot( ab, ab );
-        double t = gs::Dot( ap, ab ) / ab2;
+        const double ab2 = gs::Dot( ab, ab );
+        const double t = gs::Dot( ap, ab ) / ab2;
         if ( clamp )
         {
             if ( t < 0.0 )
@@ -57,7 +78,7 @@ namespace gs
                 t = 1.0;
             }
         }
-        return a + ab * t;
+        return t;
     }
 }
 

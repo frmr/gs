@@ -81,7 +81,7 @@ shared_ptr<const gs::Texture> gs::BiomeTextureGenerator::GetTexture( const gs::L
     else if ( biome == gs::LandTile::Biome::TUNDRA )
     {
         if ( terrain == gs::LandTile::Terrain::PLAINS )
-            return unassigned;
+            return tundraPlains;
         else if ( terrain == gs::LandTile::Terrain::HILLS )
             return unassigned;
         else
@@ -97,6 +97,7 @@ gs::BiomeTextureGenerator::BiomeTextureGenerator()
     :   grassPlains( std::make_shared<const gs::Texture>( "data/textures/grassPlains.png" ) ),
         semiAridPlains( std::make_shared<const gs::Texture>( "data/textures/semiAridPlains.png" ) ),
         desertPlains( std::make_shared<const gs::Texture>( "data/textures/desertPlains.png" ) ),
+        tundraPlains( std::make_shared<const gs::Texture>( "data/textures/tundraPlains.png" ) ),
         unassigned( std::make_shared<const gs::Texture>( "data/textures/unassigned.png" ) ),
         randomOffset( 0, 255, 0 )
 {
