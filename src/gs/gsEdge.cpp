@@ -48,12 +48,13 @@ void gs::Edge::SetRiver()
 
 void gs::Edge::Widen()
 {
+    constexpr float minimumLength = 0.01f;
     const float length = (float) vec.Length();
-    if ( length < 0.01f )
+    if ( length < minimumLength )
     {
         vec.Unit();
-        v1->SetPosition( v1->GetPosition() + vec * ( 0.01f - length ) / 2.0f );
-        v0->SetPosition( v0->GetPosition() - vec * ( 0.01f - length ) / 2.0f );
+        v1->SetPosition( v1->GetPosition() + vec * ( minimumLength - length ) / 2.0f );
+        v0->SetPosition( v0->GetPosition() - vec * ( minimumLength - length ) / 2.0f );
         vec = v1->GetPosition() - v0->GetPosition();
     }
 }
