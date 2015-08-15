@@ -79,7 +79,7 @@ double cck::Globe::Node::GetMountainHeight( const cck::GeoCoord& sampleCoord, co
         const double height = minHeight + noiseValue * ( maxHeight - minHeight );
         return ( distance <= plateau ) ? height : cck::Globe::CalculateMountainHeight( segmentHeight, height, radius, plateau, distance );
     }
-    return std::numeric_limits<double>::min();
+    return std::numeric_limits<double>::lowest();
 }
 
 shared_ptr<cck::Globe::Segment> cck::Globe::Node::GetSegment() const

@@ -228,7 +228,7 @@ namespace cck
 
         public:
             Segment( const shared_ptr<Node>& baseNode, const vector<shared_ptr<Node>>& mountainNodes, const vector<shared_ptr<Edge>>& mountainEdges );
-            explicit Segment( const shared_ptr<Node>& baseNode );
+            Segment( const shared_ptr<Node>& baseNode );
         };
 
 

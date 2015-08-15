@@ -183,7 +183,7 @@ void cck::Globe::SampleData( const cck::GeoCoord& sampleCoord, double& sampleHei
         }
     }
 
-    double highestHeight = std::numeric_limits<double>::min();
+    double highestHeight = std::numeric_limits<double>::lowest();
     int highestId = -1;
 
     for ( const auto& edge : edges )
@@ -192,10 +192,10 @@ void cck::Globe::SampleData( const cck::GeoCoord& sampleCoord, double& sampleHei
 
         if ( influence > 0.0 )
         {
-            double tempHeight = std::numeric_limits<double>::min();
+            double tempHeight = 0.0;
             int tempId = -1;
             edge->SampleData( sampleCoord, samplePoint, globeRadius, noiseValue * influence, tempHeight, tempId );
-            if ( tempHeight > highestHeight )
+            if ( tempHeight >= highestHeight )
             {
                 highestHeight = tempHeight;
                 highestId = tempId;
@@ -209,10 +209,10 @@ void cck::Globe::SampleData( const cck::GeoCoord& sampleCoord, double& sampleHei
 
         if ( influence > 0.0 )
         {
-            double tempHeight = std::numeric_limits<double>::min();
+            double tempHeight = 0.0;
             int tempId = -1;
             node->SampleData( noiseValue * influence, tempHeight, tempId );
-            if ( tempHeight > highestHeight )
+            if ( tempHeight >= highestHeight )
             {
                 highestHeight = tempHeight;
                 highestId = tempId;

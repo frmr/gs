@@ -17,7 +17,7 @@ void cck::Globe::Segment::SampleData( const cck::GeoCoord& sampleCoord, const cc
     sampleId = baseNode->id;
     const double segmentHeight = baseNode->minHeight + noiseValue * ( baseNode->maxHeight - baseNode->minHeight );
 
-    //double highestMountain = std::numeric_limits<double>::min();
+    //double highestMountain = std::numeric_limits<double>::lowest();
     bool foundMountain = false;
     double closestDistance = std::numeric_limits<double>::max();
     shared_ptr<Edge> closestEdge = nullptr;

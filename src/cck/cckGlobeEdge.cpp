@@ -136,7 +136,7 @@ double cck::Globe::Edge::GetMountainHeight( const cck::GeoCoord& sampleCoord, co
             return ( distance <= edgePlateau ) ? edgeHeight : cck::Globe::CalculateMountainHeight( segmentHeight, edgeHeight, edgeRadius, edgePlateau, distance );
         }
     }
-    return std::numeric_limits<double>::min();
+    return std::numeric_limits<double>::lowest();
 }
 
 vector<shared_ptr<cck::Globe::Side>> cck::Globe::Edge::GetSides() const

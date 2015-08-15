@@ -76,6 +76,9 @@ cck::Globe gs::Globe::GenerateTerrain() const
     terrain.AddNode( 27,  62.0,   165.0,  -1.0,   2.0,    1000.0 );   //Kamchatka       TUNDRA
     terrain.AddNode( 28,  36.0,   138.0,  -1.0,   1.5,    800.0 );    //Japan           GRASSLAND
 
+    terrain.AddNode( 50, 0.0, -90, 1.0, 1.0, 1000 );    //Andes test above water
+    terrain.AddNode( 51, 0.0, -110, -1.0, -1.0, 1000 ); //Andes test below water
+
     terrain.LinkNodes( 1,     2,  -1.6,   4.0,    150.0,  50.0 );     //France, Iberia
     terrain.LinkNodes( 1,     3,  -0.3,   0.75,   150.0,  50.0 );     //France, Germany
     terrain.LinkNodes( 1,     4,  -0.3,   5.0,    150.0,  50.0 );     //France, Italy
@@ -130,6 +133,8 @@ cck::Globe gs::Globe::GenerateTerrain() const
     terrain.LinkNodes( 24,    29, -0.5,   1.5,    150.0,  50.0 );     //Mongolia, Xinjiang
     terrain.LinkNodes( 15,    29, 0.0,    2.5,    150.0,  50.0 );     //Himalayas, Xinjiang
     terrain.LinkNodes( 21,    29, -0.5,   2.0,    150.0,  50.0 );     //Inner, Xinjiang
+
+    terrain.LinkNodes( 50, 51, 1.5, 3.0, 200.0, 50.0f ); //Andes test
 
     return terrain;
 }
@@ -269,7 +274,7 @@ void gs::Globe::CreateTile( const vector<gs::VertexPtr>& cellVertices, const cck
 
     gs::Vec3f gsCentroid( centroid.x, centroid.y, centroid.z );
 
-    if ( sampleHeight > 0.00001 )
+    if ( sampleHeight > 0.0 )
     {
         auto newTile = std::make_shared<gs::LandTile>( cellVertices, gsCentroid, sampleHeight, sampleId );
         allTiles.push_back( std::dynamic_pointer_cast<gs::Tile>( newTile ) );
