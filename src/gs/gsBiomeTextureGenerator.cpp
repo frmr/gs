@@ -56,36 +56,36 @@ shared_ptr<const gs::Texture> gs::BiomeTextureGenerator::GetTexture( const gs::L
         if ( terrain == gs::LandTile::Terrain::PLAINS )
             return desertPlains;
         else if ( terrain == gs::LandTile::Terrain::HILLS )
-            return unassigned;
+            return desertHills;
         else
-            return unassigned;
+            return desertMountains;
     }
     else if ( biome == gs::LandTile::Biome::GRASSLAND )
     {
         if ( terrain == gs::LandTile::Terrain::PLAINS )
             return grassPlains;
         else if ( terrain == gs::LandTile::Terrain::HILLS )
-            return unassigned;
+            return grassHills;
         else
-            return unassigned;
+            return grassMountains;
     }
     else if ( biome == gs::LandTile::Biome::SEMI_ARID )
     {
         if ( terrain == gs::LandTile::Terrain::PLAINS )
             return semiAridPlains;
         else if ( terrain == gs::LandTile::Terrain::HILLS )
-            return unassigned;
+            return semiAridHills;
         else
-            return unassigned;
+            return semiAridMountains;
     }
     else if ( biome == gs::LandTile::Biome::TUNDRA )
     {
         if ( terrain == gs::LandTile::Terrain::PLAINS )
             return tundraPlains;
         else if ( terrain == gs::LandTile::Terrain::HILLS )
-            return unassigned;
+            return tundraHills;
         else
-            return unassigned;
+            return tundraMountains;
     }
     else
     {
@@ -95,9 +95,17 @@ shared_ptr<const gs::Texture> gs::BiomeTextureGenerator::GetTexture( const gs::L
 
 gs::BiomeTextureGenerator::BiomeTextureGenerator()
     :   grassPlains( std::make_shared<const gs::Texture>( "data/textures/grassPlains.png" ) ),
+        grassHills( std::make_shared<const gs::Texture>( "data/textures/grassHills.png" ) ),
+        grassMountains( std::make_shared<const gs::Texture>( "data/textures/grassMountains.png" ) ),
         semiAridPlains( std::make_shared<const gs::Texture>( "data/textures/semiAridPlains.png" ) ),
+        semiAridHills( std::make_shared<const gs::Texture>( "data/textures/semiAridHills.png" ) ),
+        semiAridMountains( std::make_shared<const gs::Texture>( "data/textures/semiAridMountains.png" ) ),
         desertPlains( std::make_shared<const gs::Texture>( "data/textures/desertPlains.png" ) ),
+        desertHills( std::make_shared<const gs::Texture>( "data/textures/desertHills.png" ) ),
+        desertMountains( std::make_shared<const gs::Texture>( "data/textures/desertMountains.png" ) ),
         tundraPlains( std::make_shared<const gs::Texture>( "data/textures/tundraPlains.png" ) ),
+        tundraHills( std::make_shared<const gs::Texture>( "data/textures/tundraHills.png" ) ),
+        tundraMountains( std::make_shared<const gs::Texture>( "data/textures/tundraMountains.png" ) ),
         unassigned( std::make_shared<const gs::Texture>( "data/textures/unassigned.png" ) ),
         randomOffset( 0, 255, 0 )
 {

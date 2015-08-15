@@ -17,7 +17,7 @@ namespace gs
         vector<T>           frontier;
 
     public:
-        virtual bool Spread() = 0;
+        virtual bool    Spread() = 0;
 
     public:
         Spreader( const unsigned int speed, const T origin )
@@ -25,7 +25,6 @@ namespace gs
                 frontier( 1, origin )
         {
         }
-
     };
 }
 

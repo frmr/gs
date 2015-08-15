@@ -110,7 +110,7 @@ void gs::LandTile::GenerateTexture( gs::BiomeTextureGenerator& biomeTextureGener
 
     //compute bounding box
     gs::Vec2d minCoord( std::numeric_limits<double>::max(), std::numeric_limits<double>::max() );
-    gs::Vec2d maxCoord( std::numeric_limits<double>::min(), std::numeric_limits<double>::min() );
+    gs::Vec2d maxCoord( std::numeric_limits<double>::lowest(), std::numeric_limits<double>::lowest() );
     for ( const auto& coord : relativeCoords )
     {
         if ( coord.x < minCoord.x ) { minCoord.x = coord.x; }

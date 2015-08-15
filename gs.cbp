@@ -120,6 +120,8 @@
 		<Unit filename="src/gs/gsCamera.h" />
 		<Unit filename="src/gs/gsConfig.cpp" />
 		<Unit filename="src/gs/gsConfig.h" />
+		<Unit filename="src/gs/gsCultureSpreader.cpp" />
+		<Unit filename="src/gs/gsCultureSpreader.h" />
 		<Unit filename="src/gs/gsEdge.cpp" />
 		<Unit filename="src/gs/gsEdge.h" />
 		<Unit filename="src/gs/gsGlobe.cpp" />
