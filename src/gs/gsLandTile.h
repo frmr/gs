@@ -1,6 +1,7 @@
 #ifndef GS_LAND_TILE_H
 #define GS_LAND_TILE_H
 
+#include "gsCulture.h"
 #include "gsRandomRange.h"
 #include "gsTexture.h"
 #include "gsTile.h"
@@ -45,6 +46,7 @@ namespace gs
     private:
         bool                        forested;
         Biome                       biome;
+        shared_ptr<gs::Culture>     culture;
         shared_ptr<gs::Texture>     texture; //TODO: should be on stack, or at least unique_ptr
         vector<gs::Vec2f>           texCoords;
 
@@ -62,6 +64,7 @@ namespace gs
 
         bool                                HasUnassignedBiomeNeighbors() const;
         void                                SetBiome( const Biome newBiome );
+        void                                SetCulture( const shared_ptr<Culture> newCulture );
         bool                                SpawnRiver( const int newRiverId, gs::RandomRange<double>& rand );
         void                                UpdateAllBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo, const GLuint texCoordVbo );
         void                                UpdateTexCoordBuffer( const GLuint texCoordVbo );

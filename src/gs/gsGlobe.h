@@ -51,13 +51,14 @@ namespace gs
 
         int         numOfIndices;
 
-        vector<gs::VertexPtr>       vertices;
-        vector<gs::EdgePtr>         edges;
-        vector<gs::TilePtr>         allTiles;
-        vector<gs::LandTilePtr>     landTiles;
-        vector<gs::WaterTilePtr>    waterTiles;
+        vector<gs::VertexPtr>           vertices;
+        vector<gs::EdgePtr>             edges;
+        vector<gs::TilePtr>             allTiles;
+        vector<gs::LandTilePtr>         landTiles;
+        vector<gs::WaterTilePtr>        waterTiles;
 
-        vector<gs::LandTile::Biome> biomeTable; //TODO: Would be better as a gs::Array
+        vector<gs::LandTile::Biome>     biomeTable; //TODO: Would be better as a gs::Array
+        vector<shared_ptr<gs::Culture>> cultures;
 
         gs::TileGroupManager        groupManager;
 
@@ -68,6 +69,7 @@ namespace gs
         void                    CreateTile( const vector<gs::VertexPtr>& cellVertices, const cck::Globe& terrain, const cck::Vec3& centroid );
         void                    CreateTileEdges( const vector<gs::VertexPtr>& cellVertices );
         void                    GenerateBiomes( const int numOfSpreaders );
+        void                    GenerateCultures( const int numOfSpreaders );
         void                    GenerateRivers( const int numOfSpawners );
         void                    GenerateTextures();
         void                    GenerateTiles( const int numOfTiles );

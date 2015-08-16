@@ -2,6 +2,8 @@
 #include "gsTile.h"
 #include "gsVertex.h"
 
+#include <iostream>
+
 int gs::Edge::idCounter = 0;
 
 bool gs::Edge::AddTile( const shared_ptr<gs::Tile>& newTile )
@@ -46,16 +48,18 @@ void gs::Edge::SetRiver()
     river = true;
 }
 
-void gs::Edge::Widen()
+void gs::Edge::Widen() //TODO: Stop the method shortening some edges
 {
-    constexpr float minimumLength = 0.01f;
+    constexpr float minimumLength = 0.005f;
     const float length = (float) vec.Length();
     if ( length < minimumLength )
     {
         vec.Unit();
-        v1->SetPosition( v1->GetPosition() + vec * ( minimumLength - length ) / 2.0f );
-        v0->SetPosition( v0->GetPosition() - vec * ( minimumLength - length ) / 2.0f );
+        const gs::Vec3f correction = vec * ( ( minimumLength - length ) / 2.0f );
+        v1->SetPosition( v1->GetPosition() + correction );
+        v0->SetPosition( v0->GetPosition() - correction );
         vec = v1->GetPosition() - v0->GetPosition();
+        //std::cerr << length << " Widened edge to by " << correction.Length() * 2.0f << " or " << minimumLength - length << " to " << vec.Length() << std::endl;
     }
 }
 

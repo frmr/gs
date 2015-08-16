@@ -70,17 +70,52 @@ bool gs::BiomeSpreader::Spread()
         gs::LandTilePtr hillsTile = SelectRandomTileFromVector( unassignedHills, randomIndex );
         gs::LandTilePtr mountainsTile = SelectRandomTileFromVector( unassignedMountains, randomIndex );
 
-        gs::LandTilePtr bestTile = mountainsTile;
+        gs::LandTilePtr bestTile = nullptr;
 
         if ( terrainPreference == gs::LandTile::Terrain::PLAINS )
         {
-            bestTile = ( hillsTile == nullptr ) ? bestTile : hillsTile;
-            bestTile = ( plainsTile == nullptr ) ? bestTile : plainsTile;
+            if ( mountainsTile != nullptr )
+            {
+                bestTile = mountainsTile;
+            }
+            if ( hillsTile != nullptr )
+            {
+                bestTile = hillsTile;
+            }
+            if ( plainsTile != nullptr )
+            {
+                bestTile = plainsTile;
+            }
         }
         else if ( terrainPreference == gs::LandTile::Terrain::HILLS )
         {
-            bestTile = ( plainsTile == nullptr ) ? bestTile : plainsTile;
-            bestTile = ( hillsTile == nullptr ) ? bestTile : hillsTile;
+            if ( mountainsTile != nullptr )
+            {
+                bestTile = mountainsTile;
+            }
+            if ( plainsTile != nullptr )
+            {
+                bestTile = plainsTile;
+            }
+            if ( hillsTile != nullptr )
+            {
+                bestTile = hillsTile;
+            }
+        }
+        else if ( terrainPreference == gs::LandTile::Terrain::MOUNTAINS )
+        {
+            if ( plainsTile != nullptr )
+            {
+                bestTile = plainsTile;
+            }
+            if ( hillsTile != nullptr )
+            {
+                bestTile = hillsTile;
+            }
+            if ( mountainsTile != nullptr )
+            {
+                bestTile = mountainsTile;
+            }
         }
 
         if ( bestTile != nullptr ) //TODO: prevent nullptr all together

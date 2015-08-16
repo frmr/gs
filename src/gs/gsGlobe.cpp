@@ -42,6 +42,7 @@ void gs::Globe::Draw( const gs::Camera& worldCamera ) const
 
 cck::Globe gs::Globe::GenerateTerrain() const
 {
+    cerr << "Generating terrain" << endl;
     cck::Globe terrain( 6370.0, std::time( 0 ) );
     terrain.SetNoiseParameters( 8, 0.75, 0.00015 );
 
@@ -74,7 +75,7 @@ cck::Globe gs::Globe::GenerateTerrain() const
     terrain.AddNode( 25,  38.0,   127.0,  -0.5,   0.75,   350.0 );    //Korea           GRASSLAND
     terrain.AddNode( 26,  65.0,   144.0,  -0.5,   1.0,    800.0 );    //Siberia 3       TUNDRA
     terrain.AddNode( 27,  62.0,   165.0,  -1.0,   2.0,    1000.0 );   //Kamchatka       TUNDRA
-    terrain.AddNode( 28,  36.0,   138.0,  -1.0,   1.5,    800.0 );    //Japan           GRASSLAND
+    terrain.AddNode( 28,  36.0,   138.0,  -0.8,   2.0,    800.0 );    //Japan           GRASSLAND
 
     terrain.AddNode( 50, 0.0, -90, 1.0, 1.0, 1000 );    //Andes test above water
     terrain.AddNode( 51, 0.0, -110, -1.0, -1.0, 1000 ); //Andes test below water
@@ -135,6 +136,8 @@ cck::Globe gs::Globe::GenerateTerrain() const
     terrain.LinkNodes( 21,    29, -0.5,   2.0,    150.0,  50.0 );     //Inner, Xinjiang
 
     terrain.LinkNodes( 50, 51, 1.5, 3.0, 200.0, 50.0f ); //Andes test
+
+    cerr << "Generated terrain" << endl;
 
     return terrain;
 }
@@ -349,6 +352,8 @@ unsigned int gs::Globe::HashDouble( const double val, const int bucketDim )
 
 void gs::Globe::GenerateBiomes( const int numOfSpreaders )
 {
+    cerr << "Generating biomes" << endl;
+
     if ( landTiles.empty() )
     {
         cerr << "gs::Globe::GenerateBiomes() in gsGlobe.cpp: Cannot spawn biome spreaders because there are no land tiles." << endl;
@@ -398,10 +403,17 @@ void gs::Globe::GenerateBiomes( const int numOfSpreaders )
             tile->SetBiome( LookupRegionBiome( tile->regionId ) );
         }
     }
+    cerr << "Generated biomes" << endl;
+}
+
+void gs::Globe::GenerateCultures( const int numOfSpreaders )
+{
+
 }
 
 void gs::Globe::GenerateRivers( const int numOfSpawners )
 {
+    cerr << "Generating rivers" << endl;
     //pick numOfRivers random vertices
 
     gs::RandomRange<double> rand( 0.0, 0.9999, std::time( 0 ) );
@@ -415,10 +427,12 @@ void gs::Globe::GenerateRivers( const int numOfSpawners )
 
         landTiles[i]->SpawnRiver( i, rand );
     }
+    cerr << "Generated rivers" << endl;
 }
 
 void gs::Globe::GenerateTextures()
 {
+    cerr << "Generating textures" << endl;
     gs::BiomeTextureGenerator biomeTextureGenerator;
 
     for ( auto& tile : landTiles )
@@ -435,10 +449,12 @@ void gs::Globe::GenerateTextures()
     }
 
     groupManager.PushTextures();
+    cerr << "Generated textures" << endl;
 }
 
 void gs::Globe::GenerateTiles( const int numOfTiles )
 {
+    cerr << "Generating tiles" << endl;
     VoronoiGenerator vg( std::time( 0 ) );
     vg.generateTessellation( numOfTiles );
 
@@ -469,6 +485,8 @@ void gs::Globe::GenerateTiles( const int numOfTiles )
     }
 
     PrintMeshProperties();
+
+    cerr << "Generated tiles" << endl;
 }
 
 void gs::Globe::LinkTiles( const gs::TilePtr source, const gs::TilePtr dest, const gs::EdgePtr edge )
@@ -521,7 +539,7 @@ gs::Globe::Globe()
     //Generate planet
     GenerateRivers( 50 );
     GenerateBiomes( 200 );
-    //GenerateCultures( 150 );
+    GenerateCultures( 150 );
     //GenerateStates( 150 );
 
     AssignBufferOffsets();

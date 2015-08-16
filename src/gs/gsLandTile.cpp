@@ -200,6 +200,11 @@ void gs::LandTile::SetBiome( const gs::LandTile::Biome newBiome )
     biome = newBiome;
 }
 
+void gs::LandTile::SetCulture( const shared_ptr<Culture> newCulture )
+{
+    culture = newCulture;
+}
+
 bool gs::LandTile::SpawnRiver( const int newRiverId, gs::RandomRange<double>& rand )
 {
     double probability = 0.0;
