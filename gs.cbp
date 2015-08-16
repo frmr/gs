@@ -118,8 +118,12 @@
 		<Unit filename="src/gs/gsBiomeTextureGenerator.h" />
 		<Unit filename="src/gs/gsCamera.cpp" />
 		<Unit filename="src/gs/gsCamera.h" />
+		<Unit filename="src/gs/gsColor.cpp" />
+		<Unit filename="src/gs/gsColor.h" />
 		<Unit filename="src/gs/gsConfig.cpp" />
 		<Unit filename="src/gs/gsConfig.h" />
+		<Unit filename="src/gs/gsCulture.cpp" />
+		<Unit filename="src/gs/gsCulture.h" />
 		<Unit filename="src/gs/gsCultureSpreader.cpp" />
 		<Unit filename="src/gs/gsCultureSpreader.h" />
 		<Unit filename="src/gs/gsEdge.cpp" />

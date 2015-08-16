@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "gsArray.h"
+#include "gsColor.h"
 #include "gsTile.h"
 #include "gsLink.h"
 #include "gsRandomRange.h" //TODO: delete
@@ -23,8 +24,6 @@ using std::vector;
 
 namespace gs
 {
-    typedef gs::Vec3<int> Color;
-
     class Texture
     {
     private:
