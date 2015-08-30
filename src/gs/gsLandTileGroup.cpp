@@ -51,7 +51,7 @@ void gs::LandTileGroup::Draw() const
 {
     glBindTexture( GL_TEXTURE_2D, textureId );
     //glUniform1i( 10, textureId );
-    glDrawElements( GL_TRIANGLES, ( bufferEnd - bufferBegin ) + 1, GL_UNSIGNED_INT, (void*) ( bufferBegin * sizeof(GLuint) )  );
+    glDrawElements( GL_TRIANGLES, ( bufferEnd - bufferBegin ) + 1, GL_UNSIGNED_INT, (void*) ( bufferBegin * sizeof(GLuint) )  ); //TODO: fix this memory leak (might be drivers?)
 }
 
 void gs::LandTileGroup::PushTexture()
