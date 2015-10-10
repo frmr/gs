@@ -77,8 +77,8 @@ cck::Globe gs::Globe::GenerateTerrain() const
     terrain.AddNode( 27,  62.0,   165.0,  -1.0,   2.0,    1000.0 );   //Kamchatka       TUNDRA
     terrain.AddNode( 28,  36.0,   138.0,  -0.8,   2.0,    800.0 );    //Japan           GRASSLAND
 
-    terrain.AddNode( 50, 0.0, -90, 1.0, 1.0, 1000 );    //Andes test above water
-    terrain.AddNode( 51, 0.0, -110, -1.0, -1.0, 1000 ); //Andes test below water
+    //terrain.AddNode( 50, 0.0, -90, 1.0, 1.0, 1000 );    //Andes test above water
+    //terrain.AddNode( 51, 0.0, -110, -1.0, -1.0, 1000 ); //Andes test below water
 
     terrain.LinkNodes( 1,     2,  -1.6,   4.0,    150.0,  50.0 );     //France, Iberia
     terrain.LinkNodes( 1,     3,  -0.3,   0.75,   150.0,  50.0 );     //France, Germany
@@ -135,7 +135,7 @@ cck::Globe gs::Globe::GenerateTerrain() const
     terrain.LinkNodes( 15,    29, 0.0,    2.5,    150.0,  50.0 );     //Himalayas, Xinjiang
     terrain.LinkNodes( 21,    29, -0.5,   2.0,    150.0,  50.0 );     //Inner, Xinjiang
 
-    terrain.LinkNodes( 50, 51, 1.5, 3.0, 200.0, 50.0f ); //Andes test
+    //terrain.LinkNodes( 50, 51, 1.5, 3.0, 200.0, 50.0f ); //Andes test
 
     cerr << "Generated terrain" << endl;
 
@@ -217,7 +217,7 @@ void gs::Globe::BuildBiomeTable()
 
 void gs::Globe::CombineVertices( const vector<glm::dvec3>& corners, gs::Array<vector<gs::VertexPtr>>& buckets, const unsigned int bucketDim, vector<gs::VertexPtr>& cellVertices )
 {
-    constexpr double errorMargin = 0.000001;
+    constexpr double errorMargin = 0.0000001;
     for ( const auto& corner : corners )
     {
         const gs::Vec3f gsCorner( (float) corner.x, (float) corner.y, (float) corner.z );
@@ -360,6 +360,7 @@ void gs::Globe::GenerateBiomes( const int numOfSpreaders )
         return;
     }
 
+    /*
     gs::RandomRange<double> randomIndex( 0.0, 0.9999, std::time( 0 ) );
 
     //put numOfSpreaders random land tiles at the start of the vector
@@ -394,7 +395,7 @@ void gs::Globe::GenerateBiomes( const int numOfSpreaders )
             }
         }
     }
-
+    */
     //assign biomes to tiles that the spreaders didn't reach
     for ( auto& tile : landTiles )
     {
