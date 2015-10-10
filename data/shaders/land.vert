@@ -11,6 +11,7 @@ smooth  out vec3    normalFrag;
 flat    out vec3    colorFrag;
 smooth  out vec2    texCoordFrag;
 flat    out float   fogFrag;
+flat    out vec3    lightVec;
 
 uniform mat4 projectionMatrix;
 uniform mat4 modelViewMatrix;
@@ -24,4 +25,5 @@ void main()
     colorFrag = colorVert;
     texCoordFrag = texCoordVert;
     fogFrag = fogVert;
+    lightVec = (vec4(1.0, 1.0, 3.0, 1.0) * modelViewMatrix).xyz;
 }
