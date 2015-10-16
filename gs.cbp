@@ -128,6 +128,7 @@
 		<Unit filename="src/gs/gsCultureSpreader.h" />
 		<Unit filename="src/gs/gsEdge.cpp" />
 		<Unit filename="src/gs/gsEdge.h" />
+		<Unit filename="src/gs/gsFullscreenQuad.h" />
 		<Unit filename="src/gs/gsGlobe.cpp" />
 		<Unit filename="src/gs/gsGlobe.h" />
 		<Unit filename="src/gs/gsInputState.cpp" />
@@ -142,11 +143,14 @@
 		<Unit filename="src/gs/gsMath.h" />
 		<Unit filename="src/gs/gsMatrixStack.h" />
 		<Unit filename="src/gs/gsRandomRange.h" />
+		<Unit filename="src/gs/gsRenderer.h" />
 		<Unit filename="src/gs/gsShader.cpp" />
 		<Unit filename="src/gs/gsShader.h" />
 		<Unit filename="src/gs/gsSpreader.h" />
 		<Unit filename="src/gs/gsTexture.cpp" />
 		<Unit filename="src/gs/gsTexture.h" />
+		<Unit filename="src/gs/gsTextureGenerator.cpp" />
+		<Unit filename="src/gs/gsTextureGenerator.h" />
 		<Unit filename="src/gs/gsTile.cpp" />
 		<Unit filename="src/gs/gsTile.h" />
 		<Unit filename="src/gs/gsTileBuffer.cpp" />
@@ -155,6 +159,7 @@
 		<Unit filename="src/gs/gsTileGroup.h" />
 		<Unit filename="src/gs/gsTileGroupManager.cpp" />
 		<Unit filename="src/gs/gsTileGroupManager.h" />
+		<Unit filename="src/gs/gsUserInterface.h" />
 		<Unit filename="src/gs/gsVec2.h" />
 		<Unit filename="src/gs/gsVec3.h" />
 		<Unit filename="src/gs/gsVertex.cpp" />

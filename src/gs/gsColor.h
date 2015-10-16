@@ -8,6 +8,11 @@ namespace gs
 {
     class Color : public gs::Vec3<int>
     {
+    public:
+        int& r;
+        int& g;
+        int& b;
+
     private:
         static gs::RandomRange<int> randByte;
 
