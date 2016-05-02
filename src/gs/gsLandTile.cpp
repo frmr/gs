@@ -1,4 +1,5 @@
 #include "gsBiomeTextureGenerator.h"
+#include "gsBoundingBox.h"
 #include "gsGlobe.h"
 #include "gsLandTile.h"
 #include "gsMath.h"
@@ -108,31 +109,20 @@ void gs::LandTile::GenerateTexture( gs::BiomeTextureGenerator& biomeTextureGener
                                      gs::Dot<double>( refAxisV, (gs::Vec3d) ( vert->GetPosition() - vertices[0]->GetPosition() ) ) );
     }
 
-    //compute bounding box
-    gs::Vec2d minCoord( std::numeric_limits<double>::max(), std::numeric_limits<double>::max() );
-    gs::Vec2d maxCoord( std::numeric_limits<double>::lowest(), std::numeric_limits<double>::lowest() );
-    for ( const auto& coord : relativeCoords )
-    {
-        if ( coord.x < minCoord.x ) { minCoord.x = coord.x; }
-        if ( coord.y < minCoord.y ) { minCoord.y = coord.y; }
-        if ( coord.x > maxCoord.x ) { maxCoord.x = coord.x; }
-        if ( coord.y > maxCoord.y ) { maxCoord.y = coord.y; }
-    }
+    gs::BoundingBox<gs::Vec2d> boundingBox(relativeCoords);
 
     //shift coordinates by bounding box minimum
     for ( auto& coord : relativeCoords )
     {
-        coord -= minCoord;
+        coord -= boundingBox.minCoord;
     }
-    maxCoord -= minCoord;
-    minCoord -= minCoord; //should always be (0,0)
+    boundingBox.maxCoord -= boundingBox.minCoord;
+    boundingBox.minCoord -= boundingBox.minCoord; //should always be (0,0)
 
     constexpr int pixelsPerUnit = 2000;
 
-    int width = (int) ( maxCoord.x * pixelsPerUnit ) + 1;
-    width = ( width < 1 ) ? 1 : width;
-    int height = (int) ( maxCoord.y * pixelsPerUnit ) + 1;
-    height = ( height < 1 ) ? 1 : height;
+    const int width = std::max((int) ( boundingBox.maxCoord.x * pixelsPerUnit ) + 1, 1);
+    const int height = std::max((int) ( boundingBox.maxCoord.y * pixelsPerUnit ) + 1, 1);
 
     texture = std::make_shared<gs::Texture>( width, height );
 

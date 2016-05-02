@@ -2,6 +2,7 @@
 #define GS_VEC2_H
 
 #include <cmath>
+#include <limits>
 
 namespace gs
 {
@@ -11,6 +12,7 @@ namespace gs
     public:
         T   x, y;
         static constexpr T epsilon = (T) 0.0000001;
+        static constexpr uint8_t dimensions = 2;
 
     public:
 
@@ -137,6 +139,16 @@ namespace gs
         Vec2<T>( const T& x, const T& y )
             : x( x ), y( y )
         {
+        }
+
+        static Vec2<T> Max()
+        {
+            return Vec2<T>(std::numeric_limits<T>::max(), std::numeric_limits<T>::max());
+        }
+
+        static Vec2<T> Min()
+        {
+            return Vec2<T>(std::numeric_limits<T>::lowest(), std::numeric_limits<T>::lowest());
         }
     };
 

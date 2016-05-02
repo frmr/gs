@@ -116,6 +116,7 @@
 		<Unit filename="src/gs/gsBiomeSpreader.h" />
 		<Unit filename="src/gs/gsBiomeTextureGenerator.cpp" />
 		<Unit filename="src/gs/gsBiomeTextureGenerator.h" />
+		<Unit filename="src/gs/gsBoundingBox.h" />
 		<Unit filename="src/gs/gsCamera.cpp" />
 		<Unit filename="src/gs/gsCamera.h" />
 		<Unit filename="src/gs/gsColor.cpp" />

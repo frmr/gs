@@ -2,6 +2,8 @@
 #define GS_VEC3_H
 
 #include <cmath>
+#include <limits>
+
 #include "gsVec2.h"
 
 namespace gs
@@ -12,6 +14,7 @@ namespace gs
     public:
         T   x, y, z;
         static constexpr T epsilon = (T) 0.000000;
+        static constexpr uint8_t dimensions = 3;
 
     public:
 
@@ -153,6 +156,16 @@ namespace gs
         Vec3<T>( const T& x, const T& y, const T& z )
             : x( x ), y( y ), z( z )
         {
+        }
+
+        static Vec3<T> Max()
+        {
+            return Vec3<T>(std::numeric_limits<T>::max, std::numeric_limits<T>::max, std::numeric_limits<T>::max);
+        }
+
+        static Vec3<T> Min()
+        {
+            return Vec3<T>(std::numeric_limits<T>::lowest, std::numeric_limits<T>::lowest, std::numeric_limits<T>::lowest);
         }
     };
 

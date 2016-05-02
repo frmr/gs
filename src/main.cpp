@@ -72,7 +72,6 @@ namespace gs
 
         glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
         glViewport( 0, 0, screenWidth, screenHeight);
-
         return true;
     }
 

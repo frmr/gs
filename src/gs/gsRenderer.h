@@ -25,7 +25,7 @@ namespace gs
 
         int64_t                     time;
 
-        gs::Globe                   globe; //last globe state
+        //gs::Globe                   globe; //last globe state
 
         SDL_GLContext               context;
 
@@ -44,7 +44,7 @@ namespace gs
     public:
         bool SetResolution( const int width, const int height );
         void Render( const gs::Camera& worldCamera, const gs::Camera& interfaceCamera, const gs::UserInterface& ui ) const;
-        void Update( const gs::Globe& globe );
+        //void Update( const gs::Globe& globe );
 
     public:
         Renderer( const SDL_GLContext &context, const bool fullscreen, const bool vsync );

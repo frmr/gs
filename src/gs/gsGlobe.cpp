@@ -466,7 +466,7 @@ void gs::Globe::GenerateTiles( const int numOfTiles )
     //int vertexCount = 0;
     allTiles.reserve( numOfTiles );
 
-    static constexpr unsigned int bucketDim = 256;
+    constexpr unsigned int bucketDim = 256;
 
     gs::Array<vector<gs::VertexPtr>> buckets( bucketDim, bucketDim, bucketDim );
 
