@@ -15,13 +15,13 @@ namespace gs
 
     private:
         void            CleanFrontier();
-        gs::LandTilePtr SelectRandomTileFromVector( const vector<gs::LandTilePtr> tiles, gs::RandomRange<double>& randomIndex ) const;
+        gs::LandTilePtr SelectRandomTileFromVector(const vector<gs::LandTilePtr> tiles, gs::RandomRange<double>& randomIndex) const;
 
     public:
         bool Spread();
 
     public:
-        BiomeSpreader( const unsigned int speed, const gs::LandTilePtr origin, const gs::LandTile::Biome value, const gs::LandTile::Terrain terrainPreference );
+        BiomeSpreader(const unsigned int speed, const gs::LandTilePtr origin, const gs::LandTile::Biome value, const gs::LandTile::Terrain terrainPreference);
     };
 }
 

@@ -1,8 +1,8 @@
 #include "gsCulture.h"
 
-string gs::Culture::GenerateCultureName( const int groupId )
+string gs::Culture::GenerateCultureName(const int groupId)
 {
-    switch ( groupId )
+    switch (groupId)
     {
         case 0:     return "British";
         case 1:     return "French";
@@ -38,9 +38,9 @@ string gs::Culture::GenerateCultureName( const int groupId )
     }
 }
 
-gs::Culture::Culture( const int groupId )
-    :   groupId( groupId ),
-        name( GenerateCultureName( groupId ) ),
+gs::Culture::Culture(const int groupId)
+    :   groupId(groupId),
+        name(GenerateCultureName(groupId)),
         color()
 {
 }

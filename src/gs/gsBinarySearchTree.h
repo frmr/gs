@@ -24,30 +24,30 @@ namespace gs
             shared_ptr<Node>    right;
 
         public:
-            bool Add( const K& newKey, const D& newData )
+            bool Add(const K& newKey, const D& newData)
             {
-                if ( newKey < key )
+                if (newKey < key)
                 {
-                    if ( left == nullptr )
+                    if (left == nullptr)
                     {
-                        left = std::make_shared<Node>( newKey, newData );
+                        left = std::make_shared<Node>(newKey, newData);
                         return true;
                     }
                     else
                     {
-                        return left->Add( newKey, newData );
+                        return left->Add(newKey, newData);
                     }
                 }
-                else if ( newKey > key )
+                else if (newKey > key)
                 {
-                    if ( right == nullptr )
+                    if (right == nullptr)
                     {
-                        right = std::make_shared<Node>( newKey, newData );
+                        right = std::make_shared<Node>(newKey, newData);
                         return true;
                     }
                     else
                     {
-                        return right->Add( newKey, newData );
+                        return right->Add(newKey, newData);
                     }
                 }
                 else
@@ -56,15 +56,15 @@ namespace gs
                 }
             }
 
-            bool Contains( const K& refKey )
+            bool Contains(const K& refKey)
             {
-                if ( refKey < key )
+                if (refKey < key)
                 {
-                    return ( left == nullptr ) ? false : left->Contains( refKey );
+                    return (left == nullptr) ? false : left->Contains(refKey);
                 }
-                else if ( refKey > key )
+                else if (refKey > key)
                 {
-                    return ( right == nullptr ) ? false : right->Contains( refKey );
+                    return (right == nullptr) ? false : right->Contains(refKey);
                 }
                 else
                 {
@@ -72,15 +72,15 @@ namespace gs
                 }
             }
 
-            shared_ptr<D> GetData( const K& refKey ) const
+            shared_ptr<D> GetData(const K& refKey) const
             {
-                if ( refKey < key )
+                if (refKey < key)
                 {
-                    return ( left == nullptr ) ? nullptr : left->GetData( refKey );
+                    return (left == nullptr) ? nullptr : left->GetData(refKey);
                 }
-                else if ( refKey > key )
+                else if (refKey > key)
                 {
-                    return ( right == nullptr ) ? nullptr : right->GetData( refKey );
+                    return (right == nullptr) ? nullptr : right->GetData(refKey);
                 }
                 else
                 {
@@ -89,8 +89,8 @@ namespace gs
             }
 
         public:
-            Node( const K& key, const D& data )
-                :   key( key ), data( std::make_shared<D>( data ) ), left( nullptr ), right ( nullptr )
+            Node(const K& key, const D& data)
+                :   key(key), data(std::make_shared<D>(data)), left(nullptr), right (nullptr)
             {
             }
         };
@@ -99,32 +99,32 @@ namespace gs
         shared_ptr<Node>    root;
 
     public:
-        bool Add( const K& newKey, const D& newData )
+        bool Add(const K& newKey, const D& newData)
         {
-            if ( root == nullptr )
+            if (root == nullptr)
             {
-                root = std::make_shared<Node>( newKey, newData );
+                root = std::make_shared<Node>(newKey, newData);
                 return true;
             }
             else
             {
-                return root->Add( newKey, newData );
+                return root->Add(newKey, newData);
             }
         }
 
-        bool Contains( const K& refKey ) const
+        bool Contains(const K& refKey) const
         {
-            return ( root == nullptr ) ? false : root->Contains( refKey );
+            return (root == nullptr) ? false : root->Contains(refKey);
         }
 
-        shared_ptr<D> GetData( const K& refKey ) const
+        shared_ptr<D> GetData(const K& refKey) const
         {
-            return ( root == nullptr ) ? nullptr : root->GetData( refKey );
+            return (root == nullptr) ? nullptr : root->GetData(refKey);
         }
 
     public:
         BinarySearchTree()
-            : root( nullptr )
+            : root(nullptr)
         {
         }
     };

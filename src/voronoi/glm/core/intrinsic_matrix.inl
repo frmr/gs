@@ -324,7 +324,7 @@ GLM_FUNC_QUALIFIER __m128 sse_slow_det_ps(__m128 const in[4])
 		Fac5 = _mm_sub_ps(Mul00, Mul01);
 	}
 
-	__m128 SignA = _mm_set_ps( 1.0f,-1.0f, 1.0f,-1.0f);
+	__m128 SignA = _mm_set_ps(1.0f,-1.0f, 1.0f,-1.0f);
 	__m128 SignB = _mm_set_ps(-1.0f, 1.0f,-1.0f, 1.0f);
 
 	// m[1][0]
@@ -471,7 +471,7 @@ GLM_FUNC_QUALIFIER __m128 sse_detd_ps
 	__m128 MulFacC = _mm_mul_ps(SwpFacC, SubFacC);
 
 	__m128 AddRes = _mm_add_ps(SubRes, MulFacC);
-	__m128 DetCof = _mm_mul_ps(AddRes, _mm_setr_ps( 1.0f,-1.0f, 1.0f,-1.0f));
+	__m128 DetCof = _mm_mul_ps(AddRes, _mm_setr_ps(1.0f,-1.0f, 1.0f,-1.0f));
 
 	//return m[0][0] * DetCof[0]
 	//	 + m[0][1] * DetCof[1]
@@ -537,7 +537,7 @@ GLM_FUNC_QUALIFIER __m128 sse_det_ps
 	__m128 MulFacC = _mm_mul_ps(SwpFacC, SubFacC);
 
 	__m128 AddRes = _mm_add_ps(SubRes, MulFacC);
-	__m128 DetCof = _mm_mul_ps(AddRes, _mm_setr_ps( 1.0f,-1.0f, 1.0f,-1.0f));
+	__m128 DetCof = _mm_mul_ps(AddRes, _mm_setr_ps(1.0f,-1.0f, 1.0f,-1.0f));
 
 	//return m[0][0] * DetCof[0]
 	//	 + m[0][1] * DetCof[1]
@@ -670,7 +670,7 @@ GLM_FUNC_QUALIFIER void sse_inverse_ps(__m128 const in[4], __m128 out[4])
 		Fac5 = _mm_sub_ps(Mul00, Mul01);
 	}
 
-	__m128 SignA = _mm_set_ps( 1.0f,-1.0f, 1.0f,-1.0f);
+	__m128 SignA = _mm_set_ps(1.0f,-1.0f, 1.0f,-1.0f);
 	__m128 SignB = _mm_set_ps(-1.0f, 1.0f,-1.0f, 1.0f);
 
 	// m[1][0]
@@ -891,7 +891,7 @@ GLM_FUNC_QUALIFIER void sse_inverse_fast_ps(__m128 const in[4], __m128 out[4])
 		Fac5 = _mm_sub_ps(Mul00, Mul01);
 	}
 
-	__m128 SignA = _mm_set_ps( 1.0f,-1.0f, 1.0f,-1.0f);
+	__m128 SignA = _mm_set_ps(1.0f,-1.0f, 1.0f,-1.0f);
 	__m128 SignB = _mm_set_ps(-1.0f, 1.0f,-1.0f, 1.0f);
 
 	// m[1][0]

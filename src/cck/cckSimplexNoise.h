@@ -29,15 +29,15 @@ namespace cck
         int             perm[512];
 
     private:
-        double          Dot( const double* g, const double x, const double y, const double z ) const;
+        double          Dot(const double* g, const double x, const double y, const double z) const;
 
     public:
-        double          Noise( const double x, const double y, const double z ) const;
-        double          OctaveNoise( const double x, const double y, const double z, const int octaves, const double persistence, double frequency ) const;
-        double          ScaledOctaveNoise( const double x, const double y, const double z, const int octaves, const double persistence, const double frequency, const double boundMin, const double boundMax ) const;
+        double          Noise(const double x, const double y, const double z) const;
+        double          OctaveNoise(const double x, const double y, const double z, const int octaves, const double persistence, double frequency) const;
+        double          ScaledOctaveNoise(const double x, const double y, const double z, const int octaves, const double persistence, const double frequency, const double boundMin, const double boundMax) const;
 
     public:
-        SimplexNoise( const unsigned int seed );
+        SimplexNoise(const unsigned int seed);
     };
 }
 

@@ -15,9 +15,9 @@ GLuint gs::TileGroup::GetBufferEnd() const
     return bufferEnd;
 }
 
-gs::TileGroup::TileGroup( const GLuint bufferBegin )
-    :   bufferBegin( bufferBegin ),
-        bufferEnd( 0 )
+gs::TileGroup::TileGroup(const GLuint bufferBegin)
+    :   bufferBegin(bufferBegin),
+        bufferEnd(0)
 {
     cerr << "New tile group at " << bufferBegin << endl;
 }

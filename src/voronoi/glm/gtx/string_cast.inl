@@ -27,7 +27,7 @@ namespace detail
 #if((GLM_COMPILER & GLM_COMPILER_VC) && (GLM_COMPILER_VC >= GLM_COMPILER_VC2005))
 			vsprintf_s(text, STRING_BUFFER, msg, list);
 #else//
-			vsprintf(text, msg, list);
+			vsprintf_s(text, msg, list);
 #endif//
 		va_end(list);
 

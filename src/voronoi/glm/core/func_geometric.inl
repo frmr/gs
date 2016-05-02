@@ -175,8 +175,8 @@ namespace glm
 		    mov		edi, y
 		    movaps	xmm0, [esi]
 		    mulps	xmm0, [edi]
-		    haddps(	_xmm0, _xmm0 )
-		    haddps(	_xmm0, _xmm0 )
+		    haddps(	_xmm0, _xmm0)
+		    haddps(	_xmm0, _xmm0)
 		    movss	Result, xmm0
 	    }
 	    return Result;

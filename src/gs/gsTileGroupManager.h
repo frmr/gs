@@ -24,17 +24,17 @@ namespace gs
         gs::WaterTileGroup          waterTileGroup;
 
     public:
-        void Add( const gs::LandTilePtr& landTile );
-        void Add( const gs::WaterTilePtr& waterTile );
+        void Add(const gs::LandTilePtr& landTile);
+        void Add(const gs::WaterTilePtr& waterTile);
         void DrawAll() const;
         void DrawLandTileGroups() const;
         void DrawWaterTileGroup() const;
         void PushTextures();
-        void SetTextureSize( const GLint newTextureDim );
+        void SetTextureSize(const GLint newTextureDim);
         void WriteTileGroupsToFile() const;
 
     public:
-        explicit TileGroupManager( const GLint textureDim = 1024 );
+        explicit TileGroupManager(const GLint textureDim = 1024);
     };
 }
 

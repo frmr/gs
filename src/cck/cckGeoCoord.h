@@ -10,14 +10,14 @@ namespace cck
     class GeoCoord
     {
     public:
-        cck::Vec3       ToCartesian( const double radius ) const;
+        cck::Vec3       ToCartesian(const double radius) const;
 
     public:
         const double    latRadians;
         const double    lonRadians;
 
     public:
-        GeoCoord( const double latRadians, const double lonRadians );
+        GeoCoord(const double latRadians, const double lonRadians);
     };
 }
 

@@ -20,9 +20,9 @@ namespace gs
         virtual bool    Spread() = 0;
 
     public:
-        Spreader( const unsigned int speed, const T origin )
-            :   speed( speed ),
-                frontier( 1, origin )
+        Spreader(const unsigned int speed, const T origin)
+            :   speed(speed),
+                frontier(1, origin)
         {
         }
     };

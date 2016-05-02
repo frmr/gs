@@ -16,19 +16,19 @@ namespace cck
         cck::GeoCoord   ToGeographic() const;
         Vec3            Unit() const;
 
-        Vec3            operator+( const Vec3& rhs ) const;
-        Vec3            operator-( const Vec3& rhs ) const;
-        Vec3            operator*( const double& rhs ) const;
-        Vec3            operator/( const double& rhs ) const;
+        Vec3            operator+(const Vec3& rhs) const;
+        Vec3            operator-(const Vec3& rhs) const;
+        Vec3            operator*(const double& rhs) const;
+        Vec3            operator/(const double& rhs) const;
 
-        Vec3&           operator+=( const Vec3& rhs );
-        Vec3&           operator-=( const Vec3& rhs );
-        Vec3&           operator*=( const double& rhs );
-        Vec3&           operator/=( const double& rhs );
+        Vec3&           operator+=(const Vec3& rhs);
+        Vec3&           operator-=(const Vec3& rhs);
+        Vec3&           operator*=(const double& rhs);
+        Vec3&           operator/=(const double& rhs);
 
     public:
         Vec3();
-        Vec3( const double x, const double y, const double z );
+        Vec3(const double x, const double y, const double z);
     };
 }
 #endif // CCK_VEC3_H

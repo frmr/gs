@@ -4,7 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <math.h>
-#include <sys/time.h>
+//#include <sys/time.h>
 
 VoronoiGenerator::VoronoiGenerator()
 {

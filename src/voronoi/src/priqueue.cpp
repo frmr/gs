@@ -2,6 +2,7 @@
 
 #include <cstring>
 #include <iostream>
+#include <algorithm>
 
 PriQueueNode::PriQueueNode(CircleEvent* ce)
 {
@@ -40,7 +41,7 @@ void PriQueue::push(CircleEvent* ce)
     }
     else
     {
-        if ( comp( head->ce, ce ) ) // insert at front
+        if (comp(head->ce, ce)) // insert at front
         {
             node->next = head;
             head->prev = node;
@@ -62,7 +63,7 @@ void PriQueue::push(CircleEvent* ce)
         bool done = false;
         while (!done)
         {
-            if ( curr->skips[skip_level] != NULL && comp( ce , curr->skips[skip_level]->ce ) )
+            if (curr->skips[skip_level] != NULL && comp(ce , curr->skips[skip_level]->ce))
             {
                 curr = curr->skips[skip_level];
             }
@@ -74,7 +75,7 @@ void PriQueue::push(CircleEvent* ce)
         }
 
         // continue search on the linked list level
-        while ( curr->next != NULL && comp( ce , curr->next->ce ) )
+        while (curr->next != NULL && comp(ce , curr->next->ce))
         {
             curr = curr->next;
         }

@@ -24,13 +24,13 @@ namespace gs
         int     GetScreenHeight() const;
         bool    GetFullscreen() const;
 
-        bool    SetScreenWidth( const int newScreenWidth );
-        bool    SetScreenHeight( const int newScreenHeight );
-        void    SetFullscreen( const bool newFullscreen );
+        bool    SetScreenWidth(const int newScreenWidth);
+        bool    SetScreenHeight(const int newScreenHeight);
+        void    SetFullscreen(const bool newFullscreen);
 
     public:
         Config();
-        explicit Config( const string &filename );
+        explicit Config(const string &filename);
     };
 }
 

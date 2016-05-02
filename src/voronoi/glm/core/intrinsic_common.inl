@@ -306,7 +306,7 @@ GLM_FUNC_QUALIFIER __m128 sse_sqrt_wip_ss(__m128 const & x)
 	const static __m128 half = {0.5,0.5,0.5,0.5};
 	__m128 halfrecip = _mm_mul_ss(half, recip);
 	__m128 threeminus_xrr = _mm_sub_ss(three, _mm_mul_ss(x, _mm_mul_ss (recip, recip)));
-	return _mm_mul_ss( halfrecip, threeminus_xrr);
+	return _mm_mul_ss(halfrecip, threeminus_xrr);
 }
 
 }//namespace detail

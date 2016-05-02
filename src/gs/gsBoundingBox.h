@@ -11,14 +11,14 @@ namespace gs
         T maxCoord;
 
     private:
-        static T CalculateMinCoord( vector<T>& points )
+        static T CalculateMinCoord(vector<T>& points)
         {
             T minCoord = T::Max();
-            for ( auto& point : points )
+            for (auto& point : points)
             {
-                for ( int i = 0; i < T::dimensions; ++i )
+                for (int i = 0; i < T::dimensions; ++i)
                 {
-                    if ( point[i] < minCoord[i] )
+                    if (point[i] < minCoord[i])
                     {
                         minCoord[i] = point[i];
                     }
@@ -27,12 +27,12 @@ namespace gs
             return minCoord;
         }
 
-        static T CalculateMaxCoord( vector<T>& points )
+        static T CalculateMaxCoord(vector<T>& points)
         {
             T maxCoord = T::Min();
-            for ( auto& point : points )
+            for (auto& point : points)
             {
-                for ( int i = 0; i < T::dimensions; ++i )
+                for (int i = 0; i < T::dimensions; ++i)
                 {
                     if (point[i] > maxCoord[i])
                     {
@@ -44,9 +44,9 @@ namespace gs
         }
 
     public:
-        BoundingBox( vector<T>& points )
-            : minCoord( CalculateMinCoord( points ) ),
-              maxCoord( CalculateMaxCoord( points ) )
+        BoundingBox(vector<T>& points)
+            : minCoord(CalculateMinCoord(points)),
+              maxCoord(CalculateMaxCoord(points))
         {
         }
     };

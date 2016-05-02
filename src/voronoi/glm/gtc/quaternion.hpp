@@ -101,12 +101,12 @@ namespace detail
 		detail::tquat<T> const & q);
 
 	template <typename T> 
-	detail::tquat<T> operator+ ( 
+	detail::tquat<T> operator+ (
 		detail::tquat<T> const & q, 
 		detail::tquat<T> const & p); 
 
 	template <typename T> 
-	detail::tquat<T> operator* ( 
+	detail::tquat<T> operator* (
 		detail::tquat<T> const & q, 
 		detail::tquat<T> const & p); 
 

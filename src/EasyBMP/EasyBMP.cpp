@@ -24,20 +24,20 @@
 
 bool EasyBMPwarnings = true;
 
-void SetEasyBMPwarningsOff( void )
+void SetEasyBMPwarningsOff(void)
 { EasyBMPwarnings = false; }
-void SetEasyBMPwarningsOn( void )
+void SetEasyBMPwarningsOn(void)
 { EasyBMPwarnings = true; }
-bool GetEasyBMPwarningState( void )
+bool GetEasyBMPwarningState(void)
 { return EasyBMPwarnings; }
 
 /* These functions are defined in EasyBMP_DataStructures.h */
 
-int IntPow( int base, int exponent )
+int IntPow(int base, int exponent)
 {
  int i;
  int output = 1;
- for( i=0 ; i < exponent ; i++ )
+ for(i=0 ; i < exponent ; i++)
  { output *= base; }
  return output;
 }
@@ -49,13 +49,13 @@ BMFH::BMFH()
  bfReserved2 = 0;
 }
 
-void BMFH::SwitchEndianess( void )
+void BMFH::SwitchEndianess(void)
 {
- bfType = FlipWORD( bfType );
- bfSize = FlipDWORD( bfSize );
- bfReserved1 = FlipWORD( bfReserved1 );
- bfReserved2 = FlipWORD( bfReserved2 );
- bfOffBits = FlipDWORD( bfOffBits );
+ bfType = FlipWORD(bfType);
+ bfSize = FlipDWORD(bfSize);
+ bfReserved1 = FlipWORD(bfReserved1);
+ bfReserved2 = FlipWORD(bfReserved2);
+ bfOffBits = FlipDWORD(bfOffBits);
  return;
 }
 
@@ -69,23 +69,23 @@ BMIH::BMIH()
  biClrImportant = 0;
 }
 
-void BMIH::SwitchEndianess( void )
+void BMIH::SwitchEndianess(void)
 {
- biSize = FlipDWORD( biSize );
- biWidth = FlipDWORD( biWidth );
- biHeight = FlipDWORD( biHeight );
- biPlanes = FlipWORD( biPlanes );
- biBitCount = FlipWORD( biBitCount );
- biCompression = FlipDWORD( biCompression );
- biSizeImage = FlipDWORD( biSizeImage );
- biXPelsPerMeter = FlipDWORD( biXPelsPerMeter );
- biYPelsPerMeter = FlipDWORD( biYPelsPerMeter );
- biClrUsed = FlipDWORD( biClrUsed );
- biClrImportant = FlipDWORD( biClrImportant );
+ biSize = FlipDWORD(biSize);
+ biWidth = FlipDWORD(biWidth);
+ biHeight = FlipDWORD(biHeight);
+ biPlanes = FlipWORD(biPlanes);
+ biBitCount = FlipWORD(biBitCount);
+ biCompression = FlipDWORD(biCompression);
+ biSizeImage = FlipDWORD(biSizeImage);
+ biXPelsPerMeter = FlipDWORD(biXPelsPerMeter);
+ biYPelsPerMeter = FlipDWORD(biYPelsPerMeter);
+ biClrUsed = FlipDWORD(biClrUsed);
+ biClrImportant = FlipDWORD(biClrImportant);
  return;
 }
 
-void BMIH::display( void )
+void BMIH::display(void)
 {
  using namespace std;
  cout << "biSize: " << (int) biSize << endl
@@ -101,7 +101,7 @@ void BMIH::display( void )
       << "biClrImportant: " << (int) biClrImportant << endl << endl;
 }
 
-void BMFH::display( void )
+void BMFH::display(void)
 {
  using namespace std;
  cout << "bfType: " << (int) bfType << endl
@@ -113,19 +113,19 @@ void BMFH::display( void )
 
 /* These functions are defined in EasyBMP_BMP.h */
 
-RGBApixel BMP::GetPixel( int i, int j ) const
+RGBApixel BMP::GetPixel(int i, int j) const
 {
  using namespace std;
  bool Warn = false;
- if( i >= Width )
+ if(i >= Width)
  { i = Width-1; Warn = true; }
- if( i < 0 )
+ if(i < 0)
  { i = 0; Warn = true; }
- if( j >= Height )
+ if(j >= Height)
  { j = Height-1; Warn = true; }
- if( j < 0 )
+ if(j < 0)
  { j = 0; Warn = true; }
- if( Warn && EasyBMPwarnings )
+ if(Warn && EasyBMPwarnings)
  {
   cout << "EasyBMP Warning: Attempted to access non-existent pixel;" << endl
        << "                 Truncating request to fit in the range [0,"
@@ -134,37 +134,37 @@ RGBApixel BMP::GetPixel( int i, int j ) const
  return Pixels[i][j];
 }
 
-bool BMP::SetPixel( int i, int j, RGBApixel NewPixel )
+bool BMP::SetPixel(int i, int j, RGBApixel NewPixel)
 {
  Pixels[i][j] = NewPixel;
  return true;
 }
 
 
-bool BMP::SetColor( int ColorNumber , RGBApixel NewColor )
+bool BMP::SetColor(int ColorNumber , RGBApixel NewColor)
 {
  using namespace std;
- if( BitDepth != 1 && BitDepth != 4 && BitDepth != 8 )
+ if(BitDepth != 1 && BitDepth != 4 && BitDepth != 8)
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Warning: Attempted to change color table for a BMP object" << endl
         << "                 that lacks a color table. Ignoring request." << endl;
   }
   return false;
  }
- if( !Colors )
+ if(!Colors)
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Warning: Attempted to set a color, but the color table" << endl
         << "                 is not defined. Ignoring request." << endl; 
   }
   return false; 
  }
- if( ColorNumber >= TellNumberOfColors() )
+ if(ColorNumber >= TellNumberOfColors())
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Warning: Requested color number " 
         << ColorNumber << " is outside the allowed" << endl
@@ -177,8 +177,8 @@ bool BMP::SetColor( int ColorNumber , RGBApixel NewColor )
  return true;
 }
 
-// RGBApixel BMP::GetColor( int ColorNumber ) const
-RGBApixel BMP::GetColor( int ColorNumber )
+// RGBApixel BMP::GetColor(int ColorNumber) const
+RGBApixel BMP::GetColor(int ColorNumber)
 { 
  RGBApixel Output;
  Output.Red   = 255;
@@ -187,27 +187,27 @@ RGBApixel BMP::GetColor( int ColorNumber )
  Output.Alpha = 0;
  
  using namespace std;
- if( BitDepth != 1 && BitDepth != 4 && BitDepth != 8 )
+ if(BitDepth != 1 && BitDepth != 4 && BitDepth != 8)
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Warning: Attempted to access color table for a BMP object" << endl
         << "                 that lacks a color table. Ignoring request." << endl;
   }
   return Output;
  }
- if( !Colors )
+ if(!Colors)
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Warning: Requested a color, but the color table" << endl
         << "                 is not defined. Ignoring request." << endl;
   }
   return Output; 
  }
- if( ColorNumber >= TellNumberOfColors() )
+ if(ColorNumber >= TellNumberOfColors())
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Warning: Requested color number " 
         << ColorNumber << " is outside the allowed" << endl
@@ -238,8 +238,8 @@ BMP::BMP()
  SizeOfMetaData2 = 0;
 }
 
-// BMP::BMP( const BMP& Input )
-BMP::BMP( BMP& Input )
+// BMP::BMP(const BMP& Input)
+BMP::BMP(BMP& Input)
 {
  // first, make the image empty.
 
@@ -259,32 +259,32 @@ BMP::BMP( BMP& Input )
 
  // now, set the correct bit depth
  
- SetBitDepth( Input.TellBitDepth() );
+ SetBitDepth(Input.TellBitDepth());
  
  // set the correct pixel size 
  
- SetSize( Input.TellWidth() , Input.TellHeight() );
+ SetSize(Input.TellWidth() , Input.TellHeight());
 
  // set the DPI information from Input
  
- SetDPI( Input.TellHorizontalDPI() , Input.TellVerticalDPI() );
+ SetDPI(Input.TellHorizontalDPI() , Input.TellVerticalDPI());
  
  // if there is a color table, get all the colors
 
- if( BitDepth == 1 || BitDepth == 4 ||  
-     BitDepth == 8 )
+ if(BitDepth == 1 || BitDepth == 4 ||  
+     BitDepth == 8)
  {
-  for( int k=0 ; k < TellNumberOfColors() ; k++ )
+  for(int k=0 ; k < TellNumberOfColors() ; k++)
   {
-   SetColor( k, Input.GetColor( k )); 
+   SetColor(k, Input.GetColor(k)); 
   }
  }
  
  // get all the pixels 
  
- for( int j=0; j < Height ; j++ )
+ for(int j=0; j < Height ; j++)
  {
-  for( int i=0; i < Width ; i++ )
+  for(int i=0; i < Width ; i++)
   {
    Pixels[i][j] = *Input(i,j);
 //   Pixels[i][j] = Input.GetPixel(i,j); // *Input(i,j);
@@ -298,12 +298,12 @@ BMP::~BMP()
  for(i=0;i<Width;i++)
  { delete [] Pixels[i]; }
  delete [] Pixels;
- if( Colors )
+ if(Colors)
  { delete [] Colors; }
  
- if( MetaData1 )
+ if(MetaData1)
  { delete [] MetaData1; }
- if( MetaData2 )
+ if(MetaData2)
  { delete [] MetaData2; }
 } 
 
@@ -311,15 +311,15 @@ RGBApixel* BMP::operator()(int i, int j)
 {
  using namespace std;
  bool Warn = false;
- if( i >= Width )
+ if(i >= Width)
  { i = Width-1; Warn = true; }
- if( i < 0 )
+ if(i < 0)
  { i = 0; Warn = true; }
- if( j >= Height )
+ if(j >= Height)
  { j = Height-1; Warn = true; }
- if( j < 0 )
+ if(j < 0)
  { j = 0; Warn = true; }
- if( Warn && EasyBMPwarnings )
+ if(Warn && EasyBMPwarnings)
  {
   cout << "EasyBMP Warning: Attempted to access non-existent pixel;" << endl
        << "                 Truncating request to fit in the range [0,"
@@ -328,35 +328,35 @@ RGBApixel* BMP::operator()(int i, int j)
  return &(Pixels[i][j]);
 }
 
-// int BMP::TellBitDepth( void ) const
-int BMP::TellBitDepth( void )
+// int BMP::TellBitDepth(void) const
+int BMP::TellBitDepth(void)
 { return BitDepth; }
 
-// int BMP::TellHeight( void ) const
-int BMP::TellHeight( void )
+// int BMP::TellHeight(void) const
+int BMP::TellHeight(void)
 { return Height; }
 
-// int BMP::TellWidth( void ) const
-int BMP::TellWidth( void )
+// int BMP::TellWidth(void) const
+int BMP::TellWidth(void)
 { return Width; }
 
-// int BMP::TellNumberOfColors( void ) const
-int BMP::TellNumberOfColors( void )
+// int BMP::TellNumberOfColors(void) const
+int BMP::TellNumberOfColors(void)
 {
- int output = IntPow( 2, BitDepth );
- if( BitDepth == 32 )
- { output = IntPow( 2, 24 ); }
+ int output = IntPow(2, BitDepth);
+ if(BitDepth == 32)
+ { output = IntPow(2, 24); }
  return output;
 }
 
-bool BMP::SetBitDepth( int NewDepth )
+bool BMP::SetBitDepth(int NewDepth)
 {
  using namespace std;
- if( NewDepth != 1 && NewDepth != 4 && 
+ if(NewDepth != 1 && NewDepth != 4 && 
      NewDepth != 8 && NewDepth != 16 && 
-     NewDepth != 24 && NewDepth != 32 )
+     NewDepth != 24 && NewDepth != 32)
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Warning: User attempted to set unsupported bit depth " 
         << NewDepth << "." << endl
@@ -367,25 +367,25 @@ bool BMP::SetBitDepth( int NewDepth )
  }
  
  BitDepth = NewDepth;
- if( Colors )
+ if(Colors)
  { delete [] Colors; }
- int NumberOfColors = IntPow( 2, BitDepth );
- if( BitDepth == 1 || BitDepth == 4 || BitDepth == 8 )
+ int NumberOfColors = IntPow(2, BitDepth);
+ if(BitDepth == 1 || BitDepth == 4 || BitDepth == 8)
  { Colors = new RGBApixel [NumberOfColors]; }
  else
  { Colors = NULL; } 
- if( BitDepth == 1 || BitDepth == 4 || BitDepth == 8 )
+ if(BitDepth == 1 || BitDepth == 4 || BitDepth == 8)
  { CreateStandardColorTable(); }
  
  return true;
 }
 
-bool BMP::SetSize(int NewWidth , int NewHeight )
+bool BMP::SetSize(int NewWidth , int NewHeight)
 {
  using namespace std;
- if( NewWidth <= 0 || NewHeight <= 0 )
+ if(NewWidth <= 0 || NewHeight <= 0)
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Warning: User attempted to set a non-positive width or height." << endl
         << "                 Size remains unchanged at " 
@@ -407,9 +407,9 @@ bool BMP::SetSize(int NewWidth , int NewHeight )
  for(i=0; i<Width; i++)
  { Pixels[i] = new RGBApixel [ Height ]; }
  
- for( i=0 ; i < Width ; i++)
+ for(i=0 ; i < Width ; i++)
  {
-  for( j=0 ; j < Height ; j++ )
+  for(j=0 ; j < Height ; j++)
   {
    Pixels[i][j].Red = 255; 
    Pixels[i][j].Green = 255; 
@@ -421,12 +421,12 @@ bool BMP::SetSize(int NewWidth , int NewHeight )
  return true; 
 }
 
-bool BMP::WriteToFile( const char* FileName )
+bool BMP::WriteToFile(const char* FileName)
 {
  using namespace std;
- if( !EasyBMPcheckDataSize() )
+ if(!EasyBMPcheckDataSize())
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Error: Data types are wrong size!" << endl
         << "               You may need to mess with EasyBMP_DataTypes.h" << endl
@@ -437,26 +437,26 @@ bool BMP::WriteToFile( const char* FileName )
   return false; 
  }
  
- FILE* fp = fopen( FileName, "wb" );
- if( fp == NULL )
+ FILE* fp = fopen(FileName, "wb");
+ if(fp == NULL)
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Error: Cannot open file " 
         << FileName << " for output." << endl;
   }
-  fclose( fp );
+  fclose(fp);
   return false;
  }
   
  // some preliminaries
  
- double dBytesPerPixel = ( (double) BitDepth ) / 8.0;
+ double dBytesPerPixel = ((double) BitDepth) / 8.0;
  double dBytesPerRow = dBytesPerPixel * (Width+0.0);
  dBytesPerRow = ceil(dBytesPerRow);
   
- int BytePaddingPerRow = 4 - ( (int) (dBytesPerRow) )% 4;
- if( BytePaddingPerRow == 4 )
+ int BytePaddingPerRow = 4 - ((int) (dBytesPerRow))% 4;
+ if(BytePaddingPerRow == 4)
  { BytePaddingPerRow = 0; } 
  
  double dActualBytesPerRow = dBytesPerRow + BytePaddingPerRow;
@@ -464,11 +464,11 @@ bool BMP::WriteToFile( const char* FileName )
  double dTotalPixelBytes = Height * dActualBytesPerRow;
  
  double dPaletteSize = 0;
- if( BitDepth == 1 || BitDepth == 4 || BitDepth == 8 )
+ if(BitDepth == 1 || BitDepth == 4 || BitDepth == 8)
  { dPaletteSize = IntPow(2,BitDepth)*4.0; }
 
  // leave some room for 16-bit masks 
- if( BitDepth == 16 )
+ if(BitDepth == 16)
  { dPaletteSize = 3*4; }
  
  double dTotalFileSize = 14 + 40 + dPaletteSize + dTotalPixelBytes;
@@ -481,14 +481,14 @@ bool BMP::WriteToFile( const char* FileName )
  bmfh.bfReserved2 = 0; 
  bmfh.bfOffBits = (ebmpDWORD) (14+40+dPaletteSize);  
  
- if( IsBigEndian() )
+ if(IsBigEndian())
  { bmfh.SwitchEndianess(); }
  
- fwrite( (char*) &(bmfh.bfType) , sizeof(ebmpWORD) , 1 , fp );
- fwrite( (char*) &(bmfh.bfSize) , sizeof(ebmpDWORD) , 1 , fp );
- fwrite( (char*) &(bmfh.bfReserved1) , sizeof(ebmpWORD) , 1 , fp );
- fwrite( (char*) &(bmfh.bfReserved2) , sizeof(ebmpWORD) , 1 , fp );
- fwrite( (char*) &(bmfh.bfOffBits) , sizeof(ebmpDWORD) , 1 , fp );
+ fwrite((char*) &(bmfh.bfType) , sizeof(ebmpWORD) , 1 , fp);
+ fwrite((char*) &(bmfh.bfSize) , sizeof(ebmpDWORD) , 1 , fp);
+ fwrite((char*) &(bmfh.bfReserved1) , sizeof(ebmpWORD) , 1 , fp);
+ fwrite((char*) &(bmfh.bfReserved2) , sizeof(ebmpWORD) , 1 , fp);
+ fwrite((char*) &(bmfh.bfOffBits) , sizeof(ebmpDWORD) , 1 , fp);
  
  // write the info header 
  
@@ -500,11 +500,11 @@ bool BMP::WriteToFile( const char* FileName )
  bmih.biBitCount = BitDepth;
  bmih.biCompression = 0;
  bmih.biSizeImage = (ebmpDWORD) dTotalPixelBytes;
- if( XPelsPerMeter )
+ if(XPelsPerMeter)
  { bmih.biXPelsPerMeter = XPelsPerMeter; }
  else
  { bmih.biXPelsPerMeter = DefaultXPelsPerMeter; }
- if( YPelsPerMeter )
+ if(YPelsPerMeter)
  { bmih.biYPelsPerMeter = YPelsPerMeter; }
  else
  { bmih.biYPelsPerMeter = DefaultYPelsPerMeter; }
@@ -513,81 +513,81 @@ bool BMP::WriteToFile( const char* FileName )
  bmih.biClrImportant = 0;
 
  // indicates that we'll be using bit fields for 16-bit files
- if( BitDepth == 16 )
+ if(BitDepth == 16)
  { bmih.biCompression = 3; }
  
- if( IsBigEndian() )
+ if(IsBigEndian())
  { bmih.SwitchEndianess(); }
  
- fwrite( (char*) &(bmih.biSize) , sizeof(ebmpDWORD) , 1 , fp );
- fwrite( (char*) &(bmih.biWidth) , sizeof(ebmpDWORD) , 1 , fp );
- fwrite( (char*) &(bmih.biHeight) , sizeof(ebmpDWORD) , 1 , fp );
- fwrite( (char*) &(bmih.biPlanes) , sizeof(ebmpWORD) , 1 , fp );
- fwrite( (char*) &(bmih.biBitCount) , sizeof(ebmpWORD) , 1 , fp );
- fwrite( (char*) &(bmih.biCompression) , sizeof(ebmpDWORD) , 1 , fp );
- fwrite( (char*) &(bmih.biSizeImage) , sizeof(ebmpDWORD) , 1 , fp );
- fwrite( (char*) &(bmih.biXPelsPerMeter) , sizeof(ebmpDWORD) , 1 , fp );
- fwrite( (char*) &(bmih.biYPelsPerMeter) , sizeof(ebmpDWORD) , 1 , fp ); 
- fwrite( (char*) &(bmih.biClrUsed) , sizeof(ebmpDWORD) , 1 , fp);
- fwrite( (char*) &(bmih.biClrImportant) , sizeof(ebmpDWORD) , 1 , fp);
+ fwrite((char*) &(bmih.biSize) , sizeof(ebmpDWORD) , 1 , fp);
+ fwrite((char*) &(bmih.biWidth) , sizeof(ebmpDWORD) , 1 , fp);
+ fwrite((char*) &(bmih.biHeight) , sizeof(ebmpDWORD) , 1 , fp);
+ fwrite((char*) &(bmih.biPlanes) , sizeof(ebmpWORD) , 1 , fp);
+ fwrite((char*) &(bmih.biBitCount) , sizeof(ebmpWORD) , 1 , fp);
+ fwrite((char*) &(bmih.biCompression) , sizeof(ebmpDWORD) , 1 , fp);
+ fwrite((char*) &(bmih.biSizeImage) , sizeof(ebmpDWORD) , 1 , fp);
+ fwrite((char*) &(bmih.biXPelsPerMeter) , sizeof(ebmpDWORD) , 1 , fp);
+ fwrite((char*) &(bmih.biYPelsPerMeter) , sizeof(ebmpDWORD) , 1 , fp); 
+ fwrite((char*) &(bmih.biClrUsed) , sizeof(ebmpDWORD) , 1 , fp);
+ fwrite((char*) &(bmih.biClrImportant) , sizeof(ebmpDWORD) , 1 , fp);
  
  // write the palette 
- if( BitDepth == 1 || BitDepth == 4 || BitDepth == 8 )
+ if(BitDepth == 1 || BitDepth == 4 || BitDepth == 8)
  {
   int NumberOfColors = IntPow(2,BitDepth);
   
   // if there is no palette, create one 
-  if( !Colors )
+  if(!Colors)
   {
-   if( !Colors )
+   if(!Colors)
    { Colors = new RGBApixel [NumberOfColors]; }
    CreateStandardColorTable(); 
   }
    
   int n;
-  for( n=0 ; n < NumberOfColors ; n++ )
-  { fwrite( (char*) &(Colors[n]) , 4 , 1 , fp ); }
+  for(n=0 ; n < NumberOfColors ; n++)
+  { fwrite((char*) &(Colors[n]) , 4 , 1 , fp); }
  }
  
  // write the pixels 
  int i,j;
- if( BitDepth != 16 )
+ if(BitDepth != 16)
  {  
   ebmpBYTE* Buffer;
-  int BufferSize = (int) ( (Width*BitDepth)/8.0 );
-  while( 8*BufferSize < Width*BitDepth )
+  int BufferSize = (int) ((Width*BitDepth)/8.0);
+  while(8*BufferSize < Width*BitDepth)
   { BufferSize++; }
-  while( BufferSize % 4 )
+  while(BufferSize % 4)
   { BufferSize++; }
   
   Buffer = new ebmpBYTE [BufferSize];
-  for( j=0 ; j < BufferSize; j++ )
+  for(j=0 ; j < BufferSize; j++)
   { Buffer[j] = 0; }
     
   j=Height-1;
   
-  while( j > -1 )
+  while(j > -1)
   {
    bool Success = false;
-   if( BitDepth == 32 )
-   { Success = Write32bitRow( Buffer, BufferSize, j ); }
-   if( BitDepth == 24 )
-   { Success = Write24bitRow( Buffer, BufferSize, j ); }
-   if( BitDepth == 8  )
-   { Success = Write8bitRow( Buffer, BufferSize, j ); }
-   if( BitDepth == 4  )
-   { Success = Write4bitRow( Buffer, BufferSize, j ); }
-   if( BitDepth == 1  )
-   { Success = Write1bitRow( Buffer, BufferSize, j ); }
-   if( Success )
+   if(BitDepth == 32)
+   { Success = Write32bitRow(Buffer, BufferSize, j); }
+   if(BitDepth == 24)
+   { Success = Write24bitRow(Buffer, BufferSize, j); }
+   if(BitDepth == 8 )
+   { Success = Write8bitRow(Buffer, BufferSize, j); }
+   if(BitDepth == 4 )
+   { Success = Write4bitRow(Buffer, BufferSize, j); }
+   if(BitDepth == 1 )
+   { Success = Write1bitRow(Buffer, BufferSize, j); }
+   if(Success)
    {
-    int BytesWritten = (int) fwrite( (char*) Buffer, 1, BufferSize, fp );
-    if( BytesWritten != BufferSize )
+    int BytesWritten = (int) fwrite((char*) Buffer, 1, BufferSize, fp);
+    if(BytesWritten != BufferSize)
     { Success = false; }
    }
-   if( !Success )
+   if(!Success)
    {
-    if( EasyBMPwarnings )
+    if(EasyBMPwarnings)
     {
      cout << "EasyBMP Error: Could not write proper amount of data." << endl;
 	}
@@ -599,7 +599,7 @@ bool BMP::WriteToFile( const char* FileName )
   delete [] Buffer;
  }
  
- if( BitDepth == 16 )
+ if(BitDepth == 16)
  {
   // write the bit masks
 
@@ -608,32 +608,32 @@ bool BMP::WriteToFile( const char* FileName )
   ebmpWORD RedMask = 63488;  // bits 1-5
   ebmpWORD ZeroWORD;
   
-  if( IsBigEndian() )
-  { RedMask = FlipWORD( RedMask ); }
-  fwrite( (char*) &RedMask , 2 , 1 , fp );
-  fwrite( (char*) &ZeroWORD , 2 , 1 , fp );
+  if(IsBigEndian())
+  { RedMask = FlipWORD(RedMask); }
+  fwrite((char*) &RedMask , 2 , 1 , fp);
+  fwrite((char*) &ZeroWORD , 2 , 1 , fp);
 
-  if( IsBigEndian() )
-  { GreenMask = FlipWORD( GreenMask ); }
-  fwrite( (char*) &GreenMask , 2 , 1 , fp );
-  fwrite( (char*) &ZeroWORD , 2 , 1 , fp );
+  if(IsBigEndian())
+  { GreenMask = FlipWORD(GreenMask); }
+  fwrite((char*) &GreenMask , 2 , 1 , fp);
+  fwrite((char*) &ZeroWORD , 2 , 1 , fp);
 
-  if( IsBigEndian() )
-  { BlueMask = FlipWORD( BlueMask ); }
-  fwrite( (char*) &BlueMask , 2 , 1 , fp );
-  fwrite( (char*) &ZeroWORD , 2 , 1 , fp );
+  if(IsBigEndian())
+  { BlueMask = FlipWORD(BlueMask); }
+  fwrite((char*) &BlueMask , 2 , 1 , fp);
+  fwrite((char*) &ZeroWORD , 2 , 1 , fp);
 
   int DataBytes = Width*2;
-  int PaddingBytes = ( 4 - DataBytes % 4 ) % 4;
+  int PaddingBytes = (4 - DataBytes % 4) % 4;
   
   // write the actual pixels
   
-  for( j=Height-1 ; j >= 0 ; j-- )
+  for(j=Height-1 ; j >= 0 ; j--)
   {
    // write all row pixel data
    i=0;
    int WriteNumber = 0;
-   while( WriteNumber < DataBytes )
+   while(WriteNumber < DataBytes)
    {
     ebmpWORD TempWORD;
 	
@@ -642,19 +642,19 @@ bool BMP::WriteToFile( const char* FileName )
 	ebmpWORD BlueWORD = (ebmpWORD) ((Pixels[i][j]).Blue / 8);
 	
     TempWORD = (RedWORD<<11) + (GreenWORD<<5) + BlueWORD;
-	if( IsBigEndian() )
-	{ TempWORD = FlipWORD( TempWORD ); }
+	if(IsBigEndian())
+	{ TempWORD = FlipWORD(TempWORD); }
 	
-    fwrite( (char*) &TempWORD , 2, 1, fp);
+    fwrite((char*) &TempWORD , 2, 1, fp);
     WriteNumber += 2;
 	i++;
    }
    // write any necessary row padding
    WriteNumber = 0;
-   while( WriteNumber < PaddingBytes )
+   while(WriteNumber < PaddingBytes)
    {
     ebmpBYTE TempBYTE;
-    fwrite( (char*) &TempBYTE , 1, 1, fp);
+    fwrite((char*) &TempBYTE , 1, 1, fp);
     WriteNumber++;
    }
   }
@@ -665,12 +665,12 @@ bool BMP::WriteToFile( const char* FileName )
  return true;
 }
 
-bool BMP::ReadFromFile( const char* FileName )
+bool BMP::ReadFromFile(const char* FileName)
 { 
  using namespace std;
- if( !EasyBMPcheckDataSize() )
+ if(!EasyBMPcheckDataSize())
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Error: Data types are wrong size!" << endl
         << "               You may need to mess with EasyBMP_DataTypes.h" << endl
@@ -681,10 +681,10 @@ bool BMP::ReadFromFile( const char* FileName )
   return false; 
  }
 
- FILE* fp = fopen( FileName, "rb" );
- if( fp == NULL )
+ FILE* fp = fopen(FileName, "rb");
+ if(fp == NULL)
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Error: Cannot open file " 
         << FileName << " for input." << endl;
@@ -699,60 +699,60 @@ bool BMP::ReadFromFile( const char* FileName )
  BMFH bmfh;
  bool NotCorrupted = true;
  
- NotCorrupted &= SafeFread( (char*) &(bmfh.bfType) , sizeof(ebmpWORD), 1, fp);
+ NotCorrupted &= SafeFread((char*) &(bmfh.bfType) , sizeof(ebmpWORD), 1, fp);
  
  bool IsBitmap = false;
  
- if( IsBigEndian() && bmfh.bfType == 16973 )
+ if(IsBigEndian() && bmfh.bfType == 16973)
  { IsBitmap = true; }
- if( !IsBigEndian() && bmfh.bfType == 19778 )
+ if(!IsBigEndian() && bmfh.bfType == 19778)
  { IsBitmap = true; }
  
- if( !IsBitmap ) 
+ if(!IsBitmap) 
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Error: " << FileName 
         << " is not a Windows BMP file!" << endl; 
   }
-  fclose( fp ); 
+  fclose(fp); 
   return false;
  }
 
- NotCorrupted &= SafeFread( (char*) &(bmfh.bfSize) , sizeof(ebmpDWORD) , 1, fp); 
- NotCorrupted &= SafeFread( (char*) &(bmfh.bfReserved1) , sizeof(ebmpWORD) , 1, fp);
- NotCorrupted &= SafeFread( (char*) &(bmfh.bfReserved2) , sizeof(ebmpWORD) , 1, fp);
- NotCorrupted &= SafeFread( (char*) &(bmfh.bfOffBits) , sizeof(ebmpDWORD) , 1 , fp);
+ NotCorrupted &= SafeFread((char*) &(bmfh.bfSize) , sizeof(ebmpDWORD) , 1, fp); 
+ NotCorrupted &= SafeFread((char*) &(bmfh.bfReserved1) , sizeof(ebmpWORD) , 1, fp);
+ NotCorrupted &= SafeFread((char*) &(bmfh.bfReserved2) , sizeof(ebmpWORD) , 1, fp);
+ NotCorrupted &= SafeFread((char*) &(bmfh.bfOffBits) , sizeof(ebmpDWORD) , 1 , fp);
  
- if( IsBigEndian() ) 
+ if(IsBigEndian()) 
  { bmfh.SwitchEndianess(); }
   
  // read the info header
 
  BMIH bmih; 
  
- NotCorrupted &= SafeFread( (char*) &(bmih.biSize) , sizeof(ebmpDWORD) , 1 , fp);
- NotCorrupted &= SafeFread( (char*) &(bmih.biWidth) , sizeof(ebmpDWORD) , 1 , fp); 
- NotCorrupted &= SafeFread( (char*) &(bmih.biHeight) , sizeof(ebmpDWORD) , 1 , fp);
- NotCorrupted &= SafeFread( (char*) &(bmih.biPlanes) , sizeof(ebmpWORD) , 1, fp); 
- NotCorrupted &= SafeFread( (char*) &(bmih.biBitCount) , sizeof(ebmpWORD) , 1, fp);
+ NotCorrupted &= SafeFread((char*) &(bmih.biSize) , sizeof(ebmpDWORD) , 1 , fp);
+ NotCorrupted &= SafeFread((char*) &(bmih.biWidth) , sizeof(ebmpDWORD) , 1 , fp); 
+ NotCorrupted &= SafeFread((char*) &(bmih.biHeight) , sizeof(ebmpDWORD) , 1 , fp);
+ NotCorrupted &= SafeFread((char*) &(bmih.biPlanes) , sizeof(ebmpWORD) , 1, fp); 
+ NotCorrupted &= SafeFread((char*) &(bmih.biBitCount) , sizeof(ebmpWORD) , 1, fp);
 
- NotCorrupted &= SafeFread( (char*) &(bmih.biCompression) , sizeof(ebmpDWORD) , 1 , fp);
- NotCorrupted &= SafeFread( (char*) &(bmih.biSizeImage) , sizeof(ebmpDWORD) , 1 , fp);
- NotCorrupted &= SafeFread( (char*) &(bmih.biXPelsPerMeter) , sizeof(ebmpDWORD) , 1 , fp);
- NotCorrupted &= SafeFread( (char*) &(bmih.biYPelsPerMeter) , sizeof(ebmpDWORD) , 1 , fp);
- NotCorrupted &= SafeFread( (char*) &(bmih.biClrUsed) , sizeof(ebmpDWORD) , 1 , fp);
- NotCorrupted &= SafeFread( (char*) &(bmih.biClrImportant) , sizeof(ebmpDWORD) , 1 , fp);
+ NotCorrupted &= SafeFread((char*) &(bmih.biCompression) , sizeof(ebmpDWORD) , 1 , fp);
+ NotCorrupted &= SafeFread((char*) &(bmih.biSizeImage) , sizeof(ebmpDWORD) , 1 , fp);
+ NotCorrupted &= SafeFread((char*) &(bmih.biXPelsPerMeter) , sizeof(ebmpDWORD) , 1 , fp);
+ NotCorrupted &= SafeFread((char*) &(bmih.biYPelsPerMeter) , sizeof(ebmpDWORD) , 1 , fp);
+ NotCorrupted &= SafeFread((char*) &(bmih.biClrUsed) , sizeof(ebmpDWORD) , 1 , fp);
+ NotCorrupted &= SafeFread((char*) &(bmih.biClrImportant) , sizeof(ebmpDWORD) , 1 , fp);
  
- if( IsBigEndian() ) 
+ if(IsBigEndian()) 
  { bmih.SwitchEndianess(); }
 
  // a safety catch: if any of the header information didn't read properly, abort
  // future idea: check to see if at least most is self-consistent
   
- if( !NotCorrupted )
+ if(!NotCorrupted)
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Error: " << FileName 
         << " is obviously corrupted." << endl;
@@ -768,9 +768,9 @@ bool BMP::ReadFromFile( const char* FileName )
  
  // if bmih.biCompression 1 or 2, then the file is RLE compressed
  
- if( bmih.biCompression == 1 || bmih.biCompression == 2 )
+ if(bmih.biCompression == 1 || bmih.biCompression == 2)
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Error: " << FileName << " is (RLE) compressed." << endl
         << "               EasyBMP does not support compression." << endl;
@@ -784,9 +784,9 @@ bool BMP::ReadFromFile( const char* FileName )
  // if bmih.biCompression > 3, then something strange is going on 
  // it's probably an OS2 bitmap file.
  
- if( bmih.biCompression > 3 )
+ if(bmih.biCompression > 3)
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Error: " << FileName << " is in an unsupported format." 
         << endl
@@ -801,9 +801,9 @@ bool BMP::ReadFromFile( const char* FileName )
   return false; 
  }
  
- if( bmih.biCompression == 3 && bmih.biBitCount != 16 )
+ if(bmih.biCompression == 3 && bmih.biBitCount != 16)
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Error: " << FileName 
         << " uses bit fields and is not a" << endl
@@ -818,11 +818,11 @@ bool BMP::ReadFromFile( const char* FileName )
  // set the bit depth
  
  int TempBitDepth = (int) bmih.biBitCount;
- if(    TempBitDepth != 1  && TempBitDepth != 4 
+ if(   TempBitDepth != 1  && TempBitDepth != 4 
      && TempBitDepth != 8  && TempBitDepth != 16
-     && TempBitDepth != 24 && TempBitDepth != 32 )
+     && TempBitDepth != 24 && TempBitDepth != 32)
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Error: " << FileName << " has unrecognized bit depth." << endl;
   }
@@ -831,13 +831,13 @@ bool BMP::ReadFromFile( const char* FileName )
   fclose(fp);
   return false;
  }
- SetBitDepth( (int) bmih.biBitCount ); 
+ SetBitDepth((int) bmih.biBitCount); 
  
  // set the size
 
- if( (int) bmih.biWidth <= 0 || (int) bmih.biHeight <= 0 ) 
+ if((int) bmih.biWidth <= 0 || (int) bmih.biHeight <= 0) 
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Error: " << FileName 
         << " has a non-positive width or height." << endl;
@@ -847,32 +847,32 @@ bool BMP::ReadFromFile( const char* FileName )
   fclose(fp);
   return false;
  } 
- SetSize( (int) bmih.biWidth , (int) bmih.biHeight );
+ SetSize((int) bmih.biWidth , (int) bmih.biHeight);
   
  // some preliminaries
  
- double dBytesPerPixel = ( (double) BitDepth ) / 8.0;
+ double dBytesPerPixel = ((double) BitDepth) / 8.0;
  double dBytesPerRow = dBytesPerPixel * (Width+0.0);
  dBytesPerRow = ceil(dBytesPerRow);
   
- int BytePaddingPerRow = 4 - ( (int) (dBytesPerRow) )% 4;
- if( BytePaddingPerRow == 4 )
+ int BytePaddingPerRow = 4 - ((int) (dBytesPerRow))% 4;
+ if(BytePaddingPerRow == 4)
  { BytePaddingPerRow = 0; }  
  
  // if < 16 bits, read the palette
  
- if( BitDepth < 16 )
+ if(BitDepth < 16)
  {
   // determine the number of colors specified in the 
   // color table
   
-  int NumberOfColorsToRead = ((int) bmfh.bfOffBits - 54 )/4;  
-  if( NumberOfColorsToRead > IntPow(2,BitDepth) )
+  int NumberOfColorsToRead = ((int) bmfh.bfOffBits - 54)/4;  
+  if(NumberOfColorsToRead > IntPow(2,BitDepth))
   { NumberOfColorsToRead = IntPow(2,BitDepth); }
  
-  if( NumberOfColorsToRead < TellNumberOfColors() )
+  if(NumberOfColorsToRead < TellNumberOfColors())
   {
-   if( EasyBMPwarnings )
+   if(EasyBMPwarnings)
    {
     cout << "EasyBMP Warning: file " << FileName << " has an underspecified" << endl
          << "                 color table. The table will be padded with extra" << endl
@@ -881,18 +881,18 @@ bool BMP::ReadFromFile( const char* FileName )
   }
  
   int n;
-  for( n=0; n < NumberOfColorsToRead ; n++ )
+  for(n=0; n < NumberOfColorsToRead ; n++)
   {
-   SafeFread( (char*) &(Colors[n]) , 4 , 1 , fp);     
+   SafeFread((char*) &(Colors[n]) , 4 , 1 , fp);     
   }
-  for( n=NumberOfColorsToRead ; n < TellNumberOfColors() ; n++ )
+  for(n=NumberOfColorsToRead ; n < TellNumberOfColors() ; n++)
   {
    RGBApixel WHITE; 
    WHITE.Red = 255;
    WHITE.Green = 255;
    WHITE.Blue = 255;
    WHITE.Alpha = 0;
-   SetColor( n , WHITE );
+   SetColor(n , WHITE);
   }
   
   
@@ -901,22 +901,22 @@ bool BMP::ReadFromFile( const char* FileName )
  // skip blank data if bfOffBits so indicates
  
  int BytesToSkip = bmfh.bfOffBits - 54;;
- if( BitDepth < 16 )
+ if(BitDepth < 16)
  { BytesToSkip -= 4*IntPow(2,BitDepth); }
- if( BitDepth == 16 && bmih.biCompression == 3 )
+ if(BitDepth == 16 && bmih.biCompression == 3)
  { BytesToSkip -= 3*4; }
- if( BytesToSkip < 0 )
+ if(BytesToSkip < 0)
  { BytesToSkip = 0; }
- if( BytesToSkip > 0 && BitDepth != 16 )
+ if(BytesToSkip > 0 && BitDepth != 16)
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Warning: Extra meta data detected in file " << FileName << endl
         << "                 Data will be skipped." << endl;
   }
   ebmpBYTE* TempSkipBYTE;
   TempSkipBYTE = new ebmpBYTE [BytesToSkip];
-  SafeFread( (char*) TempSkipBYTE , BytesToSkip , 1 , fp);   
+  SafeFread((char*) TempSkipBYTE , BytesToSkip , 1 , fp);   
   delete [] TempSkipBYTE;
  } 
   
@@ -924,23 +924,23 @@ bool BMP::ReadFromFile( const char* FileName )
  // with a more-efficient buffered technique.
 
  int i,j;
- if( BitDepth != 16 )
+ if(BitDepth != 16)
  {
-  int BufferSize = (int) ( (Width*BitDepth) / 8.0 );
-  while( 8*BufferSize < Width*BitDepth )
+  int BufferSize = (int) ((Width*BitDepth) / 8.0);
+  while(8*BufferSize < Width*BitDepth)
   { BufferSize++; }
-  while( BufferSize % 4 )
+  while(BufferSize % 4)
   { BufferSize++; }
   ebmpBYTE* Buffer;
   Buffer = new ebmpBYTE [BufferSize];
   j= Height-1;
-  while( j > -1 )
+  while(j > -1)
   {
-   int BytesRead = (int) fread( (char*) Buffer, 1, BufferSize, fp );
-   if( BytesRead < BufferSize )
+   int BytesRead = (int) fread((char*) Buffer, 1, BufferSize, fp);
+   if(BytesRead < BufferSize)
    {
     j = -1; 
-    if( EasyBMPwarnings )
+    if(EasyBMPwarnings)
     {
      cout << "EasyBMP Error: Could not read proper amount of data." << endl;
 	}
@@ -948,19 +948,19 @@ bool BMP::ReadFromFile( const char* FileName )
    else
    {
     bool Success = false;
-    if( BitDepth == 1  )
-	{ Success = Read1bitRow(  Buffer, BufferSize, j ); }
-    if( BitDepth == 4  )
-	{ Success = Read4bitRow(  Buffer, BufferSize, j ); }
-    if( BitDepth == 8  )
-	{ Success = Read8bitRow(  Buffer, BufferSize, j ); }
-    if( BitDepth == 24 )
-	{ Success = Read24bitRow( Buffer, BufferSize, j ); }
-	if( BitDepth == 32 )
-	{ Success = Read32bitRow( Buffer, BufferSize, j ); }
-    if( !Success )
+    if(BitDepth == 1 )
+	{ Success = Read1bitRow( Buffer, BufferSize, j); }
+    if(BitDepth == 4 )
+	{ Success = Read4bitRow( Buffer, BufferSize, j); }
+    if(BitDepth == 8 )
+	{ Success = Read8bitRow( Buffer, BufferSize, j); }
+    if(BitDepth == 24)
+	{ Success = Read24bitRow(Buffer, BufferSize, j); }
+	if(BitDepth == 32)
+	{ Success = Read32bitRow(Buffer, BufferSize, j); }
+    if(!Success)
     {
-     if( EasyBMPwarnings )
+     if(EasyBMPwarnings)
      {
       cout << "EasyBMP Error: Could not read enough pixel data!" << endl;
 	 }
@@ -972,10 +972,10 @@ bool BMP::ReadFromFile( const char* FileName )
   delete [] Buffer; 
  }
 
- if( BitDepth == 16 )
+ if(BitDepth == 16)
  {
   int DataBytes = Width*2;
-  int PaddingBytes = ( 4 - DataBytes % 4 ) % 4;
+  int PaddingBytes = (4 - DataBytes % 4) % 4;
 
   // set the default mask
   
@@ -986,34 +986,34 @@ bool BMP::ReadFromFile( const char* FileName )
   // read the bit fields, if necessary, to 
   // override the default 5-5-5 mask
   
-  if( bmih.biCompression != 0 )
+  if(bmih.biCompression != 0)
   {
    // read the three bit masks
 
    ebmpWORD TempMaskWORD;
    ebmpWORD ZeroWORD;
   
-   SafeFread( (char*) &RedMask , 2 , 1 , fp );
-   if( IsBigEndian() )
+   SafeFread((char*) &RedMask , 2 , 1 , fp);
+   if(IsBigEndian())
    { RedMask = FlipWORD(RedMask); }
-   SafeFread( (char*) &TempMaskWORD , 2, 1, fp );
+   SafeFread((char*) &TempMaskWORD , 2, 1, fp);
   
-   SafeFread( (char*) &GreenMask , 2 , 1 , fp );
-   if( IsBigEndian() )
+   SafeFread((char*) &GreenMask , 2 , 1 , fp);
+   if(IsBigEndian())
    { GreenMask = FlipWORD(GreenMask); }
-   SafeFread( (char*) &TempMaskWORD , 2, 1, fp );
+   SafeFread((char*) &TempMaskWORD , 2, 1, fp);
 
-   SafeFread( (char*) &BlueMask , 2 , 1 , fp );
-   if( IsBigEndian() )
+   SafeFread((char*) &BlueMask , 2 , 1 , fp);
+   if(IsBigEndian())
    { BlueMask = FlipWORD(BlueMask); }
-   SafeFread( (char*) &TempMaskWORD , 2, 1, fp );
+   SafeFread((char*) &TempMaskWORD , 2, 1, fp);
   }
   
   // read and skip any meta data
 
-  if( BytesToSkip > 0 )
+  if(BytesToSkip > 0)
   {
-   if( EasyBMPwarnings )
+   if(EasyBMPwarnings)
    {
     cout << "EasyBMP Warning: Extra meta data detected in file " 
          << FileName << endl
@@ -1021,7 +1021,7 @@ bool BMP::ReadFromFile( const char* FileName )
    }
    ebmpBYTE* TempSkipBYTE;
    TempSkipBYTE = new ebmpBYTE [BytesToSkip];
-   SafeFread( (char*) TempSkipBYTE , BytesToSkip , 1 , fp);
+   SafeFread((char*) TempSkipBYTE , BytesToSkip , 1 , fp);
    delete [] TempSkipBYTE;   
   } 
   
@@ -1029,28 +1029,28 @@ bool BMP::ReadFromFile( const char* FileName )
   
   int GreenShift = 0; 
   ebmpWORD TempShiftWORD = GreenMask;
-  while( TempShiftWORD > 31 )
+  while(TempShiftWORD > 31)
   { TempShiftWORD = TempShiftWORD>>1; GreenShift++; }  
   int BlueShift = 0;
   TempShiftWORD = BlueMask;
-  while( TempShiftWORD > 31 )
+  while(TempShiftWORD > 31)
   { TempShiftWORD = TempShiftWORD>>1; BlueShift++; }  
   int RedShift = 0;  
   TempShiftWORD = RedMask;
-  while( TempShiftWORD > 31 )
+  while(TempShiftWORD > 31)
   { TempShiftWORD = TempShiftWORD>>1; RedShift++; }  
   
   // read the actual pixels
   
-  for( j=Height-1 ; j >= 0 ; j-- )
+  for(j=Height-1 ; j >= 0 ; j--)
   {
    i=0;
    int ReadNumber = 0;
-   while( ReadNumber < DataBytes )
+   while(ReadNumber < DataBytes)
    {
 	ebmpWORD TempWORD;
-	SafeFread( (char*) &TempWORD , 2 , 1 , fp );
-	if( IsBigEndian() )
+	SafeFread((char*) &TempWORD , 2 , 1 , fp);
+	if(IsBigEndian())
 	{ TempWORD = FlipWORD(TempWORD); }
     ReadNumber += 2;
   
@@ -1069,10 +1069,10 @@ bool BMP::ReadFromFile( const char* FileName )
 	i++;
    }
    ReadNumber = 0;
-   while( ReadNumber < PaddingBytes )
+   while(ReadNumber < PaddingBytes)
    {
     ebmpBYTE TempBYTE;
-    SafeFread( (char*) &TempBYTE , 1, 1, fp);
+    SafeFread((char*) &TempBYTE , 1, 1, fp);
     ReadNumber++;
    }
   }
@@ -1083,12 +1083,12 @@ bool BMP::ReadFromFile( const char* FileName )
  return true;
 }
 
-bool BMP::CreateStandardColorTable( void )
+bool BMP::CreateStandardColorTable(void)
 {
  using namespace std;
- if( BitDepth != 1 && BitDepth != 4 && BitDepth != 8 )
+ if(BitDepth != 1 && BitDepth != 4 && BitDepth != 8)
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Warning: Attempted to create color table at a bit" << endl
         << "                 depth that does not require a color table." << endl
@@ -1097,10 +1097,10 @@ bool BMP::CreateStandardColorTable( void )
   return false;
  }
 
- if( BitDepth == 1 )
+ if(BitDepth == 1)
  {
   int i;
-  for( i=0 ; i < 2 ; i++ )
+  for(i=0 ; i < 2 ; i++)
   {
    Colors[i].Red = i*255;
    Colors[i].Green = i*255;
@@ -1110,17 +1110,17 @@ bool BMP::CreateStandardColorTable( void )
   return true;
  } 
 
- if( BitDepth == 4 )
+ if(BitDepth == 4)
  {
   int i = 0;
   int j,k,ell;
   
   // simplify the code for the first 8 colors
-  for( ell=0 ; ell < 2 ; ell++ )
+  for(ell=0 ; ell < 2 ; ell++)
   {
-   for( k=0 ; k < 2 ; k++ )
+   for(k=0 ; k < 2 ; k++)
    {
-    for( j=0 ; j < 2 ; j++ )
+    for(j=0 ; j < 2 ; j++)
     {
      Colors[i].Red = j*128; 
 	 Colors[i].Green = k*128;
@@ -1131,11 +1131,11 @@ bool BMP::CreateStandardColorTable( void )
   }
  
   // simplify the code for the last 8 colors
-  for( ell=0 ; ell < 2 ; ell++ )
+  for(ell=0 ; ell < 2 ; ell++)
   {
-   for( k=0 ; k < 2 ; k++ )
+   for(k=0 ; k < 2 ; k++)
    {
-    for( j=0 ; j < 2 ; j++ )
+    for(j=0 ; j < 2 ; j++)
     {
      Colors[i].Red = j*255;
      Colors[i].Green = k*255; 
@@ -1151,23 +1151,23 @@ bool BMP::CreateStandardColorTable( void )
   Colors[i].Green = 192;
   Colors[i].Blue = 192;
    
-  for( i=0 ; i < 16 ; i++ )
+  for(i=0 ; i < 16 ; i++)
   { Colors[i].Alpha = 0; }
   return true;
  }
 
- if( BitDepth == 8 )
+ if(BitDepth == 8)
  {
   int i=0;
   int j,k,ell;
     
   // do an easy loop, which works for all but colors 
   // 0 to 9 and 246 to 255
-  for( ell=0 ; ell < 4 ; ell++ ) 
+  for(ell=0 ; ell < 4 ; ell++) 
   {
-   for( k=0 ; k < 8 ; k++ )
+   for(k=0 ; k < 8 ; k++)
    {
-    for( j=0; j < 8 ; j++ )
+    for(j=0; j < 8 ; j++)
     {
      Colors[i].Red = j*32; 
      Colors[i].Green = k*32;
@@ -1180,11 +1180,11 @@ bool BMP::CreateStandardColorTable( void )
    
   // now redo the first 8 colors  
   i=0;
-  for( ell=0 ; ell < 2 ; ell++ ) 
+  for(ell=0 ; ell < 2 ; ell++) 
   {
-   for( k=0 ; k < 2 ; k++ )
+   for(k=0 ; k < 2 ; k++)
    {
-    for( j=0; j < 2 ; j++ )
+    for(j=0; j < 2 ; j++)
     {
      Colors[i].Red = j*128;
      Colors[i].Green = k*128;
@@ -1255,53 +1255,53 @@ bool BMP::CreateStandardColorTable( void )
  return true;
 }
 
-bool SafeFread( char* buffer, int size, int number, FILE* fp )
+bool SafeFread(char* buffer, int size, int number, FILE* fp)
 {
  using namespace std;
  int ItemsRead;
- if( feof(fp) )
+ if(feof(fp))
  { return false; }
- ItemsRead = (int) fread( buffer , size , number , fp );
- if( ItemsRead < number )
+ ItemsRead = (int) fread(buffer , size , number , fp);
+ if(ItemsRead < number)
  { return false; }
  return true;
 }
 
-void BMP::SetDPI( int HorizontalDPI, int VerticalDPI )
+void BMP::SetDPI(int HorizontalDPI, int VerticalDPI)
 {
- XPelsPerMeter = (int) ( HorizontalDPI * 39.37007874015748 );
- YPelsPerMeter = (int) (   VerticalDPI * 39.37007874015748 );
+ XPelsPerMeter = (int) (HorizontalDPI * 39.37007874015748);
+ YPelsPerMeter = (int) (  VerticalDPI * 39.37007874015748);
 }
 
-// int BMP::TellVerticalDPI( void ) const
-int BMP::TellVerticalDPI( void )
+// int BMP::TellVerticalDPI(void) const
+int BMP::TellVerticalDPI(void)
 {
- if( !YPelsPerMeter )
+ if(!YPelsPerMeter)
  { YPelsPerMeter = DefaultYPelsPerMeter; }
- return (int) ( YPelsPerMeter / (double) 39.37007874015748 ); 
+ return (int) (YPelsPerMeter / (double) 39.37007874015748); 
 }
 
-// int BMP::TellHorizontalDPI( void ) const
-int BMP::TellHorizontalDPI( void )
+// int BMP::TellHorizontalDPI(void) const
+int BMP::TellHorizontalDPI(void)
 {
- if( !XPelsPerMeter )
+ if(!XPelsPerMeter)
  { XPelsPerMeter = DefaultXPelsPerMeter; }
- return (int) ( XPelsPerMeter / (double) 39.37007874015748 );
+ return (int) (XPelsPerMeter / (double) 39.37007874015748);
 }
 
 /* These functions are defined in EasyBMP_VariousBMPutilities.h */
 
-BMFH GetBMFH( const char* szFileNameIn )
+BMFH GetBMFH(const char* szFileNameIn)
 {
  using namespace std;
  BMFH bmfh;
 
  FILE* fp;
- fp = fopen( szFileNameIn,"rb");
+ fp = fopen(szFileNameIn,"rb");
  
- if( !fp  )
+ if(!fp )
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Error: Cannot initialize from file " 
         << szFileNameIn << "." << endl
@@ -1312,32 +1312,32 @@ BMFH GetBMFH( const char* szFileNameIn )
   return bmfh;
  } 
  
- SafeFread( (char*) &(bmfh.bfType) , sizeof(ebmpWORD) , 1 , fp );
- SafeFread( (char*) &(bmfh.bfSize) , sizeof(ebmpDWORD) , 1 , fp ); 
- SafeFread( (char*) &(bmfh.bfReserved1) , sizeof(ebmpWORD) , 1 , fp ); 
- SafeFread( (char*) &(bmfh.bfReserved2) , sizeof(ebmpWORD) , 1 , fp ); 
- SafeFread( (char*) &(bmfh.bfOffBits) , sizeof(ebmpDWORD) , 1 , fp ); 
+ SafeFread((char*) &(bmfh.bfType) , sizeof(ebmpWORD) , 1 , fp);
+ SafeFread((char*) &(bmfh.bfSize) , sizeof(ebmpDWORD) , 1 , fp); 
+ SafeFread((char*) &(bmfh.bfReserved1) , sizeof(ebmpWORD) , 1 , fp); 
+ SafeFread((char*) &(bmfh.bfReserved2) , sizeof(ebmpWORD) , 1 , fp); 
+ SafeFread((char*) &(bmfh.bfOffBits) , sizeof(ebmpDWORD) , 1 , fp); 
  
- fclose( fp );
+ fclose(fp);
  
- if( IsBigEndian() )
+ if(IsBigEndian())
  { bmfh.SwitchEndianess(); }
 
  return bmfh;
 }
 
-BMIH GetBMIH( const char* szFileNameIn )
+BMIH GetBMIH(const char* szFileNameIn)
 {
  using namespace std;
  BMFH bmfh;
  BMIH bmih;
 
  FILE* fp;
- fp = fopen( szFileNameIn,"rb");
+ fp = fopen(szFileNameIn,"rb");
 
- if( !fp  )
+ if(!fp )
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Error: Cannot initialize from file " 
         << szFileNameIn << "." << endl
@@ -1351,42 +1351,42 @@ BMIH GetBMIH( const char* szFileNameIn )
  
  ebmpBYTE TempBYTE;
  int i;
- for( i = 14 ; i > 0 ; i-- )
- { SafeFread( (char*) &TempBYTE , sizeof(ebmpBYTE) , 1, fp ); }
+ for(i = 14 ; i > 0 ; i--)
+ { SafeFread((char*) &TempBYTE , sizeof(ebmpBYTE) , 1, fp); }
 
  // read the bmih 
 
- SafeFread( (char*) &(bmih.biSize) , sizeof(ebmpDWORD) , 1 , fp );
- SafeFread( (char*) &(bmih.biWidth) , sizeof(ebmpDWORD) , 1 , fp ); 
- SafeFread( (char*) &(bmih.biHeight) , sizeof(ebmpDWORD) , 1 , fp ); 
- SafeFread( (char*) &(bmih.biPlanes) , sizeof(ebmpWORD) , 1 , fp ); 
+ SafeFread((char*) &(bmih.biSize) , sizeof(ebmpDWORD) , 1 , fp);
+ SafeFread((char*) &(bmih.biWidth) , sizeof(ebmpDWORD) , 1 , fp); 
+ SafeFread((char*) &(bmih.biHeight) , sizeof(ebmpDWORD) , 1 , fp); 
+ SafeFread((char*) &(bmih.biPlanes) , sizeof(ebmpWORD) , 1 , fp); 
  
- SafeFread( (char*) &(bmih.biBitCount) , sizeof(ebmpWORD) , 1 , fp );
- SafeFread( (char*) &(bmih.biCompression) , sizeof(ebmpDWORD) , 1 , fp ); 
- SafeFread( (char*) &(bmih.biSizeImage) , sizeof(ebmpDWORD) , 1 , fp ); 
- SafeFread( (char*) &(bmih.biXPelsPerMeter) , sizeof(ebmpDWORD) , 1 , fp ); 
+ SafeFread((char*) &(bmih.biBitCount) , sizeof(ebmpWORD) , 1 , fp);
+ SafeFread((char*) &(bmih.biCompression) , sizeof(ebmpDWORD) , 1 , fp); 
+ SafeFread((char*) &(bmih.biSizeImage) , sizeof(ebmpDWORD) , 1 , fp); 
+ SafeFread((char*) &(bmih.biXPelsPerMeter) , sizeof(ebmpDWORD) , 1 , fp); 
  
- SafeFread( (char*) &(bmih.biYPelsPerMeter) , sizeof(ebmpDWORD) , 1 , fp ); 
- SafeFread( (char*) &(bmih.biClrUsed) , sizeof(ebmpDWORD) , 1 , fp ); 
- SafeFread( (char*) &(bmih.biClrImportant) , sizeof(ebmpDWORD) , 1 , fp ); 
+ SafeFread((char*) &(bmih.biYPelsPerMeter) , sizeof(ebmpDWORD) , 1 , fp); 
+ SafeFread((char*) &(bmih.biClrUsed) , sizeof(ebmpDWORD) , 1 , fp); 
+ SafeFread((char*) &(bmih.biClrImportant) , sizeof(ebmpDWORD) , 1 , fp); 
  
- fclose( fp );
+ fclose(fp);
  
- if( IsBigEndian() )
+ if(IsBigEndian())
  { bmih.SwitchEndianess(); }
 
  return bmih;
 }
 
-void DisplayBitmapInfo( const char* szFileNameIn )
+void DisplayBitmapInfo(const char* szFileNameIn)
 {
  using namespace std;
  FILE* fp;
- fp = fopen( szFileNameIn,"rb");
+ fp = fopen(szFileNameIn,"rb");
  
- if( !fp  )
+ if(!fp )
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Error: Cannot initialize from file " 
         << szFileNameIn << "." << endl
@@ -1395,7 +1395,7 @@ void DisplayBitmapInfo( const char* szFileNameIn )
   }
   return;
  } 
- fclose( fp );
+ fclose(fp);
 
  // don't duplicate work! Just use the functions from above!
  
@@ -1427,93 +1427,93 @@ void DisplayBitmapInfo( const char* szFileNameIn )
  return;
 }
 
-int GetBitmapColorDepth( const char* szFileNameIn )
+int GetBitmapColorDepth(const char* szFileNameIn)
 {
- BMIH bmih = GetBMIH( szFileNameIn );
+ BMIH bmih = GetBMIH(szFileNameIn);
  return (int) bmih.biBitCount;
 }
 
-void PixelToPixelCopy( BMP& From, int FromX, int FromY,  
+void PixelToPixelCopy(BMP& From, int FromX, int FromY,  
                        BMP& To, int ToX, int ToY)
 {
  *To(ToX,ToY) = *From(FromX,FromY);
  return;
 }
 
-void PixelToPixelCopyTransparent( BMP& From, int FromX, int FromY,  
+void PixelToPixelCopyTransparent(BMP& From, int FromX, int FromY,  
                                   BMP& To, int ToX, int ToY,
-                                  RGBApixel& Transparent )
+                                  RGBApixel& Transparent)
 {
- if( From(FromX,FromY)->Red != Transparent.Red ||
+ if(From(FromX,FromY)->Red != Transparent.Red ||
      From(FromX,FromY)->Green != Transparent.Green ||
-     From(FromX,FromY)->Blue != Transparent.Blue )	 
+     From(FromX,FromY)->Blue != Transparent.Blue)	 
  { *To(ToX,ToY) = *From(FromX,FromY); }
  return;
 }
 
-void RangedPixelToPixelCopy( BMP& From, int FromL , int FromR, int FromB, int FromT, 
-                             BMP& To, int ToX, int ToY )
+void RangedPixelToPixelCopy(BMP& From, int FromL , int FromR, int FromB, int FromT, 
+                             BMP& To, int ToX, int ToY)
 {
  // make sure the conventions are followed
- if( FromB < FromT )
+ if(FromB < FromT)
  { int Temp = FromT; FromT = FromB; FromB = Temp; }
 
  // make sure that the copied regions exist in both bitmaps
- if( FromR >= From.TellWidth() )
+ if(FromR >= From.TellWidth())
  { FromR = From.TellWidth()-1; }
- if( FromL < 0 ){ FromL = 0; }
+ if(FromL < 0){ FromL = 0; }
 
- if( FromB >= From.TellHeight() )
+ if(FromB >= From.TellHeight())
  { FromB = From.TellHeight()-1; }
- if( FromT < 0 ){ FromT = 0; }
+ if(FromT < 0){ FromT = 0; }
  
- if( ToX+(FromR-FromL) >= To.TellWidth() )
+ if(ToX+(FromR-FromL) >= To.TellWidth())
  { FromR = To.TellWidth()-1+FromL-ToX; }
- if( ToY+(FromB-FromT) >= To.TellHeight() )
+ if(ToY+(FromB-FromT) >= To.TellHeight())
  { FromB = To.TellHeight()-1+FromT-ToY; } 
  
  int i,j;
- for( j=FromT ; j <= FromB ; j++ )
+ for(j=FromT ; j <= FromB ; j++)
  { 
-  for( i=FromL ; i <= FromR ; i++ )
+  for(i=FromL ; i <= FromR ; i++)
   {
-   PixelToPixelCopy( From, i,j,  
-                     To, ToX+(i-FromL), ToY+(j-FromT) );
+   PixelToPixelCopy(From, i,j,  
+                     To, ToX+(i-FromL), ToY+(j-FromT));
   }
  }
 
  return;
 }
 
-void RangedPixelToPixelCopyTransparent( 
+void RangedPixelToPixelCopyTransparent(
      BMP& From, int FromL , int FromR, int FromB, int FromT, 
      BMP& To, int ToX, int ToY ,
-     RGBApixel& Transparent )
+     RGBApixel& Transparent)
 {
  // make sure the conventions are followed
- if( FromB < FromT )
+ if(FromB < FromT)
  { int Temp = FromT; FromT = FromB; FromB = Temp; }
 
  // make sure that the copied regions exist in both bitmaps
- if( FromR >= From.TellWidth() )
+ if(FromR >= From.TellWidth())
  { FromR = From.TellWidth()-1; }
- if( FromL < 0 ){ FromL = 0; }
+ if(FromL < 0){ FromL = 0; }
 
- if( FromB >= From.TellHeight() )
+ if(FromB >= From.TellHeight())
  { FromB = From.TellHeight()-1; }
- if( FromT < 0 ){ FromT = 0; }
+ if(FromT < 0){ FromT = 0; }
  
- if( ToX+(FromR-FromL) >= To.TellWidth() )
+ if(ToX+(FromR-FromL) >= To.TellWidth())
  { FromR = To.TellWidth()-1+FromL-ToX; }
- if( ToY+(FromB-FromT) >= To.TellHeight() )
+ if(ToY+(FromB-FromT) >= To.TellHeight())
  { FromB = To.TellHeight()-1+FromT-ToY; } 
  
  int i,j;
- for( j=FromT ; j <= FromB ; j++ )
+ for(j=FromT ; j <= FromB ; j++)
  { 
-  for( i=FromL ; i <= FromR ; i++ )
+  for(i=FromL ; i <= FromR ; i++)
   {
-   PixelToPixelCopyTransparent( From, i,j,  
+   PixelToPixelCopyTransparent(From, i,j,  
                      To, ToX+(i-FromL), ToY+(j-FromT) , 
                      Transparent);
   }
@@ -1522,13 +1522,13 @@ void RangedPixelToPixelCopyTransparent(
  return;
 }
 
-bool CreateGrayscaleColorTable( BMP& InputImage )
+bool CreateGrayscaleColorTable(BMP& InputImage)
 {
  using namespace std;
  int BitDepth = InputImage.TellBitDepth();
- if( BitDepth != 1 && BitDepth != 4 && BitDepth != 8 )
+ if(BitDepth != 1 && BitDepth != 4 && BitDepth != 8)
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Warning: Attempted to create color table at a bit" << endl
         << "                 depth that does not require a color table." << endl
@@ -1540,12 +1540,12 @@ bool CreateGrayscaleColorTable( BMP& InputImage )
  int NumberOfColors = InputImage.TellNumberOfColors();
  
  ebmpBYTE StepSize;
- if( BitDepth != 1 )
+ if(BitDepth != 1)
  { StepSize = 255/(NumberOfColors-1); }
  else
  { StepSize = 255; }
   
- for( i=0 ; i < NumberOfColors ; i++ )
+ for(i=0 ; i < NumberOfColors ; i++)
  {
   ebmpBYTE TempBYTE = i*StepSize;
   RGBApixel TempColor;
@@ -1553,45 +1553,45 @@ bool CreateGrayscaleColorTable( BMP& InputImage )
   TempColor.Green = TempBYTE;
   TempColor.Blue = TempBYTE;
   TempColor.Alpha = 0;
-  InputImage.SetColor( i , TempColor );  
+  InputImage.SetColor(i , TempColor);  
  }
  return true;
 }
 
-bool BMP::Read32bitRow( ebmpBYTE* Buffer, int BufferSize, int Row )
+bool BMP::Read32bitRow(ebmpBYTE* Buffer, int BufferSize, int Row)
 { 
  int i;
- if( Width*4 > BufferSize )
+ if(Width*4 > BufferSize)
  { return false; }
- for( i=0 ; i < Width ; i++ )
- { memcpy( (char*) &(Pixels[i][Row]), (char*) Buffer+4*i, 4 ); }
+ for(i=0 ; i < Width ; i++)
+ { memcpy((char*) &(Pixels[i][Row]), (char*) Buffer+4*i, 4); }
  return true;
 }
 
-bool BMP::Read24bitRow( ebmpBYTE* Buffer, int BufferSize, int Row )
+bool BMP::Read24bitRow(ebmpBYTE* Buffer, int BufferSize, int Row)
 { 
  int i;
- if( Width*3 > BufferSize )
+ if(Width*3 > BufferSize)
  { return false; }
- for( i=0 ; i < Width ; i++ )
- { memcpy( (char*) &(Pixels[i][Row]), Buffer+3*i, 3 ); }
+ for(i=0 ; i < Width ; i++)
+ { memcpy((char*) &(Pixels[i][Row]), Buffer+3*i, 3); }
  return true;
 }
 
-bool BMP::Read8bitRow(  ebmpBYTE* Buffer, int BufferSize, int Row )
+bool BMP::Read8bitRow( ebmpBYTE* Buffer, int BufferSize, int Row)
 {
  int i;
- if( Width > BufferSize )
+ if(Width > BufferSize)
  { return false; }
- for( i=0 ; i < Width ; i++ )
+ for(i=0 ; i < Width ; i++)
  {
   int Index = Buffer[i];
-  *( this->operator()(i,Row) )= GetColor(Index); 
+  *(this->operator()(i,Row))= GetColor(Index); 
  }
  return true;
 }
 
-bool BMP::Read4bitRow(  ebmpBYTE* Buffer, int BufferSize, int Row )
+bool BMP::Read4bitRow( ebmpBYTE* Buffer, int BufferSize, int Row)
 {
  int Shifts[2] = {4  ,0 };
  int Masks[2]  = {240,15};
@@ -1599,22 +1599,22 @@ bool BMP::Read4bitRow(  ebmpBYTE* Buffer, int BufferSize, int Row )
  int i=0;
  int j;
  int k=0;
- if( Width > 2*BufferSize )
+ if(Width > 2*BufferSize)
  { return false; }
- while( i < Width )
+ while(i < Width)
  {
   j=0;
-  while( j < 2 && i < Width )
+  while(j < 2 && i < Width)
   {
-   int Index = (int) ( (Buffer[k]&Masks[j]) >> Shifts[j]);
-   *( this->operator()(i,Row) )= GetColor(Index); 
+   int Index = (int) ((Buffer[k]&Masks[j]) >> Shifts[j]);
+   *(this->operator()(i,Row))= GetColor(Index); 
    i++; j++;   
   }
   k++;
  }
  return true;
 }
-bool BMP::Read1bitRow(  ebmpBYTE* Buffer, int BufferSize, int Row )
+bool BMP::Read1bitRow( ebmpBYTE* Buffer, int BufferSize, int Row)
 {
  int Shifts[8] = {7  ,6 ,5 ,4 ,3,2,1,0};
  int Masks[8]  = {128,64,32,16,8,4,2,1};
@@ -1623,15 +1623,15 @@ bool BMP::Read1bitRow(  ebmpBYTE* Buffer, int BufferSize, int Row )
  int j;
  int k=0;
  
- if( Width > 8*BufferSize )
+ if(Width > 8*BufferSize)
  { return false; }
- while( i < Width )
+ while(i < Width)
  {
   j=0;
-  while( j < 8 && i < Width )
+  while(j < 8 && i < Width)
   {
-   int Index = (int) ( (Buffer[k]&Masks[j]) >> Shifts[j]);
-   *( this->operator()(i,Row) )= GetColor(Index); 
+   int Index = (int) ((Buffer[k]&Masks[j]) >> Shifts[j]);
+   *(this->operator()(i,Row))= GetColor(Index); 
    i++; j++;   
   }
   k++;
@@ -1639,52 +1639,52 @@ bool BMP::Read1bitRow(  ebmpBYTE* Buffer, int BufferSize, int Row )
  return true;
 }
 
-bool BMP::Write32bitRow( ebmpBYTE* Buffer, int BufferSize, int Row )
+bool BMP::Write32bitRow(ebmpBYTE* Buffer, int BufferSize, int Row)
 { 
  int i;
- if( Width*4 > BufferSize )
+ if(Width*4 > BufferSize)
  { return false; }
- for( i=0 ; i < Width ; i++ )
- { memcpy( (char*) Buffer+4*i, (char*) &(Pixels[i][Row]), 4 ); }
+ for(i=0 ; i < Width ; i++)
+ { memcpy((char*) Buffer+4*i, (char*) &(Pixels[i][Row]), 4); }
  return true;
 }
 
-bool BMP::Write24bitRow( ebmpBYTE* Buffer, int BufferSize, int Row )
+bool BMP::Write24bitRow(ebmpBYTE* Buffer, int BufferSize, int Row)
 { 
  int i;
- if( Width*3 > BufferSize )
+ if(Width*3 > BufferSize)
  { return false; }
- for( i=0 ; i < Width ; i++ )
- { memcpy( (char*) Buffer+3*i,  (char*) &(Pixels[i][Row]), 3 ); }
+ for(i=0 ; i < Width ; i++)
+ { memcpy((char*) Buffer+3*i,  (char*) &(Pixels[i][Row]), 3); }
  return true;
 }
 
-bool BMP::Write8bitRow(  ebmpBYTE* Buffer, int BufferSize, int Row )
+bool BMP::Write8bitRow( ebmpBYTE* Buffer, int BufferSize, int Row)
 {
  int i;
- if( Width > BufferSize )
+ if(Width > BufferSize)
  { return false; }
- for( i=0 ; i < Width ; i++ )
- { Buffer[i] = FindClosestColor( Pixels[i][Row] ); }
+ for(i=0 ; i < Width ; i++)
+ { Buffer[i] = FindClosestColor(Pixels[i][Row]); }
  return true;
 }
 
-bool BMP::Write4bitRow(  ebmpBYTE* Buffer, int BufferSize, int Row )
+bool BMP::Write4bitRow( ebmpBYTE* Buffer, int BufferSize, int Row)
 { 
  int PositionWeights[2]  = {16,1};
  
  int i=0;
  int j;
  int k=0;
- if( Width > 2*BufferSize )
+ if(Width > 2*BufferSize)
  { return false; }
- while( i < Width )
+ while(i < Width)
  {
   j=0;
   int Index = 0;
-  while( j < 2 && i < Width )
+  while(j < 2 && i < Width)
   {
-   Index += ( PositionWeights[j]* (int) FindClosestColor( Pixels[i][Row] ) ); 
+   Index += (PositionWeights[j]* (int) FindClosestColor(Pixels[i][Row])); 
    i++; j++;   
   }
   Buffer[k] = (ebmpBYTE) Index;
@@ -1693,22 +1693,22 @@ bool BMP::Write4bitRow(  ebmpBYTE* Buffer, int BufferSize, int Row )
  return true;
 }
 
-bool BMP::Write1bitRow(  ebmpBYTE* Buffer, int BufferSize, int Row )
+bool BMP::Write1bitRow( ebmpBYTE* Buffer, int BufferSize, int Row)
 { 
  int PositionWeights[8]  = {128,64,32,16,8,4,2,1};
  
  int i=0;
  int j;
  int k=0;
- if( Width > 8*BufferSize )
+ if(Width > 8*BufferSize)
  { return false; }
- while( i < Width )
+ while(i < Width)
  {
   j=0;
   int Index = 0;
-  while( j < 8 && i < Width )
+  while(j < 8 && i < Width)
   {
-   Index += ( PositionWeights[j]* (int) FindClosestColor( Pixels[i][Row] ) ); 
+   Index += (PositionWeights[j]* (int) FindClosestColor(Pixels[i][Row])); 
    i++; j++;   
   }
   Buffer[k] = (ebmpBYTE) Index;
@@ -1717,7 +1717,7 @@ bool BMP::Write1bitRow(  ebmpBYTE* Buffer, int BufferSize, int Row )
  return true;
 }
 
-ebmpBYTE BMP::FindClosestColor( RGBApixel& input )
+ebmpBYTE BMP::FindClosestColor(RGBApixel& input)
 {
  using namespace std;
  
@@ -1726,51 +1726,51 @@ ebmpBYTE BMP::FindClosestColor( RGBApixel& input )
  ebmpBYTE BestI = 0;
  int BestMatch = 999999;
   
- while( i < NumberOfColors )
+ while(i < NumberOfColors)
  {
-  RGBApixel Attempt = GetColor( i );
-  int TempMatch = IntSquare( (int) Attempt.Red - (int) input.Red )
-                + IntSquare( (int) Attempt.Green - (int) input.Green )
-                + IntSquare( (int) Attempt.Blue - (int) input.Blue );
-  if( TempMatch < BestMatch )
+  RGBApixel Attempt = GetColor(i);
+  int TempMatch = IntSquare((int) Attempt.Red - (int) input.Red)
+                + IntSquare((int) Attempt.Green - (int) input.Green)
+                + IntSquare((int) Attempt.Blue - (int) input.Blue);
+  if(TempMatch < BestMatch)
   { BestI = (ebmpBYTE) i; BestMatch = TempMatch; }
-  if( BestMatch < 1 )
+  if(BestMatch < 1)
   { i = NumberOfColors; }
   i++;
  }
  return BestI;
 }
 
-bool EasyBMPcheckDataSize( void )
+bool EasyBMPcheckDataSize(void)
 {
  using namespace std;
  bool ReturnValue = true;
- if( sizeof( ebmpBYTE ) != 1 )
+ if(sizeof(ebmpBYTE) != 1)
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Error: ebmpBYTE has the wrong size (" 
-        << sizeof( ebmpBYTE ) << " bytes)," << endl
+        << sizeof(ebmpBYTE) << " bytes)," << endl
 	    << "               Compared to the expected 1 byte value" << endl;
   }
   ReturnValue = false;
  }
- if( sizeof( ebmpWORD ) != 2 )
+ if(sizeof(ebmpWORD) != 2)
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Error: ebmpWORD has the wrong size (" 
-        << sizeof( ebmpWORD ) << " bytes)," << endl
+        << sizeof(ebmpWORD) << " bytes)," << endl
 	    << "               Compared to the expected 2 byte value" << endl;
   }
   ReturnValue = false;
  }
- if( sizeof( ebmpDWORD ) != 4 )
+ if(sizeof(ebmpDWORD) != 4)
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    cout << "EasyBMP Error: ebmpDWORD has the wrong size (" 
-        << sizeof( ebmpDWORD ) << " bytes)," << endl
+        << sizeof(ebmpDWORD) << " bytes)," << endl
 	    << "               Compared to the expected 4 byte value" << endl;
   }
   ReturnValue = false;
@@ -1778,22 +1778,22 @@ bool EasyBMPcheckDataSize( void )
  return ReturnValue;
 }
 
-bool Rescale( BMP& InputImage , char mode, int NewDimension )
+bool Rescale(BMP& InputImage , char mode, int NewDimension)
 {
  using namespace std;
- int CapMode = toupper( mode );
+ int CapMode = toupper(mode);
 
- BMP OldImage( InputImage );
+ BMP OldImage(InputImage);
  
- if( CapMode != 'P' &&
+ if(CapMode != 'P' &&
      CapMode != 'W' &&
      CapMode != 'H' && 
-     CapMode != 'F' )
+     CapMode != 'F')
  {
-  if( EasyBMPwarnings )
+  if(EasyBMPwarnings)
   {
    char ErrorMessage [1024];
-   sprintf( ErrorMessage, "EasyBMP Error: Unknown rescale mode %c requested\n" , mode );
+   sprintf(ErrorMessage, "EasyBMP Error: Unknown rescale mode %c requested\n" , mode);
    cout << ErrorMessage; 
   }
   return false;
@@ -1805,99 +1805,99 @@ bool Rescale( BMP& InputImage , char mode, int NewDimension )
  int OldWidth = OldImage.TellWidth();
  int OldHeight= OldImage.TellHeight();
  
- if( CapMode == 'P' )
+ if(CapMode == 'P')
  {
-  NewWidth = (int) floor( OldWidth * NewDimension / 100.0 );
-  NewHeight = (int) floor( OldHeight * NewDimension / 100.0 );
+  NewWidth = (int) floor(OldWidth * NewDimension / 100.0);
+  NewHeight = (int) floor(OldHeight * NewDimension / 100.0);
  }
- if( CapMode == 'F' )
+ if(CapMode == 'F')
  {
-  if( OldWidth > OldHeight )
+  if(OldWidth > OldHeight)
   { CapMode = 'W'; }
   else
   { CapMode = 'H'; }
  }
 
- if( CapMode == 'W' )
+ if(CapMode == 'W')
  {
   double percent = (double) NewDimension / (double) OldWidth;
   NewWidth = NewDimension;
-  NewHeight = (int) floor( OldHeight * percent );
+  NewHeight = (int) floor(OldHeight * percent);
  }
- if( CapMode == 'H' )
+ if(CapMode == 'H')
  {
   double percent = (double) NewDimension / (double) OldHeight;
   NewHeight = NewDimension;
-  NewWidth = (int) floor( OldWidth * percent );
+  NewWidth = (int) floor(OldWidth * percent);
  }
  
- if( NewWidth < 1 )
+ if(NewWidth < 1)
  { NewWidth = 1; }
- if( NewHeight < 1 )
+ if(NewHeight < 1)
  { NewHeight = 1; }
  
- InputImage.SetSize( NewWidth, NewHeight );
- InputImage.SetBitDepth( 24 );
+ InputImage.SetSize(NewWidth, NewHeight);
+ InputImage.SetBitDepth(24);
 
  int I,J;
  double ThetaI,ThetaJ;
  
- for( int j=0; j < NewHeight-1 ; j++ )
+ for(int j=0; j < NewHeight-1 ; j++)
  {
   ThetaJ = (double)(j*(OldHeight-1.0))
           /(double)(NewHeight-1.0);
-  J	= (int) floor( ThetaJ );
+  J	= (int) floor(ThetaJ);
   ThetaJ -= J;  
   
-  for( int i=0; i < NewWidth-1 ; i++ )
+  for(int i=0; i < NewWidth-1 ; i++)
   {
    ThetaI = (double)(i*(OldWidth-1.0))
            /(double)(NewWidth-1.0);
-   I = (int) floor( ThetaI );
+   I = (int) floor(ThetaI);
    ThetaI -= I;  
    
    InputImage(i,j)->Red = (ebmpBYTE) 
-                          ( (1.0-ThetaI-ThetaJ+ThetaI*ThetaJ)*(OldImage(I,J)->Red)
+                          ((1.0-ThetaI-ThetaJ+ThetaI*ThetaJ)*(OldImage(I,J)->Red)
                            +(ThetaI-ThetaI*ThetaJ)*(OldImage(I+1,J)->Red)   
                            +(ThetaJ-ThetaI*ThetaJ)*(OldImage(I,J+1)->Red)   
-                           +(ThetaI*ThetaJ)*(OldImage(I+1,J+1)->Red) );
+                           +(ThetaI*ThetaJ)*(OldImage(I+1,J+1)->Red));
    InputImage(i,j)->Green = (ebmpBYTE) 
-                          ( (1.0-ThetaI-ThetaJ+ThetaI*ThetaJ)*OldImage(I,J)->Green
+                          ((1.0-ThetaI-ThetaJ+ThetaI*ThetaJ)*OldImage(I,J)->Green
                            +(ThetaI-ThetaI*ThetaJ)*OldImage(I+1,J)->Green   
                            +(ThetaJ-ThetaI*ThetaJ)*OldImage(I,J+1)->Green   
-                           +(ThetaI*ThetaJ)*OldImage(I+1,J+1)->Green );  
+                           +(ThetaI*ThetaJ)*OldImage(I+1,J+1)->Green);  
    InputImage(i,j)->Blue = (ebmpBYTE) 
-                          ( (1.0-ThetaI-ThetaJ+ThetaI*ThetaJ)*OldImage(I,J)->Blue
+                          ((1.0-ThetaI-ThetaJ+ThetaI*ThetaJ)*OldImage(I,J)->Blue
                            +(ThetaI-ThetaI*ThetaJ)*OldImage(I+1,J)->Blue   
                            +(ThetaJ-ThetaI*ThetaJ)*OldImage(I,J+1)->Blue   
-                           +(ThetaI*ThetaJ)*OldImage(I+1,J+1)->Blue ); 
+                           +(ThetaI*ThetaJ)*OldImage(I+1,J+1)->Blue); 
   }
    InputImage(NewWidth-1,j)->Red = (ebmpBYTE) 
-                            ( (1.0-ThetaJ)*(OldImage(OldWidth-1,J)->Red)
-                          + ThetaJ*(OldImage(OldWidth-1,J+1)->Red) ); 
+                            ((1.0-ThetaJ)*(OldImage(OldWidth-1,J)->Red)
+                          + ThetaJ*(OldImage(OldWidth-1,J+1)->Red)); 
    InputImage(NewWidth-1,j)->Green = (ebmpBYTE) 
-                            ( (1.0-ThetaJ)*(OldImage(OldWidth-1,J)->Green)
-                          + ThetaJ*(OldImage(OldWidth-1,J+1)->Green) ); 
+                            ((1.0-ThetaJ)*(OldImage(OldWidth-1,J)->Green)
+                          + ThetaJ*(OldImage(OldWidth-1,J+1)->Green)); 
    InputImage(NewWidth-1,j)->Blue = (ebmpBYTE) 
-                            ( (1.0-ThetaJ)*(OldImage(OldWidth-1,J)->Blue)
-                          + ThetaJ*(OldImage(OldWidth-1,J+1)->Blue) ); 
+                            ((1.0-ThetaJ)*(OldImage(OldWidth-1,J)->Blue)
+                          + ThetaJ*(OldImage(OldWidth-1,J+1)->Blue)); 
  } 
 
- for( int i=0 ; i < NewWidth-1 ; i++ )
+ for(int i=0 ; i < NewWidth-1 ; i++)
  {
   ThetaI = (double)(i*(OldWidth-1.0))
           /(double)(NewWidth-1.0);
-  I = (int) floor( ThetaI );
+  I = (int) floor(ThetaI);
   ThetaI -= I;  
   InputImage(i,NewHeight-1)->Red = (ebmpBYTE) 
-                            ( (1.0-ThetaI)*(OldImage(I,OldHeight-1)->Red)
-                          + ThetaI*(OldImage(I,OldHeight-1)->Red) ); 
+                            ((1.0-ThetaI)*(OldImage(I,OldHeight-1)->Red)
+                          + ThetaI*(OldImage(I,OldHeight-1)->Red)); 
   InputImage(i,NewHeight-1)->Green = (ebmpBYTE) 
-                            ( (1.0-ThetaI)*(OldImage(I,OldHeight-1)->Green)
-                          + ThetaI*(OldImage(I,OldHeight-1)->Green) ); 
+                            ((1.0-ThetaI)*(OldImage(I,OldHeight-1)->Green)
+                          + ThetaI*(OldImage(I,OldHeight-1)->Green)); 
   InputImage(i,NewHeight-1)->Blue = (ebmpBYTE) 
-                            ( (1.0-ThetaI)*(OldImage(I,OldHeight-1)->Blue)
-                          + ThetaI*(OldImage(I,OldHeight-1)->Blue) ); 
+                            ((1.0-ThetaI)*(OldImage(I,OldHeight-1)->Blue)
+                          + ThetaI*(OldImage(I,OldHeight-1)->Blue)); 
  }
  
  *InputImage(NewWidth-1,NewHeight-1) = *OldImage(OldWidth-1,OldHeight-1);

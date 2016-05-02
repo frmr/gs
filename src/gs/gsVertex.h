@@ -32,22 +32,22 @@ namespace gs
         int                             riverId;
 
     private:
-        bool                            CompareTargetHeights( const gs::Link<gs::Vertex>& a, const gs::Link<gs::Vertex>& b ) const;
+        bool                            CompareTargetHeights(const gs::Link<gs::Vertex>& a, const gs::Link<gs::Vertex>& b) const;
 
     public:
-        void                            AddLink( const gs::Link<gs::Vertex>& link );
-        void                            AddTile( const shared_ptr<gs::Tile> tile );
+        void                            AddLink(const gs::Link<gs::Vertex>& link);
+        void                            AddTile(const shared_ptr<gs::Tile> tile);
         void                            CalculateHeight();
         vector<shared_ptr<gs::Edge>>    GetEdges() const;
-        shared_ptr<gs::Edge>            GetEdgeWith( const shared_ptr<gs::Vertex> refVertex ) const;
+        shared_ptr<gs::Edge>            GetEdgeWith(const shared_ptr<gs::Vertex> refVertex) const;
         double                          GetHeight() const;
         gs::Vec3f                       GetPosition() const;
         bool                            IsRiver() const;
-        void                            SetPosition( const gs::Vec3f& newPosition );
-        bool                            SetRiver( const int newRiverId );
+        void                            SetPosition(const gs::Vec3f& newPosition);
+        bool                            SetRiver(const int newRiverId);
 
     public:
-        explicit Vertex( const gs::Vec3f& position );
+        explicit Vertex(const gs::Vec3f& position);
     };
 
     typedef shared_ptr<gs::Vertex> VertexPtr;

@@ -33,28 +33,28 @@ namespace gs
         gs::Array<GLubyte>  data;
 
     public:
-        void        Blit( const shared_ptr<const Texture>& source, const gs::Vec2i& offset );
-        bool        CheckCoordIsValid( const int x, const int y ) const;
+        void        Blit(const shared_ptr<const Texture>& source, const gs::Vec2i& offset);
+        bool        CheckCoordIsValid(const int x, const int y) const;
         int         GetArea() const;
-        gs::Color   GetColor( const int x, const int y ) const;
-        GLubyte     GetBlue( const int x, const int y ) const;
+        gs::Color   GetColor(const int x, const int y) const;
+        GLubyte     GetBlue(const int x, const int y) const;
         GLubyte*    GetData() const;
-        GLubyte     GetGreen( const int x, const int y ) const;
+        GLubyte     GetGreen(const int x, const int y) const;
         int         GetHeight() const;
-        GLubyte     GetRed( const int x, const int y ) const;
+        GLubyte     GetRed(const int x, const int y) const;
         int         GetWidth() const;
         GLuint      Push() const;
-        bool        SetBlue( const int x, const int y, const GLubyte blue );
-        bool        SetColor( const int x, const int y, const GLubyte red, const GLubyte green, const GLubyte blue );
-        //bool        SetColor( const int x, const int y, const gs::Vec3f& color );
-        bool        SetColor( const int x, const int y, const gs::Color& color );
-        bool        SetGreen( const int x, const int y, const GLubyte green );
-        bool        SetRed( const int x, const int y, const GLubyte red );
-        void        WriteToFile( const string& filename ) const;
+        bool        SetBlue(const int x, const int y, const GLubyte blue);
+        bool        SetColor(const int x, const int y, const GLubyte red, const GLubyte green, const GLubyte blue);
+        //bool        SetColor(const int x, const int y, const gs::Vec3f& color);
+        bool        SetColor(const int x, const int y, const gs::Color& color);
+        bool        SetGreen(const int x, const int y, const GLubyte green);
+        bool        SetRed(const int x, const int y, const GLubyte red);
+        void        WriteToFile(const string& filename) const;
 
     public:
-        Texture( const int width, const int height );
-        explicit Texture( const string& filename );
+        Texture(const int width, const int height);
+        explicit Texture(const string& filename);
     };
 }
 #endif // GS_TILE_TEXTURE_H

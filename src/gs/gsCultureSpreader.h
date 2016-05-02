@@ -20,13 +20,13 @@ namespace gs
 
     private:
         void            CleanFrontier();
-        gs::LandTilePtr SelectRandomTileFromVector( const vector<gs::LandTilePtr> tiles, gs::RandomRange<double>& randomIndex ) const;
+        gs::LandTilePtr SelectRandomTileFromVector(const vector<gs::LandTilePtr> tiles, gs::RandomRange<double>& randomIndex) const;
 
     public:
         bool Spread();
 
     public:
-        CultureSpreader( const unsigned int speed, const gs::LandTilePtr origin, const shared_ptr<gs::Culture> value, const gs::LandTile::Terrain terrainPreference );
+        CultureSpreader(const unsigned int speed, const gs::LandTilePtr origin, const shared_ptr<gs::Culture> value, const gs::LandTile::Terrain terrainPreference);
     };
 }
 

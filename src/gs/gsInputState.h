@@ -30,7 +30,7 @@ namespace gs
     public:
         void	ResetAll();
         void    ResetPresses();
-        //void	Update( const EngineConfig &engineCfg );
+        //void	Update(const EngineConfig &engineCfg);
         void	Update();
 
         bool 	GetUp() const;

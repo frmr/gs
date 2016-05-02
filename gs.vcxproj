@@ -1,0 +1,486 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{FC594946-252A-4A1C-B2E3-957FC279EDCD}</ProjectGuid>
+    <RootNamespace>gs</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>bin\$(Configuration)$(Platform)\</OutDir>
+    <IntDir>obj\$(Configuration)$(Platform)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>bin\$(Configuration)$(Platform)\</OutDir>
+    <IntDir>obj\$(Configuration)$(Platform)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>include\SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/DNOMINMAX %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>include\SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/DNOMINMAX %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>lib\SDL2\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>include\SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/DNOMINMAX %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <EnforceTypeConversionRules>true</EnforceTypeConversionRules>
+      <AdditionalIncludeDirectories>include\SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/DNOMINMAX %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>lib\SDL2\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\cck\cckBoundBox.cpp" />
+    <ClCompile Include="src\cck\cckGeoCoord.cpp" />
+    <ClCompile Include="src\cck\cckGlobe.cpp" />
+    <ClCompile Include="src\cck\cckGlobeBspTree.cpp" />
+    <ClCompile Include="src\cck\cckGlobeEdge.cpp" />
+    <ClCompile Include="src\cck\cckGlobeLink.cpp" />
+    <ClCompile Include="src\cck\cckGlobeNode.cpp" />
+    <ClCompile Include="src\cck\cckGlobeSegment.cpp" />
+    <ClCompile Include="src\cck\cckGlobeSide.cpp" />
+    <ClCompile Include="src\cck\cckGlobeTriangle.cpp" />
+    <ClCompile Include="src\cck\cckMath.cpp" />
+    <ClCompile Include="src\cck\cckSimplexNoise.cpp" />
+    <ClCompile Include="src\cck\cckVec3.cpp" />
+    <ClCompile Include="src\EasyBMP\EasyBMP.cpp" />
+    <ClCompile Include="src\gl3w\gl3w.c" />
+    <ClCompile Include="src\gs\gsBiomeSpreader.cpp" />
+    <ClCompile Include="src\gs\gsBiomeTextureGenerator.cpp" />
+    <ClCompile Include="src\gs\gsCamera.cpp" />
+    <ClCompile Include="src\gs\gsColor.cpp" />
+    <ClCompile Include="src\gs\gsConfig.cpp" />
+    <ClCompile Include="src\gs\gsCulture.cpp" />
+    <ClCompile Include="src\gs\gsCultureSpreader.cpp" />
+    <ClCompile Include="src\gs\gsEdge.cpp" />
+    <ClCompile Include="src\gs\gsGlobe.cpp" />
+    <ClCompile Include="src\gs\gsInputState.cpp" />
+    <ClCompile Include="src\gs\gsLandTile.cpp" />
+    <ClCompile Include="src\gs\gsLandTileBuffer.cpp" />
+    <ClCompile Include="src\gs\gsLandTileGroup.cpp" />
+    <ClCompile Include="src\gs\gsShader.cpp" />
+    <ClCompile Include="src\gs\gsTexture.cpp" />
+    <ClCompile Include="src\gs\gsTextureGenerator.cpp" />
+    <ClCompile Include="src\gs\gsTile.cpp" />
+    <ClCompile Include="src\gs\gsTileBuffer.cpp" />
+    <ClCompile Include="src\gs\gsTileGroup.cpp" />
+    <ClCompile Include="src\gs\gsTileGroupManager.cpp" />
+    <ClCompile Include="src\gs\gsVertex.cpp" />
+    <ClCompile Include="src\gs\gsWaterTile.cpp" />
+    <ClCompile Include="src\gs\gsWaterTileBuffer.cpp" />
+    <ClCompile Include="src\gs\gsWaterTileGroup.cpp" />
+    <ClCompile Include="src\lodepng\lodepng.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\matrix\Matrices.cpp" />
+    <ClCompile Include="src\voronoi\src\beachline.cpp" />
+    <ClCompile Include="src\voronoi\src\mpreal\mpvec3.cpp" />
+    <ClCompile Include="src\voronoi\src\mp_sample_generator.cpp" />
+    <ClCompile Include="src\voronoi\src\priqueue.cpp" />
+    <ClCompile Include="src\voronoi\src\voronoi.cpp" />
+    <ClCompile Include="src\voronoi\src\voronoi_cell.cpp" />
+    <ClCompile Include="src\voronoi\src\voronoi_event.cpp" />
+    <ClCompile Include="src\voronoi\src\voronoi_generator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\cck\cck.h" />
+    <ClInclude Include="src\cck\cckBoundBox.h" />
+    <ClInclude Include="src\cck\cckError.h" />
+    <ClInclude Include="src\cck\cckGeoCoord.h" />
+    <ClInclude Include="src\cck\cckGlobe.h" />
+    <ClInclude Include="src\cck\cckMath.h" />
+    <ClInclude Include="src\cck\cckSimplexNoise.h" />
+    <ClInclude Include="src\cck\cckVec3.h" />
+    <ClInclude Include="src\EasyBMP\EasyBMP.h" />
+    <ClInclude Include="src\EasyBMP\EasyBMP_BMP.h" />
+    <ClInclude Include="src\EasyBMP\EasyBMP_DataStructures.h" />
+    <ClInclude Include="src\EasyBMP\EasyBMP_VariousBMPutilities.h" />
+    <ClInclude Include="src\gl3w\gl3w.h" />
+    <ClInclude Include="src\gl3w\glcorearb.h" />
+    <ClInclude Include="src\gs\gsArray.h" />
+    <ClInclude Include="src\gs\gsBinarySearchTree.h" />
+    <ClInclude Include="src\gs\gsBiomeSpreader.h" />
+    <ClInclude Include="src\gs\gsBiomeTextureGenerator.h" />
+    <ClInclude Include="src\gs\gsBoundingBox.h" />
+    <ClInclude Include="src\gs\gsCamera.h" />
+    <ClInclude Include="src\gs\gsColor.h" />
+    <ClInclude Include="src\gs\gsConfig.h" />
+    <ClInclude Include="src\gs\gsCulture.h" />
+    <ClInclude Include="src\gs\gsCultureSpreader.h" />
+    <ClInclude Include="src\gs\gsEdge.h" />
+    <ClInclude Include="src\gs\gsFullscreenQuad.h" />
+    <ClInclude Include="src\gs\gsGlobe.h" />
+    <ClInclude Include="src\gs\gsInputState.h" />
+    <ClInclude Include="src\gs\gsLandTile.h" />
+    <ClInclude Include="src\gs\gsLandTileBuffer.h" />
+    <ClInclude Include="src\gs\gsLandTileGroup.h" />
+    <ClInclude Include="src\gs\gsLink.h" />
+    <ClInclude Include="src\gs\gsMath.h" />
+    <ClInclude Include="src\gs\gsMatrixStack.h" />
+    <ClInclude Include="src\gs\gsRandomRange.h" />
+    <ClInclude Include="src\gs\gsRenderer.h" />
+    <ClInclude Include="src\gs\gsShader.h" />
+    <ClInclude Include="src\gs\gsSpreader.h" />
+    <ClInclude Include="src\gs\gsTexture.h" />
+    <ClInclude Include="src\gs\gsTextureGenerator.h" />
+    <ClInclude Include="src\gs\gsTile.h" />
+    <ClInclude Include="src\gs\gsTileBuffer.h" />
+    <ClInclude Include="src\gs\gsTileGroup.h" />
+    <ClInclude Include="src\gs\gsTileGroupManager.h" />
+    <ClInclude Include="src\gs\gsUserInterface.h" />
+    <ClInclude Include="src\gs\gsVec2.h" />
+    <ClInclude Include="src\gs\gsVec3.h" />
+    <ClInclude Include="src\gs\gsVertex.h" />
+    <ClInclude Include="src\gs\gsWaterTile.h" />
+    <ClInclude Include="src\gs\gsWaterTileBuffer.h" />
+    <ClInclude Include="src\gs\gsWaterTileGroup.h" />
+    <ClInclude Include="src\lodepng\lodepng.h" />
+    <ClInclude Include="src\matrix\Matrices.h" />
+    <ClInclude Include="src\matrix\Vectors.h" />
+    <ClInclude Include="src\voronoi\glm\core\func_common.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\func_exponential.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\func_geometric.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\func_integer.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\func_matrix.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\func_noise.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\func_packing.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\func_trigonometric.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\func_vector_relational.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\hint.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\intrinsic_common.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\intrinsic_exponential.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\intrinsic_geometric.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\intrinsic_matrix.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\intrinsic_trigonometric.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\intrinsic_vector_relational.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\setup.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\type.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\type_float.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\type_gentype.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\type_half.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\type_int.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\type_mat.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\type_mat2x2.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\type_mat2x3.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\type_mat2x4.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\type_mat3x2.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\type_mat3x3.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\type_mat3x4.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\type_mat4x2.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\type_mat4x3.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\type_mat4x4.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\type_size.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\type_vec.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\type_vec1.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\type_vec2.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\type_vec3.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\type_vec4.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\_detail.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\_fixes.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\_swizzle.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\_swizzle_func.hpp" />
+    <ClInclude Include="src\voronoi\glm\core\_vectorize.hpp" />
+    <ClInclude Include="src\voronoi\glm\ext.hpp" />
+    <ClInclude Include="src\voronoi\glm\glm.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtc\half_float.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtc\matrix_access.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtc\matrix_integer.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtc\matrix_inverse.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtc\matrix_transform.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtc\noise.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtc\quaternion.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtc\random.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtc\swizzle.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtc\type_precision.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtc\type_ptr.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\associated_min_max.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\bit.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\closest_point.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\color_cast.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\color_space.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\color_space_YCoCg.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\compatibility.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\component_wise.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\constants.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\epsilon.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\euler_angles.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\extend.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\extented_min_max.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\fast_exponential.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\fast_square_root.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\fast_trigonometry.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\gradient_paint.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\handed_coordinate_space.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\inertia.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\integer.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\intersect.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\int_10_10_10_2.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\log_base.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\matrix_cross_product.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\matrix_interpolation.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\matrix_major_storage.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\matrix_operation.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\matrix_query.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\mixed_product.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\multiple.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\noise.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\norm.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\normal.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\normalize_dot.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\number_precision.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\ocl_type.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\optimum_pow.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\orthonormalize.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\perpendicular.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\polar_coordinates.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\projection.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\quaternion.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\random.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\raw_data.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\reciprocal.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\rotate_vector.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\simd_mat4.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\simd_vec4.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\spline.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\std_based_type.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\string_cast.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\transform.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\transform2.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\ulp.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\unsigned_int.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\vec1.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\vector_access.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\vector_angle.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\vector_query.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\verbose_operator.hpp" />
+    <ClInclude Include="src\voronoi\glm\gtx\wrap.hpp" />
+    <ClInclude Include="src\voronoi\glm\virtrev\xstream.hpp" />
+    <ClInclude Include="src\voronoi\src\beachline.h" />
+    <ClInclude Include="src\voronoi\src\mpreal\mpvec3.h" />
+    <ClInclude Include="src\voronoi\src\mp_sample_generator.h" />
+    <ClInclude Include="src\voronoi\src\priqueue.h" />
+    <ClInclude Include="src\voronoi\src\voronoi.h" />
+    <ClInclude Include="src\voronoi\src\voronoi_cell.h" />
+    <ClInclude Include="src\voronoi\src\voronoi_event.h" />
+    <ClInclude Include="src\voronoi\src\voronoi_event_compare.h" />
+    <ClInclude Include="src\voronoi\src\voronoi_generator.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\voronoi\glm\core\func_common.inl" />
+    <None Include="src\voronoi\glm\core\func_exponential.inl" />
+    <None Include="src\voronoi\glm\core\func_geometric.inl" />
+    <None Include="src\voronoi\glm\core\func_integer.inl" />
+    <None Include="src\voronoi\glm\core\func_matrix.inl" />
+    <None Include="src\voronoi\glm\core\func_noise.inl" />
+    <None Include="src\voronoi\glm\core\func_packing.inl" />
+    <None Include="src\voronoi\glm\core\func_trigonometric.inl" />
+    <None Include="src\voronoi\glm\core\func_vector_relational.inl" />
+    <None Include="src\voronoi\glm\core\intrinsic_common.inl" />
+    <None Include="src\voronoi\glm\core\intrinsic_exponential.inl" />
+    <None Include="src\voronoi\glm\core\intrinsic_geometric.inl" />
+    <None Include="src\voronoi\glm\core\intrinsic_matrix.inl" />
+    <None Include="src\voronoi\glm\core\intrinsic_trigonometric.inl" />
+    <None Include="src\voronoi\glm\core\intrinsic_vector_relational.inl" />
+    <None Include="src\voronoi\glm\core\type_gentype.inl" />
+    <None Include="src\voronoi\glm\core\type_half.inl" />
+    <None Include="src\voronoi\glm\core\type_mat.inl" />
+    <None Include="src\voronoi\glm\core\type_mat2x2.inl" />
+    <None Include="src\voronoi\glm\core\type_mat2x3.inl" />
+    <None Include="src\voronoi\glm\core\type_mat2x4.inl" />
+    <None Include="src\voronoi\glm\core\type_mat3x2.inl" />
+    <None Include="src\voronoi\glm\core\type_mat3x3.inl" />
+    <None Include="src\voronoi\glm\core\type_mat3x4.inl" />
+    <None Include="src\voronoi\glm\core\type_mat4x2.inl" />
+    <None Include="src\voronoi\glm\core\type_mat4x3.inl" />
+    <None Include="src\voronoi\glm\core\type_mat4x4.inl" />
+    <None Include="src\voronoi\glm\core\type_vec.inl" />
+    <None Include="src\voronoi\glm\core\type_vec1.inl" />
+    <None Include="src\voronoi\glm\core\type_vec2.inl" />
+    <None Include="src\voronoi\glm\core\type_vec3.inl" />
+    <None Include="src\voronoi\glm\core\type_vec4.inl" />
+    <None Include="src\voronoi\glm\gtc\half_float.inl" />
+    <None Include="src\voronoi\glm\gtc\matrix_access.inl" />
+    <None Include="src\voronoi\glm\gtc\matrix_inverse.inl" />
+    <None Include="src\voronoi\glm\gtc\matrix_transform.inl" />
+    <None Include="src\voronoi\glm\gtc\noise.inl" />
+    <None Include="src\voronoi\glm\gtc\quaternion.inl" />
+    <None Include="src\voronoi\glm\gtc\random.inl" />
+    <None Include="src\voronoi\glm\gtc\swizzle.inl" />
+    <None Include="src\voronoi\glm\gtc\type_precision.inl" />
+    <None Include="src\voronoi\glm\gtc\type_ptr.inl" />
+    <None Include="src\voronoi\glm\gtx\associated_min_max.inl" />
+    <None Include="src\voronoi\glm\gtx\bit.inl" />
+    <None Include="src\voronoi\glm\gtx\closest_point.inl" />
+    <None Include="src\voronoi\glm\gtx\color_cast.inl" />
+    <None Include="src\voronoi\glm\gtx\color_space.inl" />
+    <None Include="src\voronoi\glm\gtx\color_space_YCoCg.inl" />
+    <None Include="src\voronoi\glm\gtx\compatibility.inl" />
+    <None Include="src\voronoi\glm\gtx\component_wise.inl" />
+    <None Include="src\voronoi\glm\gtx\constants.inl" />
+    <None Include="src\voronoi\glm\gtx\epsilon.inl" />
+    <None Include="src\voronoi\glm\gtx\euler_angles.inl" />
+    <None Include="src\voronoi\glm\gtx\extend.inl" />
+    <None Include="src\voronoi\glm\gtx\extented_min_max.inl" />
+    <None Include="src\voronoi\glm\gtx\fast_exponential.inl" />
+    <None Include="src\voronoi\glm\gtx\fast_square_root.inl" />
+    <None Include="src\voronoi\glm\gtx\fast_trigonometry.inl" />
+    <None Include="src\voronoi\glm\gtx\gradient_paint.inl" />
+    <None Include="src\voronoi\glm\gtx\handed_coordinate_space.inl" />
+    <None Include="src\voronoi\glm\gtx\inertia.inl" />
+    <None Include="src\voronoi\glm\gtx\integer.inl" />
+    <None Include="src\voronoi\glm\gtx\intersect.inl" />
+    <None Include="src\voronoi\glm\gtx\int_10_10_10_2.inl" />
+    <None Include="src\voronoi\glm\gtx\log_base.inl" />
+    <None Include="src\voronoi\glm\gtx\matrix_cross_product.inl" />
+    <None Include="src\voronoi\glm\gtx\matrix_interpolation.inl" />
+    <None Include="src\voronoi\glm\gtx\matrix_major_storage.inl" />
+    <None Include="src\voronoi\glm\gtx\matrix_operation.inl" />
+    <None Include="src\voronoi\glm\gtx\matrix_query.inl" />
+    <None Include="src\voronoi\glm\gtx\mixed_product.inl" />
+    <None Include="src\voronoi\glm\gtx\multiple.inl" />
+    <None Include="src\voronoi\glm\gtx\noise.inl" />
+    <None Include="src\voronoi\glm\gtx\norm.inl" />
+    <None Include="src\voronoi\glm\gtx\normal.inl" />
+    <None Include="src\voronoi\glm\gtx\normalize_dot.inl" />
+    <None Include="src\voronoi\glm\gtx\number_precision.inl" />
+    <None Include="src\voronoi\glm\gtx\ocl_type.inl" />
+    <None Include="src\voronoi\glm\gtx\optimum_pow.inl" />
+    <None Include="src\voronoi\glm\gtx\orthonormalize.inl" />
+    <None Include="src\voronoi\glm\gtx\perpendicular.inl" />
+    <None Include="src\voronoi\glm\gtx\polar_coordinates.inl" />
+    <None Include="src\voronoi\glm\gtx\projection.inl" />
+    <None Include="src\voronoi\glm\gtx\quaternion.inl" />
+    <None Include="src\voronoi\glm\gtx\random.inl" />
+    <None Include="src\voronoi\glm\gtx\raw_data.inl" />
+    <None Include="src\voronoi\glm\gtx\reciprocal.inl" />
+    <None Include="src\voronoi\glm\gtx\rotate_vector.inl" />
+    <None Include="src\voronoi\glm\gtx\simd_mat4.inl" />
+    <None Include="src\voronoi\glm\gtx\simd_vec4.inl" />
+    <None Include="src\voronoi\glm\gtx\spline.inl" />
+    <None Include="src\voronoi\glm\gtx\std_based_type.inl" />
+    <None Include="src\voronoi\glm\gtx\string_cast.inl" />
+    <None Include="src\voronoi\glm\gtx\transform.inl" />
+    <None Include="src\voronoi\glm\gtx\transform2.inl" />
+    <None Include="src\voronoi\glm\gtx\ulp.inl" />
+    <None Include="src\voronoi\glm\gtx\unsigned_int.inl" />
+    <None Include="src\voronoi\glm\gtx\vec1.inl" />
+    <None Include="src\voronoi\glm\gtx\vector_access.inl" />
+    <None Include="src\voronoi\glm\gtx\vector_angle.inl" />
+    <None Include="src\voronoi\glm\gtx\vector_query.inl" />
+    <None Include="src\voronoi\glm\gtx\verbose_operator.inl" />
+    <None Include="src\voronoi\glm\gtx\wrap.inl" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

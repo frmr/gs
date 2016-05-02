@@ -18,7 +18,7 @@ namespace gs
         }
 
     public:
-        FullscreenQuad( const int width, const int height )
+        FullscreenQuad(const int width, const int height)
         {
             const float widthf = (float) width;
             const float heightf = (float) height;
@@ -28,13 +28,13 @@ namespace gs
                                         0.0f, heightf, 0.0f, 0.0f, 1.0f, widthf, heightf, 0.0f, 1.0f, 1.0f, widthf, 0.0f, 0.0f, 1.0f, 0.0f };
 
             //generate vao
-            glGenVertexArrays( 1, &vao );
-            glBindVertexArray( vao );
+            glGenVertexArrays(1, &vao);
+            glBindVertexArray(vao);
 
             //generate vbo
-            glGenBuffers( 1, &vbo );
-            glBindBuffer( GL_ARRAY_BUFFER, vbo );
-            glBufferData( GL_ARRAY_BUFFER, sizeof(float) * dataLength, &data[0], GL_STATIC_DRAW );
+            glGenBuffers(1, &vbo);
+            glBindBuffer(GL_ARRAY_BUFFER, vbo);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(float) * dataLength, &data[0], GL_STATIC_DRAW);
             //define vertices and texture coordinates
             //fill vbo
         }

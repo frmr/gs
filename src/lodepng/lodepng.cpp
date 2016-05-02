@@ -38,8 +38,8 @@ Rename this file to lodepng.cpp to use it for C++, or to lodepng.c to use it for
 #endif /*LODEPNG_COMPILE_CPP*/
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1310) /*Visual Studio: A few warning types are not desired here.*/
-#pragma warning( disable : 4244 ) /*implicit conversions: not warned by gcc -Wall -Wextra and requires too much casts*/
-#pragma warning( disable : 4996 ) /*VS does not like fopen, but fopen_s is not standard C so unusable here*/
+#pragma warning(disable : 4244) /*implicit conversions: not warned by gcc -Wall -Wextra and requires too much casts*/
+#pragma warning(disable : 4996) /*VS does not like fopen, but fopen_s is not standard C so unusable here*/
 #endif /*_MSC_VER */
 
 const char* LODEPNG_VERSION_STRING = "20150418";
@@ -343,7 +343,7 @@ static void lodepng_set32bitInt(unsigned char* buffer, unsigned value)
   buffer[0] = (unsigned char)((value >> 24) & 0xff);
   buffer[1] = (unsigned char)((value >> 16) & 0xff);
   buffer[2] = (unsigned char)((value >>  8) & 0xff);
-  buffer[3] = (unsigned char)((value      ) & 0xff);
+  buffer[3] = (unsigned char)((value     ) & 0xff);
 }
 #endif /*defined(LODEPNG_COMPILE_PNG) || defined(LODEPNG_COMPILE_ENCODER)*/
 
@@ -392,7 +392,7 @@ unsigned lodepng_load_file(unsigned char** out, size_t* outsize, const char* fil
 unsigned lodepng_save_file(const unsigned char* buffer, size_t buffersize, const char* filename)
 {
   FILE* file;
-  file = fopen(filename, "wb" );
+  file = fopen(filename, "wb");
   if(!file) return 79;
   fwrite((char*)buffer , 1 , buffersize, file);
   fclose(file);
@@ -2524,10 +2524,10 @@ static unsigned checkColorValidity(LodePNGColorType colortype, unsigned bd) /*bd
   switch(colortype)
   {
     case 0: if(!(bd == 1 || bd == 2 || bd == 4 || bd == 8 || bd == 16)) return 37; break; /*grey*/
-    case 2: if(!(                                 bd == 8 || bd == 16)) return 37; break; /*RGB*/
-    case 3: if(!(bd == 1 || bd == 2 || bd == 4 || bd == 8            )) return 37; break; /*palette*/
-    case 4: if(!(                                 bd == 8 || bd == 16)) return 37; break; /*grey + alpha*/
-    case 6: if(!(                                 bd == 8 || bd == 16)) return 37; break; /*RGBA*/
+    case 2: if(!(                                bd == 8 || bd == 16)) return 37; break; /*RGB*/
+    case 3: if(!(bd == 1 || bd == 2 || bd == 4 || bd == 8           )) return 37; break; /*palette*/
+    case 4: if(!(                                bd == 8 || bd == 16)) return 37; break; /*grey + alpha*/
+    case 6: if(!(                                bd == 8 || bd == 16)) return 37; break; /*RGBA*/
     default: return 31;
   }
   return 0; /*allowed color type / bits combination*/

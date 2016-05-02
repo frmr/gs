@@ -18,7 +18,7 @@ namespace gs
 
     public:
         Color();
-        Color( const int r, const int g, const int b );
+        Color(const int r, const int g, const int b);
     };
 }
 

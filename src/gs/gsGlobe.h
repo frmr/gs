@@ -65,21 +65,21 @@ namespace gs
     private:
         void                    AssignBufferOffsets();
         void                    BuildBiomeTable();
-        void                    CombineVertices( const vector<glm::dvec3>& corners, gs::Array<vector<gs::VertexPtr>>& buckets, const unsigned int bucketDim, vector<gs::VertexPtr>& cellVertices );
-        void                    CreateTile( const vector<gs::VertexPtr>& cellVertices, const cck::Globe& terrain, const cck::Vec3& centroid );
-        void                    CreateTileEdges( const vector<gs::VertexPtr>& cellVertices );
-        void                    GenerateBiomes( const int numOfSpreaders );
-        void                    GenerateCultures( const int numOfSpreaders );
-        void                    GenerateRivers( const int numOfSpawners );
+        void                    CombineVertices(const vector<glm::dvec3>& corners, gs::Array<vector<gs::VertexPtr>>& buckets, const unsigned int bucketDim, vector<gs::VertexPtr>& cellVertices);
+        void                    CreateTile(const vector<gs::VertexPtr>& cellVertices, const cck::Globe& terrain, const cck::Vec3& centroid);
+        void                    CreateTileEdges(const vector<gs::VertexPtr>& cellVertices);
+        void                    GenerateBiomes(const int numOfSpreaders);
+        void                    GenerateCultures(const int numOfSpreaders);
+        void                    GenerateRivers(const int numOfSpawners);
         void                    GenerateTextures();
-        void                    GenerateTiles( const int numOfTiles );
-        static unsigned int     HashDouble( const double val, const int bucketDim );
-        static void             LinkTiles( const gs::TilePtr source, const gs::TilePtr dest, const gs::EdgePtr edge );
-        gs::LandTile::Biome     LookupRegionBiome( const int id ) const;
+        void                    GenerateTiles(const int numOfTiles);
+        static unsigned int     HashDouble(const double val, const int bucketDim);
+        static void             LinkTiles(const gs::TilePtr source, const gs::TilePtr dest, const gs::EdgePtr edge);
+        gs::LandTile::Biome     LookupRegionBiome(const int id) const;
         void                    SetTileGroupTextureSize();
 
     public:
-        void                    Draw( const gs::Camera& worldCamera ) const;
+        void                    Draw(const gs::Camera& worldCamera) const;
         cck::Globe              GenerateTerrain() const;
         void                    PrintMeshProperties() const;
         void                    Update();

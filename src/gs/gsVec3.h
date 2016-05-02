@@ -20,7 +20,7 @@ namespace gs
 
         double Length() const
         {
-            return sqrt( x * x + y * y + z * z );
+            return sqrt(x * x + y * y + z * z);
         }
 
         Vec3<T>& Reverse()
@@ -42,41 +42,41 @@ namespace gs
 
         gs::Vec2<T> ToVec2()
         {
-            return gs::Vec2<T>( x, y );
+            return gs::Vec2<T>(x, y);
         }
 
         template<typename U>
-        Vec3<T> operator+( const Vec3<U>& rhs ) const
+        Vec3<T> operator+(const Vec3<U>& rhs) const
         {
-            return gs::Vec3<T>( x + (T) rhs.x, y + (T) rhs.y, z + (T) rhs.z );
+            return gs::Vec3<T>(x + (T) rhs.x, y + (T) rhs.y, z + (T) rhs.z);
         }
 
         template<typename U>
-        Vec3<T> operator-( const Vec3<U>& rhs ) const
+        Vec3<T> operator-(const Vec3<U>& rhs) const
         {
-            return gs::Vec3<T>( x - (T) rhs.x, y - (T) rhs.y, z - (T) rhs.z );
+            return gs::Vec3<T>(x - (T) rhs.x, y - (T) rhs.y, z - (T) rhs.z);
         }
 
         template<typename U>
-        Vec3<T> operator*( const U& rhs ) const
+        Vec3<T> operator*(const U& rhs) const
         {
-            return gs::Vec3<T>( x * (T) rhs, y * (T) rhs, z * (T) rhs );
+            return gs::Vec3<T>(x * (T) rhs, y * (T) rhs, z * (T) rhs);
         }
 
         template<typename U>
-        Vec3<T> operator*( const Vec3<U>& rhs ) const
+        Vec3<T> operator*(const Vec3<U>& rhs) const
         {
-            return gs::Vec3<T>( x * (T) rhs.x, y * (T) rhs.y, z * (T) rhs.z );
+            return gs::Vec3<T>(x * (T) rhs.x, y * (T) rhs.y, z * (T) rhs.z);
         }
 
         template<typename U>
-        Vec3<T> operator/( const U& rhs ) const
+        Vec3<T> operator/(const U& rhs) const
         {
-            return gs::Vec3<T>( x / (T) rhs, y / (T) rhs, z / (T) rhs );
+            return gs::Vec3<T>(x / (T) rhs, y / (T) rhs, z / (T) rhs);
         }
 
         template<typename U>
-        Vec3<T>& operator+=( const Vec3<U>& rhs )
+        Vec3<T>& operator+=(const Vec3<U>& rhs)
         {
             x += (T) rhs.x;
             y += (T) rhs.y;
@@ -85,7 +85,7 @@ namespace gs
         }
 
         template<typename U>
-        Vec3<T>& operator-=( const Vec3<U>& rhs )
+        Vec3<T>& operator-=(const Vec3<U>& rhs)
         {
             x -= (T) rhs.x;
             y -= (T) rhs.y;
@@ -94,7 +94,7 @@ namespace gs
         }
 
         template<typename U>
-        Vec3<T>& operator*=( const U& rhs )
+        Vec3<T>& operator*=(const U& rhs)
         {
             x *= (T) rhs;
             y *= (T) rhs;
@@ -103,7 +103,7 @@ namespace gs
         }
 
         template<typename U>
-        Vec3<T>& operator*=( const Vec3<U>& rhs )
+        Vec3<T>& operator*=(const Vec3<U>& rhs)
         {
             x *= (T) rhs.x;
             y *= (T) rhs.y;
@@ -112,7 +112,7 @@ namespace gs
         }
 
         template<typename U>
-        Vec3<T>& operator/=( const U& rhs )
+        Vec3<T>& operator/=(const U& rhs)
         {
             x /= (T) rhs;
             y /= (T) rhs;
@@ -121,31 +121,31 @@ namespace gs
         }
 
         template<typename U>
-        bool operator==( const U& rhs ) const
+        bool operator==(const U& rhs) const
         {
-            return ( x <= (T) rhs.x + epsilon &&
+            return (x <= (T) rhs.x + epsilon &&
                      x >= (T) rhs.x - epsilon &&
                      y <= (T) rhs.y + epsilon &&
                      y >= (T) rhs.y - epsilon &&
                      z <= (T) rhs.z + epsilon &&
-                     z >= (T) rhs.z - epsilon );
+                     z >= (T) rhs.z - epsilon);
         }
 
-        T& operator[]( const int i )
+        T& operator[](const int i)
         {
-            if      ( i == 0 )  { return x; }
-            else if ( i == 1 )  { return y; }
+            if      (i == 0)  { return x; }
+            else if (i == 1)  { return y; }
             else                { return z; }
         }
 
         explicit operator gs::Vec3<double>() const
         {
-            return Vec3<double>( (double) x, (double) y, (double) z );
+            return Vec3<double>((double) x, (double) y, (double) z);
         }
 
         explicit operator gs::Vec3<float>() const
         {
-            return Vec3<float>( (float) x, (float) y, (float) z );
+            return Vec3<float>((float) x, (float) y, (float) z);
         }
 
     public:
@@ -153,8 +153,8 @@ namespace gs
         {
         }
 
-        Vec3<T>( const T& x, const T& y, const T& z )
-            : x( x ), y( y ), z( z )
+        Vec3<T>(const T& x, const T& y, const T& z)
+            : x(x), y(y), z(z)
         {
         }
 

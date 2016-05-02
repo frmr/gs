@@ -114,7 +114,7 @@ namespace detail
     (
         value_type const & x0, value_type const & y0, value_type const & z0,
         value_type const & x1, value_type const & y1, value_type const & z1
-    )
+   )
     {
         this->value[0] = col_type(x0, y0, z0);
         this->value[1] = col_type(x1, y1, z1);
@@ -125,7 +125,7 @@ namespace detail
     (
         col_type const & v0, 
         col_type const & v1
-    )
+   )
     {
         this->value[0] = v0;
         this->value[1] = v1;

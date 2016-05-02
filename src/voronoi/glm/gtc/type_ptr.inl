@@ -290,7 +290,7 @@ namespace glm
 	GLM_FUNC_QUALIFIER T const * value_ptr
 	(
         detail::tquat<T> const & q
-    )
+   )
 	{
 		return &(q[0]);
 	}

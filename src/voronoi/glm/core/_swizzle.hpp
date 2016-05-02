@@ -179,7 +179,7 @@ namespace detail
 			for (int i = 0; i < N; ++i)
 				t[i] = that[i];
 			for (int i = 0; i < N; ++i)
-				op( (*this)[i], t[i] );
+				op((*this)[i], t[i]);
 		}
     };
 
@@ -223,17 +223,17 @@ namespace detail
 //
 #define _GLM_SWIZZLE_VECTOR_BINARY_OPERATOR_IMPLEMENTATION(OPERAND)                 \
 	_GLM_SWIZZLE_TEMPLATE2                                                          \
-	V operator OPERAND ( const _GLM_SWIZZLE_TYPE1& a, const _GLM_SWIZZLE_TYPE2& b)  \
+	V operator OPERAND (const _GLM_SWIZZLE_TYPE1& a, const _GLM_SWIZZLE_TYPE2& b)  \
 	{                                                                               \
 		return a() OPERAND b();                                                     \
 	}                                                                               \
 	_GLM_SWIZZLE_TEMPLATE1                                                          \
-	V operator OPERAND ( const _GLM_SWIZZLE_TYPE1& a, const V& b)                   \
+	V operator OPERAND (const _GLM_SWIZZLE_TYPE1& a, const V& b)                   \
 	{                                                                               \
 		return a() OPERAND b;                                                       \
 	}                                                                               \
 	_GLM_SWIZZLE_TEMPLATE1                                                          \
-	V operator OPERAND ( const V& a, const _GLM_SWIZZLE_TYPE1& b)                   \
+	V operator OPERAND (const V& a, const _GLM_SWIZZLE_TYPE1& b)                   \
 	{                                                                               \
 		return a OPERAND b();                                                       \
 	}
@@ -243,12 +243,12 @@ namespace detail
 //
 #define _GLM_SWIZZLE_SCALAR_BINARY_OPERATOR_IMPLEMENTATION(OPERAND)                 \
 	_GLM_SWIZZLE_TEMPLATE1                                                          \
-	V operator OPERAND ( const _GLM_SWIZZLE_TYPE1& a, const T& b)                   \
+	V operator OPERAND (const _GLM_SWIZZLE_TYPE1& a, const T& b)                   \
 	{                                                                               \
 		return a() OPERAND b;                                                       \
 	}                                                                               \
 	_GLM_SWIZZLE_TEMPLATE1                                                          \
-	V operator OPERAND ( const T& a, const _GLM_SWIZZLE_TYPE1& b)                   \
+	V operator OPERAND (const T& a, const _GLM_SWIZZLE_TYPE1& b)                   \
 	{                                                                               \
 		return a OPERAND b();                                                       \
 	}

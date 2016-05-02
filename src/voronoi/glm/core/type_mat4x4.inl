@@ -125,7 +125,7 @@ namespace detail
         value_type const & x1, value_type const & y1, value_type const & z1, value_type const & w1,
         value_type const & x2, value_type const & y2, value_type const & z2, value_type const & w2,
         value_type const & x3, value_type const & y3, value_type const & z3, value_type const & w3
-    )
+   )
     {
         this->value[0] = col_type(x0, y0, z0, w0);
         this->value[1] = col_type(x1, y1, z1, w1);
@@ -140,7 +140,7 @@ namespace detail
         col_type const & v1, 
         col_type const & v2,
         col_type const & v3
-    )
+   )
     {
         this->value[0] = v0;
         this->value[1] = v1;

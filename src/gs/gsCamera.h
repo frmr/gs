@@ -18,7 +18,7 @@ namespace gs
             float       latitude;
             float       longitude;
             float       zoom;     //between 0.0 and 1.0
-            gs::Vec3f   position;
+            gs::Vec3d   position;
 
             Matrix4     viewMatrix;
             Matrix4     projectionMatrix;
@@ -28,17 +28,17 @@ namespace gs
             void NormalizeLongitude();
 
         public:
-            //void ApplyTransformation( gs::MatrixStack<Matrix4>& matrix ) const;
+            //void ApplyTransformation(gs::MatrixStack<Matrix4>& matrix) const;
             Matrix4 GetViewMatrix() const;
             Matrix4 GetProjectionMatrix() const;
-            void    Move( const double latitudeChange, const double longitudeChange );
-            void    SetOrthographic( const float left, const float right, const float bottom, const float top, const float nearVal, const float farVal );
-            void    Update( InputState& input );
+            void    Move(const double latitudeChange, const double longitudeChange);
+            void    SetOrthographic(const float left, const float right, const float bottom, const float top, const float nearVal, const float farVal);
+            void    Update(InputState& input);
             void    UpdateViewMatrix();
 
         public:
-            explicit Camera( const float aspectRatio );
-            Camera( const float aspectRatio, const double latitude, const double longitude );
+            explicit Camera(const float aspectRatio);
+            //Camera(const float aspectRatio, const double latitude, const double longitude); //TODO: implement
     };
 }
 

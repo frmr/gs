@@ -11,20 +11,20 @@ using std::endl;
 
 int gs::Vertex::idCounter = 0;
 
-void gs::Vertex::AddLink( const gs::Link<gs::Vertex>& link )
+void gs::Vertex::AddLink(const gs::Link<gs::Vertex>& link)
 {
-    links.push_back( link );
+    links.push_back(link);
 }
 
-void gs::Vertex::AddTile( const shared_ptr<gs::Tile> tile )
+void gs::Vertex::AddTile(const shared_ptr<gs::Tile> tile)
 {
-    tiles.push_back( tile );
+    tiles.push_back(tile);
 }
 
 void gs::Vertex::CalculateHeight()
 {
     double total = 0;
-    for ( const auto& tile : tiles )
+    for (const auto& tile : tiles)
     {
         total += tile->GetHeight();
     }
@@ -36,11 +36,11 @@ vector<shared_ptr<gs::Edge>> gs::Vertex::GetEdges() const
     return edges;
 }
 
-shared_ptr<gs::Edge> gs::Vertex::GetEdgeWith( const shared_ptr<gs::Vertex> refVertex ) const
+shared_ptr<gs::Edge> gs::Vertex::GetEdgeWith(const shared_ptr<gs::Vertex> refVertex) const
 {
-    for ( auto link : links )
+    for (auto link : links)
     {
-        if ( link.edge->HasVertex( refVertex ) )
+        if (link.edge->HasVertex(refVertex))
         {
             return link.edge;
         }
@@ -60,22 +60,22 @@ gs::Vec3f gs::Vertex::GetPosition() const
 
 bool gs::Vertex::IsRiver() const
 {
-    return ( riverId != -1 );
+    return (riverId != -1);
 }
 
-void gs::Vertex::SetPosition( const gs::Vec3f& newPosition )
+void gs::Vertex::SetPosition(const gs::Vec3f& newPosition)
 {
     position = newPosition;
 }
 
-bool gs::Vertex::SetRiver( const int newRiverId )
+bool gs::Vertex::SetRiver(const int newRiverId)
 {
-    if ( riverId == newRiverId )
+    if (riverId == newRiverId)
     {
         //river converges with itself, which is impossible
         return false;
     }
-    else if ( riverId != -1 )
+    else if (riverId != -1)
     {
         //two rivers converge
         return true;
@@ -84,9 +84,9 @@ bool gs::Vertex::SetRiver( const int newRiverId )
     //else, the vertex is not already a river
 
     //stop if vertex touches the sea
-    for ( const auto& tile : tiles )
+    for (const auto& tile : tiles)
     {
-        if ( tile->GetSurface() == gs::Tile::Type::WATER )
+        if (tile->GetSurface() == gs::Tile::Type::WATER)
         {
             return true;
         }
@@ -98,16 +98,16 @@ bool gs::Vertex::SetRiver( const int newRiverId )
 
     bool childSucceeded = false;
 
-    while ( !childSucceeded )
+    while (!childSucceeded)
     {
         gs::EdgePtr lowestEdge = nullptr;
         gs::VertexPtr lowestVertex = nullptr;
         double lowestHeight = std::numeric_limits<double>::max();
 
-        for ( auto& link : links )
+        for (auto& link : links)
         {
-            bool targetVisited = ( std::find( visitedIds.begin(), visitedIds.end(), link.target->id ) != visitedIds.end() );
-            if ( !targetVisited && link.target->GetHeight() < lowestHeight )
+            bool targetVisited = (std::find(visitedIds.begin(), visitedIds.end(), link.target->id) != visitedIds.end());
+            if (!targetVisited && link.target->GetHeight() < lowestHeight)
             {
                 lowestEdge = link.edge;
                 lowestVertex = link.target;
@@ -115,21 +115,21 @@ bool gs::Vertex::SetRiver( const int newRiverId )
             }
         }
 
-        if ( lowestEdge == nullptr )
+        if (lowestEdge == nullptr)
         {
             riverId = -1;
             return false;
         }
         else
         {
-            childSucceeded = lowestVertex->SetRiver( newRiverId );
-            if ( childSucceeded )
+            childSucceeded = lowestVertex->SetRiver(newRiverId);
+            if (childSucceeded)
             {
                 lowestEdge->SetRiver();
             }
             else
             {
-                visitedIds.push_back( lowestVertex->id );
+                visitedIds.push_back(lowestVertex->id);
             }
         }
 
@@ -137,10 +137,10 @@ bool gs::Vertex::SetRiver( const int newRiverId )
     return true;
 }
 
-gs::Vertex::Vertex( const gs::Vec3f& position )
-    :   id( idCounter++ ),
-        position( position ),
-        height( 0.0 ),
-        riverId( -1 )
+gs::Vertex::Vertex(const gs::Vec3f& position)
+    :   id(idCounter++),
+        position(position),
+        height(0.0),
+        riverId(-1)
 {
 }

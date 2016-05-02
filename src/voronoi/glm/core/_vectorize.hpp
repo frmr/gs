@@ -28,20 +28,20 @@
 
 #define VECTORIZE2_VEC(func) \
     template <typename T> \
-    GLM_FUNC_QUALIFIER detail::tvec2<T> func( \
+    GLM_FUNC_QUALIFIER detail::tvec2<T> func(\
 		detail::tvec2<T> const & v) \
     { \
-        return detail::tvec2<T>( \
+        return detail::tvec2<T>(\
             func(v.x), \
             func(v.y)); \
     }
 
 #define VECTORIZE3_VEC(func) \
     template <typename T> \
-    GLM_FUNC_QUALIFIER detail::tvec3<T> func( \
+    GLM_FUNC_QUALIFIER detail::tvec3<T> func(\
 		detail::tvec3<T> const & v) \
     { \
-        return detail::tvec3<T>( \
+        return detail::tvec3<T>(\
             func(v.x), \
             func(v.y), \
             func(v.z)); \
@@ -49,10 +49,10 @@
 
 #define VECTORIZE4_VEC(func) \
     template <typename T> \
-    GLM_FUNC_QUALIFIER detail::tvec4<T> func( \
+    GLM_FUNC_QUALIFIER detail::tvec4<T> func(\
 		detail::tvec4<T> const & v) \
     { \
-        return detail::tvec4<T>( \
+        return detail::tvec4<T>(\
             func(v.x), \
             func(v.y), \
             func(v.z), \
@@ -67,12 +67,12 @@
 #define VECTORIZE2_VEC_SCA(func) \
     template <typename T> \
     GLM_FUNC_QUALIFIER detail::tvec2<T> func \
-	( \
+	(\
 		detail::tvec2<T> const & x,  \
 		typename detail::tvec2<T>::value_type const & y \
 	) \
     { \
-        return detail::tvec2<T>( \
+        return detail::tvec2<T>(\
             func(x.x, y), \
             func(x.y, y)); \
     }
@@ -80,12 +80,12 @@
 #define VECTORIZE3_VEC_SCA(func) \
     template <typename T> \
     GLM_FUNC_QUALIFIER detail::tvec3<T> func \
-	( \
+	(\
 		detail::tvec3<T> const & x,  \
 		typename detail::tvec3<T>::value_type const & y \
 	) \
     { \
-        return detail::tvec3<T>( \
+        return detail::tvec3<T>(\
             func(x.x, y), \
             func(x.y, y), \
             func(x.z, y)); \
@@ -94,12 +94,12 @@
 #define VECTORIZE4_VEC_SCA(func) \
     template <typename T> \
     GLM_FUNC_QUALIFIER detail::tvec4<T> func \
-	( \
+	(\
 		detail::tvec4<T> const & x,  \
 		typename detail::tvec4<T>::value_type const & y \
 	) \
     { \
-        return detail::tvec4<T>( \
+        return detail::tvec4<T>(\
             func(x.x, y), \
             func(x.y, y), \
             func(x.z, y), \
@@ -114,12 +114,12 @@
 #define VECTORIZE2_VEC_VEC(func) \
     template <typename T> \
     GLM_FUNC_QUALIFIER detail::tvec2<T> func \
-	( \
+	(\
 		detail::tvec2<T> const & x,  \
 		detail::tvec2<T> const & y \
 	) \
     { \
-        return detail::tvec2<T>( \
+        return detail::tvec2<T>(\
             func(x.x, y.x), \
             func(x.y, y.y)); \
     }
@@ -127,12 +127,12 @@
 #define VECTORIZE3_VEC_VEC(func) \
     template <typename T> \
     GLM_FUNC_QUALIFIER detail::tvec3<T> func \
-	( \
+	(\
 		detail::tvec3<T> const & x,  \
 		detail::tvec3<T> const & y \
 	) \
     { \
-        return detail::tvec3<T>( \
+        return detail::tvec3<T>(\
             func(x.x, y.x), \
             func(x.y, y.y), \
             func(x.z, y.z)); \
@@ -141,12 +141,12 @@
 #define VECTORIZE4_VEC_VEC(func) \
     template <typename T> \
     GLM_FUNC_QUALIFIER detail::tvec4<T> func \
-	( \
+	(\
 		detail::tvec4<T> const & x,  \
 		detail::tvec4<T> const & y \
 	) \
     { \
-        return detail::tvec4<T>( \
+        return detail::tvec4<T>(\
             func(x.x, y.x), \
             func(x.y, y.y), \
             func(x.z, y.z), \

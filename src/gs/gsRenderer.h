@@ -42,12 +42,12 @@ namespace gs
         void RenderUi() const;
 
     public:
-        bool SetResolution( const int width, const int height );
-        void Render( const gs::Camera& worldCamera, const gs::Camera& interfaceCamera, const gs::UserInterface& ui ) const;
-        //void Update( const gs::Globe& globe );
+        bool SetResolution(const int width, const int height);
+        void Render(const gs::Camera& worldCamera, const gs::Camera& interfaceCamera, const gs::UserInterface& ui) const;
+        //void Update(const gs::Globe& globe);
 
     public:
-        Renderer( const SDL_GLContext &context, const bool fullscreen, const bool vsync );
+        Renderer(const SDL_GLContext &context, const bool fullscreen, const bool vsync);
     };
 }
 

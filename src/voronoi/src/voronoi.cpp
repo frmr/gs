@@ -111,7 +111,7 @@ void Voronoi::processCircleEvent(CircleEvent* circle)
 
 mpvec3 Voronoi::circumcenter(mpvec3 i, mpvec3 j, mpvec3 k)
 {
-    return mpvec3::normalize( mpvec3::cross((i-j),(k-j)) );
+    return mpvec3::normalize(mpvec3::cross((i-j),(k-j)));
 }
 
 long double Voronoi::circleBottom(mpvec3 cc, mpvec3 p)
@@ -125,7 +125,7 @@ void Voronoi::addCircleEventProcessSite(SkipNode* node)
     SiteEvent* s2 = node->site;
     SiteEvent* s3 = node->next->site;
 
-    mpvec3 cc = circumcenter( s1->point, s2->point, s3->point );
+    mpvec3 cc = circumcenter(s1->point, s2->point, s3->point);
     long double small_polar = acos(mpvec3::dot(cc,s2->point));
     long double large_polar = acos(cc.z);
 
@@ -137,7 +137,7 @@ void Voronoi::addCircleEventProcessCircle(SkipNode* node)
     SiteEvent* s1 = node->prev->site;
     SiteEvent* s2 = node->site;
     SiteEvent* s3 = node->next->site;
-    mpvec3 cc = circumcenter( s1->point, s2->point, s3->point );
+    mpvec3 cc = circumcenter(s1->point, s2->point, s3->point);
     long double small_polar = acos(mpvec3::dot(cc,s2->point));
     long double large_polar = acos(cc.z);
 

@@ -65,17 +65,17 @@ namespace glm
 	GLM_FUNC_QUALIFIER T noise1(glm::detail::tvec2<T> const & v)
 	{
 		detail::tvec4<T> const C = detail::tvec4<T>(
-													T( 0.211324865405187),  // (3.0 -  sqrt(3.0)) / 6.0
-													T( 0.366025403784439),  //  0.5 * (sqrt(3.0)  - 1.0)
+													T(0.211324865405187),  // (3.0 -  sqrt(3.0)) / 6.0
+													T(0.366025403784439),  //  0.5 * (sqrt(3.0)  - 1.0)
 													T(-0.577350269189626),	// -1.0 + 2.0 * C.x
-													T( 0.024390243902439)); //  1.0 / 41.0
+													T(0.024390243902439)); //  1.0 / 41.0
 		
 		// First corner
 		detail::tvec2<T> i  = floor(v + dot(v, detail::tvec2<T>(C[1])));
 		detail::tvec2<T> x0 = v -   i + dot(i, detail::tvec2<T>(C[0]));
 		
 		// Other corners
-		//i1.x = step( x0.y, x0.x ); // x0.x > x0.y ? 1.0 : 0.0
+		//i1.x = step(x0.y, x0.x); // x0.x > x0.y ? 1.0 : 0.0
 		//i1.y = 1.0 - i1.x;
 		detail::tvec2<T> i1 = (x0.x > x0.y) ? detail::tvec2<T>(1, 0) : detail::tvec2<T>(0, 1);
 		// x0 = x0 - 0.0 + 0.0 * C.xx ;
@@ -106,7 +106,7 @@ namespace glm
 		detail::tvec3<T> a0 = x - ox;
 		
 		// Normalise gradients implicitly by scaling m
-		// Inlined for speed: m *= taylorInvSqrt( a0*a0 + h*h );
+		// Inlined for speed: m *= taylorInvSqrt(a0*a0 + h*h);
 		m *= T(1.79284291400159) - T(0.85373472095314) * (a0 * a0 + h * h);
 		
 		// Compute final noise value at P
@@ -144,7 +144,7 @@ namespace glm
 		
 		// Permutations
 		i = mod289(i); 
-		detail::tvec4<T> p(permute(permute(permute( 
+		detail::tvec4<T> p(permute(permute(permute(
 												   i.z + detail::tvec4<T>(T(0), i1.z, i2.z, T(1))) + 
 										   i.y + detail::tvec4<T>(T(0), i1.y, i2.y, T(1))) + 
 								   i.x + detail::tvec4<T>(T(0), i1.x, i2.x, T(1))));
@@ -271,7 +271,7 @@ namespace glm
 		
 		// Mix contributions from the five corners
 		detail::tvec3<T> m0 = max(T(0.6) - detail::tvec3<T>(dot(x0, x0), dot(x1, x1), dot(x2, x2)), T(0));
-		detail::tvec2<T> m1 = max(T(0.6) - detail::tvec2<T>(dot(x3, x3), dot(x4, x4)             ), T(0));
+		detail::tvec2<T> m1 = max(T(0.6) - detail::tvec2<T>(dot(x3, x3), dot(x4, x4)            ), T(0));
 		m0 = m0 * m0;
 		m1 = m1 * m1;
 		return T(49) * 

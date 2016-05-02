@@ -16,20 +16,20 @@ namespace gs
     public:
         T Sample()
         {
-            return ( round ) ? (T) std::round( dist( engine ) ) : (T) dist( engine );
+            return (round) ? (T) std::round(dist(engine)) : (T) dist(engine);
         }
     public:
-        RandomRange( const double min, const double max, const int seed )
-            :   engine( seed ),
-                dist( min, max ),
-                round( false )
+        RandomRange(const double min, const double max, const int seed)
+            :   engine(seed),
+                dist(min, max),
+                round(false)
         {
         }
 
-        RandomRange( const int min, const int max, const int seed )
-            :   engine( seed ),
-                dist( (double) min, (double) max ),
-                round( true )
+        RandomRange(const int min, const int max, const int seed)
+            :   engine(seed),
+                dist((double) min, (double) max),
+                round(true)
         {
         }
     };

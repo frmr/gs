@@ -18,7 +18,7 @@ namespace gs
 
         double Length() const
         {
-            return sqrt( x * x + y * y );
+            return sqrt(x * x + y * y);
         }
 
         Vec2<T>& Reverse()
@@ -38,37 +38,37 @@ namespace gs
 
 
         template<typename U>
-        Vec2<T> operator+( const Vec2<U>& rhs ) const
+        Vec2<T> operator+(const Vec2<U>& rhs) const
         {
-            return gs::Vec2<T>( x + (T) rhs.x, y + (T) rhs.y );
+            return gs::Vec2<T>(x + (T) rhs.x, y + (T) rhs.y);
         }
 
         template<typename U>
-        Vec2<T> operator-( const Vec2<U>& rhs ) const
+        Vec2<T> operator-(const Vec2<U>& rhs) const
         {
-            return gs::Vec2<T>( x - (T) rhs.x, y - (T) rhs.y );
+            return gs::Vec2<T>(x - (T) rhs.x, y - (T) rhs.y);
         }
 
         template<typename U>
-        Vec2<T> operator*( const U& rhs ) const
+        Vec2<T> operator*(const U& rhs) const
         {
-            return gs::Vec2<T>( x * (T) rhs, y * (T) rhs );
+            return gs::Vec2<T>(x * (T) rhs, y * (T) rhs);
         }
 
         template<typename U>
-        Vec2<T> operator*( const Vec2<U>& rhs ) const
+        Vec2<T> operator*(const Vec2<U>& rhs) const
         {
-            return gs::Vec2<T>( x * (T) rhs.x, y * (T) rhs.y );
+            return gs::Vec2<T>(x * (T) rhs.x, y * (T) rhs.y);
         }
 
         template<typename U>
-        Vec2<T> operator/( const U& rhs ) const
+        Vec2<T> operator/(const U& rhs) const
         {
-            return gs::Vec2<T>( x / (T) rhs, y / (T) rhs );
+            return gs::Vec2<T>(x / (T) rhs, y / (T) rhs);
         }
 
         template<typename U>
-        Vec2<T>& operator+=( const Vec2<U>& rhs )
+        Vec2<T>& operator+=(const Vec2<U>& rhs)
         {
             x += (T) rhs.x;
             y += (T) rhs.y;
@@ -76,7 +76,7 @@ namespace gs
         }
 
         template<typename U>
-        Vec2<T>& operator-=( const Vec2<U>& rhs )
+        Vec2<T>& operator-=(const Vec2<U>& rhs)
         {
             x -= (T) rhs.x;
             y -= (T) rhs.y;
@@ -84,7 +84,7 @@ namespace gs
         }
 
         template<typename U>
-        Vec2<T>& operator*=( const U& rhs )
+        Vec2<T>& operator*=(const U& rhs)
         {
             x *= (T) rhs;
             y *= (T) rhs;
@@ -92,7 +92,7 @@ namespace gs
         }
 
         template<typename U>
-        Vec2<T>& operator*=( const Vec2<U>& rhs )
+        Vec2<T>& operator*=(const Vec2<U>& rhs)
         {
             x *= (T) rhs.x;
             y *= (T) rhs.y;
@@ -100,7 +100,7 @@ namespace gs
         }
 
         template<typename U>
-        Vec2<T>& operator/=( const U& rhs )
+        Vec2<T>& operator/=(const U& rhs)
         {
             x /= (T) rhs;
             y /= (T) rhs;
@@ -108,27 +108,27 @@ namespace gs
         }
 
         template<typename U>
-        bool operator==( const U& rhs ) const
+        bool operator==(const U& rhs) const
         {
-            return ( x <= (T) rhs.x + epsilon &&
+            return (x <= (T) rhs.x + epsilon &&
                      x >= (T) rhs.x - epsilon &&
                      y <= (T) rhs.y + epsilon &&
-                     y >= (T) rhs.y - epsilon );
+                     y >= (T) rhs.y - epsilon);
         }
 
-        T& operator[]( const int i )
+        T& operator[](const int i)
         {
-            return ( i == 0 ) ? x : y;
+            return (i == 0) ? x : y;
         }
 
         explicit operator gs::Vec2<double>() const
         {
-            return Vec2<double>( (double) x, (double) y );
+            return Vec2<double>((double) x, (double) y);
         }
 
         explicit operator gs::Vec2<float>() const
         {
-            return Vec2<float>( (float) x, (float) y );
+            return Vec2<float>((float) x, (float) y);
         }
 
     public:
@@ -136,8 +136,8 @@ namespace gs
         {
         }
 
-        Vec2<T>( const T& x, const T& y )
-            : x( x ), y( y )
+        Vec2<T>(const T& x, const T& y)
+            : x(x), y(y)
         {
         }
 

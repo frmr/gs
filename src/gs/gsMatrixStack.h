@@ -17,14 +17,14 @@ namespace gs
         Matrix4 top;
 
     public:
-        void SendUniform( const GLint location ) const
+        void SendUniform(const GLint location) const
         {
-            glUniformMatrix4fv( location, 1, false, top.get() );
+            glUniformMatrix4fv(location, 1, false, top.get());
         }
 
         void Push()
         {
-            matrices.push( top );
+            matrices.push(top);
         }
 
         void Pop()

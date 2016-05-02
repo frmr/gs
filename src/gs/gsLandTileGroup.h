@@ -30,14 +30,14 @@ namespace gs
         //static GLuint   GenerateTextureId();
 
     public:
-        bool            Add( const gs::LandTilePtr& landTile );
+        bool            Add(const gs::LandTilePtr& landTile);
         void            DeleteLocalTextureData();
         void            Draw() const;
         void            PushTexture();
         void            WriteToFile() const;
 
     public:
-        LandTileGroup( const GLuint bufferBegin, const int textureDim );
+        LandTileGroup(const GLuint bufferBegin, const int textureDim);
         ~LandTileGroup();
     };
 }

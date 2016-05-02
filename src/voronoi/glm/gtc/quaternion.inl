@@ -183,7 +183,7 @@ namespace detail
 
 	template <typename T> 
 	GLM_FUNC_QUALIFIER detail::tquat<T> operator+
-	( 
+	(
 		detail::tquat<T> const & q, 
 		detail::tquat<T> const & p
 	) 
@@ -197,7 +197,7 @@ namespace detail
 
 	template <typename T> 
 	GLM_FUNC_QUALIFIER detail::tquat<T> operator*
-	( 
+	(
 		detail::tquat<T> const & q, 
 		detail::tquat<T> const & p
 	) 
@@ -504,7 +504,7 @@ namespace detail
 	GLM_FUNC_QUALIFIER detail::tvec3<T> eulerAngles
 	(
         detail::tquat<T> const & x
-    )
+   )
 	{
 		return detail::tvec3<T>(pitch(x), yaw(x), roll(x));
 	}

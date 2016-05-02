@@ -22,20 +22,20 @@ namespace gs
         const GLuint    program;
 
     private:
-        bool    CompileShader( const GLuint shader, const string& filename );
-        string  LoadShaderFromFile( const string &filename ) const;
+        bool    CompileShader(const GLuint shader, const string& filename);
+        string  LoadShaderFromFile(const string &filename) const;
         void    PrintProgramLog() const;
-        void    PrintShaderLog( const GLuint shader ) const;
+        void    PrintShaderLog(const GLuint shader) const;
 
     public:
-        GLuint  GetAttribLocation( const string& attrib );
-        GLint   GetUniformLocation( const string& uniform ) const;
+        GLuint  GetAttribLocation(const string& attrib);
+        GLint   GetUniformLocation(const string& uniform) const;
         bool    Link();
-        void    SetFragOutput( const string& attrib );
+        void    SetFragOutput(const string& attrib);
         bool    Use() const;
 
     public:
-        Shader( const string& name, const string& vertexFilename, const string& fragmentFilename );
+        Shader(const string& name, const string& vertexFilename, const string& fragmentFilename);
         ~Shader();
     };
 }

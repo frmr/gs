@@ -21,14 +21,14 @@
 
 #ifndef _EasyBMP_Custom_Math_Functions_
 #define _EasyBMP_Custom_Math_Functions_
-inline double Square( double number )
+inline double Square(double number)
 { return number*number; }
 
-inline int IntSquare( int number )
+inline int IntSquare(int number)
 { return number*number; }
 #endif
 
-int IntPow( int base, int exponent );
+int IntPow(int base, int exponent);
 
 #ifndef _EasyBMP_Defined_WINGDI
 #define _EasyBMP_Defined_WINGDI
@@ -43,18 +43,18 @@ int IntPow( int base, int exponent );
 inline bool IsBigEndian()
 {
  short word = 0x0001;
- if((*(char *)& word) != 0x01 )
+ if((*(char *)& word) != 0x01)
  { return true; }
  return false;
 }
 
-inline ebmpWORD FlipWORD( ebmpWORD in )
-{ return ( (in >> 8) | (in << 8) ); }
+inline ebmpWORD FlipWORD(ebmpWORD in)
+{ return ((in >> 8) | (in << 8)); }
 
-inline ebmpDWORD FlipDWORD( ebmpDWORD in )
+inline ebmpDWORD FlipDWORD(ebmpDWORD in)
 {
- return ( ((in&0xFF000000)>>24) | ((in&0x000000FF)<<24) | 
-          ((in&0x00FF0000)>>8 ) | ((in&0x0000FF00)<<8 )   );
+ return (((in&0xFF000000)>>24) | ((in&0x000000FF)<<24) | 
+          ((in&0x00FF0000)>>8) | ((in&0x0000FF00)<<8)  );
 }
 
 // it's easier to use a struct than a class
@@ -78,8 +78,8 @@ public:
  ebmpDWORD bfOffBits; 
 
  BMFH();
- void display( void );
- void SwitchEndianess( void );
+ void display(void);
+ void SwitchEndianess(void);
 };
 
 class BMIH{
@@ -97,8 +97,8 @@ public:
  ebmpDWORD biClrImportant;
 
  BMIH();
- void display( void );
- void SwitchEndianess( void );
+ void display(void);
+ void SwitchEndianess(void);
 };
 
 #endif

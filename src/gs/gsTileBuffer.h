@@ -24,18 +24,18 @@ namespace gs
         GLuint  indexBuffer;
 
     private:
-        void InitIndexBuffer( const vector<GLuint>& indexVector ) const;
+        void InitIndexBuffer(const vector<GLuint>& indexVector) const;
 
     protected:
-        GLuint CreateVbo( const int elements, const int components, gs::Shader& shader, const string& name );
+        GLuint CreateVbo(const int elements, const int components, gs::Shader& shader, const string& name);
 
     public:
         void Bind() const;
 
-        bool Update( const GLuint tileIndex, const gs::Vec3f& newColor, const bool newFog );
+        bool Update(const GLuint tileIndex, const gs::Vec3f& newColor, const bool newFog);
 
     public:
-        TileBuffer( const int size, gs::Shader& shader, const vector<GLuint>& indexVector );
+        TileBuffer(const int size, gs::Shader& shader, const vector<GLuint>& indexVector);
     };
 }
 

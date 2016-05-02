@@ -54,23 +54,23 @@ namespace gs
         Terrain                             DetermineTerrain() const;
 
     public:
-        void                                AddToTileGroupTexture( shared_ptr<gs::Texture> tileGroupTexture, const gs::Vec2i& tileGroupTextureOffset, const int tileGroupTextureSize );
+        void                                AddToTileGroupTexture(shared_ptr<gs::Texture> tileGroupTexture, const gs::Vec2i& tileGroupTextureOffset, const int tileGroupTextureSize);
         void                                BlendTexture();
         void                                DeleteLocalTextureData();
-        void                                GenerateTexture( gs::BiomeTextureGenerator& biomeTextureGenerator );
+        void                                GenerateTexture(gs::BiomeTextureGenerator& biomeTextureGenerator);
         Biome                               GetBiome() const;
         shared_ptr<gs::Texture>             GetTexture() const;
         vector<shared_ptr<gs::LandTile>>    GetUnassignedBiomeNeighbors() const;
 
         bool                                HasUnassignedBiomeNeighbors() const;
-        void                                SetBiome( const Biome newBiome );
-        void                                SetCulture( const shared_ptr<Culture> newCulture );
-        bool                                SpawnRiver( const int newRiverId, gs::RandomRange<double>& rand );
-        void                                UpdateAllBuffers( const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo, const GLuint texCoordVbo );
-        void                                UpdateTexCoordBuffer( const GLuint texCoordVbo );
+        void                                SetBiome(const Biome newBiome);
+        void                                SetCulture(const shared_ptr<Culture> newCulture);
+        bool                                SpawnRiver(const int newRiverId, gs::RandomRange<double>& rand);
+        void                                UpdateAllBuffers(const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo, const GLuint texCoordVbo);
+        void                                UpdateTexCoordBuffer(const GLuint texCoordVbo);
 
     public:
-        LandTile( const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3f& centroid, const double height, const int regionId );
+        LandTile(const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3f& centroid, const double height, const int regionId);
         ~LandTile();
     };
 

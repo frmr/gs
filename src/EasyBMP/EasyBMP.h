@@ -79,8 +79,8 @@
 #define _EasyBMPwarnings_
 #endif
 
-void SetEasyBMPwarningsOff( void );
-void SetEasyBMPwarningsOn( void );
-bool GetEasyBMPwarningState( void );
+void SetEasyBMPwarningsOff(void);
+void SetEasyBMPwarningsOn(void);
+bool GetEasyBMPwarningState(void);
 
 #endif

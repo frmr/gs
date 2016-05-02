@@ -48,16 +48,16 @@ namespace gs
         //owner
         //controller
     protected:
-        void    UpdateColorBuffer( const GLuint colorVbo );
-        void    UpdateFogBuffer( const GLuint fogVbo );
-        void    UpdatePositionBuffer( const GLuint positionVbo );
+        void    UpdateColorBuffer(const GLuint colorVbo);
+        void    UpdateFogBuffer(const GLuint fogVbo);
+        void    UpdatePositionBuffer(const GLuint positionVbo);
 
     public:
-        void    AddVerticesToIndexVector( vector<GLuint>& indexVector );
+        void    AddVerticesToIndexVector(vector<GLuint>& indexVector);
 
-        bool    AddLink( const gs::Link<gs::Tile>& link );
-        bool    AddLink( const gs::Link<gs::LandTile>& link );
-        bool    AddLink( const gs::Link<gs::WaterTile>& link );
+        bool    AddLink(const gs::Link<gs::Tile>& link);
+        bool    AddLink(const gs::Link<gs::LandTile>& link);
+        bool    AddLink(const gs::Link<gs::WaterTile>& link);
 
         GLuint  GetBufferEnd() const;
         GLuint  GetBufferOffset() const;
@@ -67,13 +67,13 @@ namespace gs
         size_t  GetNumOfVertices() const;
         Type    GetSurface() const;
 
-        GLuint  SetBufferOffset( const GLuint offset );
+        GLuint  SetBufferOffset(const GLuint offset);
 
     protected:
-        Tile( const Type surface, const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3f& centroid, const double height );
+        Tile(const Type surface, const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3f& centroid, const double height);
 
     public:
-        //Tile( const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices );
+        //Tile(const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices);
         virtual ~Tile();
     };
 

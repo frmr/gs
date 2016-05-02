@@ -12,11 +12,11 @@ namespace gs
     class WaterTileGroup : public gs::TileGroup
     {
     public:
-        bool    Add( const gs::WaterTilePtr& waterTile );
+        bool    Add(const gs::WaterTilePtr& waterTile);
         void    Draw() const;
 
     public:
-        explicit WaterTileGroup( const GLuint bufferBegin = 0 );
+        explicit WaterTileGroup(const GLuint bufferBegin = 0);
     };
 }
 

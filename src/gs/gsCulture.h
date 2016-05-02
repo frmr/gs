@@ -18,10 +18,10 @@ namespace gs
         const gs::Color color;
 
     public:
-        static string GenerateCultureName( const int groupId );
+        static string GenerateCultureName(const int groupId);
 
     public:
-        Culture( const int groupId );
+        Culture(const int groupId);
     };
 }
 
