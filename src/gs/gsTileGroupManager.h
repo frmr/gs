@@ -27,9 +27,10 @@ namespace gs
         void Add(const gs::LandTilePtr& landTile);
         void Add(const gs::WaterTilePtr& waterTile);
         void DrawAll() const;
+		void DeleteLocalTextureData();
         void DrawLandTileGroups() const;
         void DrawWaterTileGroup() const;
-        void PushTextures();
+        void PushLastTexture();
         void SetTextureSize(const GLint newTextureDim);
         void WriteTileGroupsToFile() const;
 

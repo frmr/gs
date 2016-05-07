@@ -10,6 +10,10 @@ void gs::TileGroupManager::Add(const LandTilePtr& landTile)
 
     if (!landTileGroups.back().Add(landTile))
     {
+		//groupManager.PushTextures();
+		landTileGroups.back().PushTexture();
+		landTileGroups.back().DeleteLocalTextureData();
+		//groupManager.DeleteLocalTextureData();
         landTileGroups.emplace_back(landTileGroups.back().GetBufferEnd() + 1, textureDim);
         if (!landTileGroups.back().Add(landTile))
         {
@@ -21,6 +25,14 @@ void gs::TileGroupManager::Add(const LandTilePtr& landTile)
 void gs::TileGroupManager::Add(const gs::WaterTilePtr& waterTile)
 {
     waterTileGroup.Add(waterTile);
+}
+
+void gs::TileGroupManager::DeleteLocalTextureData()
+{
+	for (auto& group : landTileGroups)
+	{
+		group.DeleteLocalTextureData();
+	}
 }
 
 void gs::TileGroupManager::DrawAll() const
@@ -44,12 +56,14 @@ void gs::TileGroupManager::DrawWaterTileGroup() const
     waterTileGroup.Draw();
 }
 
-void gs::TileGroupManager::PushTextures()
+void gs::TileGroupManager::PushLastTexture()
 {
-    for (auto& group : landTileGroups)
+    /*for (auto& group : landTileGroups)
     {
         group.PushTexture();
-    }
+    }*/
+
+	landTileGroups.back().PushTexture();
 }
 
 void gs::TileGroupManager::SetTextureSize(const GLint newTextureDim)

@@ -98,4 +98,4 @@ namespace gs
     };
 }
 
-#endif // GS_ARRAY3_H
+#endif

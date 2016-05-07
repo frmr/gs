@@ -35,6 +35,7 @@ namespace gs
     public:
         void        Blit(const shared_ptr<const Texture>& source, const gs::Vec2i& offset);
         bool        CheckCoordIsValid(const int x, const int y) const;
+		void		Delete();
         int         GetArea() const;
         gs::Color   GetColor(const int x, const int y) const;
         GLubyte     GetBlue(const int x, const int y) const;

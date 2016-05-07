@@ -449,7 +449,9 @@ void gs::Globe::GenerateTextures()
         landBuffer->UpdateTexCoordBuffer(tile);
     }
 
-    groupManager.PushTextures();
+	groupManager.PushLastTexture();
+    /*groupManager.PushTextures();
+	groupManager.DeleteLocalTextureData();*/
     cerr << "Generated textures" << endl;
 }
 
