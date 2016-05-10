@@ -21,12 +21,11 @@ namespace gs
         vector<shared_ptr<gs::Tile>>    tiles;
         bool                            river;
 
-        gs::Vec3f                       vec;
-
     public:
         const int                       id;
         const shared_ptr<gs::Vertex>    v0;
         const shared_ptr<gs::Vertex>    v1;
+		gs::Vec3f                       vec;
 
     public:
         bool                            AddTile(const shared_ptr<gs::Tile>& newTile);

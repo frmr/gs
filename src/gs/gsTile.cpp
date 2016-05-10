@@ -43,9 +43,9 @@ void gs::Tile::UpdatePositionBuffer(const GLuint positionVbo) //TODO: const
     GLfloat* positionArray = new GLfloat[3*vertices.size()];
     for (unsigned int i = 0; i < vertices.size(); ++i)
     {
-        positionArray[3*i] = (float) vertices[i]->GetPosition().x;
-        positionArray[3*i+1] = (float) vertices[i]->GetPosition().y;
-        positionArray[3*i+2] = (float) vertices[i]->GetPosition().z;
+        positionArray[3*i] = (float) vertices[i]->position.x;
+        positionArray[3*i+1] = (float) vertices[i]->position.y;
+        positionArray[3*i+2] = (float) vertices[i]->position.z;
     }
     glBindBuffer(GL_ARRAY_BUFFER, positionVbo);
     glBufferSubData(GL_ARRAY_BUFFER, 3 * bufferOffset * sizeof(GLfloat), 3 * vertices.size() * sizeof(GLfloat), positionArray);

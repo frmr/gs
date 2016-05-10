@@ -35,7 +35,7 @@ vector<shared_ptr<gs::Tile>> gs::Edge::GetTiles() const
 
 bool gs::Edge::HasVertex(const shared_ptr<gs::Vertex>& refVertex) const
 {
-    return (v0->GetPosition() == refVertex->GetPosition() || v1->GetPosition() == refVertex->GetPosition());
+    return (v0->position == refVertex->position || v1->position == refVertex->position);
 }
 
 bool gs::Edge::IsRiver() const
@@ -56,16 +56,16 @@ void gs::Edge::Widen() //TODO: Stop the method shortening some edges
     {
         vec.Unit();
         const gs::Vec3f correction = vec * ((minimumLength - length) / 2.0f);
-        v1->SetPosition(v1->GetPosition() + correction);
-        v0->SetPosition(v0->GetPosition() - correction);
-        vec = v1->GetPosition() - v0->GetPosition();
+        v1->position = v1->position + correction;
+        v0->position = v0->position - correction;
+        vec = v1->position - v0->position;
         //std::cerr << length << " Widened edge to by " << correction.Length() * 2.0f << " or " << minimumLength - length << " to " << vec.Length() << std::endl;
     }
 }
 
 gs::Edge::Edge(const shared_ptr<gs::Vertex>& v0, const shared_ptr<gs::Vertex>& v1)
     :   river(false),
-        vec(v1->GetPosition() - v0->GetPosition()),
+        vec(v1->position - v0->position),
         id(idCounter++),
         v0(v0),
         v1(v1)

@@ -53,20 +53,20 @@ double gs::Vertex::GetHeight() const
     return height;
 }
 
-gs::Vec3f gs::Vertex::GetPosition() const
-{
-    return position;
-}
+//gs::Vec3f gs::Vertex::GetPosition() const
+//{
+//    return position;
+//}
 
 bool gs::Vertex::IsRiver() const
 {
     return (riverId != -1);
 }
-
-void gs::Vertex::SetPosition(const gs::Vec3f& newPosition)
-{
-    position = newPosition;
-}
+//
+//void gs::Vertex::SetPosition(const gs::Vec3f& newPosition)
+//{
+//    position = newPosition;
+//}
 
 bool gs::Vertex::SetRiver(const int newRiverId)
 {

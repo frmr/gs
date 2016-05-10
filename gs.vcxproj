@@ -155,6 +155,7 @@
     <ClCompile Include="src\cck\cckSimplexNoise.cpp" />
     <ClCompile Include="src\cck\cckVec3.cpp" />
     <ClCompile Include="src\EasyBMP\EasyBMP.cpp" />
+    <ClCompile Include="src\FastNoise\FastNoise.cpp" />
     <ClCompile Include="src\gl3w\gl3w.c" />
     <ClCompile Include="src\gs\gsBiomeSpreader.cpp" />
     <ClCompile Include="src\gs\gsBiomeTextureGenerator.cpp" />
@@ -163,15 +164,16 @@
     <ClCompile Include="src\gs\gsConfig.cpp" />
     <ClCompile Include="src\gs\gsCulture.cpp" />
     <ClCompile Include="src\gs\gsCultureSpreader.cpp" />
+    <ClCompile Include="src\gs\gsDesertTextureGenerator.cpp" />
     <ClCompile Include="src\gs\gsEdge.cpp" />
     <ClCompile Include="src\gs\gsGlobe.cpp" />
+    <ClCompile Include="src\gs\gsGrasslandTextureGenerator.cpp" />
     <ClCompile Include="src\gs\gsInputState.cpp" />
     <ClCompile Include="src\gs\gsLandTile.cpp" />
     <ClCompile Include="src\gs\gsLandTileBuffer.cpp" />
     <ClCompile Include="src\gs\gsLandTileGroup.cpp" />
     <ClCompile Include="src\gs\gsShader.cpp" />
     <ClCompile Include="src\gs\gsTexture.cpp" />
-    <ClCompile Include="src\gs\gsTextureGenerator.cpp" />
     <ClCompile Include="src\gs\gsTile.cpp" />
     <ClCompile Include="src\gs\gsTileBuffer.cpp" />
     <ClCompile Include="src\gs\gsTileGroup.cpp" />
@@ -205,6 +207,7 @@
     <ClInclude Include="src\EasyBMP\EasyBMP_BMP.h" />
     <ClInclude Include="src\EasyBMP\EasyBMP_DataStructures.h" />
     <ClInclude Include="src\EasyBMP\EasyBMP_VariousBMPutilities.h" />
+    <ClInclude Include="src\FastNoise\FastNoise.h" />
     <ClInclude Include="src\gl3w\gl3w.h" />
     <ClInclude Include="src\gl3w\glcorearb.h" />
     <ClInclude Include="src\gs\gsArray.h" />
@@ -217,9 +220,11 @@
     <ClInclude Include="src\gs\gsConfig.h" />
     <ClInclude Include="src\gs\gsCulture.h" />
     <ClInclude Include="src\gs\gsCultureSpreader.h" />
+    <ClInclude Include="src\gs\gsDesertTextureGenerator.h" />
     <ClInclude Include="src\gs\gsEdge.h" />
     <ClInclude Include="src\gs\gsFullscreenQuad.h" />
     <ClInclude Include="src\gs\gsGlobe.h" />
+    <ClInclude Include="src\gs\gsGrasslandTextureGenerator.h" />
     <ClInclude Include="src\gs\gsInputState.h" />
     <ClInclude Include="src\gs\gsLandTile.h" />
     <ClInclude Include="src\gs\gsLandTileBuffer.h" />
@@ -232,7 +237,6 @@
     <ClInclude Include="src\gs\gsShader.h" />
     <ClInclude Include="src\gs\gsSpreader.h" />
     <ClInclude Include="src\gs\gsTexture.h" />
-    <ClInclude Include="src\gs\gsTextureGenerator.h" />
     <ClInclude Include="src\gs\gsTile.h" />
     <ClInclude Include="src\gs\gsTileBuffer.h" />
     <ClInclude Include="src\gs\gsTileGroup.h" />

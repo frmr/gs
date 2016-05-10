@@ -34,39 +34,18 @@ namespace gs
     }
 
     template <typename T>
-    T Clip(const T& n, const T& lower, const T& upper)
+    T Clamp(const T& n, const T& lower, const T& upper)
     {
         return std::max(lower, std::min(n, upper));
     }
 
-//    template <typename V>
-//    V ClosestPointOnLine(const V& a, const V& ab, const V& p, const bool clamp)
-//    {
-//        V ap = p - a;
-//
-//        const double ab2 = gs::Dot(ab, ab);
-//        const double t = gs::Dot(ap, ab) / ab2;
-//        if (clamp)
-//        {
-//            if (t < 0.0)
-//            {
-//                t = 0.0;
-//            }
-//            else if (t > 1.0)
-//            {
-//                t = 1.0;
-//            }
-//        }
-//        return a + ab * t;
-//    }
-
     template <typename V>
-    double ClosestPointOnLine(const V& a, const V& ab, const V& p, const bool clamp)
+    V ClosestPointOnLine(const V& a, const V& ab, const V& p, const bool clamp)
     {
         V ap = p - a;
 
         const double ab2 = gs::Dot(ab, ab);
-        const double t = gs::Dot(ap, ab) / ab2;
+        double t = gs::Dot(ap, ab) / ab2;
         if (clamp)
         {
             if (t < 0.0)
@@ -78,8 +57,29 @@ namespace gs
                 t = 1.0;
             }
         }
-        return t;
+        return a + ab * t;
     }
+
+    //template <typename V>
+    //double ClosestPointOnLine(const V& a, const V& ab, const V& p, const bool clamp)
+    //{
+    //    V ap = p - a;
+
+    //    const double ab2 = gs::Dot(ab, ab);
+    //    const double t = gs::Dot(ap, ab) / ab2;
+    //    if (clamp)
+    //    {
+    //        if (t < 0.0)
+    //        {
+    //            return 0.0;
+    //        }
+    //        else if (t > 1.0)
+    //        {
+    //            return 1.0;
+    //        }
+    //    }
+    //    return t;
+    //}
 }
 
 #endif // GS_MATH_H

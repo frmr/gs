@@ -48,7 +48,7 @@ namespace gs
         Biome                       biome;
         shared_ptr<gs::Culture>     culture;
         shared_ptr<gs::Texture>     texture; //TODO: should be on stack, or at least unique_ptr
-        vector<gs::Vec2f>           texCoords;
+        vector<gs::Vec2d>           texCoords;
 
     private:
         Terrain                             DetermineTerrain() const;

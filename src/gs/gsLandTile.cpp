@@ -95,7 +95,7 @@ void gs::LandTile::GenerateTexture(gs::BiomeTextureGenerator& biomeTextureGenera
     //TODO: Make this safer by checking for presence of first and second vertices
 
     //reference u-axis is from v0 to v1
-    const gs::Vec3d refAxisU = (gs::Vec3d) (vertices[1]->GetPosition() - vertices[0]->GetPosition()).Unit();
+    const gs::Vec3d refAxisU = (gs::Vec3d) (vertices[1]->position - vertices[0]->position).Unit();
     //reference v-axis is the cross-product of u-axis and the tile normal
     const gs::Vec3d refAxisV = gs::Cross<double>(refAxisU, normal).Unit(); //TODO: Second argument might actually be worldVertices[0]->position
 
@@ -105,8 +105,8 @@ void gs::LandTile::GenerateTexture(gs::BiomeTextureGenerator& biomeTextureGenera
     //use reference axes to compute relative coordinates of each world vertex
     for (const auto& vert : vertices)
     {
-        relativeCoords.emplace_back(gs::Dot<double>(refAxisU, (gs::Vec3d) (vert->GetPosition() - vertices[0]->GetPosition())),
-                                     gs::Dot<double>(refAxisV, (gs::Vec3d) (vert->GetPosition() - vertices[0]->GetPosition())));
+        relativeCoords.emplace_back(gs::Dot<double>(refAxisU, (gs::Vec3d) (vert->position - vertices.front()->position)),
+                                     gs::Dot<double>(refAxisV, (gs::Vec3d) (vert->position - vertices.front()->position)));
     }
 
     gs::BoundingBox<gs::Vec2d> boundingBox(relativeCoords);
@@ -121,8 +121,8 @@ void gs::LandTile::GenerateTexture(gs::BiomeTextureGenerator& biomeTextureGenera
 
     constexpr int pixelsPerUnit = 2000;
 
-    const int width = std::max((int) (boundingBox.maxCoord.x * pixelsPerUnit) + 1, 1);
-    const int height = std::max((int) (boundingBox.maxCoord.y * pixelsPerUnit) + 1, 1);
+    const int width = std::max((int) (boundingBox.maxCoord.x * pixelsPerUnit) + 2, 1);
+    const int height = std::max((int) (boundingBox.maxCoord.y * pixelsPerUnit) + 2, 1);
 
     texture = std::make_shared<gs::Texture>(width, height);
 
@@ -133,19 +133,108 @@ void gs::LandTile::GenerateTexture(gs::BiomeTextureGenerator& biomeTextureGenera
     {
         //pixelCoords.emplace_back((int) (coord.x * pixelsPerUnit), (int) (coord.y * pixelsPerUnit)); //don't need all of them, just the first
         //texCoords.emplace_back((float) pixelCoords.back().x, (float) pixelCoords.back().y);
-        texCoords.emplace_back(coord.x * pixelsPerUnit, coord.y * pixelsPerUnit);
+        texCoords.emplace_back(coord.x * pixelsPerUnit + 1, coord.y * pixelsPerUnit + 1);
     }
 
-    //blit realistic texture onto tile texture
-    shared_ptr<const gs::Texture> sourceTexture = biomeTextureGenerator.GetTexture(biome, terrain);
-    const gs::Vec2i offset = biomeTextureGenerator.GetRandomOffset();
+	constexpr double riverLimit = 0.002;
+	constexpr double blendLimit = 0.004;
+
+	const gs::Vec3d xJump = refAxisU / (double) pixelsPerUnit;
+	const gs::Vec3d yJump = refAxisV / (double) pixelsPerUnit;
+
+	const gs::Vec3d pixelOriginWorldCoord = vertices[0]->position - (xJump * texCoords.front().x) - (yJump * texCoords.front().y); //world coordinate of pixel (0,0)
+
+
+	//create sublist of links to tiles that are rivers or need blending
+	vector<gs::Link<gs::LandTile>> notableLinks;
+	for (const auto& link : landLinks)
+	{
+		if (link.target->GetBiome() != biome || link.target->terrain != terrain || link.edge->IsRiver())
+		{
+			notableLinks.push_back(link);
+		}
+	}
+
+    //sample texture generator at each pixel
+    //shared_ptr<const gs::Texture> sourceTexture = biomeTextureGenerator.GetTexture(biome, terrain);
+    //const gs::Vec2i offset = biomeTextureGenerator.GetRandomOffset();
     for (int x = 0; x < width; ++x)
     {
-        const int sourceX = (x + offset.x) % sourceTexture->GetWidth();
+        //const int sourceX = (x + offset.x) % sourceTexture->GetWidth();
         for (int  y = 0; y < height; ++y)
         {
-            const int sourceY = (y + offset.y) % sourceTexture->GetHeight();
-            texture->SetColor(x, y, sourceTexture->GetRed(sourceX, sourceY), sourceTexture->GetGreen(sourceX, sourceY), sourceTexture->GetBlue(sourceX, sourceY));
+			const gs::Vec3d pixelWorldCoord = (pixelOriginWorldCoord + xJump * x + yJump * y).Unit(); //TODO: Speed this up by using xJump and yJump to increment for each pixel
+
+			//calculate distance to each notable edge
+			vector<float> notableDistances;
+			notableDistances.reserve(notableLinks.size());
+			for (const auto& link : notableLinks)
+			{
+				notableDistances.push_back((gs::ClosestPointOnLine<gs::Vec3d>(link.edge->v0->position, link.edge->vec, pixelWorldCoord, true) - pixelWorldCoord).Length());
+			}
+
+            //TODO: Use iterators
+			bool colorSet = false;
+			for (int i = 0; i < notableLinks.size(); ++i)
+			{
+				if (notableLinks[i].edge->IsRiver())
+				{
+					if (notableDistances[i] < riverLimit)
+					{
+						texture->SetColor(x, y, gs::Color(0, 0, 255));
+						colorSet = true;
+						break;
+					}
+				}
+
+				if (!colorSet)
+				{
+					//blend if necessary
+				}
+			}
+
+			if (!colorSet)
+			{
+				texture->SetColor(x, y, biomeTextureGenerator.Sample(pixelWorldCoord, biome, terrain));
+			}
+                //else if (notableLinks[i].target->GetBiome() != biome || notableLinks[i].target->terrain != terrain)
+                //{
+                //    if (notableDistances[i] < blendLimit)
+                //    {
+                //        //blend if there are no closer tiles of the same biome
+                //        bool foundCloser = false;
+                //        for (int j = 0; j < notableLinks.size(); ++j)
+                //        {
+                //            if (i == j)
+                //            {
+                //                continue;
+                //            }
+                //            if (notableLinks[i].target->GetBiome() == notableLinks[j].target->GetBiome())
+                //            {
+                //                if (notableDistances[j] < notableDistances[i])
+                //                {
+                //                    foundCloser = true;
+                //                    break;
+                //                }
+                //            }
+                //        }
+
+                //        //blend
+                //        if (!foundCloser)
+                //        {
+                //        /*    const gs::Color neighborColor = biomeTextureGenerator.Sample(pixelWorldCoord, notableLinks[i].target->GetBiome(), notableLinks[i].target->terrain);
+                //            const gs::Color colorDifference = neighborColor - texelColor;
+                //            texelColor += colorDifference * ((1.0f - (notableDistances[i] / blendLimit)) * 0.5f);*/
+                //        }
+                //    }
+                //}
+            //texture->SetColor(x, y, texelColor);
+
+			//texture->SetColor(x, y, biomeTextureGenerator.Sample(pixelWorldCoord, biome, terrain));
+
+			//gs::Vec3f texelColor = biomeTextureGenerator.Sample(pixelWorldCoord, biome, terrain);
+            //const int sourceY = (y + offset.y) % sourceTexture->GetHeight();
+            //texture->SetColor(x, y, sourceTexture->GetRed(sourceX, sourceY), sourceTexture->GetGreen(sourceX, sourceY), sourceTexture->GetBlue(sourceX, sourceY));
         }
     }
 }

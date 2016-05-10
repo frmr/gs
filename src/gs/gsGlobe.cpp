@@ -236,9 +236,9 @@ void gs::Globe::CombineVertices(const vector<glm::dvec3>& corners, gs::Array<vec
                 {
                     for (auto v : buckets.At(xi, yi, zi))
                     {
-                        if (v->GetPosition().x < gsCorner.x + errorMargin && v->GetPosition().x > gsCorner.x - errorMargin &&
-                             v->GetPosition().y < gsCorner.y + errorMargin && v->GetPosition().y > gsCorner.y - errorMargin &&
-                             v->GetPosition().z < gsCorner.z + errorMargin && v->GetPosition().z > gsCorner.z - errorMargin)
+                        if (v->position.x < gsCorner.x + errorMargin && v->position.x > gsCorner.x - errorMargin &&
+                             v->position.y < gsCorner.y + errorMargin && v->position.y > gsCorner.y - errorMargin &&
+                             v->position.z < gsCorner.z + errorMargin && v->position.z > gsCorner.z - errorMargin)
                         {
                             cellVertices.push_back(v);
                             foundVertex = true;
@@ -443,7 +443,7 @@ void gs::Globe::GenerateTextures()
 
     for (auto& tile : landTiles)
     {
-        tile->BlendTexture();
+        //tile->BlendTexture();
         groupManager.Add(tile);
         tile->DeleteLocalTextureData();
         landBuffer->UpdateTexCoordBuffer(tile);

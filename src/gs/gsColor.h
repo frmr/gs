@@ -3,22 +3,26 @@
 
 #include "gsRandomRange.h"
 #include "gsVec3.h"
+#include <cstdint>
 
 namespace gs
 {
-    class Color : public gs::Vec3<int>
+    class Color : public gs::Vec3<uint8_t>
     {
     public:
-        int& r;
-        int& g;
-        int& b;
+        uint8_t& r;
+        uint8_t& g;
+        uint8_t& b;
 
     private:
-        static gs::RandomRange<int> randByte;
+        static gs::RandomRange<uint8_t> randByte;
 
     public:
         Color();
-        Color(const int r, const int g, const int b);
+        Color(const uint8_t r, const uint8_t g, const uint8_t b);
+		Color(const gs::Color& rhs);
+		Color(const gs::Vec3i& rhs);
+		Color(const gs::Vec3f& rhs);
     };
 }
 
