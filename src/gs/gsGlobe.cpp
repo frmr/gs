@@ -220,7 +220,7 @@ void gs::Globe::CombineVertices(const vector<glm::dvec3>& corners, gs::Array<vec
     constexpr double errorMargin = 0.0000001;
     for (const auto& corner : corners)
     {
-        const gs::Vec3f gsCorner((float) corner.x, (float) corner.y, (float) corner.z);
+        const gs::Vec3d gsCorner((float) corner.x, (float) corner.y, (float) corner.z);
         //hash to buckets
         unsigned int xHash = HashDouble(gsCorner.x, bucketDim);
         unsigned int yHash = HashDouble(gsCorner.y, bucketDim);
@@ -275,7 +275,7 @@ void gs::Globe::CreateTile(const vector<gs::VertexPtr>& cellVertices, const cck:
     //terrain.SampleData(centroid.ToGeographic(), sampleHeight, sampleId);
     terrain.SampleData(cck::Vec3(centroid.z, centroid.x, centroid.y).ToGeographic(), sampleHeight, sampleId);
 
-    gs::Vec3f gsCentroid(centroid.x, centroid.y, centroid.z);
+    gs::Vec3d gsCentroid(centroid.x, centroid.y, centroid.z);
 
     if (sampleHeight > 0.0)
     {
@@ -518,7 +518,7 @@ void gs::Globe::SetTileGroupTextureSize()
 {
     GLint maxSize;
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxSize);
-    maxSize = 1024;
+    maxSize = 2048;
     groupManager.SetTextureSize(maxSize);
 }
 

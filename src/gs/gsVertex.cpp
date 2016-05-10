@@ -53,7 +53,7 @@ double gs::Vertex::GetHeight() const
     return height;
 }
 
-//gs::Vec3f gs::Vertex::GetPosition() const
+//gs::Vec3d gs::Vertex::GetPosition() const
 //{
 //    return position;
 //}
@@ -63,7 +63,7 @@ bool gs::Vertex::IsRiver() const
     return (riverId != -1);
 }
 //
-//void gs::Vertex::SetPosition(const gs::Vec3f& newPosition)
+//void gs::Vertex::SetPosition(const gs::Vec3d& newPosition)
 //{
 //    position = newPosition;
 //}
@@ -137,7 +137,7 @@ bool gs::Vertex::SetRiver(const int newRiverId)
     return true;
 }
 
-gs::Vertex::Vertex(const gs::Vec3f& position)
+gs::Vertex::Vertex(const gs::Vec3d& position)
     :   id(idCounter++),
         position(position),
         height(0.0),

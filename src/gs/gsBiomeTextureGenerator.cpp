@@ -98,7 +98,7 @@ shared_ptr<const gs::Texture> gs::BiomeTextureGenerator::GetTexture(const gs::La
 }
 */
 
-gs::Color& gs::BiomeTextureGenerator::Sample(const gs::Vec3f& coord, const gs::LandTile::Biome biome, const gs::LandTile::Terrain terrain) const
+gs::Color& gs::BiomeTextureGenerator::Sample(const gs::Vec3d& coord, const gs::LandTile::Biome biome, const gs::LandTile::Terrain terrain) const
 {
 	if (biome == gs::LandTile::Biome::DESERT)
 	{

@@ -28,8 +28,8 @@ gs::Color::Color(const gs::Vec3i& rhs)
 {
 }
 
-gs::Color::Color(const gs::Vec3f& rhs)
-	: gs::Vec3<uint8_t>((uint8_t) gs::Clamp(rhs.x, 0.0f, 255.0f), (uint8_t) gs::Clamp(rhs.y, 0.0f, 255.0f), gs::Clamp(rhs.z, 0.0f, 255.0f)),
+gs::Color::Color(const gs::Vec3d& rhs)
+	: gs::Vec3<uint8_t>((uint8_t) gs::Clamp(rhs.x, 0.0, 255.0), (uint8_t) gs::Clamp(rhs.y, 0.0, 255.0), gs::Clamp(rhs.z, 0.0, 255.0)),
 	  r(x), g(y), b(z)
 {
 }

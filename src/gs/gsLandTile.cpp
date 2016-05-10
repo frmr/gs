@@ -119,10 +119,10 @@ void gs::LandTile::GenerateTexture(gs::BiomeTextureGenerator& biomeTextureGenera
     boundingBox.maxCoord -= boundingBox.minCoord;
     boundingBox.minCoord -= boundingBox.minCoord; //should always be (0,0)
 
-    constexpr int pixelsPerUnit = 2000;
+    constexpr int pixelsPerUnit = 4000;
 
-    const int width = std::max((int) (boundingBox.maxCoord.x * pixelsPerUnit) + 2, 1);
-    const int height = std::max((int) (boundingBox.maxCoord.y * pixelsPerUnit) + 2, 1);
+    const int width = std::max((int) (boundingBox.maxCoord.x * pixelsPerUnit), 1);
+    const int height = std::max((int) (boundingBox.maxCoord.y * pixelsPerUnit), 1);
 
     texture = std::make_shared<gs::Texture>(width, height);
 
@@ -133,7 +133,7 @@ void gs::LandTile::GenerateTexture(gs::BiomeTextureGenerator& biomeTextureGenera
     {
         //pixelCoords.emplace_back((int) (coord.x * pixelsPerUnit), (int) (coord.y * pixelsPerUnit)); //don't need all of them, just the first
         //texCoords.emplace_back((float) pixelCoords.back().x, (float) pixelCoords.back().y);
-        texCoords.emplace_back(coord.x * pixelsPerUnit + 1, coord.y * pixelsPerUnit + 1);
+        texCoords.emplace_back(coord.x * pixelsPerUnit, coord.y * pixelsPerUnit);
     }
 
 	constexpr double riverLimit = 0.002;
@@ -232,7 +232,7 @@ void gs::LandTile::GenerateTexture(gs::BiomeTextureGenerator& biomeTextureGenera
 
 			//texture->SetColor(x, y, biomeTextureGenerator.Sample(pixelWorldCoord, biome, terrain));
 
-			//gs::Vec3f texelColor = biomeTextureGenerator.Sample(pixelWorldCoord, biome, terrain);
+			//gs::Vec3d texelColor = biomeTextureGenerator.Sample(pixelWorldCoord, biome, terrain);
             //const int sourceY = (y + offset.y) % sourceTexture->GetHeight();
             //texture->SetColor(x, y, sourceTexture->GetRed(sourceX, sourceY), sourceTexture->GetGreen(sourceX, sourceY), sourceTexture->GetBlue(sourceX, sourceY));
         }
@@ -332,7 +332,7 @@ void gs::LandTile::UpdateTexCoordBuffer(const GLuint texCoordVbo)
     delete[] texCoordArray;
 }
 
-gs::LandTile::LandTile(const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3f& centroid, const double height, const int regionId)
+gs::LandTile::LandTile(const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3d& centroid, const double height, const int regionId)
     :   gs::Tile(gs::Tile::Type::LAND, vertices, centroid, height),
         regionId(regionId),
         terrain(DetermineTerrain()),
@@ -342,15 +342,15 @@ gs::LandTile::LandTile(const vector<shared_ptr<gs::Vertex>>& vertices, const gs:
 {
     if (terrain == gs::LandTile::Terrain::PLAINS)
     {
-        color = gs::Vec3f(0.0f, 0.8f, 0.0f);
+        color = gs::Vec3d(0.0f, 0.8f, 0.0f);
     }
     else if (terrain == gs::LandTile::Terrain::HILLS)
     {
-        color = gs::Vec3f(0.0f, 0.4f, 0.0f);
+        color = gs::Vec3d(0.0f, 0.4f, 0.0f);
     }
     else if (terrain == gs::LandTile::Terrain::MOUNTAINS)
     {
-        color = gs::Vec3f(0.4, 0.4, 0.4);
+        color = gs::Vec3d(0.4, 0.4, 0.4);
     }
 }
 

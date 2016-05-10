@@ -55,7 +55,7 @@ void gs::Edge::Widen() //TODO: Stop the method shortening some edges
     if (length < minimumLength)
     {
         vec.Unit();
-        const gs::Vec3f correction = vec * ((minimumLength - length) / 2.0f);
+        const gs::Vec3d correction = vec * ((minimumLength - length) / 2.0f);
         v1->position = v1->position + correction;
         v0->position = v0->position - correction;
         vec = v1->position - v0->position;

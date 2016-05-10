@@ -46,7 +46,7 @@ namespace gs
         //gs::Color   Sample(const gs::Vec3d& coord, const gs::LandTile::Biome biome, const gs::LandTile::Terrain terrain) const;
         //gs::Vec2i                       GetRandomOffset();
         //shared_ptr<const gs::Texture>   GetTexture(const gs::LandTile::Biome biome, const gs::LandTile::Terrain terrain) const;
-		gs::Color&	Sample(const gs::Vec3f& coord, const gs::LandTile::Biome biome, const gs::LandTile::Terrain terrain) const;
+		gs::Color&	Sample(const gs::Vec3d& coord, const gs::LandTile::Biome biome, const gs::LandTile::Terrain terrain) const;
 
     public:
         BiomeTextureGenerator();

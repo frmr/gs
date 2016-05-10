@@ -70,7 +70,7 @@ namespace gs
         void                                UpdateTexCoordBuffer(const GLuint texCoordVbo);
 
     public:
-        LandTile(const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3f& centroid, const double height, const int regionId);
+        LandTile(const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3d& centroid, const double height, const int regionId);
         ~LandTile();
     };
 

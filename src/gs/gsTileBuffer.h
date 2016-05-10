@@ -32,7 +32,7 @@ namespace gs
     public:
         void Bind() const;
 
-        bool Update(const GLuint tileIndex, const gs::Vec3f& newColor, const bool newFog);
+        bool Update(const GLuint tileIndex, const gs::Vec3d& newColor, const bool newFog);
 
     public:
         TileBuffer(const int size, gs::Shader& shader, const vector<GLuint>& indexVector);

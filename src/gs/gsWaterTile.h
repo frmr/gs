@@ -23,7 +23,7 @@ namespace gs
         void UpdateAllBuffers(const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo);
 
     public:
-        WaterTile(const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3f& centroid);
+        WaterTile(const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3d& centroid);
     };
 
     typedef shared_ptr<gs::WaterTile> WaterTilePtr;

@@ -22,7 +22,7 @@ namespace gs
         Color(const uint8_t r, const uint8_t g, const uint8_t b);
 		Color(const gs::Color& rhs);
 		Color(const gs::Vec3i& rhs);
-		Color(const gs::Vec3f& rhs);
+		Color(const gs::Vec3d& rhs);
     };
 }
 

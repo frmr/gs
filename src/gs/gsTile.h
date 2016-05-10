@@ -38,7 +38,7 @@ namespace gs
         const vector<shared_ptr<gs::Vertex>>    vertices;
         GLuint                                  bufferOffset;
         GLuint                                  indexBufferOffset;
-        gs::Vec3f                               color;
+        gs::Vec3d                               color;
         bool                                    fog;
 
         vector<gs::Link<gs::Tile>>              allLinks;
@@ -70,7 +70,7 @@ namespace gs
         GLuint  SetBufferOffset(const GLuint offset);
 
     protected:
-        Tile(const Type surface, const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3f& centroid, const double height);
+        Tile(const Type surface, const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3d& centroid, const double height);
 
     public:
         //Tile(const int bufferOffset, const vector<shared_ptr<gs::Vertex>>& vertices);

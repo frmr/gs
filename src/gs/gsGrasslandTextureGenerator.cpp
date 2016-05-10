@@ -2,15 +2,15 @@
 
 #include <algorithm>
 
-const std::vector<gs::Vec3f> gs::GrasslandTextureGenerator::colors = { gs::Vec3f(57.0f, 84.0f, 54.0f),
-																	gs::Vec3f(25.0f, 42.0f, 23.0f),
-																	gs::Vec3f(144.0f, 140.0f, 115.0f),
-																	gs::Vec3f(210.0f, 210.0f, 210.0f),
-																	gs::Vec3f(250.0f, 250.0f, 250.0f) };
+const std::vector<gs::Vec3d> gs::GrasslandTextureGenerator::colors = { gs::Vec3d(57.0f, 84.0f, 54.0f),
+																	gs::Vec3d(25.0f, 42.0f, 23.0f),
+																	gs::Vec3d(144.0f, 140.0f, 115.0f),
+																	gs::Vec3d(210.0f, 210.0f, 210.0f),
+																	gs::Vec3d(250.0f, 250.0f, 250.0f) };
 
 const std::vector<float> gs::GrasslandTextureGenerator::limits = { 0.3f, 0.5f, 0.7f, 0.8f };
 
-gs::Color gs::GrasslandTextureGenerator::Sample(const gs::Vec3f& coord, const gs::LandTile::Terrain terrain)
+gs::Color gs::GrasslandTextureGenerator::Sample(const gs::Vec3d& coord, const gs::LandTile::Terrain terrain)
 {
 	float minHeight = 0.0f;
 	float maxHeight = 0.0f;

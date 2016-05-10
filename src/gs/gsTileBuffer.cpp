@@ -34,7 +34,7 @@ void gs::TileBuffer::InitIndexBuffer(const vector<GLuint>& indexVector) const
     delete[] indexArray;
 }
 
-bool gs::TileBuffer::Update(const GLuint tileIndex, const gs::Vec3f& newColor, const bool newFog)
+bool gs::TileBuffer::Update(const GLuint tileIndex, const gs::Vec3d& newColor, const bool newFog)
 {
     return true;
 }

@@ -136,7 +136,7 @@ GLuint gs::Tile::SetBufferOffset(const GLuint vertexCount)
     return vertexCount + vertices.size();
 }
 
-gs::Tile::Tile(const Type surface, const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3f& centroid, const double height)
+gs::Tile::Tile(const Type surface, const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3d& centroid, const double height)
     :   id(idCounter++),
         surface(surface),
         normal(gs::Vec3d((double) centroid.x, (double) centroid.y, (double) centroid.z).Unit()),

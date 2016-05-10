@@ -2,15 +2,15 @@
 
 #include <algorithm>
 
-const std::vector<gs::Vec3f> gs::DesertTextureGenerator::colors = { gs::Vec3f(241.0f, 203.0f, 159.0f),
-																	gs::Vec3f(227.0f, 181.0f, 138.0f),
-																	gs::Vec3f(155.0f, 123.0f, 98.0f),
-																	gs::Vec3f(237.0f, 228.0f, 207.0f),
-																	gs::Vec3f(250.0f, 249.0f, 241.0f) };
+const std::vector<gs::Vec3d> gs::DesertTextureGenerator::colors = { gs::Vec3d(241.0f, 203.0f, 159.0f),
+																	gs::Vec3d(227.0f, 181.0f, 138.0f),
+																	gs::Vec3d(155.0f, 123.0f, 98.0f),
+																	gs::Vec3d(237.0f, 228.0f, 207.0f),
+																	gs::Vec3d(250.0f, 249.0f, 241.0f) };
 
 const std::vector<float> gs::DesertTextureGenerator::limits = { 0.2f, 0.4f, 0.6f, 0.7f };
 
-gs::Color gs::DesertTextureGenerator::Sample(const gs::Vec3f& coord, const gs::LandTile::Terrain terrain)
+gs::Color gs::DesertTextureGenerator::Sample(const gs::Vec3d& coord, const gs::LandTile::Terrain terrain)
 {
 	float minHeight = 0.0f;
 	float maxHeight = 0.0f;

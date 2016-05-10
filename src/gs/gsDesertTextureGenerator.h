@@ -11,14 +11,14 @@ namespace gs
 	class DesertTextureGenerator
 	{
 	private:
-		static const std::vector<gs::Vec3f> colors;
+		static const std::vector<gs::Vec3d> colors;
 		static const std::vector<float>		limits;
 
 		FastNoise noiseA;
 		FastNoise noiseB;
 
 	public:
-		gs::Color Sample(const gs::Vec3f& coord, const gs::LandTile::Terrain terrain);
+		gs::Color Sample(const gs::Vec3d& coord, const gs::LandTile::Terrain terrain);
 
 		DesertTextureGenerator();
 	};

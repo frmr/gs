@@ -149,7 +149,7 @@ bool gs::Texture::SetColor(const int x, const int y, const GLubyte red, const GL
     return false;
 }
 
-//bool gs::Texture::SetColor(const int x, const int y, const gs::Vec3f& color)
+//bool gs::Texture::SetColor(const int x, const int y, const gs::Vec3d& color)
 //{
 //    return SetColor(x, y, (GLubyte) (color.x * 255.0f), (GLubyte) (color.y * 255.0f), (GLubyte) (color.z * 255.0f));
 //}

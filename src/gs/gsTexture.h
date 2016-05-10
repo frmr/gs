@@ -47,7 +47,7 @@ namespace gs
         GLuint      Push() const;
         bool        SetBlue(const int x, const int y, const GLubyte blue);
         bool        SetColor(const int x, const int y, const GLubyte red, const GLubyte green, const GLubyte blue);
-        //bool        SetColor(const int x, const int y, const gs::Vec3f& color);
+        //bool        SetColor(const int x, const int y, const gs::Vec3d& color);
         bool        SetColor(const int x, const int y, const gs::Color& color);
         bool        SetGreen(const int x, const int y, const GLubyte green);
         bool        SetRed(const int x, const int y, const GLubyte red);
