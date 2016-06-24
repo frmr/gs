@@ -150,6 +150,7 @@ namespace gs
 
     public:
         Vec3<T>()
+			: x((T)0), y((T)0), z((T)0)
         {
         }
 
