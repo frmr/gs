@@ -172,12 +172,14 @@
     <ClCompile Include="src\gs\gsLandTile.cpp" />
     <ClCompile Include="src\gs\gsLandTileBuffer.cpp" />
     <ClCompile Include="src\gs\gsLandTileGroup.cpp" />
+    <ClCompile Include="src\gs\gsSemiAridTextureGenerator .cpp" />
     <ClCompile Include="src\gs\gsShader.cpp" />
     <ClCompile Include="src\gs\gsTexture.cpp" />
     <ClCompile Include="src\gs\gsTile.cpp" />
     <ClCompile Include="src\gs\gsTileBuffer.cpp" />
     <ClCompile Include="src\gs\gsTileGroup.cpp" />
     <ClCompile Include="src\gs\gsTileGroupManager.cpp" />
+    <ClCompile Include="src\gs\gsTundraTextureGenerator.cpp" />
     <ClCompile Include="src\gs\gsVertex.cpp" />
     <ClCompile Include="src\gs\gsWaterTile.cpp" />
     <ClCompile Include="src\gs\gsWaterTileBuffer.cpp" />
@@ -234,6 +236,7 @@
     <ClInclude Include="src\gs\gsMatrixStack.h" />
     <ClInclude Include="src\gs\gsRandomRange.h" />
     <ClInclude Include="src\gs\gsRenderer.h" />
+    <ClInclude Include="src\gs\gsSemiAridTextureGenerator.h" />
     <ClInclude Include="src\gs\gsShader.h" />
     <ClInclude Include="src\gs\gsSpreader.h" />
     <ClInclude Include="src\gs\gsTexture.h" />
@@ -241,6 +244,7 @@
     <ClInclude Include="src\gs\gsTileBuffer.h" />
     <ClInclude Include="src\gs\gsTileGroup.h" />
     <ClInclude Include="src\gs\gsTileGroupManager.h" />
+    <ClInclude Include="src\gs\gsTundraTextureGenerator.h" />
     <ClInclude Include="src\gs\gsUserInterface.h" />
     <ClInclude Include="src\gs\gsVec2.h" />
     <ClInclude Include="src\gs\gsVec3.h" />

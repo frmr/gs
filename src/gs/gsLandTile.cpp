@@ -328,8 +328,8 @@ void gs::LandTile::UpdateTexCoordBuffer(const GLuint texCoordVbo)
     GLfloat* texCoordArray = new GLfloat[2*vertices.size()];
     for (unsigned int i = 0; i < texCoords.size(); ++i)
     {
-        texCoordArray[2*i] = texCoords[i].x;
-        texCoordArray[2*i+1] = texCoords[i].y;
+        texCoordArray[2*i] = (GLfloat) texCoords[i].x;
+        texCoordArray[2*i+1] = (GLfloat) texCoords[i].y;
     }
     glBindBuffer(GL_ARRAY_BUFFER, texCoordVbo);
     glBufferSubData(GL_ARRAY_BUFFER, 2 * bufferOffset * sizeof(GLfloat), 2 * vertices.size() * sizeof(GLfloat), texCoordArray);

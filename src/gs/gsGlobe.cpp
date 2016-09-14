@@ -43,7 +43,7 @@ void gs::Globe::Draw(const gs::Camera& worldCamera) const
 cck::Globe gs::Globe::GenerateTerrain() const
 {
     cerr << "Generating terrain" << endl;
-    cck::Globe terrain(6370.0, std::time(0));
+    cck::Globe terrain(6370.0, (unsigned int) std::time(0));
     terrain.SetNoiseParameters(8, 0.75, 0.00015);
 
     terrain.AddNode(0,   52.0,   -4.0,   -0.2,   0.5,    600.0);    //Britain         GRASSLAND
@@ -417,7 +417,7 @@ void gs::Globe::GenerateRivers(const int numOfSpawners)
     cerr << "Generating rivers" << endl;
     //pick numOfRivers random vertices
 
-    gs::RandomRange<double> rand(0.0, 0.9999, std::time(0));
+    gs::RandomRange<double> rand(0.0, 0.9999, (unsigned int) std::time(0));
 
     for (int i = 0; i < numOfSpawners && i < (int) landTiles.size(); ++i)
     {
@@ -458,7 +458,7 @@ void gs::Globe::GenerateTextures()
 void gs::Globe::GenerateTiles(const int numOfTiles)
 {
     cerr << "Generating tiles" << endl;
-    VoronoiGenerator vg(std::time(0));
+    VoronoiGenerator vg((unsigned int) std::time(0));
     vg.generateTessellation(numOfTiles);
 
     //generate world
