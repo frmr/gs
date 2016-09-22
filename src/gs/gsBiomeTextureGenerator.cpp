@@ -25,7 +25,7 @@ gs::Color& gs::BiomeTextureGenerator::Sample(const gs::Vec3d& coord, const gs::L
 	}
 	else
 	{
-		return gs::Color(255, 0, 0);
+		return gs::Color(255, 0, 255);
 	}
 }
 

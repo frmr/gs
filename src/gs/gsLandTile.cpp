@@ -10,6 +10,7 @@
 
 #include <ctime>
 #include <unordered_map>
+#include <map>
 #include <array>
 
 gs::LandTile::Terrain gs::LandTile::DetermineTerrain() const
@@ -152,18 +153,15 @@ void gs::LandTile::GenerateTexture(gs::BiomeTextureGenerator& biomeTextureGenera
 	for (const auto& link : landLinks)
 	{
 		//if (link.target->biome != this->biome || link.target->terrain != terrain || link.edge->IsRiver())
-		if (link.target->biome != this->biome || link.edge->IsRiver())
+		if (link.target->biome != this->biome || link.edge->IsRiver() || link.target->terrain != this->terrain)
 		{
 			notableLinks.push_back(link);
 		}
 	}
 
     //sample texture generator at each pixel
-    //shared_ptr<const gs::Texture> sourceTexture = biomeTextureGenerator.GetTexture(biome, terrain);
-    //const gs::Vec2i offset = biomeTextureGenerator.GetRandomOffset();
     for (int x = 0; x < width; ++x)
     {
-        //const int sourceX = (x + offset.x) % sourceTexture->GetWidth();
         for (int  y = 0; y < height; ++y)
         {
 			const gs::Vec3d pixelWorldCoord = (pixelOriginWorldCoord + xJump * x + yJump * y).Unit(); //TODO: Speed this up by using xJump and yJump to increment for each pixel
@@ -192,53 +190,51 @@ void gs::LandTile::GenerateTexture(gs::BiomeTextureGenerator& biomeTextureGenera
 			}
 			if (colorSet)
 			{
-				break;
+				continue;
 			}
 
-			//texture->SetColor(x, y, thisTerrainSample);
+			std::map<std::pair<gs::LandTile::Biome, gs::LandTile::Terrain>, double> distanceMap;
 
-			std::array<double, 7> biomeDistances;
-
-			for (auto It = biomeDistances.begin(); It != biomeDistances.end(); ++It)
-			{
-				*It = std::numeric_limits<double>::max();
-			}
-
-			biomeDistances[(int)this->biome] = 1.0;
-
-			//std::unordered_map<gs::LandTile::Biome, double> biomesToBlend;
+			distanceMap.emplace(std::make_pair(this->biome, this->terrain), 0.0);
 
 			for (int i = 0; i < notableLinks.size(); ++i)
 			{
-				const gs::LandTile::Biome targetBiome = notableLinks[i].target->biome;
-				if (notableDistances[i] >= blendLimit || targetBiome != this->biome)
+				if (notableDistances[i] >= blendLimit)
 				{
 					continue;
 				}
 
-				const double factor = (blendLimit - notableDistances[i]) / blendLimit;
-				if (factor < biomeDistances[(int)targetBiome])
+				const gs::LandTile::Biome targetBiome = notableLinks[i].target->biome;
+				const gs::LandTile::Terrain targetTerrain = notableLinks[i].target->terrain;
+
+				const std::pair<gs::LandTile::Biome, gs::LandTile::Terrain> key(notableLinks[i].target->biome, notableLinks[i].target->terrain);
+
+				if (distanceMap.count(key))
 				{
-					biomeDistances[(int)targetBiome] = factor;
+					if (notableDistances[i] < distanceMap.at(key))
+					{
+						distanceMap.at(key) = notableDistances[i];
+					}
+				}
+				else
+				{
+					distanceMap.emplace(key, notableDistances[i]);
 				}
 			}
 
 			gs::Vec3d tempColor;
-			//for (auto It = biomeDistances.begin(); It != biomeDistances.end(); ++It)
-			int biomeCount = 0;
-			for (int i = 0; i < 7; ++i)
+			double factorSum = 0.0;
+			for (auto& element : distanceMap)
 			{
-				if (biomeDistances[i] <= 1.1)
-				{
-					const gs::Color sample = biomeTextureGenerator.Sample(pixelWorldCoord, (gs::LandTile::Biome) i, terrain);
-					tempColor += gs::Vec3d((double)sample.r * biomeDistances[i], (double)sample.g * biomeDistances[i], (double)sample.b * biomeDistances[i]);
-					++biomeCount;
-				}
+				const double factor = (blendLimit - element.second) / blendLimit;
+				const gs::Color sample = biomeTextureGenerator.Sample(pixelWorldCoord, element.first.first, element.first.second);
+				tempColor += gs::Vec3d((double)sample.r * factor, (double)sample.g * factor, (double)sample.b * factor);
+				factorSum += factor;
 			}
 
 			//std::cout << tempColor.x << " " << tempColor.y << " " << tempColor.z << std::endl;
 
-			texture->SetColor(x, y, gs::Color(tempColor / biomeCount));
+			texture->SetColor(x, y, gs::Color(tempColor / factorSum));
         }
     }
 }
