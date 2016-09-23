@@ -120,23 +120,20 @@ void gs::LandTile::GenerateTexture(gs::BiomeTextureGenerator& biomeTextureGenera
         coord -= boundingBox.minCoord;
     }
     boundingBox.maxCoord -= boundingBox.minCoord;
-    boundingBox.minCoord -= boundingBox.minCoord; //should always be (0,0)
+	boundingBox.minCoord = gs::Vec2d();
 
     constexpr int pixelsPerUnit = 4000;
+	constexpr uint8_t edgeCushion = 16;
 
-    const int width = std::max((int) (boundingBox.maxCoord.x * pixelsPerUnit), 1);
-    const int height = std::max((int) (boundingBox.maxCoord.y * pixelsPerUnit), 1);
+    const int width = std::max((int) (boundingBox.maxCoord.x * pixelsPerUnit), 1) + edgeCushion * 2;
+    const int height = std::max((int) (boundingBox.maxCoord.y * pixelsPerUnit), 1) + edgeCushion * 2;
 
     texture = std::make_shared<gs::Texture>(width, height);
 
-    //vector<gs::Vec2i> pixelCoords;
-    //pixelCoords.reserve(vertices.size());
     texCoords.reserve(vertices.size());
     for (const auto& coord : relativeCoords)
     {
-        //pixelCoords.emplace_back((int) (coord.x * pixelsPerUnit), (int) (coord.y * pixelsPerUnit)); //don't need all of them, just the first
-        //texCoords.emplace_back((float) pixelCoords.back().x, (float) pixelCoords.back().y);
-        texCoords.emplace_back(coord.x * pixelsPerUnit, coord.y * pixelsPerUnit);
+        texCoords.emplace_back(coord.x * pixelsPerUnit + edgeCushion, coord.y * pixelsPerUnit + edgeCushion);
     }
 
 	constexpr double riverLimit = 0.002;
@@ -145,7 +142,7 @@ void gs::LandTile::GenerateTexture(gs::BiomeTextureGenerator& biomeTextureGenera
 	const gs::Vec3d xJump = refAxisU / (double) pixelsPerUnit;
 	const gs::Vec3d yJump = refAxisV / (double) pixelsPerUnit;
 
-	const gs::Vec3d pixelOriginWorldCoord = vertices[0]->position - (xJump * texCoords.front().x) - (yJump * texCoords.front().y); //world coordinate of pixel (0,0)
+	const gs::Vec3d pixelOriginWorldCoord = vertices[0]->position - (xJump * (texCoords.front().x - edgeCushion)) - (yJump * (texCoords.front().y - edgeCushion)); //world coordinate of pixel (0,0)
 
 
 	//create sublist of links to tiles that are rivers or need blending
@@ -164,7 +161,7 @@ void gs::LandTile::GenerateTexture(gs::BiomeTextureGenerator& biomeTextureGenera
     {
         for (int  y = 0; y < height; ++y)
         {
-			const gs::Vec3d pixelWorldCoord = (pixelOriginWorldCoord + xJump * x + yJump * y).Unit(); //TODO: Speed this up by using xJump and yJump to increment for each pixel
+			const gs::Vec3d pixelWorldCoord = (pixelOriginWorldCoord + xJump * (x - edgeCushion) + yJump * (y - edgeCushion)).Unit(); //TODO: Speed this up by using xJump and yJump to increment for each pixel
 
 			//calculate distance to each notable edge
 			vector<double> notableDistances;
@@ -231,8 +228,6 @@ void gs::LandTile::GenerateTexture(gs::BiomeTextureGenerator& biomeTextureGenera
 				tempColor += gs::Vec3d((double)sample.r * factor, (double)sample.g * factor, (double)sample.b * factor);
 				factorSum += factor;
 			}
-
-			//std::cout << tempColor.x << " " << tempColor.y << " " << tempColor.z << std::endl;
 
 			texture->SetColor(x, y, gs::Color(tempColor / factorSum));
         }

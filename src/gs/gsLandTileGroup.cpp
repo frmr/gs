@@ -74,7 +74,7 @@ gs::LandTileGroup::LandTileGroup(const GLuint bufferBegin, const int textureSize
         shelfCursor(0, 0),
         shelfTop(0)
 {
-    texture = std::make_shared<gs::Texture>(textureSize, textureSize);
+	texture = std::make_shared<gs::Texture>(textureSize, textureSize);
 }
 
 gs::LandTileGroup::~LandTileGroup()

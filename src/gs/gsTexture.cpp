@@ -45,6 +45,19 @@ void gs::Texture::Delete()
 	data.Delete();
 }
 
+void gs::Texture::Fill(const gs::Color& color)
+{
+	for (int x = 0; x < width; ++x)
+	{
+		for (int y = 0; y < height; ++y)
+		{
+			data.At(x, y, 0) = color.r;
+			data.At(x, y, 1) = color.g;
+			data.At(x, y, 2) = color.b;
+		}
+	}
+}
+
 int gs::Texture::GetArea() const
 {
     return width * height;
@@ -115,8 +128,8 @@ GLuint gs::Texture::Push() const
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data.GetData());
 
     glGenerateMipmap(GL_TEXTURE_2D);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
@@ -204,6 +217,14 @@ gs::Texture::Texture(const int width, const int height)
         height(height),
         data(width, height, 3)
 {
+}
+
+gs::Texture::Texture(const int width, const int height, const gs::Color& color)
+	:	width(width),
+		height(height),
+		data(width, height, 3)
+{
+	Fill(color);
 }
 
 gs::Texture::Texture(const string& filename)
