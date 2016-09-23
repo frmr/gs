@@ -57,9 +57,6 @@ void gs::LandTileGroup::Draw() const
 void gs::LandTileGroup::PushTexture()
 {
     textureId = texture->Push();
-    //glBindTexture(textureId);
-    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 }
 
 void gs::LandTileGroup::WriteToFile() const

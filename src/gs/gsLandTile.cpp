@@ -123,7 +123,7 @@ void gs::LandTile::GenerateTexture(gs::BiomeTextureGenerator& biomeTextureGenera
 	boundingBox.minCoord = gs::Vec2d();
 
     constexpr int pixelsPerUnit = 4000;
-	constexpr uint8_t edgeCushion = 16;
+	constexpr uint8_t edgeCushion = 8;
 
     const int width = std::max((int) (boundingBox.maxCoord.x * pixelsPerUnit), 1) + edgeCushion * 2;
     const int height = std::max((int) (boundingBox.maxCoord.y * pixelsPerUnit), 1) + edgeCushion * 2;
@@ -137,7 +137,7 @@ void gs::LandTile::GenerateTexture(gs::BiomeTextureGenerator& biomeTextureGenera
     }
 
 	constexpr double riverLimit = 0.002;
-	constexpr double blendLimit = 0.004;
+	constexpr double blendLimit = 0.008;
 
 	const gs::Vec3d xJump = refAxisU / (double) pixelsPerUnit;
 	const gs::Vec3d yJump = refAxisV / (double) pixelsPerUnit;
