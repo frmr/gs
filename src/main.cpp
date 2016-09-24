@@ -32,10 +32,17 @@ namespace gs
         return true;
     }
 
-    bool InitWindow(SDL_Window** window, SDL_GLContext& context, const int screenWidth, const int screenHeight)
+    bool InitWindow(SDL_Window** window, SDL_GLContext& context, const int screenWidth, const int screenHeight, const bool fullscreen)
     {
-        *window = SDL_CreateWindow("gs", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screenWidth, screenHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
-        //*window = SDL_CreateWindow("gs", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenWidth, screenHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN);
+		if (fullscreen)
+		{
+			*window = SDL_CreateWindow("gs", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenWidth, screenHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN);
+		}
+		else
+		{
+			*window = SDL_CreateWindow("gs", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screenWidth, screenHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+		}
+        
 
         if (window == NULL)
         {
@@ -101,13 +108,13 @@ int main(int argc, char* argv[])
         running = false;
     }
 
-    const int screenWidth = 1024;
-    const int screenHeight = 768;
+    const int screenWidth = 1280;
+    const int screenHeight = 1024;
 
     SDL_Window* window = NULL;
     SDL_GLContext context = NULL;
 
-    if (!gs::InitWindow(&window, context, screenWidth, screenHeight))
+    if (!gs::InitWindow(&window, context, screenWidth, screenHeight, false))
     {
         cerr << "main() in main.cpp: Failed to initialise window." << endl;
         running = false;

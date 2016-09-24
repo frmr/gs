@@ -123,7 +123,7 @@ void gs::LandTile::GenerateTexture(gs::BiomeTextureGenerator& biomeTextureGenera
 	boundingBox.minCoord = gs::Vec2d();
 
     constexpr int pixelsPerUnit = 4000;
-	constexpr uint8_t edgeCushion = 8;
+	constexpr uint8_t edgeCushion = 16;
 
     const int width = std::max((int) (boundingBox.maxCoord.x * pixelsPerUnit), 1) + edgeCushion * 2;
     const int height = std::max((int) (boundingBox.maxCoord.y * pixelsPerUnit), 1) + edgeCushion * 2;
