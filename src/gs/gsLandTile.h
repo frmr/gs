@@ -16,7 +16,7 @@ using std::vector;
 
 namespace gs
 {
-    class BiomeTextureGenerator;
+	class BiomeTextureGenerator;
 
     class LandTile : public gs::Tile
     {
@@ -24,7 +24,6 @@ namespace gs
         enum class Biome
         {
             UNASSIGNED = 0,
-            LAKE,
             ICE,
             TUNDRA,
             GRASSLAND,
@@ -36,38 +35,33 @@ namespace gs
         {
             PLAINS = 0,
             HILLS,
-            MOUNTAINS
+            MOUNTAINS,
+			LAKE
         };
 
     public:
-        const int                   regionId;
-        const Terrain               terrain;
+        const int							regionId;
+        const Terrain						terrain;
 
     private:
-        bool                        forested;
-        Biome                       biome;
-        shared_ptr<gs::Culture>     culture;
-        shared_ptr<gs::Texture>     texture; //TODO: should be on stack, or at least unique_ptr
-        vector<gs::Vec2d>           texCoords;
+        bool								forested;
+        Biome								biome;
+        shared_ptr<gs::Culture>				culture;
+
+		static gs::BiomeTextureGenerator	biomeTextureGenerator;
 
     private:
         Terrain                             DetermineTerrain() const;
 
     public:
-        void                                AddToTileGroupTexture(shared_ptr<gs::Texture> tileGroupTexture, const gs::Vec2i& tileGroupTextureOffset, const int tileGroupTextureSize);
-        void                                BlendTexture();
-        void                                DeleteLocalTextureData();
-        void                                GenerateTexture(gs::BiomeTextureGenerator& biomeTextureGenerator);
+        void                                GenerateTexture();
         Biome                               GetBiome() const;
-        shared_ptr<gs::Texture>             GetTexture() const;
         vector<shared_ptr<gs::LandTile>>    GetUnassignedBiomeNeighbors() const;
 
         bool                                HasUnassignedBiomeNeighbors() const;
         void                                SetBiome(const Biome newBiome);
         void                                SetCulture(const shared_ptr<Culture> newCulture);
         bool                                SpawnRiver(const int newRiverId, gs::RandomRange<double>& rand);
-        void                                UpdateAllBuffers(const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo, const GLuint texCoordVbo);
-        void                                UpdateTexCoordBuffer(const GLuint texCoordVbo);
 
     public:
         LandTile(const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3d& centroid, const double height, const int regionId);

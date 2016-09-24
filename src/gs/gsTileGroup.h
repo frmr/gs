@@ -5,6 +5,7 @@
 
 #include "../gl3w/gl3w.h"
 #include "../EasyBMP/EasyBMP.h"
+#include "gsTexture.h"
 
 #include "gsTile.h"
 
@@ -14,20 +15,29 @@ namespace gs
 {
     class TileGroup
     {
-    protected:
-        //texture id
-        //pointer to image data (to be deleted eventually)
+	private:
+		const int               textureSize;
+		GLuint                  textureId;
+		gs::Vec2i               shelfCursor;
+		int                     shelfTop;
+		shared_ptr<gs::Texture> texture;    //TODO: should be unique_ptr
+
+	protected:
         const GLuint        bufferBegin;
         GLuint              bufferEnd;
 
     public:
-        virtual void    Draw() const = 0;
-        GLuint          GetBufferBegin() const;
-        GLuint          GetBufferEnd() const;
+		bool		Add(const gs::TilePtr& tile);
+		void		DeleteLocalTextureData();
+		void		PushTexture();
+		void		WriteToFile(const std::string& filename = "") const;
+        void		Draw() const;
+        GLuint      GetBufferBegin() const;
+        GLuint      GetBufferEnd() const;
 
     public:
-        //TileGroup();
-        explicit TileGroup(const GLuint bufferBegin);
+        explicit TileGroup(const GLuint bufferBegin, const int textureSize);
+		~TileGroup();
     };
 }
 

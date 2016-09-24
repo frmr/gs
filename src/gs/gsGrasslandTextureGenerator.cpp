@@ -31,8 +31,8 @@ gs::Color gs::GrasslandTextureGenerator::Sample(const gs::Vec3d& coord, const gs
 		maxHeight = 1.0f;
 	}
 
-	const float noiseValA = minHeight + noiseA.GetGradientFractal(coord.x * 2560.0f, coord.y * 2560.0f, coord.z * 2560.0f) * (maxHeight - minHeight);
-	const float noiseValB = minHeight + noiseB.GetGradientFractal(coord.x * 2560.0f, coord.y * 2560.0f, coord.z * 2560.0f) * (noiseValA - minHeight);
+	const float noiseValA = minHeight + noiseA.GetGradientFractal(float(coord.x) * 2560.0f, float(coord.y) * 2560.0f, float(coord.z) * 2560.0f) * (maxHeight - minHeight);
+	const float noiseValB = minHeight + noiseB.GetGradientFractal(float(coord.x) * 2560.0f, float(coord.y) * 2560.0f, float(coord.z) * 2560.0f) * (noiseValA - minHeight);
 
 	//const double funcVal = 1.0 - (noiseValA - noiseValB * 0.5);
 	//const double funcVal = minHeight + (1.0 - (noiseValA - noiseValB * 0.5)) * (maxHeight - minHeight);

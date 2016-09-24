@@ -13,6 +13,8 @@
 #include <map>
 #include <array>
 
+gs::BiomeTextureGenerator gs::LandTile::biomeTextureGenerator;
+
 gs::LandTile::Terrain gs::LandTile::DetermineTerrain() const
 {
     if (height < 0.25)
@@ -29,71 +31,7 @@ gs::LandTile::Terrain gs::LandTile::DetermineTerrain() const
     }
 }
 
-void gs::LandTile::AddToTileGroupTexture(shared_ptr<gs::Texture> tileGroupTexture, const gs::Vec2i& tileGroupTextureOffset, const int tileGroupTextureSize)
-{
-    tileGroupTexture->Blit(texture, tileGroupTextureOffset);
-    //update texture coordinates to be relative to the texture group texture
-    for (unsigned int i = 0; i < texCoords.size(); ++i)
-    {
-        texCoords[i].x = ((float) tileGroupTextureOffset.x + texCoords[i].x) / (float) tileGroupTextureSize;
-        texCoords[i].y = ((float) tileGroupTextureOffset.y + texCoords[i].y) / (float) tileGroupTextureSize;
-    }
-}
-
-void gs::LandTile::BlendTexture()
-{
-    const float riverLimit = 0.002f;
-    const float blendLimit = 0.004f;
-
-    for (int i = 0; i < texCoords.size(); ++i)
-    {
-//        gs::EdgePtr realEdge = vertices[i]->GetEdgeWith(vertices[(i+1)%vertices.size()]);
-//        for (const auto& texEdge : texEdges)
-//        {
-//            if (texEdge.id == realEdge.id)
-//            {
-//                for (int x = 0; x < texture->GetWidth(); ++x)
-//                {
-//                    for (int y = 0; y < texture->GetHeight(); ++y)
-//                    {
-//                        int blendCount = 1;
-//                        gs::Color texelColor = texture->GetColor(x, y);
-//
-//                        const gs::Vec2i coord(x, y);
-//
-//
-//
-//
-//                        //get distance to edge
-//                        const double t = ClosestPointOnLine();
-//                        const gs::Vec2i closestPoint = ;
-//                        const double dist = (coord - closestPoint).Length();
-//                        if (dist < riverLimit)
-//                        {
-//                            texture->SetColor(x, y, 0, 0, 255);
-//                            break;
-//                        }
-//                        //if distance to edge is less than riverLimit
-//
-//                        //else if distance to edge is less than blendLimit
-//                        //link.target->Get
-//                    }
-//                }
-//
-//                break;
-//            }
-//        }
-
-
-    }
-}
-
-void gs::LandTile::DeleteLocalTextureData()
-{
-    texture.reset();
-}
-
-void gs::LandTile::GenerateTexture(gs::BiomeTextureGenerator& biomeTextureGenerator)
+void gs::LandTile::GenerateTexture()
 {
     //TODO: Make this safer by checking for presence of first and second vertices
 
@@ -234,11 +172,6 @@ void gs::LandTile::GenerateTexture(gs::BiomeTextureGenerator& biomeTextureGenera
     }
 }
 
-shared_ptr<gs::Texture> gs::LandTile::GetTexture() const
-{
-    return texture;
-}
-
 vector<shared_ptr<gs::LandTile>> gs::LandTile::GetUnassignedBiomeNeighbors() const
 {
     vector<shared_ptr<gs::LandTile>> unassignedNeighbors;
@@ -306,34 +239,12 @@ bool gs::LandTile::SpawnRiver(const int newRiverId, gs::RandomRange<double>& ran
     }
 }
 
-void gs::LandTile::UpdateAllBuffers(const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo, const GLuint texCoordVbo) //const
-{
-    UpdatePositionBuffer(positionVbo);
-    UpdateColorBuffer(colorVbo);
-    UpdateFogBuffer(fogVbo);
-    UpdateTexCoordBuffer(texCoordVbo);
-}
-
-void gs::LandTile::UpdateTexCoordBuffer(const GLuint texCoordVbo)
-{
-    GLfloat* texCoordArray = new GLfloat[2*vertices.size()];
-    for (unsigned int i = 0; i < texCoords.size(); ++i)
-    {
-        texCoordArray[2*i] = (GLfloat) texCoords[i].x;
-        texCoordArray[2*i+1] = (GLfloat) texCoords[i].y;
-    }
-    glBindBuffer(GL_ARRAY_BUFFER, texCoordVbo);
-    glBufferSubData(GL_ARRAY_BUFFER, 2 * bufferOffset * sizeof(GLfloat), 2 * vertices.size() * sizeof(GLfloat), texCoordArray);
-    delete[] texCoordArray;
-}
-
 gs::LandTile::LandTile(const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3d& centroid, const double height, const int regionId)
     :   gs::Tile(gs::Tile::Type::LAND, vertices, centroid, height),
         regionId(regionId),
         terrain(DetermineTerrain()),
         forested(false),
-        biome(gs::LandTile::Biome::UNASSIGNED),
-        texture(nullptr)
+        biome(gs::LandTile::Biome::UNASSIGNED)
 {
     if (terrain == gs::LandTile::Terrain::PLAINS)
     {

@@ -29,13 +29,13 @@ void gs::Globe::Draw(const gs::Camera& worldCamera) const
     groupManager.DrawLandTileGroups();
 
     //Draw water tiles
-    waterShader.Use();
+    //waterShader.Use();
     //pass matrices to shaders
     glUniformMatrix4fv(modelViewMatrixLocationWater, 1, false, worldCamera.GetViewMatrix().get()); //TODO: multiply by model matrix if needed
     glUniformMatrix4fv(projectionMatrixLocationWater, 1, false, worldCamera.GetProjectionMatrix().get());
     glUniformMatrix4fv(normalMatrixLocationWater, 1, false, inverseModelViewMatrix.getTranspose());
     waterBuffer->Bind();
-    groupManager.DrawWaterTileGroup();
+    groupManager.DrawWaterTileGroups();
 
     //glUseProgram(0);
 }
@@ -412,6 +412,22 @@ void gs::Globe::GenerateCultures(const int numOfSpreaders)
 
 }
 
+void gs::Globe::GenerateLandTextures()
+{
+	cerr << "Generating land textures" << endl;
+
+	for (auto& tile : landTiles)
+	{
+		tile->GenerateTexture();
+		groupManager.Add(tile);
+		tile->DeleteLocalTextureData();
+		landBuffer->UpdateTexCoordBuffer(tile);
+	}
+
+	groupManager.PushLastLandTexture();
+	cerr << "Generated land textures" << endl;
+}
+
 void gs::Globe::GenerateRivers(const int numOfSpawners)
 {
     cerr << "Generating rivers" << endl;
@@ -431,28 +447,20 @@ void gs::Globe::GenerateRivers(const int numOfSpawners)
     cerr << "Generated rivers" << endl;
 }
 
-void gs::Globe::GenerateTextures()
+void gs::Globe::GenerateWaterTextures()
 {
-    cerr << "Generating textures" << endl;
-    gs::BiomeTextureGenerator biomeTextureGenerator;
+	cerr << "Generating water textures" << endl;
 
-    for (auto& tile : landTiles)
-    {
-        tile->GenerateTexture(biomeTextureGenerator);
-    }
+	for (auto& tile : waterTiles)
+	{
+		tile->GenerateTexture();
+		groupManager.Add(tile);
+		tile->DeleteLocalTextureData();
+		waterBuffer->UpdateTexCoordBuffer(tile);
+	}
 
-    for (auto& tile : landTiles)
-    {
-        //tile->BlendTexture();
-        groupManager.Add(tile);
-        tile->DeleteLocalTextureData();
-        landBuffer->UpdateTexCoordBuffer(tile);
-    }
-
-	groupManager.PushLastTexture();
-    /*groupManager.PushTextures();
-	groupManager.DeleteLocalTextureData();*/
-    cerr << "Generated textures" << endl;
+	groupManager.PushLastWaterTexture();
+    cerr << "Generated water textures" << endl;
 }
 
 void gs::Globe::GenerateTiles(const int numOfTiles)
@@ -518,7 +526,7 @@ void gs::Globe::SetTileGroupTextureSize()
 {
     GLint maxSize;
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxSize);
-    maxSize = 2048;
+    maxSize = 2048; //TODO: Change this with config file
     groupManager.SetTextureSize(maxSize);
 }
 
@@ -549,11 +557,16 @@ gs::Globe::Globe()
 
     SetTileGroupTextureSize();
 
+
+
+
+
+
     //Allocate memory for land buffer and initialise tile data
-    landBuffer = std::make_shared<gs::LandTileBuffer>(landTiles, landShader);
+    landBuffer = std::make_shared<gs::TileBuffer<gs::LandTile>>(landTiles, landShader);
     landBuffer->Bind();
 
-    GenerateTextures();
+    GenerateLandTextures();
 
     landShader.SetFragOutput("colorOut");
     landShader.Link();
@@ -562,15 +575,17 @@ gs::Globe::Globe()
     projectionMatrixLocationLand = landShader.GetUniformLocation("projectionMatrix");
     normalMatrixLocationLand = landShader.GetUniformLocation("normalMatrix");
 
+
+
+
+
+
+
     //Allocate memory for water buffer and initialise tile data
-    waterBuffer = std::make_shared<gs::WaterTileBuffer>(waterTiles, waterShader);
+    waterBuffer = std::make_shared<gs::TileBuffer<gs::WaterTile>>(waterTiles, waterShader);
     waterBuffer->Bind();
 
-    //Add water tiles to tile group
-    for (auto& tile : waterTiles)
-    {
-        groupManager.Add(tile);
-    }
+	GenerateWaterTextures();
 
     waterShader.SetFragOutput("colorOut");
     waterShader.Link();
@@ -578,6 +593,4 @@ gs::Globe::Globe()
     modelViewMatrixLocationWater = waterShader.GetUniformLocation("modelViewMatrix");
     projectionMatrixLocationWater = waterShader.GetUniformLocation("projectionMatrix");
     normalMatrixLocationWater = waterShader.GetUniformLocation("normalMatrix");
-
-    //groupManager.WriteTileGroupsToFile();
 }

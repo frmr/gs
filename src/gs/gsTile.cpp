@@ -4,6 +4,8 @@
 #include "gsMath.h"
 #include "gsWaterTile.h"
 
+#include "gsBiomeTextureGenerator.h"
+
 #include <iostream>
 #include <limits>
 
@@ -12,14 +14,35 @@ using std::endl;
 
 int gs::Tile::idCounter = 0;
 
+void gs::Tile::AddToTileGroupTexture(shared_ptr<gs::Texture> tileGroupTexture, const gs::Vec2i& tileGroupTextureOffset, const int tileGroupTextureSize)
+{
+	tileGroupTexture->Blit(texture, tileGroupTextureOffset);
+	//update texture coordinates to be relative to the texture group texture
+	for (unsigned int i = 0; i < texCoords.size(); ++i)
+	{
+		texCoords[i].x = ((float)tileGroupTextureOffset.x + texCoords[i].x) / (float)tileGroupTextureSize;
+		texCoords[i].y = ((float)tileGroupTextureOffset.y + texCoords[i].y) / (float)tileGroupTextureSize;
+	}
+}
+
+void gs::Tile::DeleteLocalTextureData()
+{
+	texture.reset();
+}
+
+shared_ptr<gs::Texture> gs::Tile::GetTexture() const
+{
+	return texture;
+}
+
 void gs::Tile::UpdateColorBuffer(const GLuint colorVbo) //TODO: const
 {
     GLfloat* colorArray = new GLfloat[3*vertices.size()];
     for (unsigned int i = 0; i < vertices.size(); ++i)
     {
-        colorArray[3*i] = color.x;
-        colorArray[3*i+1] = color.y;
-        colorArray[3*i+2] = color.z;
+        colorArray[3*i] = GLfloat(color.x);
+        colorArray[3*i+1] = GLfloat(color.y);
+        colorArray[3*i+2] = GLfloat(color.z);
     }
     glBindBuffer(GL_ARRAY_BUFFER, colorVbo);
     glBufferSubData(GL_ARRAY_BUFFER, 3 * bufferOffset * sizeof(GLfloat), 3 * vertices.size() * sizeof(GLfloat), colorArray);
@@ -54,7 +77,7 @@ void gs::Tile::UpdatePositionBuffer(const GLuint positionVbo) //TODO: const
 
 void gs::Tile::AddVerticesToIndexVector(vector<GLuint>& indexVector)
 {
-    indexBufferOffset = indexVector.size();
+    indexBufferOffset = GLuint(indexVector.size());
     indexVector.reserve(indexVector.size() + 3 * vertices.size());
 
     for (unsigned int i = 1; i < vertices.size() - 1; ++i)
@@ -63,6 +86,27 @@ void gs::Tile::AddVerticesToIndexVector(vector<GLuint>& indexVector)
         indexVector.push_back(bufferOffset + i);
         indexVector.push_back(bufferOffset + i + 1);
     }
+}
+
+void gs::Tile::UpdateAllBuffers(const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo, const GLuint texCoordVbo) //const
+{
+	UpdatePositionBuffer(positionVbo);
+	UpdateColorBuffer(colorVbo);
+	UpdateFogBuffer(fogVbo);
+	UpdateTexCoordBuffer(texCoordVbo);
+}
+
+void gs::Tile::UpdateTexCoordBuffer(const GLuint texCoordVbo)
+{
+	GLfloat* texCoordArray = new GLfloat[2 * vertices.size()];
+	for (unsigned int i = 0; i < texCoords.size(); ++i)
+	{
+		texCoordArray[2 * i] = (GLfloat)texCoords[i].x;
+		texCoordArray[2 * i + 1] = (GLfloat)texCoords[i].y;
+	}
+	glBindBuffer(GL_ARRAY_BUFFER, texCoordVbo);
+	glBufferSubData(GL_ARRAY_BUFFER, 2 * bufferOffset * sizeof(GLfloat), 2 * vertices.size() * sizeof(GLfloat), texCoordArray);
+	delete[] texCoordArray;
 }
 
 bool gs::Tile::AddLink(const gs::Link<gs::Tile>& link)
@@ -95,9 +139,9 @@ bool gs::Tile::AddLink(const gs::Link<gs::WaterTile>& link)
     return true;
 }
 
-GLuint  gs::Tile::GetBufferEnd() const
+GLuint gs::Tile::GetBufferEnd() const
 {
-    return bufferOffset + vertices.size() - 1;
+    return bufferOffset + GLuint(vertices.size()) - 1;
 }
 
 GLuint  gs::Tile::GetBufferOffset() const
@@ -112,7 +156,7 @@ double gs::Tile::GetHeight() const
 
 GLuint gs::Tile::GetIndexBufferEnd() const
 {
-    return indexBufferOffset + (3 * (vertices.size() - 2)) - 1;
+    return indexBufferOffset + (3 * (GLuint(vertices.size()) - 2)) - 1;
 }
 
 GLuint  gs::Tile::GetIndexBufferOffset() const
@@ -133,17 +177,18 @@ gs::Tile::Type gs::Tile::GetSurface() const
 GLuint gs::Tile::SetBufferOffset(const GLuint vertexCount)
 {
     bufferOffset = vertexCount;
-    return vertexCount + vertices.size();
+    return vertexCount + GLuint(vertices.size());
 }
 
-gs::Tile::Tile(const Type surface, const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3d& centroid, const double height)
-    :   id(idCounter++),
-        surface(surface),
-        normal(gs::Vec3d((double) centroid.x, (double) centroid.y, (double) centroid.z).Unit()),
-        height(height),
-        vertices(vertices),
-        color(1.0f, 0.0f, 0.0f),
-        fog(false)
+gs::Tile::Tile(const Type surface, const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3d& centroid, const double height) :
+	id(idCounter++),
+    surface(surface),
+    normal(gs::Vec3d((double) centroid.x, (double) centroid.y, (double) centroid.z).Unit()),
+    height(height),
+    vertices(vertices),
+    color(1.0f, 0.0f, 0.0f),
+    fog(false),
+	texture(nullptr)
 {
 }
 

@@ -2,10 +2,9 @@
 #define GS_TILE_GROUP_MANAGER_H
 
 #include "gsLandTile.h"
-#include "gsLandTileGroup.h"
 #include "gsTexture.h"
+#include "gsTileGroup.h"
 #include "gsWaterTile.h"
-#include "gsWaterTileGroup.h"
 
 #include <iostream>
 #include <vector>
@@ -19,9 +18,9 @@ namespace gs
     class TileGroupManager
     {
     private:
-        GLint                       textureDim;
-        vector<gs::LandTileGroup>   landTileGroups;
-        gs::WaterTileGroup          waterTileGroup;
+        GLint                   textureDim;
+        vector<gs::TileGroup>	landTileGroups;
+        vector<gs::TileGroup>	waterTileGroups;
 
     public:
         void Add(const gs::LandTilePtr& landTile);
@@ -29,8 +28,9 @@ namespace gs
         void DrawAll() const;
 		void DeleteLocalTextureData();
         void DrawLandTileGroups() const;
-        void DrawWaterTileGroup() const;
-        void PushLastTexture();
+        void DrawWaterTileGroups() const;
+        void PushLastLandTexture();
+		void PushLastWaterTexture();
         void SetTextureSize(const GLint newTextureDim);
         void WriteTileGroupsToFile() const;
 

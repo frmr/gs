@@ -10,10 +10,8 @@ void gs::TileGroupManager::Add(const LandTilePtr& landTile)
 
     if (!landTileGroups.back().Add(landTile))
     {
-		//groupManager.PushTextures();
 		landTileGroups.back().PushTexture();
 		landTileGroups.back().DeleteLocalTextureData();
-		//groupManager.DeleteLocalTextureData();
         landTileGroups.emplace_back(landTileGroups.back().GetBufferEnd() + 1, textureDim);
         if (!landTileGroups.back().Add(landTile))
         {
@@ -22,9 +20,23 @@ void gs::TileGroupManager::Add(const LandTilePtr& landTile)
     }
 }
 
-void gs::TileGroupManager::Add(const gs::WaterTilePtr& waterTile)
+void gs::TileGroupManager::Add(const WaterTilePtr& waterTile)
 {
-    waterTileGroup.Add(waterTile);
+	if (waterTileGroups.empty())
+	{
+		waterTileGroups.emplace_back(0, textureDim);
+	}
+
+	if (!waterTileGroups.back().Add(waterTile))
+	{
+		waterTileGroups.back().PushTexture();
+		waterTileGroups.back().DeleteLocalTextureData();
+		waterTileGroups.emplace_back(waterTileGroups.back().GetBufferEnd() + 1, textureDim);
+		if (!waterTileGroups.back().Add(waterTile))
+		{
+			cerr << "gs::TileGroupManager::Add() in src/gs/gsTileGroupManager.h: Could not add tile texture to empty tile group. Tile texture is too large." << endl;
+		}
+	}
 }
 
 void gs::TileGroupManager::DeleteLocalTextureData()
@@ -33,14 +45,17 @@ void gs::TileGroupManager::DeleteLocalTextureData()
 	{
 		group.DeleteLocalTextureData();
 	}
+
+	for (auto& group : waterTileGroups)
+	{
+		group.DeleteLocalTextureData();
+	}
 }
 
 void gs::TileGroupManager::DrawAll() const
 {
-    for (const auto& group : landTileGroups)
-    {
-        group.Draw();
-    }
+	DrawLandTileGroups();
+	DrawWaterTileGroups();
 }
 
 void gs::TileGroupManager::DrawLandTileGroups() const
@@ -51,19 +66,24 @@ void gs::TileGroupManager::DrawLandTileGroups() const
     }
 }
 
-void gs::TileGroupManager::DrawWaterTileGroup() const
+void gs::TileGroupManager::DrawWaterTileGroups() const
 {
-    waterTileGroup.Draw();
+	for (const auto& group : waterTileGroups)
+	{
+		group.Draw();
+	}
 }
 
-void gs::TileGroupManager::PushLastTexture()
+void gs::TileGroupManager::PushLastLandTexture()
 {
-    /*for (auto& group : landTileGroups)
-    {
-        group.PushTexture();
-    }*/
-
 	landTileGroups.back().PushTexture();
+	landTileGroups.back().DeleteLocalTextureData();
+}
+
+void gs::TileGroupManager::PushLastWaterTexture()
+{
+	waterTileGroups.back().PushTexture();
+	waterTileGroups.back().DeleteLocalTextureData();
 }
 
 void gs::TileGroupManager::SetTextureSize(const GLint newTextureDim)
@@ -77,6 +97,11 @@ void gs::TileGroupManager::WriteTileGroupsToFile() const
     {
         group.WriteToFile();
     }
+
+	for (const auto& group : waterTileGroups)
+	{
+		group.WriteToFile();
+	}
 }
 
 gs::TileGroupManager::TileGroupManager(const GLint textureDim)

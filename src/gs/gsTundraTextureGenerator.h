@@ -1,8 +1,8 @@
 #ifndef GS_TUNDRA_TEXTURE_GENERATOR_H
 #define GS_TUNDRA_TEXTURE_GENERATOR_H
 
-#include "gsColor.h"
 #include "gsLandTile.h"
+#include "gsColor.h"
 #include <vector>
 #include "../FastNoise/FastNoise.h"
 

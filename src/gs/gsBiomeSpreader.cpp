@@ -64,7 +64,7 @@ bool gs::BiomeSpreader::Spread()
         }
 
         //select best tile from the three vectors
-        gs::RandomRange<double> randomIndex(0.0, 0.9999, std::time(0));
+        gs::RandomRange<double> randomIndex(0.0, 0.9999, int(std::time(0)));
 
         gs::LandTilePtr plainsTile = SelectRandomTileFromVector(unassignedPlains, randomIndex);
         gs::LandTilePtr hillsTile = SelectRandomTileFromVector(unassignedHills, randomIndex);

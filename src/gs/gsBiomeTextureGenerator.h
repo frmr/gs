@@ -24,7 +24,7 @@ namespace gs
 
 
     public:
-		gs::Color&	Sample(const gs::Vec3d& coord, const gs::LandTile::Biome biome, const gs::LandTile::Terrain terrain) const;
+		gs::Color const& Sample(const gs::Vec3d& coord, const gs::LandTile::Biome biome, const gs::LandTile::Terrain terrain) const;
 
     public:
         BiomeTextureGenerator();

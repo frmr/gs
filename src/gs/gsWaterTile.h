@@ -12,6 +12,7 @@ using std::vector;
 
 namespace gs
 {
+	class BiomeTextureGenerator;
     class Tile;
 
     class WaterTile : public gs::Tile
@@ -20,10 +21,8 @@ namespace gs
         bool ice;
 
     public:
-        void UpdateAllBuffers(const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo);
-
-    public:
         WaterTile(const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3d& centroid);
+		void GenerateTexture();
     };
 
     typedef shared_ptr<gs::WaterTile> WaterTilePtr;
