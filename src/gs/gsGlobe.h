@@ -70,7 +70,7 @@ namespace gs
         void							GenerateBiomes(const int numOfSpreaders);
         void							GenerateCultures(const int numOfSpreaders);
 		void							GenerateLandTextures();
-        void							GenerateRivers(const int numOfSpawners);
+        void							GenerateRivers(const int minRivers, const int maxRivers);
         void							GenerateWaterTextures();
         void							GenerateTiles(const int numOfTiles);
         static unsigned int				HashDouble(const double val, const int bucketDim);

@@ -60,8 +60,8 @@ void gs::LandTile::GenerateTexture()
     boundingBox.maxCoord -= boundingBox.minCoord;
 	boundingBox.minCoord = gs::Vec2d();
 
-    constexpr int pixelsPerUnit = 4000;
-	constexpr uint8_t edgeCushion = 16;
+    constexpr int pixelsPerUnit = 1000;
+	constexpr uint8_t edgeCushion = 32;
 
     const int width = std::max((int) (boundingBox.maxCoord.x * pixelsPerUnit), 1) + edgeCushion * 2;
     const int height = std::max((int) (boundingBox.maxCoord.y * pixelsPerUnit), 1) + edgeCushion * 2;
@@ -230,8 +230,7 @@ bool gs::LandTile::SpawnRiver(const int newRiverId, gs::RandomRange<double>& ran
 
     if (rand.Sample() < probability)
     {
-        vertices[(int) (rand.Sample() * (double) vertices.size())]->SetRiver(newRiverId);
-        return true;
+        return vertices[(int) (rand.Sample() * (double) vertices.size())]->SetRiver(newRiverId);
     }
     else
     {

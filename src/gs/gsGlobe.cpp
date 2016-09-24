@@ -428,21 +428,24 @@ void gs::Globe::GenerateLandTextures()
 	cerr << "Generated land textures" << endl;
 }
 
-void gs::Globe::GenerateRivers(const int numOfSpawners)
+void gs::Globe::GenerateRivers(const int minRivers, const int maxRivers)
 {
     cerr << "Generating rivers" << endl;
     //pick numOfRivers random vertices
 
     gs::RandomRange<double> rand(0.0, 0.9999, (unsigned int) std::time(0));
 
-    for (int i = 0; i < numOfSpawners && i < (int) landTiles.size(); ++i)
+    for (int i = 0; i < maxRivers && i < int(landTiles.size());)
     {
         int swapTarget = i + (int) (rand.Sample() * (double) (landTiles.size() - i));
         gs::LandTilePtr temp = landTiles[swapTarget];
         landTiles[swapTarget] = landTiles[i];
         landTiles[i] = temp;
 
-        landTiles[i]->SpawnRiver(i, rand);
+		if (landTiles[i]->SpawnRiver(i, rand) || i > minRivers)
+		{
+			++i;
+		}
     }
     cerr << "Generated rivers" << endl;
 }
@@ -548,7 +551,7 @@ gs::Globe::Globe()
     }
 
     //Generate planet
-    GenerateRivers(50);
+    GenerateRivers(10, 50);
     GenerateBiomes(200);
     GenerateCultures(150);
     //GenerateStates(150);

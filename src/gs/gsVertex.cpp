@@ -102,7 +102,7 @@ bool gs::Vertex::SetRiver(const int newRiverId)
     {
         gs::EdgePtr lowestEdge = nullptr;
         gs::VertexPtr lowestVertex = nullptr;
-        double lowestHeight = std::numeric_limits<double>::max();
+		double lowestHeight = GetHeight();
 
         for (auto& link : links)
         {
