@@ -52,6 +52,7 @@ namespace gs
 
     private:
         Terrain                             DetermineTerrain() const;
+		bool								CheckCoordIsNearCoast(const gs::Vec3d& coord) const;
 
     public:
         void                                GenerateTexture();

@@ -31,6 +31,63 @@ gs::LandTile::Terrain gs::LandTile::DetermineTerrain() const
     }
 }
 
+bool gs::LandTile::CheckCoordIsNearCoast(const gs::Vec3d & coord) const
+{
+	constexpr double coastEdgeLimit = 0.004;
+	constexpr double coastCornerLimit = 0.008;
+
+	assert(coastCornerLimit > coastEdgeLimit);
+
+	if (waterLinks.empty())
+	{
+		return false;
+	}
+
+	std::vector<double> innerDistances;
+
+	for (const auto& link : waterLinks)
+	{
+		const double linkDistance = (gs::ClosestPointOnLine<gs::Vec3d>(link.edge->v0->position, link.edge->vec, coord, true) - coord).Length();
+		if (linkDistance <= coastEdgeLimit)
+		{
+			return true;
+		}
+		else if (linkDistance <= coastCornerLimit)
+		{
+			innerDistances.push_back(coastCornerLimit - linkDistance);
+		}
+	}
+
+	if (innerDistances.size() >= 2)
+	{
+		double sum = 0.0;
+		for (const auto& dist : innerDistances)
+		{
+			sum += dist * dist;
+		}
+
+		if (std::sqrt(sum) > coastCornerLimit - coastEdgeLimit)
+		{
+			return true;
+		}
+	}
+
+	 for (const auto& link : waterLinks)
+	 {
+		 if ((coord - link.edge->v0->position).Length() < coastEdgeLimit)
+		 {
+			 return true;
+		 }
+
+		 if ((coord - link.edge->v1->position).Length() < coastEdgeLimit)
+		 {
+			 return true;
+		 }
+	 }
+
+	 return false;
+}
+
 void gs::LandTile::GenerateTexture()
 {
     //TODO: Make this safer by checking for presence of first and second vertices
@@ -88,7 +145,7 @@ void gs::LandTile::GenerateTexture()
 	for (const auto& link : landLinks)
 	{
 		//if (link.target->biome != this->biome || link.target->terrain != terrain || link.edge->IsRiver())
-		if (link.target->biome != this->biome || link.edge->IsRiver() || link.target->terrain != this->terrain)
+		if (link.target->biome != this->biome || link.target->terrain != this->terrain || link.edge->IsRiver())
 		{
 			notableLinks.push_back(link);
 		}
@@ -100,6 +157,14 @@ void gs::LandTile::GenerateTexture()
         for (int  y = 0; y < height; ++y)
         {
 			const gs::Vec3d pixelWorldCoord = (pixelOriginWorldCoord + xJump * (x - edgeCushion) + yJump * (y - edgeCushion)).Unit(); //TODO: Speed this up by using xJump and yJump to increment for each pixel
+
+			if (CheckCoordIsNearCoast(pixelWorldCoord))
+			{
+				texture->SetColor(x, y, pixelWorldCoord * 255.0);
+				//texture->SetColor(x, y, gs::Color(255,0,0));
+				continue;
+			}
+
 
 			//calculate distance to each notable edge
 			vector<double> notableDistances;
