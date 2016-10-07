@@ -40,7 +40,7 @@ void gs::WaterTile::GenerateTexture()
 	boundingBox.maxCoord -= boundingBox.minCoord;
 	boundingBox.minCoord = gs::Vec2d();
 
-	constexpr int pixelsPerUnit = 1000;
+	constexpr int pixelsPerUnit = 1024;
 	constexpr uint8_t edgeCushion = 32;
 
 	const int width = std::max((int)(boundingBox.maxCoord.x * pixelsPerUnit), 1) + edgeCushion * 2;

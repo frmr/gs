@@ -2,6 +2,7 @@
 
 #include <ctime>
 #include <iostream>
+#include <thread>
 
 #include "gsBiomeSpreader.hpp"
 #include "gsLandTextureGenerator.hpp"
@@ -415,9 +416,39 @@ void gs::Globe::GenerateLandTextures()
 {
 	cerr << "Generating land textures" << endl;
 
+	constexpr size_t numThreads = 4;
+	const size_t tilesPerThread = landTiles.size() / numThreads;
+	auto& tilesRef = landTiles;
+
+	if (tilesPerThread >= 1)
+	{
+		std::vector<std::thread> threads;
+
+		for (size_t threadIndex = 0; threadIndex < numThreads; ++threadIndex)
+		{
+			threads.push_back(std::thread([=, &tilesRef]() {
+				for (size_t tileIndex = threadIndex * tilesPerThread; tileIndex < ((threadIndex == numThreads - 1) ? landTiles.size() : (threadIndex + 1) * tilesPerThread); ++tileIndex)
+				{
+					landTiles[tileIndex]->GenerateTexture();
+				};
+			}));
+		}
+
+		for (auto& thread : threads)
+		{
+			thread.join();
+		}
+	}
+	else
+	{
+		for (auto& tile : landTiles)
+		{
+			tile->GenerateTexture();
+		}
+	}
+
 	for (auto& tile : landTiles)
 	{
-		tile->GenerateTexture();
 		groupManager.Add(tile);
 		tile->DeleteLocalTextureData();
 		landBuffer->UpdateTexCoordBuffer(tile);
@@ -453,9 +484,39 @@ void gs::Globe::GenerateWaterTextures()
 {
 	cerr << "Generating water textures" << endl;
 
+	constexpr size_t numThreads = 4;
+	const size_t tilesPerThread = waterTiles.size() / numThreads;
+	auto& tilesRef = waterTiles;
+
+	if (tilesPerThread >= 1)
+	{
+		std::vector<std::thread> threads;
+
+		for (size_t threadIndex = 0; threadIndex < numThreads; ++threadIndex)
+		{
+			threads.push_back(std::thread([=, &tilesRef]() {
+				for (size_t tileIndex = threadIndex * tilesPerThread; tileIndex < ((threadIndex == numThreads - 1) ? waterTiles.size() : (threadIndex + 1) * tilesPerThread); ++tileIndex)
+				{
+					waterTiles[tileIndex]->GenerateTexture();
+				};
+			}));
+		}
+
+		for (auto& thread : threads)
+		{
+			thread.join();
+		}
+	}
+	else
+	{
+		for (auto& tile : waterTiles)
+		{
+			tile->GenerateTexture();
+		}
+	}
+
 	for (auto& tile : waterTiles)
 	{
-		tile->GenerateTexture();
 		groupManager.Add(tile);
 		tile->DeleteLocalTextureData();
 		waterBuffer->UpdateTexCoordBuffer(tile);
