@@ -4,7 +4,7 @@
 #include <iostream>
 
 #include "gsBiomeSpreader.h"
-#include "gsBiomeTextureGenerator.h"
+#include "gsLandTextureGenerator.h"
 #include "gsRandomRange.h"
 #include "gsMath.h" //TODO: remove
 #include "gsSpreader.h"

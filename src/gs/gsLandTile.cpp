@@ -1,4 +1,4 @@
-#include "gsBiomeTextureGenerator.h"
+#include "gsLandTextureGenerator.h"
 #include "gsBoundingBox.h"
 #include "gsGlobe.h"
 #include "gsLandTile.h"
@@ -13,7 +13,7 @@
 #include <map>
 #include <array>
 
-gs::BiomeTextureGenerator gs::LandTile::biomeTextureGenerator;
+gs::LandTextureGenerator gs::LandTile::biomeTextureGenerator;
 
 gs::LandTile::Terrain gs::LandTile::DetermineTerrain() const
 {
@@ -282,7 +282,7 @@ bool gs::LandTile::SpawnRiver(const int newRiverId, gs::RandomRange<double>& ran
     double probability = 0.0;
     if (terrain == gs::LandTile::Terrain::PLAINS)
     {
-        probability = 0.05;
+        probability = 0.01;
     }
     else if (terrain == gs::LandTile::Terrain::HILLS)
     {

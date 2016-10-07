@@ -14,7 +14,7 @@ using std::shared_ptr;
 
 namespace gs
 {
-    class BiomeTextureGenerator
+    class LandTextureGenerator
     {
     private:
 		static gs::DesertTextureGenerator		desert;
@@ -24,10 +24,10 @@ namespace gs
 
 
     public:
-		gs::Color const& Sample(const gs::Vec3d& coord, const gs::LandTile::Biome biome, const gs::LandTile::Terrain terrain) const;
+		gs::Color Sample(const gs::Vec3d& coord, const gs::LandTile::Biome biome, const gs::LandTile::Terrain terrain) const;
 
     public:
-        BiomeTextureGenerator();
+        LandTextureGenerator();
     };
 }
 

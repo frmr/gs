@@ -16,7 +16,7 @@ using std::vector;
 
 namespace gs
 {
-	class BiomeTextureGenerator;
+	class LandTextureGenerator;
 
     class LandTile : public gs::Tile
     {
@@ -48,7 +48,7 @@ namespace gs
         Biome								biome;
         shared_ptr<gs::Culture>				culture;
 
-		static gs::BiomeTextureGenerator	biomeTextureGenerator;
+		static gs::LandTextureGenerator	biomeTextureGenerator;
 
     private:
         Terrain                             DetermineTerrain() const;

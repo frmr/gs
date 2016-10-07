@@ -4,7 +4,7 @@
 #include "gsMath.h"
 #include "gsWaterTile.h"
 
-#include "gsBiomeTextureGenerator.h"
+#include "gsLandTextureGenerator.h"
 
 #include <iostream>
 #include <limits>

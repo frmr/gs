@@ -1,4 +1,4 @@
-#include "gsBiomeTextureGenerator.h"
+#include "gsLandTextureGenerator.h"
 #include "gsBoundingBox.h"
 #include "gsMath.h"
 #include "gsWaterTile.h"

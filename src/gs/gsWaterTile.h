@@ -12,7 +12,7 @@ using std::vector;
 
 namespace gs
 {
-	class BiomeTextureGenerator;
+	class LandTextureGenerator;
     class Tile;
 
     class WaterTile : public gs::Tile

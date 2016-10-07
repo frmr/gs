@@ -158,7 +158,7 @@
     <ClCompile Include="src\FastNoise\FastNoise.cpp" />
     <ClCompile Include="src\gl3w\gl3w.c" />
     <ClCompile Include="src\gs\gsBiomeSpreader.cpp" />
-    <ClCompile Include="src\gs\gsBiomeTextureGenerator.cpp" />
+    <ClCompile Include="src\gs\gsLandTextureGenerator.cpp" />
     <ClCompile Include="src\gs\gsCamera.cpp" />
     <ClCompile Include="src\gs\gsColor.cpp" />
     <ClCompile Include="src\gs\gsConfig.cpp" />
@@ -210,7 +210,7 @@
     <ClInclude Include="src\gs\gsArray.h" />
     <ClInclude Include="src\gs\gsBinarySearchTree.h" />
     <ClInclude Include="src\gs\gsBiomeSpreader.h" />
-    <ClInclude Include="src\gs\gsBiomeTextureGenerator.h" />
+    <ClInclude Include="src\gs\gsLandTextureGenerator.h" />
     <ClInclude Include="src\gs\gsBoundingBox.h" />
     <ClInclude Include="src\gs\gsCamera.h" />
     <ClInclude Include="src\gs\gsColor.h" />
