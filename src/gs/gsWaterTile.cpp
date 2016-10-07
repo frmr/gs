@@ -54,9 +54,6 @@ void gs::WaterTile::GenerateTexture()
 		texCoords.emplace_back(coord.x * pixelsPerUnit + edgeCushion, coord.y * pixelsPerUnit + edgeCushion);
 	}
 
-	constexpr double riverLimit = 0.002;
-	constexpr double blendLimit = 0.008;
-
 	const gs::Vec3d xJump = refAxisU / (double)pixelsPerUnit;
 	const gs::Vec3d yJump = refAxisV / (double)pixelsPerUnit;
 
@@ -70,9 +67,8 @@ void gs::WaterTile::GenerateTexture()
 		{
 			const gs::Vec3d pixelWorldCoord = (pixelOriginWorldCoord + xJump * (x - edgeCushion) + yJump * (y - edgeCushion)).Unit(); //TODO: Speed this up by using xJump and yJump to increment for each pixel
 
-			//const gs::Color sample = biomeTextureGenerator.Sample(pixelWorldCoord, );
-			const gs::Color sample = pixelWorldCoord * 255.0;
-			texture->SetColor(x, y, sample);
+			texture->SetColor(x, y, waterTextureGenerator.Sample());
+			//texture->SetColor(x, y, pixelWorldCoord * 255.0);
 		}
 	}
 }

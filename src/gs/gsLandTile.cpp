@@ -13,7 +13,7 @@
 #include <map>
 #include <array>
 
-gs::LandTextureGenerator gs::LandTile::biomeTextureGenerator;
+gs::LandTextureGenerator gs::LandTile::landTextureGenerator;
 
 gs::LandTile::Terrain gs::LandTile::DetermineTerrain() const
 {
@@ -160,7 +160,8 @@ void gs::LandTile::GenerateTexture()
 
 			if (CheckCoordIsNearCoast(pixelWorldCoord))
 			{
-				texture->SetColor(x, y, pixelWorldCoord * 255.0);
+				texture->SetColor(x, y, waterTextureGenerator.Sample());
+				//texture->SetColor(x, y, pixelWorldCoord * 255.0);
 				//texture->SetColor(x, y, gs::Color(255,0,0));
 				continue;
 			}
@@ -227,7 +228,7 @@ void gs::LandTile::GenerateTexture()
 			for (auto& element : distanceMap)
 			{
 				const double factor = (blendLimit - element.second) / blendLimit;
-				const gs::Color sample = biomeTextureGenerator.Sample(pixelWorldCoord, element.first.first, element.first.second);
+				const gs::Color sample = landTextureGenerator.Sample(pixelWorldCoord, element.first.first, element.first.second);
 				tempColor += gs::Vec3d((double)sample.r * factor, (double)sample.g * factor, (double)sample.b * factor);
 				factorSum += factor;
 			}

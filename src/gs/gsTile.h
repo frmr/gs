@@ -9,6 +9,7 @@
 #include "gsVec3.h"
 #include "gsVertex.h"
 #include "gsTexture.h"
+#include "gsWaterTextureGenerator.h"
 
 using std::shared_ptr;
 using std::vector;
@@ -44,6 +45,7 @@ namespace gs
         gs::Vec3d                               color;
         bool                                    fog;
 
+		static gs::WaterTextureGenerator		waterTextureGenerator;
 		shared_ptr<gs::Texture>					texture; //TODO: should be on stack, or at least unique_ptr
 		vector<gs::Vec2d>						texCoords;
 

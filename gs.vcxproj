@@ -242,6 +242,7 @@
     <ClInclude Include="src\gs\gsVec2.h" />
     <ClInclude Include="src\gs\gsVec3.h" />
     <ClInclude Include="src\gs\gsVertex.h" />
+    <ClInclude Include="src\gs\gsWaterTextureGenerator.h" />
     <ClInclude Include="src\gs\gsWaterTile.h" />
     <ClInclude Include="src\lodepng\lodepng.h" />
     <ClInclude Include="src\matrix\Matrices.h" />

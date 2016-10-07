@@ -48,7 +48,7 @@ namespace gs
         Biome								biome;
         shared_ptr<gs::Culture>				culture;
 
-		static gs::LandTextureGenerator	biomeTextureGenerator;
+		static gs::LandTextureGenerator		landTextureGenerator;
 
     private:
         Terrain                             DetermineTerrain() const;

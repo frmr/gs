@@ -13,6 +13,7 @@ using std::cerr;
 using std::endl;
 
 int gs::Tile::idCounter = 0;
+gs::WaterTextureGenerator gs::Tile::waterTextureGenerator;
 
 void gs::Tile::AddToTileGroupTexture(shared_ptr<gs::Texture> tileGroupTexture, const gs::Vec2i& tileGroupTextureOffset, const int tileGroupTextureSize)
 {
