@@ -1,7 +1,7 @@
-#include "gsLandTextureGenerator.h"
-#include "gsBoundingBox.h"
-#include "gsMath.h"
-#include "gsWaterTile.h"
+#include "gsLandTextureGenerator.hpp"
+#include "gsBoundingBox.hpp"
+#include "gsMath.hpp"
+#include "gsWaterTile.hpp"
 
 
 gs::WaterTile::WaterTile(const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3d& centroid)

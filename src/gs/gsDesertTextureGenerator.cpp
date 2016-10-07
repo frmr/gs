@@ -1,4 +1,4 @@
-#include "gsDesertTextureGenerator.h"
+#include "gsDesertTextureGenerator.hpp"
 
 #include <algorithm>
 

@@ -1,15 +1,14 @@
-#include "gsGlobe.h"
+#include "gsGlobe.hpp"
 
 #include <ctime>
 #include <iostream>
 
-#include "gsBiomeSpreader.h"
-#include "gsLandTextureGenerator.h"
-#include "gsRandomRange.h"
-#include "gsMath.h" //TODO: remove
-#include "gsSpreader.h"
-#include "gsTexture.h"
-#include "gsTileGroupManager.h"
+#include "gsBiomeSpreader.hpp"
+#include "gsLandTextureGenerator.hpp"
+#include "gsRandomRange.hpp"
+#include "gsSpreader.hpp"
+#include "gsTexture.hpp"
+#include "gsTileGroupManager.hpp"
 
 using std::cerr;
 using std::endl;

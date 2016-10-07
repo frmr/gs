@@ -1,10 +1,10 @@
-#include "gsTile.h"
+#include "gsTile.hpp"
 
-#include "gsLandTile.h"
-#include "gsMath.h"
-#include "gsWaterTile.h"
+#include "gsLandTile.hpp"
+#include "gsMath.hpp"
+#include "gsWaterTile.hpp"
 
-#include "gsLandTextureGenerator.h"
+#include "gsLandTextureGenerator.hpp"
 
 #include <iostream>
 #include <limits>

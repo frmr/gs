@@ -1,6 +1,6 @@
-#include "gsEdge.h"
-#include "gsTile.h"
-#include "gsVertex.h"
+#include "gsEdge.hpp"
+#include "gsTile.hpp"
+#include "gsVertex.hpp"
 
 #include <iostream>
 

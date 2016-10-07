@@ -1,5 +1,5 @@
-#include "gsCamera.h"
-#include "gsMath.h"
+#include "gsCamera.hpp"
+#include "gsMath.hpp"
 
 #include "../gl3w/gl3w.h"
 

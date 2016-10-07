@@ -1,5 +1,5 @@
-#include "gsTileGroupManager.h"
-#include "gsLandTile.h"
+#include "gsTileGroupManager.hpp"
+#include "gsLandTile.hpp"
 
 void gs::TileGroupManager::Add(const LandTilePtr& landTile)
 {

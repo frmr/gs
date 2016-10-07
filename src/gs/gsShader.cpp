@@ -2,7 +2,7 @@
 #include <iostream>
 #include <sstream>
 
-#include "gsShader.h"
+#include "gsShader.hpp"
 
 using std::cerr;
 using std::endl;

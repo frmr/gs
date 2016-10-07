@@ -1,4 +1,4 @@
-#include "gsCulture.h"
+#include "gsCulture.hpp"
 
 string gs::Culture::GenerateCultureName(const int groupId)
 {

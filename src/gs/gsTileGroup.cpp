@@ -1,4 +1,4 @@
-#include "gsTileGroup.h"
+#include "gsTileGroup.hpp"
 
 #include <iostream>
 

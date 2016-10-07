@@ -1,4 +1,4 @@
-#include "gsCultureSpreader.h"
+#include "gsCultureSpreader.hpp"
 
 #include <ctime>
 #include <iostream>

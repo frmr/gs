@@ -1,10 +1,10 @@
-#include "gsLandTextureGenerator.h"
-#include "gsBoundingBox.h"
-#include "gsGlobe.h"
-#include "gsLandTile.h"
-#include "gsMath.h"
-#include "gsRandomRange.h"
-#include "gsTileGroupManager.h"
+#include "gsLandTextureGenerator.hpp"
+#include "gsBoundingBox.hpp"
+#include "gsGlobe.hpp"
+#include "gsLandTile.hpp"
+#include "gsMath.hpp"
+#include "gsRandomRange.hpp"
+#include "gsTileGroupManager.hpp"
 
 #include "../EasyBMP/EasyBMP.h"
 

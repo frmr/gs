@@ -1,4 +1,4 @@
-#include "gsLandTextureGenerator.h"
+#include "gsLandTextureGenerator.hpp"
 
 gs::DesertTextureGenerator		gs::LandTextureGenerator::desert;
 gs::GrasslandTextureGenerator	gs::LandTextureGenerator::grassland;

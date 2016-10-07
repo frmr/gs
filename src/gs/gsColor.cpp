@@ -1,5 +1,5 @@
-#include "gsColor.h"
-#include "gsMath.h"
+#include "gsColor.hpp"
+#include "gsMath.hpp"
 #include <ctime>
 
 gs::RandomRange<uint8_t> gs::Color::randByte(0, 255, (int) time(0));

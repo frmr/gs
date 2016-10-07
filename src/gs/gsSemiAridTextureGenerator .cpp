@@ -1,4 +1,4 @@
-#include "gsSemiAridTextureGenerator.h"
+#include "gsSemiAridTextureGenerator.hpp"
 
 #include <algorithm>
 

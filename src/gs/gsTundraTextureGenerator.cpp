@@ -1,4 +1,4 @@
-#include "gsTundraTextureGenerator.h"
+#include "gsTundraTextureGenerator.hpp"
 
 #include <algorithm>
 

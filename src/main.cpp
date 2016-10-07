@@ -3,10 +3,10 @@
 #include <SDL.h>
 #include "gl3w/gl3w.h"
 
-#include "gs/gsCamera.h"
-#include "gs/gsGlobe.h"
-#include "gs/gsInputState.h"
-#include "gs/gsMatrixStack.h"
+#include "gs/gsCamera.hpp"
+#include "gs/gsGlobe.hpp"
+#include "gs/gsInputState.hpp"
+#include "gs/gsMatrixStack.hpp"
 
 using std::cout;
 using std::cerr;

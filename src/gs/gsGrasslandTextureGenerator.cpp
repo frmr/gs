@@ -1,4 +1,4 @@
-#include "gsGrasslandTextureGenerator.h"
+#include "gsGrasslandTextureGenerator.hpp"
 
 #include <algorithm>
 

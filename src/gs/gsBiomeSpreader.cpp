@@ -1,4 +1,4 @@
-#include "gsBiomeSpreader.h"
+#include "gsBiomeSpreader.hpp"
 
 #include <ctime>
 #include <iostream>

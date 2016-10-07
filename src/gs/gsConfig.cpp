@@ -1,4 +1,4 @@
-#include "gsConfig.h"
+#include "gsConfig.hpp"
 
 int gs::Config::GetScreenWidth() const
 {

@@ -1,5 +1,5 @@
-#include "gsTexture.h"
-#include "gsMath.h"
+#include "gsTexture.hpp"
+#include "gsMath.hpp"
 
 #include "../lodepng/lodepng.h"
 

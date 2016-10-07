@@ -1,4 +1,4 @@
-#include "gsInputState.h"
+#include "gsInputState.hpp"
 
 void gs::InputState::ResetAll()
 {
