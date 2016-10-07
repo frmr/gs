@@ -1,5 +1,4 @@
-#ifndef GS_BIOME_TEXTURE_GENERATOR_H
-#define GS_BIOME_TEXTURE_GENERATOR_H
+#pragma once
 
 #include "gsLandTile.h"
 #include "gsVec3.h"
@@ -30,5 +29,3 @@ namespace gs
         LandTextureGenerator();
     };
 }
-
-#endif // GS_BIOME_TEXTURE_GENERATOR_H

@@ -1,5 +1,4 @@
-#ifndef GS_SHADER_H
-#define GS_SHADER_H
+#pragma once
 
 #include <string>
 
@@ -39,5 +38,3 @@ namespace gs
         ~Shader();
     };
 }
-
-#endif // FRMR_SHADER_H

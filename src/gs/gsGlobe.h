@@ -1,5 +1,4 @@
-#ifndef GS_GLOBE_H
-#define GS_GLOBE_H
+#pragma once
 
 #include <memory>
 #include <string>
@@ -88,5 +87,3 @@ namespace gs
         Globe();
     };
 }
-
-#endif // GS_GLOBE_H

@@ -1,5 +1,4 @@
-#ifndef GS_CULTURE_H
-#define GS_CULTURE_H
+#pragma once
 
 #include "gsColor.h"
 #include "gsVec3.h"
@@ -24,5 +23,3 @@ namespace gs
         Culture(const int groupId);
     };
 }
-
-#endif // GS_CULTURE_H

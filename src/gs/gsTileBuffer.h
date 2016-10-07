@@ -1,5 +1,4 @@
-#ifndef GS_TILE_BUFFER_H
-#define GS_TILE_BUFFER_H
+#pragma once
 
 #include "../gl3w/gl3w.h"
 
@@ -118,5 +117,3 @@ namespace gs
 
     };
 }
-
-#endif // GS_TILE_BUFFER_H

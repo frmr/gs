@@ -1,5 +1,4 @@
-#ifndef GS_RANDOM_RANGE_H
-#define GS_RANDOM_RANGE_H
+#pragma once
 
 #include <cmath>
 #include <random>
@@ -34,5 +33,3 @@ namespace gs
         }
     };
 }
-
-#endif // GS_RANDOM_RANGE_H

@@ -1,5 +1,4 @@
-#ifndef GS_INPUT_STATE_H
-#define GS_INPUT_STATE_H
+#pragma once
 
 #include <SDL.h>
 
@@ -55,7 +54,3 @@ namespace gs
         InputState(); //binding config
     };
 }
-
-
-
-#endif //GS_INPUT_STATE_H

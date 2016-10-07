@@ -1,5 +1,4 @@
-#ifndef GS_LAND_TILE_H
-#define GS_LAND_TILE_H
+#pragma once
 
 #include "gsCulture.h"
 #include "gsRandomRange.h"
@@ -71,5 +70,3 @@ namespace gs
 
     typedef shared_ptr<gs::LandTile> LandTilePtr;
 }
-
-#endif // GS_LAND_TILE_H

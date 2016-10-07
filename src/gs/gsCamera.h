@@ -1,5 +1,4 @@
-#ifndef GS_CAMERA_H
-#define GS_CAMERA_H
+#pragma once
 
 #include "gsInputState.h"
 #include "gsMatrixStack.h"
@@ -31,7 +30,7 @@ namespace gs
             //void ApplyTransformation(gs::MatrixStack<Matrix4>& matrix) const;
             Matrix4 GetViewMatrix() const;
             Matrix4 GetProjectionMatrix() const;
-            void    Move(const double latitudeChange, const double longitudeChange);
+            void    Move(const float latitudeChange, const float longitudeChange);
             void    SetOrthographic(const float left, const float right, const float bottom, const float top, const float nearVal, const float farVal);
             void    Update(InputState& input);
             void    UpdateViewMatrix();
@@ -41,5 +40,3 @@ namespace gs
             //Camera(const float aspectRatio, const double latitude, const double longitude); //TODO: implement
     };
 }
-
-#endif // GS_CAMERA_H

@@ -1,5 +1,4 @@
-#ifndef GS_TILE_GROUP_H
-#define GS_TILE_GROUP_H
+#pragma once
 
 #include <vector>
 
@@ -40,5 +39,3 @@ namespace gs
 		~TileGroup();
     };
 }
-
-#endif

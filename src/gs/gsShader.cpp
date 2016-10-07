@@ -11,7 +11,7 @@ bool gs::Shader::CompileShader(const GLuint shader, const string& filename)
 {
     const string sourceString = LoadShaderFromFile(filename);
     const char* const sourceChar = sourceString.c_str();
-    const GLint length = sourceString.size();
+    const GLint length = (GLint) sourceString.size();
     glShaderSource(shader, 1, &sourceChar, &length);
     glCompileShader(shader);
     PrintShaderLog(shader);

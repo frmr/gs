@@ -1,5 +1,4 @@
-#ifndef GS_WATER_TILE_H
-#define GS_WATER_TILE_H
+#pragma once
 
 #include "gsTile.h"
 #include "gsVertex.h"
@@ -27,5 +26,3 @@ namespace gs
 
     typedef shared_ptr<gs::WaterTile> WaterTilePtr;
 }
-
-#endif // GS_WATER_TILE_H

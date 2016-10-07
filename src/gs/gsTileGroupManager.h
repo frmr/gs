@@ -1,5 +1,4 @@
-#ifndef GS_TILE_GROUP_MANAGER_H
-#define GS_TILE_GROUP_MANAGER_H
+#pragma once
 
 #include "gsLandTile.h"
 #include "gsTexture.h"
@@ -38,5 +37,3 @@ namespace gs
         explicit TileGroupManager(const GLint textureDim = 1024);
     };
 }
-
-#endif // GS_TILE_GROUP_MANAGER_H

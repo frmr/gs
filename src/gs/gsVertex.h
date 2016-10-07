@@ -1,5 +1,4 @@
-#ifndef GS_VERTEX_H
-#define GS_VERTEX_H
+#pragma once
 
 #include <memory>
 #include <vector>
@@ -53,5 +52,3 @@ namespace gs
 
     typedef shared_ptr<gs::Vertex> VertexPtr;
 }
-
-#endif // GS_VERTEX_H

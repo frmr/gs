@@ -1,5 +1,4 @@
-#ifndef GS_ARRAY_H
-#define GS_ARRAY_H
+#pragma once
 
 #include <cstddef>
 #include <vector>
@@ -97,5 +96,3 @@ namespace gs
         }
     };
 }
-
-#endif

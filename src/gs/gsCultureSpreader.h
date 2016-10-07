@@ -1,5 +1,4 @@
-#ifndef GS_CULTURE_SPREADER_H
-#define GS_CULTURE_SPREADER_H
+#pragma once
 
 #include "gsCulture.h"
 #include "gsLandTile.h"
@@ -29,5 +28,3 @@ namespace gs
         CultureSpreader(const unsigned int speed, const gs::LandTilePtr origin, const shared_ptr<gs::Culture> value, const gs::LandTile::Terrain terrainPreference);
     };
 }
-
-#endif // GS_CULTURE_SPREADER_H

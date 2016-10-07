@@ -1,5 +1,4 @@
-#ifndef GS_USER_INTERFACE_H
-#define GS_USER_INTERFACE_H
+#pragma once
 
 #include <vector>
 
@@ -13,5 +12,3 @@ namespace gs
         //use libRocket?
     };
 }
-
-#endif

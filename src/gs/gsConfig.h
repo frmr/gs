@@ -1,5 +1,4 @@
-#ifndef GS_CONFIG_H
-#define GS_CONFIG_H
+#pragma once
 
 #include <string>
 
@@ -33,5 +32,3 @@ namespace gs
         explicit Config(const string &filename);
     };
 }
-
-#endif

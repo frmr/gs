@@ -1,5 +1,4 @@
-#ifndef GS_COLOR_H
-#define GS_COLOR_H
+#pragma once
 
 #include "gsRandomRange.h"
 #include "gsVec3.h"
@@ -25,5 +24,3 @@ namespace gs
 		Color(const gs::Vec3d& rhs);
     };
 }
-
-#endif // GS_COLOR_H

@@ -1,5 +1,4 @@
-#ifndef GS_EDGE_H
-#define GS_EDGE_H
+#pragma once
 
 #include <memory>
 #include <vector>
@@ -43,5 +42,3 @@ namespace gs
 
     typedef shared_ptr<gs::Edge> EdgePtr;
 }
-
-#endif // GS_EDGE_H

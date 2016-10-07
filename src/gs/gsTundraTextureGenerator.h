@@ -1,5 +1,4 @@
-#ifndef GS_TUNDRA_TEXTURE_GENERATOR_H
-#define GS_TUNDRA_TEXTURE_GENERATOR_H
+#pragma once
 
 #include "gsLandTile.h"
 #include "gsColor.h"
@@ -23,5 +22,3 @@ namespace gs
 		TundraTextureGenerator();
 	};
 }
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef GS_TILE_TEXTURE_H
-#define GS_TILE_TEXTURE_H
+#pragma once
 
 #include <limits>
 #include <memory>
@@ -60,4 +59,3 @@ namespace gs
         explicit Texture(const string& filename);
     };
 }
-#endif // GS_TILE_TEXTURE_H

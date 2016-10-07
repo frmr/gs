@@ -1,5 +1,4 @@
-#ifndef GS_MATH_H
-#define GS_MATH_H
+#pragma once
 
 #include "gsVec2.h"
 #include "gsVec3.h"
@@ -81,5 +80,3 @@ namespace gs
     //    return t;
     //}
 }
-
-#endif // GS_MATH_H

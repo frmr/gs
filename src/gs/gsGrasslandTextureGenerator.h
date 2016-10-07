@@ -1,5 +1,4 @@
-#ifndef GS_GRASS_TEXTURE_GENERATOR_H
-#define GS_GRASS_TEXTURE_GENERATOR_H
+#pragma once
 
 #include "gsColor.h"
 #include "gsLandTile.h"
@@ -23,5 +22,3 @@ namespace gs
 		GrasslandTextureGenerator();
 	};
 }
-
-#endif

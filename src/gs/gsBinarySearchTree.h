@@ -1,5 +1,4 @@
-#ifndef GS_BINARY_SEARCH_TREE
-#define GS_BINARY_SEARCH_TREE
+#pragma once
 
 #include <iostream>
 #include <memory>
@@ -129,5 +128,3 @@ namespace gs
         }
     };
 }
-
-#endif // GS_BINARY_SEARCH_TREE

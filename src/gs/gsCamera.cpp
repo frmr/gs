@@ -42,7 +42,7 @@ Matrix4 gs::Camera::GetProjectionMatrix() const
     return projectionMatrix;
 }
 
-void gs::Camera::Move(const double latitudeChange, const double longitudeChange)
+void gs::Camera::Move(const float latitudeChange, const float longitudeChange)
 {
     latitude += latitudeChange;
     NormalizeLatitude();

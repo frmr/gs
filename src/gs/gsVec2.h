@@ -1,5 +1,4 @@
-#ifndef GS_VEC2_H
-#define GS_VEC2_H
+#pragma once
 
 #include <cmath>
 #include <limits>
@@ -156,5 +155,3 @@ namespace gs
     typedef	Vec2<double>    Vec2d;
     typedef Vec2<int>       Vec2i;
 }
-
-#endif // GS_VEC2_H

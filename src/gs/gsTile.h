@@ -1,5 +1,4 @@
-#ifndef GS_TILE_H
-#define GS_TILE_H
+#pragma once
 
 #include "../gl3w/gl3w.h"
 #include <vector>
@@ -95,5 +94,3 @@ namespace gs
 
     typedef shared_ptr<gs::Tile> TilePtr;
 }
-
-#endif // GS_TILE_H

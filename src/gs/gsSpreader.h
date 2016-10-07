@@ -1,5 +1,4 @@
-#ifndef GS_SPREADER_H
-#define GS_SPREADER_H
+#pragma once
 
 #include <memory>
 #include <vector>
@@ -27,5 +26,3 @@ namespace gs
         }
     };
 }
-
-#endif // GS_SPREADER_H

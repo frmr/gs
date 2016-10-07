@@ -1,5 +1,4 @@
-#ifndef GS_FULLSCREEN_QUAD_H
-#define GS_FULLSCREEN_QUAD_H
+#pragma once
 
 #include "../gl3w/gl3w.h"
 
@@ -40,5 +39,3 @@ namespace gs
         }
     };
 }
-
-#endif

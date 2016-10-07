@@ -1,5 +1,4 @@
-#ifndef GS_MATRIX_STACK_H
-#define GS_MATRIX_STACK_H
+#pragma once
 
 #include <stack>
 
@@ -35,5 +34,3 @@ namespace gs
 
     };
 }
-
-#endif // GS_MATRIX_STACK_H

@@ -1,5 +1,4 @@
-#ifndef GS_BOUNDING_BOX_H
-#define GS_BOUNDING_BOX_H
+#pragma once
 
 namespace gs
 {
@@ -52,5 +51,3 @@ namespace gs
     };
 
 }
-
-#endif // GS_BOUNDING_BOX_H

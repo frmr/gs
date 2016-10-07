@@ -1,5 +1,4 @@
-#ifndef GS_BIOME_SPREADER_H
-#define GS_BIOME_SPREADER_H
+#pragma once
 
 #include "gsSpreader.h"
 #include "gsLandTile.h"
@@ -24,5 +23,3 @@ namespace gs
         BiomeSpreader(const unsigned int speed, const gs::LandTilePtr origin, const gs::LandTile::Biome value, const gs::LandTile::Terrain terrainPreference);
     };
 }
-
-#endif // GS_BIOME_SPREADER_H

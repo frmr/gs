@@ -1,5 +1,4 @@
-#ifndef GS_LINK_H
-#define GS_LINK_H
+#pragma once
 
 #include "gsEdge.h"
 
@@ -26,5 +25,3 @@ namespace gs
         }
     };
 }
-
-#endif // GS_LINK_H

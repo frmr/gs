@@ -1,5 +1,4 @@
-#ifndef GS_RENDERER_H
-#define GS_RENDERER_H
+#pragma once
 
 #include <cstdint>
 
@@ -50,5 +49,3 @@ namespace gs
         Renderer(const SDL_GLContext &context, const bool fullscreen, const bool vsync);
     };
 }
-
-#endif
