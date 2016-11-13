@@ -18,6 +18,7 @@ void main()
     //political map mode
     //colorOut = vec4( ( texture( tex, texCoordFrag ).rgb + colorFrag ) / 2.0, 1.0 );
     float atmosphere = max(0, (gl_FragCoord.z-0.095) / 0.005);
+	atmosphere = atmosphere * atmosphere;
 
     float shadow = dot(normalFrag, normalize(lightVec));
 

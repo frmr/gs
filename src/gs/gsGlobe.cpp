@@ -29,7 +29,7 @@ void gs::Globe::Draw(const gs::Camera& worldCamera) const
     groupManager.DrawLandTileGroups();
 
     //Draw water tiles
-    //waterShader.Use();
+    waterShader.Use();
     //pass matrices to shaders
     glUniformMatrix4fv(modelViewMatrixLocationWater, 1, false, worldCamera.GetViewMatrix().get()); //TODO: multiply by model matrix if needed
     glUniformMatrix4fv(projectionMatrixLocationWater, 1, false, worldCamera.GetProjectionMatrix().get());
