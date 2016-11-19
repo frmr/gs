@@ -278,9 +278,9 @@ void gs::LandTile::GenerateTexture()
 	}
 
 	//color water
-	for (int x = aaRadius; x < width - aaRadius; ++x)
+	for (int x = 0; x < width; ++x)
 	{
-		for (int y = aaRadius; y < height - aaRadius; ++y)
+		for (int y = 0; y < height; ++y)
 		{
 			const gs::Color oldColor = texture->GetColor(x, y);
 			const gs::Color waterColor = waterTextureGenerator.Sample();
