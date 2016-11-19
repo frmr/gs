@@ -130,6 +130,12 @@ namespace gs
                      z >= (T) rhs.z - epsilon);
         }
 
+		template<typename U>
+		bool operator!=(const U& rhs) const
+		{
+			return !(*this == rhs);
+		}
+
         T& operator[](const int i)
         {
             if      (i == 0)  { return x; }

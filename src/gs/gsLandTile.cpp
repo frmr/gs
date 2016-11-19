@@ -114,6 +114,7 @@ void gs::LandTile::GenerateTexture()
     {
         coord -= boundingBox.minCoord;
     }
+
     boundingBox.maxCoord -= boundingBox.minCoord;
 	boundingBox.minCoord = gs::Vec2d();
 
@@ -139,6 +140,7 @@ void gs::LandTile::GenerateTexture()
 
 	const gs::Vec3d pixelOriginWorldCoord = vertices[0]->position - (xJump * (texCoords.front().x - edgeCushion)) - (yJump * (texCoords.front().y - edgeCushion)); //world coordinate of pixel (0,0)
 
+	const gs::Color noLandColor(255, 0, 255);
 
 	//create sublist of links to tiles that are rivers or need blending
 	vector<gs::Link<gs::LandTile>> notableLinks;
@@ -160,12 +162,9 @@ void gs::LandTile::GenerateTexture()
 
 			if (CheckCoordIsNearCoast(pixelWorldCoord))
 			{
-				texture->SetColor(x, y, waterTextureGenerator.Sample());
-				//texture->SetColor(x, y, pixelWorldCoord * 255.0);
-				//texture->SetColor(x, y, gs::Color(255,0,0));
+				texture->SetColor(x, y, noLandColor);
 				continue;
 			}
-
 
 			//calculate distance to each notable edge
 			vector<double> notableDistances;
@@ -183,12 +182,13 @@ void gs::LandTile::GenerateTexture()
 				{
 					if (notableDistances[i] < riverLimit)
 					{
-						texture->SetColor(x, y, gs::Color(0, 0, 255));
+						texture->SetColor(x, y, noLandColor);
 						colorSet = true;
 						break;
 					}
 				}
 			}
+
 			if (colorSet)
 			{
 				continue;
@@ -225,6 +225,7 @@ void gs::LandTile::GenerateTexture()
 
 			gs::Vec3d tempColor;
 			double factorSum = 0.0;
+
 			for (auto& element : distanceMap)
 			{
 				const double factor = (blendLimit - element.second) / blendLimit;
@@ -236,6 +237,60 @@ void gs::LandTile::GenerateTexture()
 			texture->SetColor(x, y, gs::Color(tempColor / factorSum));
         }
     }
+
+	constexpr int aaRadius = 2;
+
+	//blend coast
+	for (int x = aaRadius; x < width - aaRadius; ++x)
+	{
+		for (int y = aaRadius; y < height - aaRadius; ++y)
+		{
+			const gs::Color oldColor = texture->GetColor(x, y);
+
+			if (oldColor != noLandColor)
+			{
+				constexpr double factorIncrement = 0.125;
+				double waterFactor = 0.0;
+
+				for (int sampleX = x - aaRadius; sampleX <= x + aaRadius; ++sampleX)
+				{
+					for (int sampleY = y - aaRadius; sampleY <= y + aaRadius; ++sampleY)
+					{
+						if (!(x == sampleX && y == sampleY) && texture->GetColor(sampleX, sampleY) == noLandColor)
+						{
+							waterFactor += factorIncrement;
+						}
+					}
+				}
+
+				waterFactor = std::min(waterFactor, 1.0);
+
+				const gs::Color waterColor = waterTextureGenerator.Sample();
+
+				const gs::Vec3d tempColor(
+					(double)waterColor.x * waterFactor + (double)oldColor.x * (1.0 - waterFactor),
+					(double)waterColor.y * waterFactor + (double)oldColor.y * (1.0 - waterFactor),
+					(double)waterColor.z * waterFactor + (double)oldColor.z * (1.0 - waterFactor));
+
+				texture->SetColor(x, y, tempColor);
+			}
+		}
+	}
+
+	//color water
+	for (int x = aaRadius; x < width - aaRadius; ++x)
+	{
+		for (int y = aaRadius; y < height - aaRadius; ++y)
+		{
+			const gs::Color oldColor = texture->GetColor(x, y);
+			const gs::Color waterColor = waterTextureGenerator.Sample();
+
+			if (texture->GetColor(x, y) == noLandColor)
+			{
+				texture->SetColor(x, y, waterTextureGenerator.Sample());
+			}
+		}
+	}
 }
 
 vector<shared_ptr<gs::LandTile>> gs::LandTile::GetUnassignedBiomeNeighbors() const
