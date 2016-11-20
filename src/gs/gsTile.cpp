@@ -21,8 +21,8 @@ void gs::Tile::AddToTileGroupTexture(shared_ptr<gs::Texture> tileGroupTexture, c
 	//update texture coordinates to be relative to the texture group texture
 	for (unsigned int i = 0; i < texCoords.size(); ++i)
 	{
-		texCoords[i].x = ((float)tileGroupTextureOffset.x + texCoords[i].x) / (float)tileGroupTextureSize;
-		texCoords[i].y = ((float)tileGroupTextureOffset.y + texCoords[i].y) / (float)tileGroupTextureSize;
+		texCoords[i].x = ((double)tileGroupTextureOffset.x + texCoords[i].x) / (double)tileGroupTextureSize;
+		texCoords[i].y = ((double)tileGroupTextureOffset.y + texCoords[i].y) / (double)tileGroupTextureSize;
 	}
 }
 
@@ -184,7 +184,7 @@ GLuint gs::Tile::SetBufferOffset(const GLuint vertexCount)
 gs::Tile::Tile(const Type surface, const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3d& centroid, const double height) :
 	id(idCounter++),
     surface(surface),
-    normal(gs::Vec3d((double) centroid.x, (double) centroid.y, (double) centroid.z).Unit()),
+    normal(gs::Vec3d(centroid.x, centroid.y, centroid.z).Unit()),
     height(height),
     vertices(vertices),
     color(1.0f, 0.0f, 0.0f),

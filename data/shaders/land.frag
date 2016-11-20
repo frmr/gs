@@ -15,13 +15,18 @@ out vec4 colorOut;
 
 void main()
 {
-    //political map mode
-    //colorOut = vec4( ( texture( tex, texCoordFrag ).rgb + colorFrag ) / 2.0, 1.0 );
-    float atmosphere = max(0, (gl_FragCoord.z-0.095) / 0.005);
+	float atmosphere = max(0, (gl_FragCoord.z-0.095) / 0.005);
 	atmosphere = atmosphere * atmosphere;
-
-    float shadow = dot(normalFrag, normalize(lightVec));
+	
+	float shadow = dot(normalFrag, normalize(lightVec));
+	
+	vec4 texColor = texture(tex, texCoordFrag);
+	
+	colorOut = texColor;
+	
+    //political map mode
+    colorOut = vec4((texColor.rgb + colorFrag) / 2.0, 1.0);
 
     //terrain map mode
-    colorOut = (texture( tex, texCoordFrag ) + vec4(0.4, 0.6, 1.0, 1.0) * atmosphere / 1.0) * shadow;
+    colorOut = (colorOut + vec4(0.4, 0.6, 1.0, 1.0) * atmosphere / 1.0) * shadow;
 }

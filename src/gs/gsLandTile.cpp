@@ -31,7 +31,7 @@ gs::LandTile::Terrain gs::LandTile::DetermineTerrain() const
     }
 }
 
-bool gs::LandTile::CheckCoordIsNearCoast(const gs::Vec3d & coord) const
+bool gs::LandTile::CheckCoordIsNearCoast(const gs::Vec3d& coord) const
 {
 	constexpr double coastEdgeLimit = 0.004;
 	constexpr double coastCornerLimit = 0.008;
@@ -43,49 +43,43 @@ bool gs::LandTile::CheckCoordIsNearCoast(const gs::Vec3d & coord) const
 		return false;
 	}
 
-	std::vector<double> innerDistances;
+	std::vector<double> distances;
+	distances.reserve(waterLinks.size());
+	
+	std::vector<double> reverseDistances;
+	reverseDistances.reserve(waterLinks.size());
 
 	for (const auto& link : waterLinks)
 	{
-		const double linkDistance = (gs::ClosestPointOnLine<gs::Vec3d>(link.edge->v0->position, link.edge->vec, coord, true) - coord).Length();
-		if (linkDistance <= coastEdgeLimit)
+		const gs::Vec3d closestPoint = gs::ClosestPointOnLine<gs::Vec3d>(link.edge->v0->position, link.edge->vec, coord, true);
+		const double distance = (closestPoint - coord).Length();
+
+		if (distance <= coastCornerLimit)
 		{
-			return true;
-		}
-		else if (linkDistance <= coastCornerLimit)
-		{
-			innerDistances.push_back(coastCornerLimit - linkDistance);
+			distances.push_back(distance);
+			reverseDistances.push_back(coastCornerLimit - distance);
 		}
 	}
 
-	if (innerDistances.size() >= 2)
+	if (distances.empty())
+	{
+		return false;
+	}
+	else if (distances.size() == 1)
+	{
+		return (distances.front() < coastEdgeLimit);
+	}
+	else
 	{
 		double sum = 0.0;
-		for (const auto& dist : innerDistances)
+	
+		for (const auto& dist : reverseDistances)
 		{
 			sum += dist * dist;
 		}
-
-		if (std::sqrt(sum) > coastCornerLimit - coastEdgeLimit)
-		{
-			return true;
-		}
+	
+		return (std::sqrt(sum) > coastCornerLimit - coastEdgeLimit);
 	}
-
-	 for (const auto& link : waterLinks)
-	 {
-		 if ((coord - link.edge->v0->position).Length() < coastEdgeLimit)
-		 {
-			 return true;
-		 }
-
-		 if ((coord - link.edge->v1->position).Length() < coastEdgeLimit)
-		 {
-			 return true;
-		 }
-	 }
-
-	 return false;
 }
 
 void gs::LandTile::GenerateTexture()
@@ -93,7 +87,7 @@ void gs::LandTile::GenerateTexture()
     //TODO: Make this safer by checking for presence of first and second vertices
 
     //reference u-axis is from v0 to v1
-    const gs::Vec3d refAxisU = (gs::Vec3d) (vertices[1]->position - vertices[0]->position).Unit();
+    const gs::Vec3d refAxisU = (vertices[1]->position - vertices[0]->position).Unit();
     //reference v-axis is the cross-product of u-axis and the tile normal
     const gs::Vec3d refAxisV = gs::Cross<double>(refAxisU, normal).Unit(); //TODO: Second argument might actually be worldVertices[0]->position
 
@@ -103,8 +97,8 @@ void gs::LandTile::GenerateTexture()
     //use reference axes to compute relative coordinates of each world vertex
     for (const auto& vert : vertices)
     {
-        relativeCoords.emplace_back(gs::Dot<double>(refAxisU, (gs::Vec3d) (vert->position - vertices.front()->position)),
-                                     gs::Dot<double>(refAxisV, (gs::Vec3d) (vert->position - vertices.front()->position)));
+        relativeCoords.emplace_back(gs::Dot<double>(refAxisU, vert->position - vertices.front()->position),
+                                     gs::Dot<double>(refAxisV, (vert->position - vertices.front()->position)));
     }
 
     gs::BoundingBox<gs::Vec2d> boundingBox(relativeCoords);
@@ -174,18 +168,31 @@ void gs::LandTile::GenerateTexture()
 				notableDistances.push_back((gs::ClosestPointOnLine<gs::Vec3d>(link.edge->v0->position, link.edge->vec, pixelWorldCoord, true) - pixelWorldCoord).Length());
 			}
 
+			//check for rivers
             //TODO: Use iterators
 			bool colorSet = false;
 			for (int i = 0; i < notableLinks.size(); ++i)
 			{
-				if (notableLinks[i].edge->IsRiver())
+				if (notableLinks[i].edge->IsRiver() && notableDistances[i] < riverLimit)
 				{
-					if (notableDistances[i] < riverLimit)
-					{
-						texture->SetColor(x, y, noLandColor);
-						colorSet = true;
-						break;
-					}
+					texture->SetColor(x, y, noLandColor);
+					colorSet = true;
+					break;
+				}
+			}
+
+			if (colorSet)
+			{
+				continue;
+			}
+
+			for (const auto& vertex : vertices)
+			{
+				if (vertex->IsRiver() && (vertex->position - pixelWorldCoord).Length() < riverLimit)
+				{
+					texture->SetColor(x, y, noLandColor);
+					colorSet = true;
+					break;
 				}
 			}
 
@@ -366,18 +373,6 @@ gs::LandTile::LandTile(const vector<shared_ptr<gs::Vertex>>& vertices, const gs:
         forested(false),
         biome(gs::LandTile::Biome::UNASSIGNED)
 {
-    if (terrain == gs::LandTile::Terrain::PLAINS)
-    {
-        color = gs::Vec3d(0.0f, 0.8f, 0.0f);
-    }
-    else if (terrain == gs::LandTile::Terrain::HILLS)
-    {
-        color = gs::Vec3d(0.0f, 0.4f, 0.0f);
-    }
-    else if (terrain == gs::LandTile::Terrain::MOUNTAINS)
-    {
-        color = gs::Vec3d(0.4, 0.4, 0.4);
-    }
 }
 
 gs::LandTile::~LandTile()

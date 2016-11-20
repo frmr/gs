@@ -409,7 +409,7 @@ void gs::Globe::GenerateBiomes(const int numOfSpreaders)
 
 void gs::Globe::GenerateCultures(const int numOfSpreaders)
 {
-
+	
 }
 
 void gs::Globe::GenerateLandTextures()

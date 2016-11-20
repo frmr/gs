@@ -8,7 +8,6 @@ gs::WaterTile::WaterTile(const vector<shared_ptr<gs::Vertex>>& vertices, const g
     :   gs::Tile(gs::Tile::Type::WATER, vertices, centroid, 0.0),
         ice(false)
 {
-    color = gs::Vec3d(0.09f, 0.13f, 0.33f);
 }
 
 void gs::WaterTile::GenerateTexture()
@@ -16,7 +15,7 @@ void gs::WaterTile::GenerateTexture()
 	//TODO: Make this safer by checking for presence of first and second vertices
 
 	//reference u-axis is from v0 to v1
-	const gs::Vec3d refAxisU = (gs::Vec3d) (vertices[1]->position - vertices[0]->position).Unit();
+	const gs::Vec3d refAxisU = (vertices[1]->position - vertices[0]->position).Unit();
 	//reference v-axis is the cross-product of u-axis and the tile normal
 	const gs::Vec3d refAxisV = gs::Cross<double>(refAxisU, normal).Unit(); //TODO: Second argument might actually be worldVertices[0]->position
 
@@ -26,8 +25,8 @@ void gs::WaterTile::GenerateTexture()
 	//use reference axes to compute relative coordinates of each world vertex
 	for (const auto& vert : vertices)
 	{
-		relativeCoords.emplace_back(gs::Dot<double>(refAxisU, (gs::Vec3d) (vert->position - vertices.front()->position)),
-			gs::Dot<double>(refAxisV, (gs::Vec3d) (vert->position - vertices.front()->position)));
+		relativeCoords.emplace_back(gs::Dot<double>(refAxisU, vert->position - vertices.front()->position),
+			gs::Dot<double>(refAxisV, vert->position - vertices.front()->position));
 	}
 
 	gs::BoundingBox<gs::Vec2d> boundingBox(relativeCoords);
