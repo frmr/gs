@@ -31,6 +31,38 @@ gs::LandTile::Terrain gs::LandTile::DetermineTerrain() const
     }
 }
 
+float gs::LandTile::GetBiomeAsValue() const
+{
+	switch (biome)
+	{
+	case Biome::UNASSIGNED:	return 0.0f;
+	case Biome::DESERT:		return 0.4f;
+	case Biome::ICE:		return 0.4f;
+	case Biome::TUNDRA:		return 0.6f;
+	case Biome::SEMI_ARID:	return 0.8f;
+	case Biome::GRASSLAND:	return 1.0f;
+	};
+
+	assert(false);
+
+	return 0.0;
+}
+
+float gs::LandTile::GetTerrainAsValue() const
+{
+	switch (terrain)
+	{
+	case Terrain::LAKE:			return 0.0f;
+	case Terrain::MOUNTAINS:	return 0.5f;
+	case Terrain::HILLS:		return 0.8f;
+	case Terrain::PLAINS:		return 1.0f;
+	}
+
+	assert(false);
+
+	return 0.0;
+}
+
 bool gs::LandTile::CheckCoordIsNearCoast(const gs::Vec3d& coord) const
 {
 	constexpr double coastEdgeLimit = 0.004;
@@ -80,6 +112,28 @@ bool gs::LandTile::CheckCoordIsNearCoast(const gs::Vec3d& coord) const
 	
 		return (std::sqrt(sum) > coastCornerLimit - coastEdgeLimit);
 	}
+}
+
+void gs::LandTile::CalculateEnvironment()
+{
+	const float biomeValue = GetBiomeAsValue();
+	const float terrainValue = GetTerrainAsValue();
+	const float coastValue = waterLinks.empty() ? 0.8f : 1.0f;
+
+	float riverValue = 0.8f;
+
+	for (const auto& link : landLinks)
+	{
+		if (link.edge->IsRiver())
+		{
+			riverValue = std::min(1.0f, riverValue + 0.5f);
+			break;
+		}
+	}
+
+	environment = biomeValue * terrainValue * coastValue * riverValue;
+
+	color = gs::Vec3d(environment, 0, 0);
 }
 
 void gs::LandTile::GenerateTexture()
@@ -371,7 +425,8 @@ gs::LandTile::LandTile(const vector<shared_ptr<gs::Vertex>>& vertices, const gs:
         regionId(regionId),
         terrain(DetermineTerrain()),
         forested(false),
-        biome(gs::LandTile::Biome::UNASSIGNED)
+        biome(gs::LandTile::Biome::UNASSIGNED),
+		environment(0.0, false)
 {
 }
 

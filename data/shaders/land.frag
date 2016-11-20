@@ -20,13 +20,11 @@ void main()
 	
 	float shadow = dot(normalFrag, normalize(lightVec));
 	
-	vec4 texColor = texture(tex, texCoordFrag);
-	
-	colorOut = texColor;
+	vec4 landColor = texture(tex, texCoordFrag);
 	
     //political map mode
-    colorOut = vec4((texColor.rgb + colorFrag) / 2.0, 1.0);
+    landColor = vec4((landColor.rgb + colorFrag) / 2.0, 1.0);
 
     //terrain map mode
-    colorOut = (colorOut + vec4(0.4, 0.6, 1.0, 1.0) * atmosphere / 1.0) * shadow;
+    colorOut = (landColor + vec4(0.4, 0.6, 1.0, 1.0) * atmosphere / 1.0) * shadow;
 }

@@ -409,7 +409,10 @@ void gs::Globe::GenerateBiomes(const int numOfSpreaders)
 
 void gs::Globe::GenerateCultures(const int numOfSpreaders)
 {
-	
+	for (auto& tile : landTiles)
+	{
+		tile->CalculateEnvironment();
+	}
 }
 
 void gs::Globe::GenerateLandTextures()

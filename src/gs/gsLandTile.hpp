@@ -4,6 +4,7 @@
 #include "gsRandomRange.hpp"
 #include "gsTexture.hpp"
 #include "gsTile.hpp"
+#include "gsUnit.hpp"
 #include "gsVec2.hpp"
 #include "gsVertex.hpp"
 
@@ -45,15 +46,20 @@ namespace gs
     private:
         bool								forested;
         Biome								biome;
+		UnitF								environment;
         shared_ptr<gs::Culture>				culture;
+		
 
 		static gs::LandTextureGenerator		landTextureGenerator;
 
     private:
-        Terrain                             DetermineTerrain() const;
 		bool								CheckCoordIsNearCoast(const gs::Vec3d& coord) const;
+        Terrain                             DetermineTerrain() const;
+		float								GetBiomeAsValue() const;
+		float								GetTerrainAsValue() const;
 
     public:
+		void								CalculateEnvironment();
         void                                GenerateTexture();
         Biome                               GetBiome() const;
         vector<shared_ptr<gs::LandTile>>    GetUnassignedBiomeNeighbors() const;
