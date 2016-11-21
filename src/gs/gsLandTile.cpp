@@ -118,20 +118,19 @@ void gs::LandTile::CalculateEnvironment()
 {
 	const float biomeValue = GetBiomeAsValue();
 	const float terrainValue = GetTerrainAsValue();
-	const float coastValue = waterLinks.empty() ? 0.8f : 1.0f;
 
-	float riverValue = 0.8f;
+	float waterValue = 0.8f;
 
-	for (const auto& link : landLinks)
+	for (const auto& link : allLinks)
 	{
-		if (link.edge->IsRiver())
+		if (link.edge->IsRiver() || link.target->GetSurface() == gs::Tile::Type::WATER)
 		{
-			riverValue = std::min(1.0f, riverValue + 0.5f);
+			waterValue = std::min(1.0f, waterValue + 0.5f);
 			break;
 		}
 	}
 
-	environment = biomeValue * terrainValue * coastValue * riverValue;
+	environment = biomeValue * terrainValue * waterValue;
 
 	color = gs::Vec3d(environment, 0, 0);
 }
