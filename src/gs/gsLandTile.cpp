@@ -126,7 +126,6 @@ void gs::LandTile::CalculateEnvironment()
 		if (link.edge->IsRiver() || link.target->GetSurface() == gs::Tile::Type::WATER)
 		{
 			waterValue = std::min(1.0f, waterValue + 0.5f);
-			break;
 		}
 	}
 
