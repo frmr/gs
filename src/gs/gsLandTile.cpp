@@ -31,7 +31,7 @@ gs::LandTile::Terrain gs::LandTile::DetermineTerrain() const
     }
 }
 
-float gs::LandTile::GetBiomeAsValue() const
+float gs::LandTile::GetBiomeEnvironmentValue() const
 {
 	switch (biome)
 	{
@@ -48,7 +48,7 @@ float gs::LandTile::GetBiomeAsValue() const
 	return 0.0;
 }
 
-float gs::LandTile::GetTerrainAsValue() const
+float gs::LandTile::GetTerrainEnvironmentValue() const
 {
 	switch (terrain)
 	{
@@ -61,6 +61,20 @@ float gs::LandTile::GetTerrainAsValue() const
 	assert(false);
 
 	return 0.0;
+}
+
+float gs::LandTile::GetLatitudeEnvironmentValue() const
+{
+	const float latitude = float(std::abs(cck::Vec3(center.x, center.z, center.y).ToGeographic().latRadians));
+	
+	if (latitude < cck::quarterPi)
+	{
+		return 0.75f + 0.25f * latitude / float(cck::quarterPi);
+	}
+	else
+	{
+		return 1.0f - std::min(1.0f, (latitude - float(cck::quarterPi)) / ((0.9f * float(cck::halfPi) - float(cck::quarterPi))));
+	}
 }
 
 bool gs::LandTile::CheckCoordIsNearCoast(const gs::Vec3d& coord) const
@@ -116,9 +130,9 @@ bool gs::LandTile::CheckCoordIsNearCoast(const gs::Vec3d& coord) const
 
 void gs::LandTile::CalculateEnvironment()
 {
-	const float biomeValue = GetBiomeAsValue();
-	const float terrainValue = GetTerrainAsValue();
-	const float latitudeValue = ((1.0f - std::abs(float(std::abs(cck::Vec3(center.x, center.z, center.y).ToGeographic().latRadians)) - float(cck::quarterPi)) / float(cck::quarterPi)) + 0.25f) / 1.25f;
+	const float biomeValue = GetBiomeEnvironmentValue();
+	const float terrainValue = GetTerrainEnvironmentValue();
+	const float latitudeValue = GetLatitudeEnvironmentValue();
 
 	float waterValue = 0.8f;
 
