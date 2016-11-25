@@ -118,6 +118,7 @@ void gs::LandTile::CalculateEnvironment()
 {
 	const float biomeValue = GetBiomeAsValue();
 	const float terrainValue = GetTerrainAsValue();
+	const float latitudeValue = ((1.0f - std::abs(float(std::abs(cck::Vec3(center.x, center.z, center.y).ToGeographic().latRadians)) - float(cck::quarterPi)) / float(cck::quarterPi)) + 0.25f) / 1.25f;
 
 	float waterValue = 0.8f;
 
@@ -129,8 +130,7 @@ void gs::LandTile::CalculateEnvironment()
 		}
 	}
 
-	environment = biomeValue * terrainValue * waterValue;
-
+	environment = biomeValue * terrainValue * latitudeValue * waterValue;
 	color = gs::Vec3d(environment, 0, 0);
 }
 

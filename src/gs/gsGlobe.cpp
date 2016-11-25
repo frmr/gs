@@ -196,8 +196,8 @@ void gs::Globe::BuildBiomeTable()
     biomeTable.push_back(gs::LandTile::Biome::DESERT);    //Arabia
     biomeTable.push_back(gs::LandTile::Biome::DESERT);    //Persia
     biomeTable.push_back(gs::LandTile::Biome::SEMI_ARID); //Central Asia
-    biomeTable.push_back(gs::LandTile::Biome::GRASSLAND); //Siberia 1
-    biomeTable.push_back(gs::LandTile::Biome::GRASSLAND); //Siberia 2
+    biomeTable.push_back(gs::LandTile::Biome::TUNDRA); //Siberia 1
+    biomeTable.push_back(gs::LandTile::Biome::TUNDRA); //Siberia 2
     biomeTable.push_back(gs::LandTile::Biome::SEMI_ARID); //Himalayas
     biomeTable.push_back(gs::LandTile::Biome::GRASSLAND); //North India
     biomeTable.push_back(gs::LandTile::Biome::SEMI_ARID); //South India

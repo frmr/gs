@@ -39,6 +39,7 @@ namespace gs
         const double                            height;
 
         const vector<shared_ptr<gs::Vertex>>    vertices;
+		const gs::Vec3d							center;
         GLuint                                  bufferOffset;
         GLuint                                  indexBufferOffset;
         gs::Vec3d                               color;
@@ -83,6 +84,9 @@ namespace gs
 
 		void					UpdateTexCoordBuffer(const GLuint texCoordVbo);
 		void					UpdateAllBuffers(const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo, const GLuint texCoordVbo);
+
+	private:
+		gs::Vec3d				CalculateCenter() const;
 
     protected:
         Tile(const Type surface, const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3d& centroid, const double height);

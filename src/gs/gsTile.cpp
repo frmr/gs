@@ -97,6 +97,20 @@ void gs::Tile::UpdateAllBuffers(const GLuint positionVbo, const GLuint colorVbo,
 	UpdateTexCoordBuffer(texCoordVbo);
 }
 
+gs::Vec3d gs::Tile::CalculateCenter() const
+{
+	assert(!vertices.empty());
+
+	gs::Vec3d sum;
+
+	for (const auto& vertex : vertices)
+	{
+		sum += vertex->position;
+	}
+
+	return sum / double(vertices.size());
+}
+
 void gs::Tile::UpdateTexCoordBuffer(const GLuint texCoordVbo)
 {
 	GLfloat* texCoordArray = new GLfloat[2 * vertices.size()];
@@ -187,6 +201,7 @@ gs::Tile::Tile(const Type surface, const vector<shared_ptr<gs::Vertex>>& vertice
     normal(gs::Vec3d(centroid.x, centroid.y, centroid.z).Unit()),
     height(height),
     vertices(vertices),
+	center(CalculateCenter()),
     color(1.0f, 0.0f, 0.0f),
     fog(false),
 	texture(nullptr)
