@@ -210,6 +210,7 @@
     <ClInclude Include="src\gs\gsArray.hpp" />
     <ClInclude Include="src\gs\gsBinarySearchTree.hpp" />
     <ClInclude Include="src\gs\gsBiomeSpreader.hpp" />
+    <ClInclude Include="src\gs\gsBounded.hpp" />
     <ClInclude Include="src\gs\gsUnit.hpp" />
     <ClInclude Include="src\gs\gsLandTextureGenerator.hpp" />
     <ClInclude Include="src\gs\gsBoundingBox.hpp" />

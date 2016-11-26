@@ -1,48 +1,32 @@
 #pragma once
 
-#include "gsMath.hpp"
-#include <cassert>
+#include "gsBounded.hpp"
 
 namespace gs
 {
 	template<typename T>
-	class Unit
+	class Unit : public gs::Bounded<T>
 	{
 	public:
-		//Unit(const bool clamp) :
-		//	clamp(clamp),
-		//	value()
-		//{
-		//}
 
 		Unit(const T& value, const bool clamp) :
-			clamp(clamp),
-			value(value)
+			gs::Bounded<T>((T)0, (T)1, value, clamp)
 		{
 		}
 
-		operator T() const
-		{
-			return value;
-		}
-
-		Unit& operator=(const T& newValue)
+		Unit<T>& operator=(const T& newValue)
 		{
 			value = newValue;
 
 			if (clamp)
 			{
-				gs::Clamp(value, (T)0, (T)1);
+				gs::Clamp(value, lower, upper);
 			}
 
-			assert(value >= (T)0 && value <= (T)1);
+			assert(value >= lower && value <= upper);
 
 			return *this;
 		}
-
-	private:
-		const bool	clamp;
-		T			value;
 	};
 
 	typedef Unit<float>		UnitF;
