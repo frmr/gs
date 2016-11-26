@@ -46,7 +46,8 @@ namespace gs
     private:
         bool								forested;
         Biome								biome;
-		UnitF								environment;
+		UnitF								environmentRating;
+		UnitF								movementRating;
         shared_ptr<gs::Culture>				culture;
 		
 
@@ -55,12 +56,13 @@ namespace gs
     private:
 		bool								CheckCoordIsNearCoast(const gs::Vec3d& coord) const;
         Terrain                             DetermineTerrain() const;
-		UnitF								GetBiomeEnvironmentValue() const;
-		UnitF								GetTerrainEnvironmentValue() const;
-		UnitF								GetLatitudeEnvironmentValue() const;
+		UnitF								GetBiomeEnvironmentRating() const;
+		UnitF								GetTerrainEnvironmentRating() const;
+		UnitF								GetLatitudeEnvironmentRating() const;
 
     public:
-		void								CalculateEnvironment();
+		void								CalculateEnvironmentRating();
+		void								CalculateMovementRating();
         void                                GenerateTexture();
         Biome                               GetBiome() const;
         vector<shared_ptr<gs::LandTile>>    GetUnassignedBiomeNeighbors() const;

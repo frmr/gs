@@ -31,7 +31,7 @@ gs::LandTile::Terrain gs::LandTile::DetermineTerrain() const
     }
 }
 
-gs::UnitF gs::LandTile::GetBiomeEnvironmentValue() const
+gs::UnitF gs::LandTile::GetBiomeEnvironmentRating() const
 {
 	switch (biome)
 	{
@@ -48,7 +48,7 @@ gs::UnitF gs::LandTile::GetBiomeEnvironmentValue() const
 	return UnitF(0.0, false);
 }
 
-gs::UnitF gs::LandTile::GetTerrainEnvironmentValue() const
+gs::UnitF gs::LandTile::GetTerrainEnvironmentRating() const
 {
 	switch (terrain)
 	{
@@ -63,7 +63,7 @@ gs::UnitF gs::LandTile::GetTerrainEnvironmentValue() const
 	return gs::UnitF(0.0, false);
 }
 
-gs::UnitF gs::LandTile::GetLatitudeEnvironmentValue() const
+gs::UnitF gs::LandTile::GetLatitudeEnvironmentRating() const
 {
 	const float latitude = float(std::abs(cck::Vec3(center.x, center.z, center.y).ToGeographic().latRadians));
 	
@@ -128,11 +128,11 @@ bool gs::LandTile::CheckCoordIsNearCoast(const gs::Vec3d& coord) const
 	}
 }
 
-void gs::LandTile::CalculateEnvironment()
+void gs::LandTile::CalculateEnvironmentRating()
 {
-	const UnitF biomeValue = GetBiomeEnvironmentValue();
-	const UnitF terrainValue = GetTerrainEnvironmentValue();
-	const UnitF latitudeValue = GetLatitudeEnvironmentValue();
+	const UnitF biomeValue = GetBiomeEnvironmentRating();
+	const UnitF terrainValue = GetTerrainEnvironmentRating();
+	const UnitF latitudeValue = GetLatitudeEnvironmentRating();
 
 	UnitF waterValue(0.8f, true);
 
@@ -144,8 +144,39 @@ void gs::LandTile::CalculateEnvironment()
 		}
 	}
 
-	environment = biomeValue * terrainValue * latitudeValue * waterValue;
-	color = gs::Vec3d(environment, 0, 0);
+	environmentRating = biomeValue * terrainValue * latitudeValue * waterValue;
+	//color = gs::Vec3d(environmentRating, 0, 0);
+}
+
+void gs::LandTile::CalculateMovementRating()
+{
+	switch (terrain)
+	{
+	case Terrain::LAKE:			movementRating = 1.0f;	break;
+	case Terrain::PLAINS:		movementRating = 1.0f;	break;
+	case Terrain::HILLS:		movementRating = 0.8f;	break;
+	case Terrain::MOUNTAINS:	movementRating = 0.2f;	break;
+	}
+
+	UnitF neighborsMovementRating(1.0f, false);
+
+	for (const auto& link : landLinks)
+	{
+		if (link.target->terrain == Terrain::HILLS)
+		{
+			neighborsMovementRating -= 0.025f;
+		}
+		else if (link.target->terrain == Terrain::MOUNTAINS)
+		{
+			neighborsMovementRating -= 0.1f;
+		}
+
+		neighborsMovementRating = std::max(0.2f, float(neighborsMovementRating));
+	}
+
+	movementRating *= neighborsMovementRating;
+
+	color = gs::Vec3d(movementRating, 0, 0);
 }
 
 void gs::LandTile::GenerateTexture()
@@ -438,7 +469,8 @@ gs::LandTile::LandTile(const vector<shared_ptr<gs::Vertex>>& vertices, const gs:
         terrain(DetermineTerrain()),
         forested(false),
         biome(gs::LandTile::Biome::UNASSIGNED),
-		environment(0.0, false)
+		environmentRating(0.0, false),
+		movementRating(0.0, false)
 {
 }
 

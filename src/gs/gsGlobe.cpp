@@ -411,7 +411,8 @@ void gs::Globe::GenerateCultures(const int numOfSpreaders)
 {
 	for (auto& tile : landTiles)
 	{
-		tile->CalculateEnvironment();
+		tile->CalculateEnvironmentRating();
+		tile->CalculateMovementRating();
 	}
 }
 
