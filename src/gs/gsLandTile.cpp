@@ -31,49 +31,49 @@ gs::LandTile::Terrain gs::LandTile::DetermineTerrain() const
     }
 }
 
-float gs::LandTile::GetBiomeEnvironmentValue() const
+gs::UnitF gs::LandTile::GetBiomeEnvironmentValue() const
 {
 	switch (biome)
 	{
-	case Biome::UNASSIGNED:	return 0.0f;
-	case Biome::DESERT:		return 0.4f;
-	case Biome::ICE:		return 0.4f;
-	case Biome::TUNDRA:		return 0.6f;
-	case Biome::SEMI_ARID:	return 0.8f;
-	case Biome::GRASSLAND:	return 1.0f;
+	case Biome::UNASSIGNED:	return gs::UnitF(0.0f, false);
+	case Biome::DESERT:		return gs::UnitF(0.4f, false);
+	case Biome::ICE:		return gs::UnitF(0.4f, false);
+	case Biome::TUNDRA:		return gs::UnitF(0.6f, false);
+	case Biome::SEMI_ARID:	return gs::UnitF(0.8f, false);
+	case Biome::GRASSLAND:	return gs::UnitF(1.0f, false);
 	};
 
 	assert(false);
 
-	return 0.0;
+	return UnitF(0.0, false);
 }
 
-float gs::LandTile::GetTerrainEnvironmentValue() const
+gs::UnitF gs::LandTile::GetTerrainEnvironmentValue() const
 {
 	switch (terrain)
 	{
-	case Terrain::LAKE:			return 0.0f;
-	case Terrain::MOUNTAINS:	return 0.5f;
-	case Terrain::HILLS:		return 0.8f;
-	case Terrain::PLAINS:		return 1.0f;
+	case Terrain::LAKE:			return gs::UnitF(0.0f, false);
+	case Terrain::MOUNTAINS:	return gs::UnitF(0.5f, false);
+	case Terrain::HILLS:		return gs::UnitF(0.8f, false);
+	case Terrain::PLAINS:		return gs::UnitF(1.0f, false);
 	}
 
 	assert(false);
 
-	return 0.0;
+	return gs::UnitF(0.0, false);
 }
 
-float gs::LandTile::GetLatitudeEnvironmentValue() const
+gs::UnitF gs::LandTile::GetLatitudeEnvironmentValue() const
 {
 	const float latitude = float(std::abs(cck::Vec3(center.x, center.z, center.y).ToGeographic().latRadians));
 	
 	if (latitude < cck::quarterPi)
 	{
-		return 0.75f + 0.25f * latitude / float(cck::quarterPi);
+		return gs::UnitF(0.75f + 0.25f * latitude / float(cck::quarterPi), false);
 	}
 	else
 	{
-		return 1.0f - std::min(1.0f, (latitude - float(cck::quarterPi)) / ((0.9f * float(cck::halfPi) - float(cck::quarterPi))));
+		return gs::UnitF(1.0f - std::min(1.0f, (latitude - float(cck::quarterPi)) / ((0.9f * float(cck::halfPi) - float(cck::quarterPi)))), false);
 	}
 }
 
@@ -130,17 +130,17 @@ bool gs::LandTile::CheckCoordIsNearCoast(const gs::Vec3d& coord) const
 
 void gs::LandTile::CalculateEnvironment()
 {
-	const float biomeValue = GetBiomeEnvironmentValue();
-	const float terrainValue = GetTerrainEnvironmentValue();
-	const float latitudeValue = GetLatitudeEnvironmentValue();
+	const UnitF biomeValue = GetBiomeEnvironmentValue();
+	const UnitF terrainValue = GetTerrainEnvironmentValue();
+	const UnitF latitudeValue = GetLatitudeEnvironmentValue();
 
-	float waterValue = 0.8f;
+	UnitF waterValue(0.8f, true);
 
 	for (const auto& link : allLinks)
 	{
 		if (link.edge->IsRiver() || link.target->GetSurface() == gs::Tile::Type::WATER)
 		{
-			waterValue = std::min(1.0f, waterValue + 0.5f);
+			waterValue += 0.5f;
 		}
 	}
 

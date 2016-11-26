@@ -55,9 +55,9 @@ namespace gs
     private:
 		bool								CheckCoordIsNearCoast(const gs::Vec3d& coord) const;
         Terrain                             DetermineTerrain() const;
-		float								GetBiomeEnvironmentValue() const;
-		float								GetTerrainEnvironmentValue() const;
-		float								GetLatitudeEnvironmentValue() const;
+		UnitF								GetBiomeEnvironmentValue() const;
+		UnitF								GetTerrainEnvironmentValue() const;
+		UnitF								GetLatitudeEnvironmentValue() const;
 
     public:
 		void								CalculateEnvironment();
