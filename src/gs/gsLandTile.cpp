@@ -133,19 +133,21 @@ void gs::LandTile::CalculateEnvironmentRating()
 	const UnitF biomeValue = GetBiomeEnvironmentRating();
 	const UnitF terrainValue = GetTerrainEnvironmentRating();
 	const UnitF latitudeValue = GetLatitudeEnvironmentRating();
+	const UnitF coastValue(waterLinks.empty() ? 0.8f : 1.0f, false);
 
-	UnitF waterValue(0.8f, true);
+	UnitF riverValue(0.8f, false);
 
-	for (const auto& link : allLinks)
+	for (const auto& link : landLinks)
 	{
-		if (link.edge->IsRiver() || link.target->GetSurface() == gs::Tile::Type::WATER)
+		if (link.edge->IsRiver())
 		{
-			waterValue += 0.5f;
+			riverValue = 1.0f;
+			break;
 		}
 	}
 
-	environmentRating = biomeValue * terrainValue * latitudeValue * waterValue;
-	//color = gs::Vec3d(environmentRating, 0, 0);
+	environmentRating = biomeValue * terrainValue * latitudeValue * coastValue * riverValue;
+	color = gs::Vec3d(environmentRating, 0, 0);
 }
 
 void gs::LandTile::CalculateMovementRating()
@@ -176,7 +178,7 @@ void gs::LandTile::CalculateMovementRating()
 
 	movementRating *= neighborsMovementRating;
 
-	color = gs::Vec3d(movementRating, 0, 0);
+	//color = gs::Vec3d(movementRating, 0, 0);
 }
 
 void gs::LandTile::GenerateTexture()
