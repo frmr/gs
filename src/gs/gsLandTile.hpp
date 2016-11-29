@@ -66,8 +66,13 @@ namespace gs
         void                                GenerateTexture();
         Biome                               GetBiome() const;
         vector<shared_ptr<gs::LandTile>>    GetUnassignedBiomeNeighbors() const;
+		shared_ptr<gs::Culture>				GetCulture() const;
+		float								GetEnvironmentRating() const;
+		float								GetMovementRating() const;
 
         bool                                HasUnassignedBiomeNeighbors() const;
+		bool								HasUnassignedCultureNeighbors() const;
+		bool								HasDifferentCultureNeighbors() const;
         void                                SetBiome(const Biome newBiome);
         void                                SetCulture(const shared_ptr<Culture> newCulture);
         bool                                SpawnRiver(const int newRiverId, gs::RandomRange<double>& rand);

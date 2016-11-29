@@ -67,7 +67,7 @@ namespace gs
         void										CreateTile(const vector<gs::VertexPtr>& cellVertices, const cck::Globe& terrain, const cck::Vec3& centroid);
         void										CreateTileEdges(const vector<gs::VertexPtr>& cellVertices);
         void										GenerateBiomes(const int numOfSpreaders);
-        void										GenerateCultures(const int numOfSpreaders);
+        void										GenerateCultures(const int numOfCultures);
 		void										GenerateLandTextures();
         void										GenerateRivers(const int minRivers, const int maxRivers);
         void										GenerateWaterTextures();

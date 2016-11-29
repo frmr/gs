@@ -10,13 +10,13 @@ void gs::BiomeSpreader::CleanFrontier()
 {
     for (vector<gs::LandTilePtr>::iterator it = frontier.begin(); it != frontier.end();)
     {
-        if (!(*it)->HasUnassignedBiomeNeighbors())
+        if ((*it)->HasUnassignedBiomeNeighbors())
         {
-            it = frontier.erase(it);
+			++it;
         }
         else
         {
-            ++it;
+			it = frontier.erase(it);
         }
     }
 }

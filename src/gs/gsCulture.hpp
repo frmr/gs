@@ -1,6 +1,7 @@
 #pragma once
 
 #include "gsColor.hpp"
+#include "gsRandomRange.hpp"
 #include "gsVec3.hpp"
 
 #include <string>
@@ -11,15 +12,19 @@ namespace gs
 {
     class Culture
     {
-    private:
-        const int       groupId;
-        const string    name;
-        const gs::Color color;
+    public:
+		const uint16_t					id;
+        const int						groupId;
+        const string					name;
+        const gs::Color					color;
+
+	private:
+		static gs::RandomRange<uint8_t>	randomRange;
 
     public:
         static string GenerateCultureName(const int groupId);
 
     public:
-        Culture(const int groupId);
+        Culture(const int id, const int groupId);
     };
 }

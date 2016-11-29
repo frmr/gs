@@ -189,6 +189,11 @@ gs::Tile::Type gs::Tile::GetSurface() const
     return surface;
 }
 
+vector<gs::Link<gs::LandTile>> gs::Tile::GetLandLinks() const
+{
+	return landLinks;
+}
+
 GLuint gs::Tile::SetBufferOffset(const GLuint vertexCount)
 {
     bufferOffset = vertexCount;

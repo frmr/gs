@@ -1,5 +1,7 @@
 #include "gsCulture.hpp"
 
+gs::RandomRange<uint8_t> gs::Culture::randomRange(0, 255, int(time(0)));
+
 string gs::Culture::GenerateCultureName(const int groupId)
 {
     switch (groupId)
@@ -38,9 +40,10 @@ string gs::Culture::GenerateCultureName(const int groupId)
     }
 }
 
-gs::Culture::Culture(const int groupId)
-    :   groupId(groupId),
-        name(GenerateCultureName(groupId)),
-        color()
+gs::Culture::Culture(const int id, const int groupId) :   
+	id(id),
+	groupId(groupId),
+	name(GenerateCultureName(groupId)),
+	color(randomRange.Sample(), randomRange.Sample(), randomRange.Sample())
 {
 }

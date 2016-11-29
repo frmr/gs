@@ -412,6 +412,21 @@ vector<shared_ptr<gs::LandTile>> gs::LandTile::GetUnassignedBiomeNeighbors() con
     return unassignedNeighbors;
 }
 
+shared_ptr<gs::Culture> gs::LandTile::GetCulture() const
+{
+	return culture;
+}
+
+float gs::LandTile::GetEnvironmentRating() const
+{
+	return environmentRating;
+}
+
+float gs::LandTile::GetMovementRating() const
+{
+	return movementRating;
+}
+
 gs::LandTile::Biome gs::LandTile::GetBiome() const
 {
     return biome;
@@ -429,6 +444,31 @@ bool gs::LandTile::HasUnassignedBiomeNeighbors() const
     return false;
 }
 
+bool gs::LandTile::HasUnassignedCultureNeighbors() const
+{
+	for (const auto& link : landLinks)
+	{
+		if (link.target->GetCulture() == nullptr)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool gs::LandTile::HasDifferentCultureNeighbors() const
+{
+	for (const auto& link : landLinks)
+	{
+		if (link.target->culture != this->culture)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void gs::LandTile::SetBiome(const gs::LandTile::Biome newBiome)
 {
     biome = newBiome;
@@ -437,6 +477,7 @@ void gs::LandTile::SetBiome(const gs::LandTile::Biome newBiome)
 void gs::LandTile::SetCulture(const shared_ptr<Culture> newCulture)
 {
     culture = newCulture;
+	color = gs::Vec3d(double(culture->color.r) / 255.0, double(culture->color.g) / 255.0, double(culture->color.b) / 255.0);
 }
 
 bool gs::LandTile::SpawnRiver(const int newRiverId, gs::RandomRange<double>& rand)
@@ -465,14 +506,15 @@ bool gs::LandTile::SpawnRiver(const int newRiverId, gs::RandomRange<double>& ran
     }
 }
 
-gs::LandTile::LandTile(const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3d& centroid, const double height, const int regionId)
-    :   gs::Tile(gs::Tile::Type::LAND, vertices, centroid, height),
+gs::LandTile::LandTile(const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3d& centroid, const double height, const int regionId) :
+		gs::Tile(gs::Tile::Type::LAND, vertices, centroid, height),
         regionId(regionId),
         terrain(DetermineTerrain()),
         forested(false),
         biome(gs::LandTile::Biome::UNASSIGNED),
 		environmentRating(0.0, false),
-		movementRating(0.0, false)
+		movementRating(0.0, false),
+		culture(nullptr)
 {
 }
 

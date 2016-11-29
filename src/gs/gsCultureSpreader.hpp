@@ -14,17 +14,18 @@ namespace gs
     class CultureSpreader : public gs::Spreader<gs::LandTilePtr>
     {
     private:
-        shared_ptr<gs::Culture> value;
-        gs::LandTile::Terrain   terrainPreference;
+        const shared_ptr<gs::Culture>	culture;
+        const gs::LandTile::Terrain		terrainPreference;
+		const gs::LandTile::Biome		biomePreference;
 
     private:
         void            CleanFrontier();
-        gs::LandTilePtr SelectRandomTileFromVector(const vector<gs::LandTilePtr> tiles, gs::RandomRange<double>& randomIndex) const;
+        gs::LandTilePtr SelectRandomTileFromVector(const vector<gs::LandTilePtr>& tiles, gs::RandomRange<double>& randomIndex) const;
 
     public:
         bool Spread();
 
     public:
-        CultureSpreader(const unsigned int speed, const gs::LandTilePtr origin, const shared_ptr<gs::Culture> value, const gs::LandTile::Terrain terrainPreference);
+        CultureSpreader(const unsigned int speed, const gs::LandTilePtr origin, const shared_ptr<gs::Culture> value);
     };
 }

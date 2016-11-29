@@ -2,6 +2,7 @@
 
 #include <ctime>
 #include <iostream>
+#include <unordered_map>
 
 using std::cerr;
 using std::endl;
@@ -10,100 +11,82 @@ void gs::CultureSpreader::CleanFrontier()
 {
     for (vector<gs::LandTilePtr>::iterator it = frontier.begin(); it != frontier.end();)
     {
-        if (!(*it)->HasUnassignedBiomeNeighbors())
+        if ((*it)->HasUnassignedCultureNeighbors())
         {
-            it = frontier.erase(it);
+			++it;
         }
         else
         {
-            ++it;
+			it = frontier.erase(it);
         }
     }
 }
 
-gs::LandTilePtr gs::CultureSpreader::SelectRandomTileFromVector(const vector<gs::LandTilePtr> tiles, gs::RandomRange<double>& randomIndex) const
+gs::LandTilePtr gs::CultureSpreader::SelectRandomTileFromVector(const vector<gs::LandTilePtr>& tiles, gs::RandomRange<double>& randomIndex) const
 {
-    return (tiles.empty()) ? nullptr : tiles[(int) (randomIndex.Sample() * (double) tiles.size())];
+    return (tiles.empty()) ? nullptr : tiles[(int)(randomIndex.Sample() * (double)tiles.size())];
 }
 
 bool gs::CultureSpreader::Spread()
 {
-//    for (unsigned int i = 0; i < speed; ++i)
-//    {
-//        if (frontier.empty())
-//        {
-//            return false;
-//        }
-//
-//        vector<gs::LandTilePtr> unassignedNeighbors;
-//
-//        for (const auto& tile : frontier)
-//        {
-//            vector<gs::LandTilePtr> tileUnassignedNeighbors = tile->GetUnassignedBiomeNeighbors();
-//            unassignedNeighbors.insert(unassignedNeighbors.end(), tileUnassignedNeighbors.begin(), tileUnassignedNeighbors.end());
-//        }
-//
-//        vector<gs::LandTilePtr> unassignedPlains;
-//        vector<gs::LandTilePtr> unassignedHills;
-//        vector<gs::LandTilePtr> unassignedMountains;
-//
-//        for (const auto& tile : unassignedNeighbors)
-//        {
-//            if (tile->terrain == gs::LandTile::Terrain::PLAINS)
-//            {
-//                unassignedPlains.push_back(tile);
-//            }
-//            else if (tile->terrain == gs::LandTile::Terrain::HILLS)
-//            {
-//                unassignedHills.push_back(tile);
-//            }
-//            else if (tile->terrain == gs::LandTile::Terrain::MOUNTAINS)
-//            {
-//                unassignedMountains.push_back(tile);
-//            }
-//        }
-//
-//        //select best tile from the three vectors
-//        gs::RandomRange<double> randomIndex(0.0, 0.9999, std::time(0));
-//
-//        gs::LandTilePtr plainsTile = SelectRandomTileFromVector(unassignedPlains, randomIndex);
-//        gs::LandTilePtr hillsTile = SelectRandomTileFromVector(unassignedHills, randomIndex);
-//        gs::LandTilePtr mountainsTile = SelectRandomTileFromVector(unassignedMountains, randomIndex);
-//
-//        gs::LandTilePtr bestTile = mountainsTile;
-//
-//        if (terrainPreference == gs::LandTile::Terrain::PLAINS)
-//        {
-//            bestTile = (hillsTile == nullptr) ? bestTile : hillsTile;
-//            bestTile = (plainsTile == nullptr) ? bestTile : plainsTile;
-//        }
-//        else if (terrainPreference == gs::LandTile::Terrain::HILLS)
-//        {
-//            bestTile = (plainsTile == nullptr) ? bestTile : plainsTile;
-//            bestTile = (hillsTile == nullptr) ? bestTile : hillsTile;
-//        }
-//
-//        if (bestTile != nullptr) //TODO: prevent nullptr all together
-//        {
-//            bestTile->SetBiome(value);
-//            frontier.push_back(bestTile);
-//        }
-//        else
-//        {
-//            return false;
-//        }
-//
-//        CleanFrontier();
-//
-//    }
+	bool spread = false;
 
-    return true;
+	for (unsigned int i = 0; i < speed; ++i)
+	{
+		if (frontier.empty())
+		{
+			break;
+		}
+
+		std::unordered_map<int, gs::LandTilePtr> neighbors;
+
+		for (const auto& frontierTile : frontier)
+		{
+			const std::vector<gs::Link<gs::LandTile>> landLinks = frontierTile->GetLandLinks();
+
+			for (const auto& link : landLinks)
+			{
+				if (link.target->GetCulture() == nullptr && neighbors.count(link.target->id) == 0)// || neighbors.count(link.target->GetCulture()->id) == 0)
+				{
+					neighbors.emplace(link.target->id, link.target);
+				}
+			}
+		}
+
+		if (neighbors.empty())
+		{
+			break;
+		}
+
+		gs::LandTilePtr bestNeighbor = nullptr;
+		float bestNeighborValue = std::numeric_limits<float>::lowest();
+
+		for (const auto& neighborPair : neighbors)
+		{
+			const gs::LandTilePtr tile = neighborPair.second;
+			const float value = (tile->terrain == terrainPreference ? 10.0f : 1.0f) * (tile->GetBiome() == biomePreference ? 10.0f : 1.0f) * tile->GetEnvironmentRating() * tile->GetMovementRating();
+
+			if (value > bestNeighborValue)
+			{
+				bestNeighbor = neighborPair.second;
+			}
+		}
+
+		spread = true;
+		bestNeighbor->SetCulture(culture);
+		frontier.push_back(bestNeighbor);
+
+		CleanFrontier();
+	}
+
+    return spread;
 }
 
-gs::CultureSpreader::CultureSpreader(const unsigned int speed, const gs::LandTilePtr origin, const shared_ptr<gs::Culture> value, const gs::LandTile::Terrain terrainPreference)
-    :   Spreader<shared_ptr<gs::LandTile>>(speed, origin),
-        value(value),
-        terrainPreference(terrainPreference)
+gs::CultureSpreader::CultureSpreader(const unsigned int speed, const gs::LandTilePtr origin, const shared_ptr<gs::Culture> value) :
+	Spreader<shared_ptr<gs::LandTile>>(1, origin),
+    culture(value),
+    terrainPreference(origin->terrain),
+	biomePreference(origin->GetBiome())
 {
     origin->SetCulture(value);
     CleanFrontier();

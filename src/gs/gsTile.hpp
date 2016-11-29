@@ -56,37 +56,39 @@ namespace gs
         //owner
         //controller
     protected:
-        void					UpdateColorBuffer(const GLuint colorVbo);
-        void					UpdateFogBuffer(const GLuint fogVbo);
-        void					UpdatePositionBuffer(const GLuint positionVbo);
+        void									UpdateColorBuffer(const GLuint colorVbo);
+        void									UpdateFogBuffer(const GLuint fogVbo);
+        void									UpdatePositionBuffer(const GLuint positionVbo);
 
     public:
-        void					AddVerticesToIndexVector(vector<GLuint>& indexVector);
+        void									AddVerticesToIndexVector(vector<GLuint>& indexVector);
 
-        bool					AddLink(const gs::Link<gs::Tile>& link);
-        bool					AddLink(const gs::Link<gs::LandTile>& link);
-        bool					AddLink(const gs::Link<gs::WaterTile>& link);
+        bool									AddLink(const gs::Link<gs::Tile>& link);
+        bool									AddLink(const gs::Link<gs::LandTile>& link);
+        bool									AddLink(const gs::Link<gs::WaterTile>& link);
 
-        GLuint					GetBufferEnd() const;
-        GLuint					GetBufferOffset() const;
-        double					GetHeight() const;
-        GLuint					GetIndexBufferEnd() const;
-        GLuint					GetIndexBufferOffset() const;
-        size_t					GetNumOfVertices() const;
-        Type					GetSurface() const;
+        GLuint									GetBufferEnd() const;
+        GLuint									GetBufferOffset() const;
+        double									GetHeight() const;
+        GLuint									GetIndexBufferEnd() const;
+        GLuint									GetIndexBufferOffset() const;
+        size_t									GetNumOfVertices() const;
+        Type									GetSurface() const;
 
-        GLuint					SetBufferOffset(const GLuint offset);
+		vector<gs::Link<gs::LandTile>>			GetLandLinks() const;
 
-		void					AddToTileGroupTexture(shared_ptr<gs::Texture> tileGroupTexture, const gs::Vec2i& tileGroupTextureOffset, const int tileGroupTextureSize);
-		void					DeleteLocalTextureData();
-		virtual void			GenerateTexture() = 0;
-		shared_ptr<gs::Texture>	GetTexture() const;
+        GLuint									SetBufferOffset(const GLuint offset);
 
-		void					UpdateTexCoordBuffer(const GLuint texCoordVbo);
-		void					UpdateAllBuffers(const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo, const GLuint texCoordVbo);
+		void									AddToTileGroupTexture(shared_ptr<gs::Texture> tileGroupTexture, const gs::Vec2i& tileGroupTextureOffset, const int tileGroupTextureSize);
+		void									DeleteLocalTextureData();
+		virtual void							GenerateTexture() = 0;
+		shared_ptr<gs::Texture>					GetTexture() const;
+
+		void									UpdateTexCoordBuffer(const GLuint texCoordVbo);
+		void									UpdateAllBuffers(const GLuint positionVbo, const GLuint colorVbo, const GLuint fogVbo, const GLuint texCoordVbo);
 
 	private:
-		gs::Vec3d				CalculateCenter() const;
+		gs::Vec3d								CalculateCenter() const;
 
     protected:
         Tile(const Type surface, const vector<shared_ptr<gs::Vertex>>& vertices, const gs::Vec3d& centroid, const double height);

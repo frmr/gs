@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <random>
+#include <ctime>
 
 namespace gs
 {
@@ -18,14 +19,14 @@ namespace gs
             return (round) ? (T) std::round(dist(engine)) : (T) dist(engine);
         }
     public:
-        RandomRange(const double min, const double max, const int seed)
+        RandomRange(const double min, const double max, const int seed = std::time(0))
             :   engine(seed),
                 dist(min, max),
                 round(false)
         {
         }
 
-        RandomRange(const int min, const int max, const int seed)
+        RandomRange(const int min, const int max, const int seed = std::time(0))
             :   engine(seed),
                 dist((double) min, (double) max),
                 round(true)

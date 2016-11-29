@@ -3,8 +3,10 @@
 #include <ctime>
 #include <iostream>
 #include <thread>
+#include <unordered_set>
 
 #include "gsBiomeSpreader.hpp"
+#include "gsCultureSpreader.hpp"
 #include "gsLandTextureGenerator.hpp"
 #include "gsRandomRange.hpp"
 #include "gsSpreader.hpp"
@@ -407,12 +409,54 @@ void gs::Globe::GenerateBiomes(const int numOfSpreaders)
     cerr << "Generated biomes" << endl;
 }
 
-void gs::Globe::GenerateCultures(const int numOfSpreaders)
+void gs::Globe::GenerateCultures(const int numOfCultures)
 {
+	assert(size_t(numOfCultures) < landTiles.size());
+
 	for (auto& tile : landTiles)
 	{
 		tile->CalculateEnvironmentRating();
 		tile->CalculateMovementRating();
+	}
+
+	cultures.reserve(numOfCultures);
+	for (uint16_t i = 0; i < numOfCultures; ++i)
+	{
+		cultures.push_back(std::make_shared<gs::Culture>(i, i));
+	}
+
+	std::vector<gs::CultureSpreader> spreaders;
+
+	std::unordered_set<int> originIds;
+
+	gs::RandomRange<size_t> randomIndex(0, int(landTiles.size() - 1));
+
+	for (const auto& culture : cultures)
+	{
+		gs::LandTilePtr origin = nullptr;
+
+		do
+		{
+			origin = *(landTiles.begin() + randomIndex.Sample());
+		} while (originIds.count(origin->id) > 0);
+		
+		spreaders.push_back(gs::CultureSpreader(1, origin, culture));
+	}
+
+	bool spreading = true;
+
+	while (spreading)
+	{
+		spreading = false;
+
+		for (auto& spreader : spreaders)
+		{
+			const bool spread = spreader.Spread();
+			if (spread)
+			{
+				spreading = true;
+			}
+		}
 	}
 }
 
@@ -617,7 +661,7 @@ gs::Globe::Globe()
     //Generate planet
     GenerateRivers(10, 50);
     GenerateBiomes(200);
-    GenerateCultures(150);
+    GenerateCultures(100);
     //GenerateStates(150);
 
     AssignBufferOffsets();
