@@ -1,0 +1,1059 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="gs">
+      <UniqueIdentifier>{ece693f2-b42d-4949-a2ac-96574c7b62d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cck">
+      <UniqueIdentifier>{b3d2b1f8-b4a0-4f95-ba63-7bf156f69367}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EasyBMP">
+      <UniqueIdentifier>{4f2ca70d-7df3-4104-8d50-7a890a2f161f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gl3w">
+      <UniqueIdentifier>{8db00b0d-8ebd-4c54-9079-9e943fcad702}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lodepng">
+      <UniqueIdentifier>{69c255d7-4c18-446c-a082-6e9b65e82077}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="matrix">
+      <UniqueIdentifier>{cc80e8ae-96e6-4214-9cae-01bae67c607a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="voronoi">
+      <UniqueIdentifier>{276b0728-7396-43f4-b39a-70d95b842716}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="voronoi\src">
+      <UniqueIdentifier>{c58fd8e3-e468-421e-9f9a-d5e60663a044}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="voronoi\src\mpreal">
+      <UniqueIdentifier>{49a631fb-3fee-4647-8168-d3670d81c7f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="voronoi\glm">
+      <UniqueIdentifier>{428a4e0b-98fb-4a4d-9f28-a3bd9839f81a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="voronoi\glm\core">
+      <UniqueIdentifier>{3aacded9-9ce9-45d9-9101-625672a587f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="voronoi\glm\gtc">
+      <UniqueIdentifier>{61e67486-1433-4744-b7e0-162d9881bff3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="voronoi\glm\gtx">
+      <UniqueIdentifier>{7ad5af01-d22b-4267-b00c-17052ba89aef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="voronoi\glm\virtrev">
+      <UniqueIdentifier>{dbc203bf-18f7-4e8d-96ac-6a4f450fb280}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FastNoise">
+      <UniqueIdentifier>{e75feb43-d232-4c37-b9c0-5a632b2757a3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\cck\cck.h">
+      <Filter>cck</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cck\cckBoundBox.h">
+      <Filter>cck</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cck\cckError.h">
+      <Filter>cck</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cck\cckGeoCoord.h">
+      <Filter>cck</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cck\cckGlobe.h">
+      <Filter>cck</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cck\cckMath.h">
+      <Filter>cck</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cck\cckSimplexNoise.h">
+      <Filter>cck</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cck\cckVec3.h">
+      <Filter>cck</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EasyBMP\EasyBMP.h">
+      <Filter>EasyBMP</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EasyBMP\EasyBMP_BMP.h">
+      <Filter>EasyBMP</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EasyBMP\EasyBMP_DataStructures.h">
+      <Filter>EasyBMP</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EasyBMP\EasyBMP_VariousBMPutilities.h">
+      <Filter>EasyBMP</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gl3w\gl3w.h">
+      <Filter>gl3w</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gl3w\glcorearb.h">
+      <Filter>gl3w</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lodepng\lodepng.h">
+      <Filter>lodepng</Filter>
+    </ClInclude>
+    <ClInclude Include="src\matrix\Matrices.h">
+      <Filter>matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="src\matrix\Vectors.h">
+      <Filter>matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\src\beachline.h">
+      <Filter>voronoi\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\src\mp_sample_generator.h">
+      <Filter>voronoi\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\src\priqueue.h">
+      <Filter>voronoi\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\src\voronoi.h">
+      <Filter>voronoi\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\src\voronoi_cell.h">
+      <Filter>voronoi\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\src\voronoi_event.h">
+      <Filter>voronoi\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\src\voronoi_event_compare.h">
+      <Filter>voronoi\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\src\voronoi_generator.h">
+      <Filter>voronoi\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\src\mpreal\mpvec3.h">
+      <Filter>voronoi\src\mpreal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\_detail.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\_fixes.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\_swizzle.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\_swizzle_func.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\_vectorize.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\func_common.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\func_exponential.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\func_geometric.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\func_integer.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\func_matrix.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\func_noise.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\func_packing.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\func_trigonometric.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\func_vector_relational.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\hint.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\intrinsic_common.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\intrinsic_exponential.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\intrinsic_geometric.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\intrinsic_matrix.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\intrinsic_trigonometric.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\intrinsic_vector_relational.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\setup.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\type.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\type_float.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\type_gentype.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\type_half.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\type_int.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\type_mat.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\type_mat2x2.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\type_mat2x3.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\type_mat2x4.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\type_mat3x2.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\type_mat3x3.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\type_mat3x4.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\type_mat4x2.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\type_mat4x3.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\type_mat4x4.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\type_size.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\type_vec.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\type_vec1.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\type_vec2.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\type_vec3.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\core\type_vec4.hpp">
+      <Filter>voronoi\glm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtc\half_float.hpp">
+      <Filter>voronoi\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtc\matrix_access.hpp">
+      <Filter>voronoi\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtc\matrix_integer.hpp">
+      <Filter>voronoi\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtc\matrix_inverse.hpp">
+      <Filter>voronoi\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtc\matrix_transform.hpp">
+      <Filter>voronoi\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtc\noise.hpp">
+      <Filter>voronoi\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtc\quaternion.hpp">
+      <Filter>voronoi\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtc\random.hpp">
+      <Filter>voronoi\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtc\swizzle.hpp">
+      <Filter>voronoi\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtc\type_precision.hpp">
+      <Filter>voronoi\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtc\type_ptr.hpp">
+      <Filter>voronoi\glm\gtc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\associated_min_max.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\bit.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\closest_point.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\color_cast.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\color_space.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\color_space_YCoCg.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\compatibility.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\component_wise.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\constants.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\epsilon.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\euler_angles.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\extend.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\extented_min_max.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\fast_exponential.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\fast_square_root.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\fast_trigonometry.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\gradient_paint.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\handed_coordinate_space.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\inertia.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\int_10_10_10_2.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\integer.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\intersect.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\log_base.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\matrix_cross_product.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\matrix_interpolation.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\matrix_major_storage.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\matrix_operation.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\matrix_query.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\mixed_product.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\multiple.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\noise.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\norm.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\normal.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\normalize_dot.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\number_precision.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\ocl_type.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\optimum_pow.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\orthonormalize.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\perpendicular.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\polar_coordinates.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\projection.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\quaternion.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\random.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\raw_data.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\reciprocal.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\rotate_vector.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\simd_mat4.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\simd_vec4.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\spline.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\std_based_type.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\string_cast.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\transform.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\transform2.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\ulp.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\unsigned_int.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\vec1.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\vector_access.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\vector_angle.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\vector_query.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\verbose_operator.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\gtx\wrap.hpp">
+      <Filter>voronoi\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\virtrev\xstream.hpp">
+      <Filter>voronoi\glm\virtrev</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\ext.hpp">
+      <Filter>voronoi\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="src\voronoi\glm\glm.hpp">
+      <Filter>voronoi\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FastNoise\FastNoise.h">
+      <Filter>FastNoise</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsArray.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsBinarySearchTree.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsBiomeSpreader.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsLandTextureGenerator.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsBoundingBox.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsCamera.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsColor.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsConfig.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsCulture.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsCultureSpreader.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsDesertTextureGenerator.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsEdge.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsFullscreenQuad.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsGlobe.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsGrasslandTextureGenerator.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsInputState.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsLandTile.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsLink.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsMath.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsMatrixStack.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsRandomRange.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsRenderer.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsSemiAridTextureGenerator.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsShader.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsSpreader.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsTexture.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsTile.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsTileBuffer.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsTileGroup.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsTileGroupManager.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsTundraTextureGenerator.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsVec2.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsUserInterface.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsVec3.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsVertex.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsWaterTextureGenerator.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsWaterTile.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gs\gsUnit.hpp">
+      <Filter>gs</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\gs\gsBiomeSpreader.cpp">
+      <Filter>gs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gs\gsCamera.cpp">
+      <Filter>gs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gs\gsColor.cpp">
+      <Filter>gs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gs\gsConfig.cpp">
+      <Filter>gs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gs\gsCulture.cpp">
+      <Filter>gs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gs\gsCultureSpreader.cpp">
+      <Filter>gs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gs\gsEdge.cpp">
+      <Filter>gs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gs\gsGlobe.cpp">
+      <Filter>gs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gs\gsInputState.cpp">
+      <Filter>gs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gs\gsLandTile.cpp">
+      <Filter>gs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gs\gsShader.cpp">
+      <Filter>gs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gs\gsTexture.cpp">
+      <Filter>gs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gs\gsTile.cpp">
+      <Filter>gs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gs\gsTileGroup.cpp">
+      <Filter>gs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gs\gsTileGroupManager.cpp">
+      <Filter>gs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gs\gsVertex.cpp">
+      <Filter>gs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gs\gsWaterTile.cpp">
+      <Filter>gs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cck\cckBoundBox.cpp">
+      <Filter>cck</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cck\cckGeoCoord.cpp">
+      <Filter>cck</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cck\cckGlobe.cpp">
+      <Filter>cck</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cck\cckGlobeBspTree.cpp">
+      <Filter>cck</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cck\cckGlobeEdge.cpp">
+      <Filter>cck</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cck\cckGlobeLink.cpp">
+      <Filter>cck</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cck\cckGlobeNode.cpp">
+      <Filter>cck</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cck\cckGlobeSegment.cpp">
+      <Filter>cck</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cck\cckGlobeSide.cpp">
+      <Filter>cck</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cck\cckGlobeTriangle.cpp">
+      <Filter>cck</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cck\cckMath.cpp">
+      <Filter>cck</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cck\cckSimplexNoise.cpp">
+      <Filter>cck</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cck\cckVec3.cpp">
+      <Filter>cck</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EasyBMP\EasyBMP.cpp">
+      <Filter>EasyBMP</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gl3w\gl3w.c">
+      <Filter>gl3w</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lodepng\lodepng.cpp">
+      <Filter>lodepng</Filter>
+    </ClCompile>
+    <ClCompile Include="src\matrix\Matrices.cpp">
+      <Filter>matrix</Filter>
+    </ClCompile>
+    <ClCompile Include="src\voronoi\src\beachline.cpp">
+      <Filter>voronoi\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\voronoi\src\mp_sample_generator.cpp">
+      <Filter>voronoi\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\voronoi\src\priqueue.cpp">
+      <Filter>voronoi\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\voronoi\src\voronoi.cpp">
+      <Filter>voronoi\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\voronoi\src\voronoi_cell.cpp">
+      <Filter>voronoi\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\voronoi\src\voronoi_event.cpp">
+      <Filter>voronoi\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\voronoi\src\voronoi_generator.cpp">
+      <Filter>voronoi\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\voronoi\src\mpreal\mpvec3.cpp">
+      <Filter>voronoi\src\mpreal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\FastNoise\FastNoise.cpp">
+      <Filter>FastNoise</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gs\gsDesertTextureGenerator.cpp">
+      <Filter>gs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gs\gsGrasslandTextureGenerator.cpp">
+      <Filter>gs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gs\gsSemiAridTextureGenerator .cpp">
+      <Filter>gs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gs\gsTundraTextureGenerator.cpp">
+      <Filter>gs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gs\gsLandTextureGenerator.cpp">
+      <Filter>gs</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\voronoi\glm\core\func_common.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\func_exponential.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\func_geometric.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\func_integer.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\func_matrix.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\func_noise.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\func_packing.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\func_trigonometric.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\func_vector_relational.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\intrinsic_common.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\intrinsic_exponential.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\intrinsic_geometric.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\intrinsic_matrix.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\intrinsic_trigonometric.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\intrinsic_vector_relational.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\type_gentype.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\type_half.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\type_mat.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\type_mat2x2.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\type_mat2x3.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\type_mat2x4.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\type_mat3x2.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\type_mat3x3.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\type_mat3x4.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\type_mat4x2.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\type_mat4x3.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\type_mat4x4.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\type_vec.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\type_vec1.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\type_vec2.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\type_vec3.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\core\type_vec4.inl">
+      <Filter>voronoi\glm\core</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtc\half_float.inl">
+      <Filter>voronoi\glm\gtc</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtc\matrix_access.inl">
+      <Filter>voronoi\glm\gtc</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtc\matrix_inverse.inl">
+      <Filter>voronoi\glm\gtc</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtc\matrix_transform.inl">
+      <Filter>voronoi\glm\gtc</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtc\noise.inl">
+      <Filter>voronoi\glm\gtc</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtc\quaternion.inl">
+      <Filter>voronoi\glm\gtc</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtc\random.inl">
+      <Filter>voronoi\glm\gtc</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtc\swizzle.inl">
+      <Filter>voronoi\glm\gtc</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtc\type_precision.inl">
+      <Filter>voronoi\glm\gtc</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtc\type_ptr.inl">
+      <Filter>voronoi\glm\gtc</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\associated_min_max.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\bit.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\closest_point.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\color_cast.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\color_space.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\color_space_YCoCg.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\compatibility.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\component_wise.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\constants.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\epsilon.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\euler_angles.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\extend.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\extented_min_max.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\fast_exponential.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\fast_square_root.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\fast_trigonometry.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\gradient_paint.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\handed_coordinate_space.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\inertia.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\int_10_10_10_2.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\integer.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\intersect.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\log_base.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\matrix_cross_product.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\matrix_interpolation.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\matrix_major_storage.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\matrix_operation.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\matrix_query.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\mixed_product.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\multiple.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\noise.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\norm.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\normal.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\normalize_dot.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\number_precision.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\ocl_type.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\optimum_pow.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\orthonormalize.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\perpendicular.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\polar_coordinates.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\projection.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\quaternion.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\random.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\raw_data.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\reciprocal.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\rotate_vector.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\simd_mat4.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\simd_vec4.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\spline.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\std_based_type.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\string_cast.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\transform.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\transform2.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\ulp.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\unsigned_int.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\vec1.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\vector_access.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\vector_angle.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\vector_query.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\verbose_operator.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+    <None Include="src\voronoi\glm\gtx\wrap.inl">
+      <Filter>voronoi\glm\gtx</Filter>
+    </None>
+  </ItemGroup>
+</Project>
