@@ -69,6 +69,7 @@ bool gs::CultureSpreader::Spread()
 			if (value > bestNeighborValue)
 			{
 				bestNeighbor = neighborPair.second;
+				bestNeighborValue = value;
 			}
 		}
 
