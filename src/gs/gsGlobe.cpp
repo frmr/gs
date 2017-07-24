@@ -661,7 +661,7 @@ gs::Globe::Globe()
     //Generate planet
     GenerateRivers(10, 50);
     GenerateBiomes(200);
-    GenerateCultures(100);
+    GenerateCultures(20);
     //GenerateStates(150);
 
     AssignBufferOffsets();
