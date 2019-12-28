@@ -1,8 +1,1 @@
-src
-	gs	Code for the game itself
-	vs	Octahedro's voronoi sphere generator
-	
-
-Requires
-	cck (available [here])
-	
+This planet generator is a test bench for the Continent Construction Kit built with C++ and OpenGL 3. It divides the world into tiles and generates biomes and rivers based on the CCK output. A voronoi sphere was used to avoid the distortions that would appear towards the poles on a flat map.
